@@ -21,8 +21,6 @@
         </div>
 
     @endif
-
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -32,13 +30,9 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-
-
-
                         <table id="table" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-
                                 <th>Id</th>
                                 <th>Customer</th>
                                 <th>State</th>
@@ -63,11 +57,9 @@
                                         <td>Chờ chấp nhận</td>
                                     @endif
                                     <td>
-
                                             {!! Form::open(['method'=>'DELETE' , 'route' => ['order.destroy',$orders->id]]) !!}
-                                            {{ Form::button('Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+                                            {{ Form::button('Delete', ['class' => 'btn btn-danger','id'=>'delete-order', 'type' => 'submit']) }}
                                             {!! Form::close() !!}
-
                                     </td>
                                 </tr>
 
@@ -75,7 +67,6 @@
                             </tbody>
                             <tfoot>
                             <tr>
-
                                 <th>Id</th>
                                 <th>Customer</th>
                                 <th>State</th>
@@ -85,13 +76,9 @@
                             </tfoot>
                         </table>
 
-
                     </div>
                     <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
-
-
                 <!-- /.card -->
             </div>
             <!-- /.col -->
@@ -136,8 +123,6 @@
 
 
         });
-
-
     </script>
 
 @endsection

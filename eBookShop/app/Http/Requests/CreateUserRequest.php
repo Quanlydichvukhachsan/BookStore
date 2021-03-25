@@ -28,7 +28,8 @@ class CreateUserRequest extends FormRequest
             'lastName'=>'required|string|max:255',
             'userName'=>'required|string|max:255',
             'email'=>'required|regex:/(.+)@(.+)\.(.+)/i|email|unique:users',
-             'password'=>'required|string|max:255|min:8|confirmed'
+           'password' => 'required|between:8,255|confirmed',
+
 
         ];
     }
