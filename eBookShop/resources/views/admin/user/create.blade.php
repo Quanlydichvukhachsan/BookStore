@@ -1,7 +1,3 @@
-@extends('layouts.main')
-@section('content')
-
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -49,52 +45,3 @@
        </div>
     </div>
 </div>
-
-
-
-
-
-    @if(count($errors) >0)
-        <div class="alert alert-danger">
-
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-@endsection
-
- @section('script')
-     <script>
-
-         $('#btn-submit').click(function (e){
-             e.preventDefault();
-             $.ajax({
-                 type:'POST',
-                 cache:false,
-                 url:"{{route('user.store')}}",
-                 data:{
-                     "_token":'{{csrf_token()}}',
-                     "lastName": $('#lastName').val(),
-                     "firstName":$('#firstName').val(),
-                     "userName":$('#userName').val(),
-                     "email":$('#email').val(),
-                     "password":$('#password').val(),
-                     "password_confirmation":$('#password_confirmation').val()
-                 },
-                 success:function (data){
-                     console.log(data.success);
-                     $("#msg").append( `<p>${data.success}</p>` );
-                     //alert(data.success);
-                 },
-                 error:function (data){
-                     console.log('error');
-                     console.log(data);
-                 },
-             });
-         });
-
-     </script>
- @endsection
