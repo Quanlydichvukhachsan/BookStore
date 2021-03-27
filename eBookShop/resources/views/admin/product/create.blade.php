@@ -1,41 +1,45 @@
-<div class="modal  bs-example-modal-lg  fade" id="addStudentModal" focus-group focus-group-head="loop" focus-group-tail="loop" focus-stacktabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    ×
+                <h5 class="modal-title" id="exampleModalLabel">Create user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Add Student</h4>
             </div>
             <div class="modal-body">
-                <form name="form.studentForm" id='form.studentForm' ng-submit="submitForm()" novalidate>
-                    <!-- NAME -->
-                    <div class="form-group" ng-class="{ 'has-error' : form.studentForm.name.$invalid && !form.studentForm.name.$pristine }">
-                        <label>Name*</label>
-                        <input type="text" name="name" class="form-control" ng-model="newStudent.name" ng-minlength=3 ng-maxlength=20 required>
-                        <p ng-show="form.studentForm.name.$error.required && form.studentForm.name.$dirty" class="help-block">Name is required.</p>
-                        <p ng-show="form.studentForm.name.$error.minlength" class="help-block">Name is required to be at least 3 characters</p>
-                        <p ng-show="form.studentForm.name.$error.maxlength" class="help-block">Name cannot be longer than 20 characters</p>
+                <form>
+                    @csrf
+                    @method('POST')
+                    <div class="form-group">
+                        <label for="firstName" class="col-form-label">First Name</label>
+                        <input name="firstName" id="firstName" type="text" class="form-control" placeholder="first name" value="">
                     </div>
-
-                    <!-- Phone Number -->
-                    <div class="form-group" ng-class="{ 'has-error' : form.studentForm.phoneNumber.$invalid && !form.studentForm.phoneNumber.$pristine }">
-                        <label>Phone Number*</label>
-                        <input type="number" name="phoneNumber" class="form-control" ng-model="newStudent.phoneNumber" ng-minlength="11" ng-maxlength=11 required>
-                        <p ng-show="form.studentForm.phoneNumber.$error.required && form.studentForm.phoneNumber.$dirty" class="help-block">Phone Number is required.</p>
-                        <p ng-show="form.studentForm.phoneNumber.$error.minlength" class="help-block">Field is too short</p>
-                        <p ng-show="form.studentForm.phoneNumber.$error.maxlength" class="help-block">Field is too long</p>
+                    <div class="form-group">
+                        <label for="lastName" class="col-form-label">Last Name</label>
+                        <input name="lastName" id="lastName" type="text" class="form-control" value="" placeholder="lastname">
                     </div>
-
-                    <!-- EMAIL -->
-                    <div class="form-group" ng-class="{ 'has-error' : form.studentForm.email.$invalid && form.studentForm.email.$dirty }">
-                        <label>Email*</label>
-                        <input type="email" name="email" class="form-control" ng-model="newStudent.email" required>
-                        <p ng-show="form.studentForm.email.$error.required && form.studentForm.email.$dirty" class="help-block">Your email is required.</p>
-                        <p ng-show="form.studentForm.email.$error.email" class="help-block">Enter a valid email.</p>
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input name="email" id="email" type="text" class="form-control" placeholder="enter address" value="">
                     </div>
-                    <button type="submit" ng-disabled="form.studentForm.$invalid" ng-click='postStudent(newStudent)' class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <label for="firstName" class="col-form-label">User Name</label>
+                        <input name="userName" id="userName" type="text" class="form-control" placeholder="enter phone number" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-form-label">Password</label>
+                        <input name="password" id="password" type="password" class="form-control" placeholder="password" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation" class="col-form-label">Confirm Password</label>
+                        <input name="password_confirmation"  id="password_confirmation" type="password" class="form-control" placeholder="password confirm" value="">
+                    </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-submit" class="btn btn-primary">Create user</button>
             </div>
         </div>
     </div>

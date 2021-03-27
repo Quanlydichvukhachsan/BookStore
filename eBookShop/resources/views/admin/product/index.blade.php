@@ -16,6 +16,7 @@
         </div>
     @endif
 
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
@@ -118,8 +119,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Sản phẩm</h3>
-                        <button type="button" class="btn btn-success float-right" data-dismiss="modal">Thêm sản phẩm
+
+                        <button type="button" class="btn btn-success float-right" data-toggle=modal data-target='#exampleModal'>Thêm sản phẩm
+
                         </button>
+                        @include('admin.product.create')
                     </div>
 
                     <!-- /.card-header -->
