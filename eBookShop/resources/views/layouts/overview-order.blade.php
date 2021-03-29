@@ -1,70 +1,93 @@
-<div class="row">
-    <div class="col-lg-3 col-6">
-        <!-- small card -->
-        <div class="small-box bg-info">
-            <div class="inner">
-                <h3>150</h3>
 
-                <p>New Orders</p>
+    <div class="col-md-6 col-xl-3">
+        <div class="card card-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+
+                      <span class="bg-purple text-white avatar">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f3ecec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l9.2 9.2M17 7v10H7"/></svg>                      </span>
+                    </div>
+                    <div class="col">
+
+                            <div class="font-weight-medium">
+
+                                <a  href="#"> Order pending </a>
+
+                             </div>
+                        <div class="text-muted">
+                            12343
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="icon">
-                <i class="fas fa-shopping-cart"></i>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card card-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="bg-red text-white avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f3ecec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>                      </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium">
+                            <a   href="#">   Order cancel </a>
+                        </div>
+                        <div class="text-muted">
+                            0
+                        </div>
+                    </div>
+                </div>
             </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card card-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                         <span class="bg-orange text-white avatar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f3ecec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.2"/></svg>
+                         </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium">
+                            <a   href="#">   Order process </a>
+                        </div>
+                        <div class="text-muted">
+                            163
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small card -->
-        <div class="small-box bg-success">
-            <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>Bounce Rate</p>
+    <div class="col-md-6 col-xl-3">
+        <div class="card card-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="bg-green text-white avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f3ecec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="20.5" r="1"/><circle cx="18" cy="20.5" r="1"/><path d="M2.5 2.5h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6l1.6-8.4H7.1"/></svg>                      </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium">
+                            <a   href="#"> Orders shipped </a>
+                        </div>
+                        <div class="text-muted">
+                            32
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small card -->
-        <div class="small-box bg-warning">
-            <div class="inner">
-                <h3>44</h3>
 
-                <p>User Registrations</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-user-plus"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small card -->
-        <div class="small-box bg-danger">
-            <div class="inner">
-                <h3>65</h3>
 
-                <p>Unique Visitors</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-chart-pie"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
     <!-- ./col -->
-</div>
+

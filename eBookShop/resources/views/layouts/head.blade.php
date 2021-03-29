@@ -9,10 +9,19 @@
     <link href="/dist/css/tabler-payments.min.css" rel="stylesheet"/>
     <link href="/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
     <link href="/dist/css/demo.min.css" rel="stylesheet"/>
+
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- Theme style -->
+    <style>
+        a{
+            color:grey;
+        }
+        a:hover{
+            color: #bec0c2;
+        }
+    </style>
 </head>
