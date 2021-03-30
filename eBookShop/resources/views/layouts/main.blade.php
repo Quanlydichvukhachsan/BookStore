@@ -1,354 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 @include('layouts.head')
-<body class="antialiased">
-<div class="page">
+
+<body class="header-fixed sidebar-fixed sidebar-light header-light" id="body">
+
+<script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+</script>
+
+<div id="toaster"></div>
+<div class="wrapper">
+    <!-- Github Link -->
+    <a href="https://github.com/coding-gang"  target="_blank" class="github-link">
+        <svg width="70" height="70" viewBox="0 0 250 250" aria-hidden="true">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="75%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#896def;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#482271;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M 0,0 L115,115 L115,115 L142,142 L250,250 L250,0 Z" fill="url(#grad1)"></path>
+        </svg>
+        <i class="mdi mdi-github-circle"></i>
+    </a>
+    <!--
+          ====================================
+          ——— LEFT SIDEBAR WITH FOOTER
+          =====================================
+        -->
+    @include('layouts.sidebar')
+
+    <div class="page-wrapper">
+        <!--
+         ====================================
+         ——— HEADER
+         =====================================
+       -->
 @include('layouts.header')
-@include('layouts.navbar')
-    <div class="content">
-        <div class="container-xl">
-            @include('layouts.page-title')
-            <div class="row row-deck row-cards">
-
-            @include('layouts.overview-order')
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Invoices</h3>
-                        <div class="ms-auto text-muted">
-                           <a class="nav-link" href="#">View all</a>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body border-bottom py-3">
-                        <div class="d-flex">
-                            <div class="text-muted">
-                                Show
-                                <div class="mx-2 d-inline-block">
-                                    <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
-                                </div>
-                                entries
-                            </div>
-                            <div class="ms-auto text-muted">
-                                Search:
-                                <div class="ms-2 d-inline-block">
-                                    <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+        <div class="content-wrapper">
+            <div class="content">
+                <!--
+        ====================================
+        ——— OVERVIEW
+        =====================================
+      -->
+              @include('layouts.overview-order')
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Recent Order Table -->
+                        <div class="card card-table-border-none" id="recent-orders">
+                            <div class="card-header justify-content-between">
+                                <h2>Recent Orders</h2>
+                                <div class="date-range-report ">
+                                    <span></span>
                                 </div>
                             </div>
+                            <div class="card-body pt-0 pb-5">
+                                <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Product Name</th>
+                                        <th class="d-none d-lg-table-cell">Units</th>
+                                        <th class="d-none d-lg-table-cell">Order Date</th>
+                                        <th class="d-none d-lg-table-cell">Order Cost</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td >24541</td>
+                                        <td >
+                                            <a class="text-dark" href=""> Coach Swagger</a>
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">1 Unit</td>
+                                        <td class="d-none d-lg-table-cell">Oct 20, 2018</td>
+                                        <td class="d-none d-lg-table-cell">$230</td>
+                                        <td >
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
+                                                    <li class="dropdown-item">
+                                                        <a href="#">View</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Remove</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >24541</td>
+                                        <td >
+                                            <a class="text-dark" href=""> Toddler Shoes, Gucci Watch</a>
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">2 Units</td>
+                                        <td class="d-none d-lg-table-cell">Nov 15, 2018</td>
+                                        <td class="d-none d-lg-table-cell">$550</td>
+                                        <td >
+                                            <span class="badge badge-warning">Delayed</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order2">
+                                                    <li class="dropdown-item">
+                                                        <a href="#">View</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Remove</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >24541</td>
+                                        <td >
+                                            <a class="text-dark" href=""> Hat Black Suits</a>
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">1 Unit</td>
+                                        <td class="d-none d-lg-table-cell">Nov 18, 2018</td>
+                                        <td class="d-none d-lg-table-cell">$325</td>
+                                        <td >
+                                            <span class="badge badge-warning">On Hold</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order3" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false" data-display="static"></a>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order3">
+                                                    <li class="dropdown-item">
+                                                        <a href="#">View</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Remove</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >24541</td>
+                                        <td >
+                                            <a class="text-dark" href=""> Backpack Gents, Swimming Cap Slin</a>
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">5 Units</td>
+                                        <td class="d-none d-lg-table-cell">Dec 13, 2018</td>
+                                        <td class="d-none d-lg-table-cell">$200</td>
+                                        <td >
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order4">
+                                                    <li class="dropdown-item">
+                                                        <a href="#">View</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Remove</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >24541</td>
+                                        <td >
+                                            <a class="text-dark" href=""> Speed 500 Ignite</a>
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">1 Unit</td>
+                                        <td class="d-none d-lg-table-cell">Dec 23, 2018</td>
+                                        <td class="d-none d-lg-table-cell">$150</td>
+                                        <td >
+                                            <span class="badge badge-danger">Cancelled</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false" data-display="static"></a>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order5">
+                                                    <li class="dropdown-item">
+                                                        <a href="#">View</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Remove</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table card-table table-vcenter text-nowrap datatable">
-                            <thead>
-                            <tr>
-                                <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
-                                <th class="w-1">No. <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-dark icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="6 15 12 9 18 15" /></svg>
-                                </th>
-                                <th>Invoice Subject</th>
-                                <th>Client</th>
-                                <th>VAT No.</th>
-                                <th>Created</th>
-                                <th>Status</th>
-                                <th>Price</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001401</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">Design Works</a></td>
-                                <td>
-                                    <span class="flag flag-country-us"></span>
-                                    Carlson Limited
-                                </td>
-                                <td>
-                                    87956621
-                                </td>
-                                <td>
-                                    15 Dec 2017
-                                </td>
-                                <td>
-                                    <span class="badge bg-success me-1"></span> Paid
-                                </td>
-                                <td>$887</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001402</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">UX Wireframes</a></td>
-                                <td>
-                                    <span class="flag flag-country-gb"></span>
-                                    Adobe
-                                </td>
-                                <td>
-                                    87956421
-                                </td>
-                                <td>
-                                    12 Apr 2017
-                                </td>
-                                <td>
-                                    <span class="badge bg-warning me-1"></span> Pending
-                                </td>
-                                <td>$1200</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001403</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">New Dashboard</a></td>
-                                <td>
-                                    <span class="flag flag-country-de"></span>
-                                    Bluewolf
-                                </td>
-                                <td>
-                                    87952621
-                                </td>
-                                <td>
-                                    23 Oct 2017
-                                </td>
-                                <td>
-                                    <span class="badge bg-warning me-1"></span> Pending
-                                </td>
-                                <td>$534</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001404</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">Landing Page</a></td>
-                                <td>
-                                    <span class="flag flag-country-br"></span>
-                                    Salesforce
-                                </td>
-                                <td>
-                                    87953421
-                                </td>
-                                <td>
-                                    2 Sep 2017
-                                </td>
-                                <td>
-                                    <span class="badge bg-secondary me-1"></span> Due in 2 Weeks
-                                </td>
-                                <td>$1500</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001405</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">Marketing Templates</a></td>
-                                <td>
-                                    <span class="flag flag-country-pl"></span>
-                                    Printic
-                                </td>
-                                <td>
-                                    87956621
-                                </td>
-                                <td>
-                                    29 Jan 2018
-                                </td>
-                                <td>
-                                    <span class="badge bg-danger me-1"></span> Paid Today
-                                </td>
-                                <td>$648</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001406</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">Sales Presentation</a></td>
-                                <td>
-                                    <span class="flag flag-country-br"></span>
-                                    Tabdaq
-                                </td>
-                                <td>
-                                    87956621
-                                </td>
-                                <td>
-                                    4 Feb 2018
-                                </td>
-                                <td>
-                                    <span class="badge bg-secondary me-1"></span> Due in 3 Weeks
-                                </td>
-                                <td>$300</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001407</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">Logo & Print</a></td>
-                                <td>
-                                    <span class="flag flag-country-us"></span>
-                                    Apple
-                                </td>
-                                <td>
-                                    87956621
-                                </td>
-                                <td>
-                                    22 Mar 2018
-                                </td>
-                                <td>
-                                    <span class="badge bg-success me-1"></span> Paid Today
-                                </td>
-                                <td>$2500</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                                <td><span class="text-muted">001408</span></td>
-                                <td><a href="invoice.html" class="text-reset" tabindex="-1">Icons</a></td>
-                                <td>
-                                    <span class="flag flag-country-pl"></span>
-                                    Tookapic
-                                </td>
-                                <td>
-                                    87956621
-                                </td>
-                                <td>
-                                    13 May 2018
-                                </td>
-                                <td>
-                                    <span class="badge bg-success me-1"></span> Paid Today
-                                </td>
-                                <td>$940</td>
-                                <td class="text-end">
-                          <span class="dropdown">
-                            <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">
-                                Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                Another action
-                              </a>
-                            </div>
-                          </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer d-flex align-items-center">
-                        <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
-                        <ul class="pagination m-0 ms-auto">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
-                                    prev
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    next <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
-            </div>
 
             </div>
-
-
-
         </div>
-    </div>
-
     @include('layouts.footer')
+    </div>
 </div>
-
 <!-- jQuery -->
 @include('layouts.script')
 </body>

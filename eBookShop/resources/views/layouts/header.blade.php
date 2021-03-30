@@ -1,44 +1,110 @@
-<header class="navbar navbar-expand-md navbar-light d-print-none">
-    <div class="container-xl">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-            <span class="navbar-toggler-icon"></span>
+<!-- Header -->
+<header class="main-header " id="header">
+    <nav class="navbar navbar-static-top navbar-expand-lg">
+        <!-- Sidebar toggle button -->
+        <button id="sidebar-toggler" class="sidebar-toggle">
+            <span class="sr-only">Toggle navigation</span>
         </button>
-        <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href=".">
-                <img src="/static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-            </a>
-        </h1>
-        <div class="navbar-nav flex-row order-md-last">
-            <div class="nav-item dropdown d-none d-md-flex me-3">
-                <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>
-                    <span class="badge bg-red"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
-                    <div class="card">
-                        <div class="card-body">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad amet consectetur exercitationem fugiat in ipsa ipsum, natus odio quidem quod repudiandae sapiente. Amet debitis et magni maxime necessitatibus ullam.
-                        </div>
-                    </div>
-                </div>
+        <!-- search form -->
+        <div class="search-form d-none d-lg-inline-block">
+            <div class="input-group">
+                <button type="button" name="search" id="search-btn" class="btn btn-flat">
+                    <i class="mdi mdi-magnify"></i>
+                </button>
+                <input type="text" name="query" id="search-input" class="form-control" placeholder="'button', 'chart' etc."
+                       autofocus autocomplete="off" />
             </div>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(/static/avatars/000m.jpg)"></span>
-                    <div class="d-none d-xl-block ps-2">
-                        <div>Paweł Kuna</div>
-                        <div class="mt-1 small text-muted">UI Designer</div>
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Set status</a>
-                    <a href="#" class="dropdown-item">Profile & account</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
-                    <a href="#" class="dropdown-item">Logout</a>
-                </div>
+            <div id="search-results-container">
+                <ul id="search-results"></ul>
             </div>
         </div>
-    </div>
+
+        <div class="navbar-right ">
+            <ul class="nav navbar-nav">
+                <li class="dropdown notifications-menu">
+                    <button class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="mdi mdi-bell-outline"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="dropdown-header">You have 5 notifications</li>
+                        <li>
+                            <a href="#">
+                                <i class="mdi mdi-account-plus"></i> New user registered
+                                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 10 AM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mdi mdi-account-remove"></i> User deleted
+                                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 07 AM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mdi mdi-chart-areaspline"></i> Sales report is ready
+                                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 12 PM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mdi mdi-account-supervisor"></i> New client
+                                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 10 AM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mdi mdi-server-network-off"></i> Server overloaded
+                                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 05 AM</span>
+                            </a>
+                        </li>
+                        <li class="dropdown-footer">
+                            <a class="text-center" href="#"> View All </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="right-sidebar-in right-sidebar-2-menu">
+                    <i class="mdi mdi-settings mdi-spin"></i>
+                </li>
+                <!-- User Account -->
+                <li class="dropdown user-menu">
+                    <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <img src="assets/img/user/user.png" class="user-image" alt="User Image" />
+                        <span class="d-none d-lg-inline-block">Abdus Salam</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <!-- User image -->
+                        <li class="dropdown-header">
+                            <img src="assets/img/user/user.png" class="img-circle" alt="User Image" />
+                            <div class="d-inline-block">
+                                Abdus Salam <small class="pt-1">iamabdus@gmail.com</small>
+                            </div>
+                        </li>
+
+                        <li>
+                            <a href="user-profile.html">
+                                <i class="mdi mdi-account"></i> My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mdi mdi-email"></i> Message
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="mdi mdi-diamond-stone"></i> Projects </a>
+                        </li>
+                        <li class="right-sidebar-in">
+                            <a href="javascript:0"> <i class="mdi mdi-settings"></i> Setting </a>
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a href="index.html"> <i class="mdi mdi-logout"></i> Log Out </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
 </header>
