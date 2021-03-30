@@ -8,3 +8,21 @@
 <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="assets/plugins/toastr/toastr.min.js"></script>
 <script src="assets/js/sleek.bundle.js"></script>
+<script src="assets/plugins/data-tables/jquery.datatables.min.js"></script>
+<script src="assets/plugins/data-tables/datatables.bootstrap4.min.js"></script>
+<script src="assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
+<script src="assets/plugins/select2/js/select2.full.min.js"></script>
+
+<script>
+    jQuery(document).ready(function() {
+        jQuery('#basic-data-table').DataTable({
+            "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">'
+        });
+    });
+    $(function () {
+        $('.select2').select2()
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+    });
+</script>

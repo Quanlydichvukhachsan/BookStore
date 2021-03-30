@@ -7,7 +7,7 @@
     <div id="sidebar" class="sidebar">
         <!-- Aplication Brand -->
         <div class="app-brand">
-            <a href="/index.html" title="Sleek Dashboard">
+            <a href="{{route('admin.index')}}" title="Sleek Dashboard">
                 <svg
                     class="brand-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -93,8 +93,8 @@
 
 
                             <li >
-                                <a class="sidenav-item-link" href="chat.html">
-                                    <span class="nav-text">Chat</span>
+                                <a class="sidenav-item-link" href="{{route('user.index')}}">
+                                    <span class="nav-text">Users</span>
 
                                 </a>
                             </li>
