@@ -2,9 +2,16 @@
 
 namespace App\Providers;
 
+
+
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\OrderContract;
 use App\Services\OrderBookService;
+use App\Contracts\CategoriesContract;
+use App\Contracts\CategoriesRequest;
+use App\Services\CategoriesServiceConstract;
+use App\Services\CategoriesService;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -15,7 +22,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(OrderContract::class, OrderBookService::class);
-
+        $this->app->bind(CategoriesContract::class,CategoriesRequest::class);
+        $this->app->bind(CategoriesContract::class,CategoriesService::class);
     }
 
     /**
@@ -25,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 }
