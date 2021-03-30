@@ -10,7 +10,7 @@
 - VS Code
 - MySql
 - XAMPP
-- 
-## dashboard
+ 
+## Dashboard
 
 - https://github.com/tafcoder/sleek-dashboard
