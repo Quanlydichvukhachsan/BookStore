@@ -81,65 +81,62 @@
 
 @endsection
 @section('script')
-
-
     <script>
-        $('#btn-submit').click(function (e){
+        $('#btn-submit').click(function (e) {
             e.preventDefault();
-
             $('#overlay').show();
-            setTimeout(function (){
+            setTimeout(function () {
                 $.ajax({
-                    type:'POST',
-                    cache:false,
-                    url:"{{route('user.store')}}",
-                    data:{
-                        "_token":'{{csrf_token()}}',
+                    type: 'POST',
+                    cache: false,
+                    url: "{{route('user.store')}}",
+                    data: {
+                        "_token": '{{csrf_token()}}',
                         "lastName": $('#lastName').val(),
-                        "firstName":$('#firstName').val(),
-                        "userName":$('#userName').val(),
-                        "email":$('#email').val(),
-                        "password":$('#password').val(),
-                        "password_confirmation":$("#password_confirmation").val(),
-                        "arrayRole":$('#arrayRole').val()
+                        "firstName": $('#firstName').val(),
+                        "userName": $('#userName').val(),
+                        "email": $('#email').val(),
+                        "password": $('#password').val(),
+                        "password_confirmation": $("#password_confirmation").val(),
+                        "arrayRole": $('#arrayRole').val()
                     },
 
 
-                    success: function (data){
+                    success: function (data) {
                         console.log(data.user);
-                        var tools = '<td class="text-right">'+
-                            '<div class="dropdown show d-inline-block widget-dropdown">'+
-                            '<a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true" '+
-                            'aria-expanded="false" data-display="static"></a>'+
-                            '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order5">'+
-                            '<li class="dropdown-item">'+
-                            '<a href="'+'user'+'/show/'+data.user.id+'">'+'View'+'</a>'+
-                            '</li>'+
-                            '<li class="dropdown-item">'+
-                            '<a href="'+'user'+'/destroy/'+data.user.id+'">'+'Remove'+'</a>'+
-                            '</li>'+
-                            '</ul>'+
-                            '</div>'+
+                        var tools = '<td class="text-right">' +
+                            '<div class="dropdown show d-inline-block widget-dropdown">' +
+                            '<a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true" ' +
+                            'aria-expanded="false" data-display="static"></a>' +
+                            '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order5">' +
+                            '<li class="dropdown-item">' +
+                            '<a href="' + 'user' + '/show/' + data.user.id + '">' + 'View' + '</a>' +
+                            '</li>' +
+                            '<li class="dropdown-item">' +
+                            '<a href="' + 'user' + '/destroy/' + data.user.id + '">' + 'Remove' + '</a>' +
+                            '</li>' +
+                            '</ul>' +
+                            '</div>' +
                             '</td>';
 
-                        var rowName =  '<td>'+'<a href="/user/'+data.user.id+'">' + data.user.userName +'</a>' +'</td>'
-                        var $row = $('<tr>'+
-                            '<td>'+data.user.id+'</td>'+
-                            '<td>'+data.user.lastName+'</td>'+
-                            '<td>'+data.user.firstName+'</td>'+
-                            rowName+
-                            '<td>'+data.user.email+'</td>'+
-                            '<td>'+'</td>'+
-                            tools+
+                        var rowName = '<td>' + '<a href="/user/' + data.user.id + '">' + data.user.userName + '</a>' + '</td>'
+                        var $row = $('<tr>' +
+                            '<td>' + data.user.id + '</td>' +
+                            '<td>' + data.user.lastName + '</td>' +
+                            '<td>' + data.user.firstName + '</td>' +
+                            rowName +
+                            '<td>' + data.user.email + '</td>' +
+                            '<td>' + '</td>' +
+                            tools +
                             '</tr>');
-                        var rowRoles ='<span>No active</span>';
-                        if( data.user.roles.length !==0) {
-                            var array=data.user.roles;
-                            array.forEach(function (item){
-                                rowRoles = '<span class="mb-2 mr-2 badge badge-pill badge-info">'+item.name+'</span>'+'  ';
+                        var rowRoles = '<span>No active</span>';
+                        if (data.user.roles.length !== 0) {
+                            var array = data.user.roles;
+                            array.forEach(function (item) {
+                                rowRoles = '<span class="mb-2 mr-2 badge badge-pill badge-info">' + item.name + '</span>' + '  ';
                                 $row.find("td").eq(5).append(rowRoles);
                             })
-                        }else{
+                        } else {
 
                             $row.find("td").eq(5).append(rowRoles);
                         }
@@ -151,14 +148,34 @@
 
                     },
 
-                    error:function (data){
+                    error: function (data) {
                         $('#overlay').hide();
-                        console.log('error');
-                       // console.log(data.responseJSON.errors.password);
+                        var nameKey = [];
+                        var nameValue = [];
+                        //  console.log();
+                        var dataError = data.responseJSON.errors;
+                        $.map(dataError, function (value, key) {
+                            nameKey.push(key);
+                            nameValue.push(value);
+                        });
+                        $.each(nameKey, function (index, value) {
+
+                            $('input[id=' + value + ']').addClass('is-invalid');
+
+                            $('div.invalid-feedback.' + nameKey[index]).append(nameValue[index]);
+                            //console.log(htmlError);
+                        })
+                        $.each(nameKey, function (index, value) {
+                            setTimeout(function () {
+                                $('input[id=' + value + ']').removeClass('is-invalid');
+
+                            }, 3000)
+                        })
+
                     }
 
                 });
-            },1000);
+            }, 1000);
 
         });
     </script>
