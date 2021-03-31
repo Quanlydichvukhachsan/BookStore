@@ -86,65 +86,80 @@
     <script>
         $('#btn-submit').click(function (e){
             e.preventDefault();
-            $.ajax({
-                type:'POST',
-                cache:false,
-                url:"{{route('user.store')}}",
-                data:{
-                    "_token":'{{csrf_token()}}',
-                    "lastName": $('#lastName').val(),
-                    "firstName":$('#firstName').val(),
-                    "userName":$('#userName').val(),
-                    "email":$('#email').val(),
-                    "password":$('#password').val(),
-                    "password_confirmation":$("#password_confirmation").val(),
-                    "arrayRole":$('#arrayRole').val()
-                },
-                success:function (data){
-                    console.log(data.user);
-                    var tools = '<td class="text-right">'+
-                        '<div class="dropdown show d-inline-block widget-dropdown">'+
-                        '<a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true" '+
-                    'aria-expanded="false" data-display="static"></a>'+
-                    '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order5">'+
-                        '<li class="dropdown-item">'+
+
+            $('#overlay').show();
+            setTimeout(function (){
+                $.ajax({
+                    type:'POST',
+                    cache:false,
+                    url:"{{route('user.store')}}",
+                    data:{
+                        "_token":'{{csrf_token()}}',
+                        "lastName": $('#lastName').val(),
+                        "firstName":$('#firstName').val(),
+                        "userName":$('#userName').val(),
+                        "email":$('#email').val(),
+                        "password":$('#password').val(),
+                        "password_confirmation":$("#password_confirmation").val(),
+                        "arrayRole":$('#arrayRole').val()
+                    },
+
+
+                    success: function (data){
+                        console.log(data.user);
+                        var tools = '<td class="text-right">'+
+                            '<div class="dropdown show d-inline-block widget-dropdown">'+
+                            '<a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true" '+
+                            'aria-expanded="false" data-display="static"></a>'+
+                            '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order5">'+
+                            '<li class="dropdown-item">'+
                             '<a href="'+'user'+'/show/'+data.user.id+'">'+'View'+'</a>'+
-                        '</li>'+
-                        '<li class="dropdown-item">'+
+                            '</li>'+
+                            '<li class="dropdown-item">'+
                             '<a href="'+'user'+'/destroy/'+data.user.id+'">'+'Remove'+'</a>'+
-                        '</li>'+
-                    '</ul>'+
-                '</div>'+
-                '</td>';
+                            '</li>'+
+                            '</ul>'+
+                            '</div>'+
+                            '</td>';
 
-                    var rowName =  '<td>'+'<a href="/user/'+data.user.id+'">' + data.user.userName +'</a>' +'</td>'
-                    var $row = $('<tr>'+
-                        '<td>'+data.user.id+'</td>'+
-                        '<td>'+data.user.lastName+'</td>'+
-                        '<td>'+data.user.firstName+'</td>'+
-                        rowName+
-                        '<td>'+data.user.email+'</td>'+
-                        '<td>'+'</td>'+
-                        tools+
-                        '</tr>');
-                    var rowRoles ='<span>No active</span>';
-                    if( data.user.roles.length !==0) {
-                        var array=data.user.roles;
-                        array.forEach(function (item){
-                            rowRoles = '<span class="mb-2 mr-2 badge badge-pill badge-info">'+item.name+'</span>'+'  ';
+                        var rowName =  '<td>'+'<a href="/user/'+data.user.id+'">' + data.user.userName +'</a>' +'</td>'
+                        var $row = $('<tr>'+
+                            '<td>'+data.user.id+'</td>'+
+                            '<td>'+data.user.lastName+'</td>'+
+                            '<td>'+data.user.firstName+'</td>'+
+                            rowName+
+                            '<td>'+data.user.email+'</td>'+
+                            '<td>'+'</td>'+
+                            tools+
+                            '</tr>');
+                        var rowRoles ='<span>No active</span>';
+                        if( data.user.roles.length !==0) {
+                            var array=data.user.roles;
+                            array.forEach(function (item){
+                                rowRoles = '<span class="mb-2 mr-2 badge badge-pill badge-info">'+item.name+'</span>'+'  ';
+                                $row.find("td").eq(5).append(rowRoles);
+                            })
+                        }else{
+
                             $row.find("td").eq(5).append(rowRoles);
-                        })
-                    }else{
+                        }
+                        $('table> tbody:last').append($row);
+                        $('.alert-highlighted').show();
+                        $('#overlay').hide();
+                        $('#exampleModalForm').modal('hide');
+                        $('.alert-highlighted').fadeOut(3000);
 
-                        $row.find("td").eq(5).append(rowRoles);
+                    },
+
+                    error:function (data){
+                        $('#overlay').hide();
+                        console.log('error');
+                       // console.log(data.responseJSON.errors.password);
                     }
-                    $('table> tbody:last').append($row);
-                },
-                error:function (data){
-                    console.log('error');
-                    console.log(data);
-                },
-            });
+
+                });
+            },1000);
+
         });
     </script>
 @endsection

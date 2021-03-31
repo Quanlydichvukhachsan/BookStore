@@ -53,7 +53,9 @@ class UserController extends Controller
     public function store( CreateUserRequest $request)
     {
          $user = $this->userContract->create($request);
-        return response()->json(['success'=>'Added new records.','user'=>$user]);
+
+
+       return response()->json(['success'=>'Added new records.','user'=>$user]);
     }
 
     /**

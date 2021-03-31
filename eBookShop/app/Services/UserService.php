@@ -2,6 +2,7 @@
 use App\Models\Photo;
 use App\Models\User;
 use App\Contracts\UserContract;
+
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -33,6 +34,7 @@ class UserService implements UserContract{
         ]);
 
         $user->assignRole($request['arrayRole']);
+
            return $user;
     }
 

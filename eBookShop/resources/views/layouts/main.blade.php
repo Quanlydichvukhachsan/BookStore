@@ -37,6 +37,13 @@
          ——— HEADER
          =====================================
        -->
+
+        <div aria-live="polite" aria-atomic="true" style="position: relative;">
+            <div class="alert alert-success alert-highlighted" style="position: absolute; top: 0; right: 0; display: none;" data-delay="5000">
+                        <i class="mdi mdi-chevron-down-circle"></i> successfully added a new user!
+            </div>
+        </div>
+
 @include('layouts.header')
         <div class="content-wrapper">
             <div class="content">
@@ -50,6 +57,7 @@
               @include('layouts.overview-order')
 
                             @else
+
                     <div class="breadcrumb-wrapper">
                            @yield('name')
                         <nav aria-label="breadcrumb">
@@ -71,6 +79,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
+
                             @yield('content')
                 @endif
 

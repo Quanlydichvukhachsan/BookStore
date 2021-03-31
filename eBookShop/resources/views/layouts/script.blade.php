@@ -24,5 +24,23 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
+
+    });
+
+    $(document).ready(function(){
+
+        // Create overlay and append to body:
+        $('<div id="overlay"/>').css({
+            position: 'fixed',
+            display:'none',
+            top: 0,
+            left: 0,
+            color:'#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity:0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        }).appendTo('#exampleModalForm');
+
     });
 </script>
