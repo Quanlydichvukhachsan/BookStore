@@ -12,7 +12,7 @@
 <script src="assets/plugins/data-tables/datatables.bootstrap4.min.js"></script>
 <script src="assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
 <script src="assets/plugins/select2/js/select2.full.min.js"></script>
-
+<script src="assets/plugins/treeview/gijgo.min.js"></script>
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({

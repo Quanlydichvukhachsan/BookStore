@@ -15,7 +15,8 @@
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
                 <h2>Basic Data Table</h2>
 
-                <button class="btn btn-outline-primary" type="submit" data-toggle="modal" data-target ="#exampleModalForm">
+                <button class="btn btn-outline-primary" type="button" data-toggle="modal"
+                        data-target="#exampleModalForm">
                     <i class=" mdi mdi-plus-circle"></i> Create User
 
                 </button>
@@ -43,7 +44,7 @@
                                 <td>{{$users->id}}</td>
                                 <td> {{$users->lastName }}</td>
                                 <td> {{$users->firstName }} </td>
-                                <td>  <a href="{{route('user.show',$users->id)}}"> {{$users->userName}}</a></td>
+                                <td><a href="{{route('user.show',$users->id)}}"> {{$users->userName}}</a></td>
                                 <td>{{$users->email}}</td>
 
                                 @if(count($users->roles) ==0)
@@ -57,14 +58,20 @@
                                 @endif
                                 <td class="text-right">
                                     <div class="dropdown show d-inline-block widget-dropdown">
-                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
+                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
+                                           id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
                                            aria-expanded="false" data-display="static"></a>
-                                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order5">
+                                        <ul class="dropdown-menu dropdown-menu-right"
+                                            aria-labelledby="dropdown-recent-order5">
                                             <li class="dropdown-item">
                                                 <a href="{{route('user.show',$users->id)}}">View</a>
                                             </li>
                                             <li class="dropdown-item">
                                                 <a href="{{route('user.destroy',$users->id)}}">Remove</a>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a data-value="{{$users->id}}" id='editRole-{{$users->id}}' data-toggle="modal" data-target="#exampleModal">
+                                                    Assign access</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -73,7 +80,32 @@
                         @endforeach
                         </tbody>
                     </table>
+
+
+
                     @include('admin.user.create',['arrRoles'=>$arrRole])
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <div id="tree"></div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary btn-pill">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -81,6 +113,7 @@
 
 @endsection
 @section('script')
+    <script src="error-handler/exception.js"></script>
     <script>
         $('#btn-submit').click(function (e) {
             e.preventDefault();
@@ -101,7 +134,6 @@
                         "arrayRole": $('#arrayRole').val()
                     },
 
-
                     success: function (data) {
                         console.log(data.user);
                         var tools = '<td class="text-right">' +
@@ -114,6 +146,9 @@
                             '</li>' +
                             '<li class="dropdown-item">' +
                             '<a href="' + 'user' + '/destroy/' + data.user.id + '">' + 'Remove' + '</a>' +
+                            '</li>' +
+                            '<li class="dropdown-item">' +
+                            '<a href="' + 'user' + '/destroy/' + data.user.id + '">' + 'Assign access' + '</a>' +
                             '</li>' +
                             '</ul>' +
                             '</div>' +
@@ -144,40 +179,34 @@
                         $('.alert-highlighted').show();
                         $('#overlay').hide();
                         $('#exampleModalForm').modal('hide');
-                        $('.alert-highlighted').fadeOut(3000);
+                        $('.alert-highlighted').fadeOut(5000);
 
                     },
-
                     error: function (data) {
-                        $('#overlay').hide();
-                        var nameKey = [];
-                        var nameValue = [];
-                        //  console.log();
-                        var dataError = data.responseJSON.errors;
-                        $.map(dataError, function (value, key) {
-                            nameKey.push(key);
-                            nameValue.push(value);
-                        });
-                        $.each(nameKey, function (index, value) {
-
-                            $('input[id=' + value + ']').addClass('is-invalid');
-
-                            $('div.invalid-feedback.' + nameKey[index]).append(nameValue[index]);
-                            //console.log(htmlError);
-                        })
-                        $.each(nameKey, function (index, value) {
-                            setTimeout(function () {
-                                $('input[id=' + value + ']').removeClass('is-invalid');
-
-                            }, 3000)
-                        })
-
+                        $.fn.handlerError(data);
                     }
-
                 });
-            }, 1000);
-
+            }, 500);
         });
+
+            $('#editRole-2').click(function (e){
+                e.preventDefault();
+                var idUser= $('#editRole-2').data('value-abc');
+                console.log(idUser);
+                var tree=
+                    $('#tree').tree({
+                        //  idUser:idUser,
+                        primaryKey: 'id',
+                        uiLibrary: 'bootstrap4',
+                        dataSource: '/user/' + idUser + '/role',
+                        checkboxes: true
+                    });
+
+                console.log(tree);
+
+            });
+
+
     </script>
 @endsection
 
