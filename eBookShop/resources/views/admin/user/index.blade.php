@@ -70,8 +70,9 @@
                                                 <a href="{{route('user.destroy',$users->id)}}">Remove</a>
                                             </li>
                                             <li class="dropdown-item">
-                                                <a data-value="{{$users->id}}" id='editRole-{{$users->id}}' data-toggle="modal" data-target="#exampleModal">
-                                                    Assign access</a>
+                                                <a type="button" data-value="{{$users->id}}" onclick="getIdUser(this)"
+                                                   id='editRole' data-toggle="modal" data-target="#exampleModal">
+                                                    role </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -82,9 +83,9 @@
                     </table>
 
 
-
                     @include('admin.user.create',['arrRoles'=>$arrRole])
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -98,7 +99,8 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close
+                                    </button>
                                     <button type="button" class="btn btn-primary btn-pill">Save Changes</button>
                                 </div>
                             </div>
@@ -189,22 +191,23 @@
             }, 500);
         });
 
-            $('#editRole-2').click(function (e){
-                e.preventDefault();
-                var idUser= $('#editRole-2').data('value-abc');
-                console.log(idUser);
-                var tree=
-                    $('#tree').tree({
-                        //  idUser:idUser,
-                        primaryKey: 'id',
-                        uiLibrary: 'bootstrap4',
-                        dataSource: '/user/' + idUser + '/role',
-                        checkboxes: true
-                    });
-
-                console.log(tree);
-
+        function getIdUser(item) {
+            // e.preventDefault();
+            var id = item.getAttribute("data-value");
+            console.log(id);
+            var tree = $('#tree').tree({
+                //  idUser:idUser,
+                primaryKey: 'id',
+                uiLibrary: 'bootstrap4',
+                dataSource: '/user/' + id + '/role',
+                checkboxes: true
             });
+
+            console.log(tree);
+        }
+
+
+        //     });
 
 
     </script>

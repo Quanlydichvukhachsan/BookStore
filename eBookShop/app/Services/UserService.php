@@ -4,15 +4,17 @@ use App\Models\Photo;
 use App\Models\User;
 use App\Contracts\UserContract;
 use App\viewModels\TreeModels;
-use App\viewModels\TextModels;
+use App\viewModels\childModels;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserService implements UserContract
 {
 
     public function getAll()
     {
+        //Permission::create(['name' => 'update']);
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
@@ -109,36 +111,60 @@ class UserService implements UserContract
 
     public function editRole($id)
     {
-         $user = User::findOrFail($id);
-          $data =  $this->showAccess();
-            return $data;
-       /* $role = Role::all();
-        $arrayIdRole = array();
-        $IdRole = $user->roles;
-        foreach ($IdRole as $idRoles) {
-            array_push($arrayIdRole, $idRoles->id);
-        }
-        $result = array('user' => $user, 'arrayIdRole' => $arrayIdRole,'role'=>$role);
-        return $result;*/
+        $user = User::findOrFail($id);
+        $data = $this->showAccess($user);
+        return $data;
     }
-    private function showAccess()
+
+    private function showAccess(User $user)
     {
         $arrayJson = array();
         $role = Role::all();
-        foreach ($role as $roles) {
-            $name = $roles->name;
-            $array = $roles->getPermissionNames();
-            $treeModels = new TreeModels();
-            $treeModels->setText($name);
-            foreach ($array as $namePer) {
-                $text = new TextModels();
-                $text->setText($namePer);
-                $treeModels->setChildren($text);
+        if (count($role) > 0) {
+            foreach ($role as $roles) {
+                $name = $roles->name;
+                $array = $roles->getPermissionNames();
+                $treeModels = new TreeModels();
+                $checked = $this->checkRoleByUserId($user, $roles);
+                $treeModels->setChecked($checked);
+                $treeModels->setText($name);
+                if (count($array) > 0) {
+                    foreach ($array as $namePer) {
+                        $child = new childModels();
+                        $checked = false;
+                        if ($user->hasRole($roles) && $user->hasDirectPermission($namePer)) {
+                            $checked = $this->checkPermissionByUser($user, $namePer);
+                        } else {
+                            $treeModels->setChecked($checked);
+                        }
+                        $child->setChecked($checked);
+                        $child->setText($namePer);
+                        $treeModels->setChildren($child);
+                    }
+                }
+
+                array_push($arrayJson, $treeModels);
             }
-            array_push($arrayJson, $treeModels);
         }
-     //   collect($arrayJson)->toJson();
         return $arrayJson;
+    }
+
+    private function checkPermissionByUser(User $user, $permission): bool
+    {
+        $check = false;
+        if ($user->hasDirectPermission($permission)) {
+            $check = true;
+        }
+        return $check;
+    }
+
+    private function checkRoleByUserId(User $user, $role): bool
+    {
+        $check = false;
+        if ($user->hasRole($role)) {
+            $check = true;
+        }
+        return $check;
     }
 
     public function edit($id)

@@ -4,9 +4,10 @@
 namespace App\viewModels;
 
 
-class TextModels
+class childModels
 {
     public $text;
+    public $checked;
 
     function setText($text)
     {
@@ -16,5 +17,15 @@ class TextModels
     function getText()
     {
         return $this->text;
+    }
+
+    function setChecked($checked)
+    {
+        $this->checked = $checked;
+    }
+
+    function getChecked()
+    {
+        return $this->checked;
     }
 }
