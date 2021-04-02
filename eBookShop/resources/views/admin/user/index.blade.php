@@ -70,7 +70,8 @@
                                                 <a href="{{route('user.destroy',$users->id)}}">Remove</a>
                                             </li>
                                             <li class="dropdown-item">
-                                                <a type="button" data-value="{{$users->id}}" onclick="getIdUser(this)"
+                                                <a type="button" style="cursor:pointer" data-value="{{$users->id}}"
+                                                   onclick="getIdUser(this)"
                                                    id='editRole' data-toggle="modal" data-target="#exampleModal">
                                                     role </a>
                                             </li>
@@ -89,7 +90,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Role permissions</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -101,7 +102,9 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-pill">Save Changes</button>
+                                    <button type="submit" id="role-submit" class="btn btn-primary btn-pill">Save
+                                        Changes
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -117,6 +120,7 @@
 @section('script')
     <script src="error-handler/exception.js"></script>
     <script>
+
         $('#btn-submit').click(function (e) {
             e.preventDefault();
             $('#overlay').show();
@@ -189,25 +193,47 @@
                     }
                 });
             }, 500);
+
         });
+        let tree;
+        let id;
 
         function getIdUser(item) {
-            // e.preventDefault();
-            var id = item.getAttribute("data-value");
+
+            id = item.getAttribute("data-value");
             console.log(id);
-            var tree = $('#tree').tree({
+            tree = $('#tree').tree({
                 //  idUser:idUser,
-                primaryKey: 'id',
+                primaryKey: 'text',
                 uiLibrary: 'bootstrap4',
                 dataSource: '/user/' + id + '/role',
                 checkboxes: true
             });
-
             console.log(tree);
         }
 
+        $('#role-submit').click(function () {
 
-        //     });
+           var checkedText = tree.getCheckedNodes();
+            $.ajax({
+                type: 'POST',
+                catch: false,
+                url: 'user/' + id + '/addRole',
+
+                data: {
+                    "_token": '{{csrf_token()}}',
+                    'data': checkedText
+
+                },
+               success:function(data){
+                      console.log(data);
+               },
+               error:function (error){
+                   console.log(error);
+               }
+            })
+
+        })
 
 
     </script>

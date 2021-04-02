@@ -100,19 +100,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
         return redirect()->route('user.index');
     }
 
     public function editRole($id)
     {
         $responseText = $this->userContract->editRole($id);
-       // dd($data);
-         //, compact('role', 'arrayIdRole', 'user')
         return $responseText;
-        // return response()->json(['responseText'=>$responseText]);
     }
-
     /**
      * add role user
      *
@@ -122,8 +117,7 @@ class UserController extends Controller
      */
     public function addRole(Request $request, $id)
     {
-
-
-        return redirect()->route('user.index');
+        $result = $this->userContract->addRole($request,$id);
+        return $result;
     }
 }

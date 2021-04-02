@@ -68,7 +68,7 @@ Route::middleware(['auth','role:administrator'])->group(function () {
     Route::resource('permission',PermissionController::class);
 //Add-Role-user
  Route::get('/user/{user}/role',[UserController::class, 'editRole'])->name('user.role');
- Route::put('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
+ Route::post('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
 
  //discount
  Route::resource('discount',DiscountController::class);

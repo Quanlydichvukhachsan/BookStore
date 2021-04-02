@@ -88,25 +88,9 @@ class UserService implements UserContract
     {
         $user = User::findOrFail($id);
         $input = $request->all();
-        $arrayNameRole = array();
-        $originRole = Role::all();
+        return $input;
 
-        foreach ($originRole as $nameRole) {
-            array_push($arrayNameRole, $nameRole->name);
-        }
 
-        if (array_key_exists('arrayIdRole', $input)) {
-            foreach ($originRole as $role) {
-                if (in_array($role, $input['arrayIdRole']) == false) {
-
-                    $user->removeRole($role);
-                }
-            }
-            $user->assignRole($input['arrayIdRole']);
-        } else {
-            $user->syncRoles([]);
-        }
-        $request->session()->flash('assignRole-user', 'Assign role user success!');
     }
 
     public function editRole($id)
