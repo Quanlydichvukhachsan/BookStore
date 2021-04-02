@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Contracts\UserContract;
 use App\viewModels\TreeModels;
 use App\viewModels\childModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -15,6 +16,8 @@ class UserService implements UserContract
     public function getAll()
     {
         //Permission::create(['name' => 'update']);
+      //  $user = User::findOrFail(1);
+     //   $user->assignRole('administrator');
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
@@ -86,11 +89,44 @@ class UserService implements UserContract
 
     public function addRole($request, $id)
     {
-        $user = User::findOrFail($id);
-        $input = $request->all();
-        return $input;
+        $dataChecked = $request->all();
+       $user = User::findOrFail($id);
+        $tempPermissions = [];
+        $permissions = DB::table('permissions')->pluck('name');
 
+       if (array_key_exists('data',$dataChecked)) {
+            //return contains roles
+            foreach ($permissions as $permission) {
+                if (in_array($permission, $dataChecked) !== false) {
+                    array_push($tempPermissions, $permission);
+                   $index = array_search($permission, $dataChecked);
+                   unset($dataChecked[$index]);
+                }
+            }
+            if (count($dataChecked) === 0) {
+                $this->removeAllRolePermissionByUser($user);
 
+            } else {
+                $user->syncRoles($dataChecked);
+                $havePermissions = $user->getAllPermissions();
+                foreach ($havePermissions as $permission) {
+                    if (in_array($permission, $tempPermissions) === false) {
+                        $user->revokePermissionTo($permission);
+                    }
+                }
+                $user->givePermissionTo($tempPermissions);
+            }
+        } else {
+            $this->removeAllRolePermissionByUser($user);
+        }
+
+        return "Success assign access!";
+    }
+
+    private function removeAllRolePermissionByUser(User $user)
+    {
+        $user->syncRoles([]);
+        $user->syncPermissions([]);
     }
 
     public function editRole($id)

@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::middleware(['auth','role:administrator'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
 
 

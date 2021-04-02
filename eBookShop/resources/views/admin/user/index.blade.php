@@ -197,6 +197,15 @@
         });
         let tree;
         let id;
+        let reportRecipientsDuplicate =[];
+        function  checkDuplicate(reportRecipient){
+                $.each(reportRecipient,function (i,el){
+                      if($.inArray(el,reportRecipientsDuplicate)===-1){
+                              reportRecipientsDuplicate.push(el);
+                      }
+
+                })
+        }
 
         function getIdUser(item) {
 
@@ -209,12 +218,16 @@
                 dataSource: '/user/' + id + '/role',
                 checkboxes: true
             });
+
             console.log(tree);
         }
+
 
         $('#role-submit').click(function () {
 
            var checkedText = tree.getCheckedNodes();
+            checkDuplicate(checkedText);
+            console.log(reportRecipientsDuplicate);
             $.ajax({
                 type: 'POST',
                 catch: false,
@@ -222,11 +235,11 @@
 
                 data: {
                     "_token": '{{csrf_token()}}',
-                    'data': checkedText
+                    'data': reportRecipientsDuplicate
 
                 },
                success:function(data){
-                      console.log(data);
+                      console.log(data.success);
                },
                error:function (error){
                    console.log(error);

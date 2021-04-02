@@ -108,6 +108,7 @@ class UserController extends Controller
         $responseText = $this->userContract->editRole($id);
         return $responseText;
     }
+
     /**
      * add role user
      *
@@ -117,7 +118,7 @@ class UserController extends Controller
      */
     public function addRole(Request $request, $id)
     {
-        $result = $this->userContract->addRole($request,$id);
-        return $result;
+        $result = $this->userContract->addRole($request, $id);
+        return response()->json(['success' => $result]);
     }
 }
