@@ -212,11 +212,10 @@
             id = item.getAttribute("data-value");
             console.log(id);
             tree = $('#tree').tree({
-                //  idUser:idUser,
                 primaryKey: 'text',
                 uiLibrary: 'bootstrap4',
                 dataSource: '/user/' + id + '/role',
-                checkboxes: true
+                checkboxes: true,
             });
 
             console.log(tree);
@@ -226,6 +225,7 @@
         $('#role-submit').click(function () {
 
            var checkedText = tree.getCheckedNodes();
+             console.log(tree.destroy());
             checkDuplicate(checkedText);
             console.log(reportRecipientsDuplicate);
             $.ajax({

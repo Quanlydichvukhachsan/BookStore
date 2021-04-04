@@ -15,9 +15,10 @@ class UserService implements UserContract
 
     public function getAll()
     {
-        //Permission::create(['name' => 'update']);
+       // Permission::create(['name' => 'edit']);
       //  $user = User::findOrFail(1);
      //   $user->assignRole('administrator');
+  //  Role::create(['name' => 'staff']);
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
@@ -90,24 +91,29 @@ class UserService implements UserContract
     public function addRole($request, $id)
     {
         $dataChecked = $request->all();
+        $checked =[];
+
+       // return $checked;
        $user = User::findOrFail($id);
         $tempPermissions = [];
+
         $permissions = DB::table('permissions')->pluck('name');
 
        if (array_key_exists('data',$dataChecked)) {
-            //return contains roles
+        $checked =$dataChecked['data'];
+      //  return $checked;
             foreach ($permissions as $permission) {
-                if (in_array($permission, $dataChecked) !== false) {
+                if (in_array($permission, $checked) !== false) {
                     array_push($tempPermissions, $permission);
-                   $index = array_search($permission, $dataChecked);
-                   unset($dataChecked[$index]);
+                   $index = array_search($permission, $checked);
+                   unset($checked[$index]);
                 }
             }
-            if (count($dataChecked) === 0) {
+            if (count($checked) === 0) {
                 $this->removeAllRolePermissionByUser($user);
 
             } else {
-                $user->syncRoles($dataChecked);
+                $user->syncRoles($checked);
                 $havePermissions = $user->getAllPermissions();
                 foreach ($havePermissions as $permission) {
                     if (in_array($permission, $tempPermissions) === false) {
@@ -132,7 +138,7 @@ class UserService implements UserContract
     public function editRole($id)
     {
         $user = User::findOrFail($id);
-        $data = $this->showAccess($user);
+            $data = $this->showAccess($user);
         return $data;
     }
 
@@ -154,7 +160,9 @@ class UserService implements UserContract
                         $checked = false;
                         if ($user->hasRole($roles) && $user->hasDirectPermission($namePer)) {
                             $checked = $this->checkPermissionByUser($user, $namePer);
-                        } else {
+                        }
+                         else {
+                             //$checked =true;
                             $treeModels->setChecked($checked);
                         }
                         $child->setChecked($checked);

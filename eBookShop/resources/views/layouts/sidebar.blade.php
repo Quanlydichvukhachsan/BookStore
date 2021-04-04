@@ -696,20 +696,12 @@
                     <ul  class="collapse"  id="pages"
                          data-parent="#sidebar-menu">
                         <div class="sub-menu">
-
-
-
                             <li >
                                 <a class="sidenav-item-link" href="user-profile.html">
                                     <span class="nav-text">User Profile</span>
 
                                 </a>
                             </li>
-
-
-
-
-
                             <li  class="has-sub" >
                                 <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#authentication"
                                    aria-expanded="false" aria-controls="authentication">
@@ -918,15 +910,9 @@
                                 </a>
                             </li>
 
-
-
-
                         </div>
                     </ul>
                 </li>
-
-
-
             </ul>
 
         </div>
