@@ -15,30 +15,51 @@ class CategoryService implements CategoryContract{
     public function getAll()
     {
         $Categorys = Category::where('parent_id', '=', 0)->get();
-        $tree='<ul id="browser" class="filetree"><li class="tree-view"></li>';
+//        dd($Categorys[1]->childs);
+        $tree='<ul class="collapse"  id="category"  data-parent="#sidebar-menu">
+               <div class="sub-menu">';
         foreach ($Categorys as $Category) {
-            $tree .='<li class="tree-view closed"<a class="tree-name">'.$Category->name.'</a>';
+           $name=  str_replace(' ', '', $Category->name);
+            $tree .='<li class="has-sub"> <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#'.$name.'"
+ aria-expanded="true" aria-controls="'.$name.'">
+<span class="nav-text">'.$Category->name.'</span>';
             if(count($Category->childs)) {
+               // $tree .="<b class='caret'></b>";
+                $tree.="<b class='caret'></b></a>";
                 $tree .=$this->childView($Category);
+                $tree .="</li>";
+
+
             }
+            else
+            {
+                $tree.="</a></li>";
+            }
+
+
+
+
         }
-        $tree .='<ul>';
+        $tree .='</div></ul>';
         return $tree;
     }
     public function childview($Category){
-        $html ='<ul>';
+        $cate = Category::Where('id','=',$Category->childs[0]->parent_id)->first();
+        $name=  str_replace(' ', '', $cate->name);
+        $html ='<ul  class="collapse"  id="'.$name.'"><div class="sub-menu">';
         foreach ($Category->childs as $arr) {
             if(count($arr->childs)){
-                $html .='<li class="tree-view closed"><a class="tree-name">'.$arr->name.'</a>';
+                $html .='<li>
+                         <a class="sidenav-item-link" href="user-profile.html">
+                            '.$arr->name.'
+                         </a>';
                 $html.= $this->childView($arr);
             }else{
-                $html .='<li class="tree-view"><a class="tree-name">'.$arr->name.'</a>';
+                $html .='<li><a class="sidenav-item-link" href="#">'.$arr->name.'</a>';
                 $html .="</li>";
             }
-
         }
-
-        $html .="</ul>";
+        $html .="</div></ul>";
         return $html;
     }
 

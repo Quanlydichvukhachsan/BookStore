@@ -26,8 +26,6 @@ class CategoryController extends Controller
     public function index()
     {
         $html = $this->CategoryContract->getAll();
-
-
         return view('admin.category.index',compact('html'));
     }
 
@@ -133,8 +131,6 @@ class CategoryController extends Controller
         {
             session()->flash('delete-error','Category exiting in Genres!');
         }
-
-
 
         return redirect()->route('category.index');
     }
