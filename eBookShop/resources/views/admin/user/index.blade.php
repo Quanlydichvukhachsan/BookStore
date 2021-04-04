@@ -72,8 +72,8 @@
                                             <li class="dropdown-item">
                                                 <a type="button" style="cursor:pointer" data-value="{{$users->id}}"
                                                    onclick="getIdUser(this)"
-                                                   id='editRole' data-toggle="modal" data-target="#exampleModal">
-                                                    role </a>
+                                                   id="editRole" data-toggle="modal" data-target="#exampleModal">
+                                                    Assign access </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -86,12 +86,14 @@
 
                     @include('admin.user.create',['arrRoles'=>$arrRole])
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+                         data-keyboard="false">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Role permissions</h5>
-                                    <button type="button" id="btn-hidden" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" id="btn-hidden" class="close" data-dismiss="modal"
+                                            aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -100,7 +102,8 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" id="btn-close" class="btn btn-secondary btn-pill" data-dismiss="modal">Close
+                                    <button type="button" id="btn-close" class="btn btn-secondary btn-pill"
+                                            data-dismiss="modal">Close
                                     </button>
                                     <button type="submit" id="role-submit" class="btn btn-primary btn-pill">Save
                                         Changes
@@ -122,17 +125,17 @@
 
     <script>
 
-          $overlay =  $('<div id="overlay"/>').css({
-                position: 'fixed',
-                display:'none',
-                top: 0,
-                left: 0,
-                color:'#adbcbf',
-                width: '100%',
-                height: $(window).height() + 'px',
-                opacity:0.4,
-                background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
-            })
+        $overlay = $('<div id="overlay"/>').css({
+            position: 'fixed',
+            display: 'none',
+            top: 0,
+            left: 0,
+            color: '#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity: 0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        })
 
         $('#btn-submit').click(function (e) {
             e.preventDefault();
@@ -155,7 +158,6 @@
                     },
 
                     success: function (data) {
-                        console.log(data.user);
                         var tools = '<td class="text-right">' +
                             '<div class="dropdown show d-inline-block widget-dropdown">' +
                             '<a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true" ' +
@@ -168,7 +170,8 @@
                             '<a href="' + 'user' + '/destroy/' + data.user.id + '">' + 'Remove' + '</a>' +
                             '</li>' +
                             '<li class="dropdown-item">' +
-                            '<a href="' + 'user' + '/destroy/' + data.user.id + '">' + 'Assign access' + '</a>' +
+                            '<a data-toggle="modal" data-target="#exampleModal" id="editRole" onclick="getIdUser(this)"' +
+                            ' type="button" style="cursor:pointer" data-value=' + '"' + data.user.id + '"' + '>' + 'Assign access' + '</a>' +
                             '</li>' +
                             '</ul>' +
                             '</div>' +
@@ -185,7 +188,7 @@
                             tools +
                             '</tr>');
                         var rowRoles = '<span>No active</span>';
-                        if (data.user.roles.length !== 0) {
+                        if (typeof data.user.roles !== "undefined") {
                             var array = data.user.roles;
                             array.forEach(function (item) {
                                 rowRoles = '<span class="mb-2 mr-2 badge badge-pill badge-info">' + item.name + '</span>' + '  ';
@@ -212,15 +215,18 @@
 
         let tree;
         let id;
-        let reportRecipientsDuplicate = [];
+
 
         function checkDuplicate(reportRecipient) {
+            var reportRecipientsDuplicate = [];
             $.each(reportRecipient, function (i, el) {
                 if ($.inArray(el, reportRecipientsDuplicate) === -1) {
                     reportRecipientsDuplicate.push(el);
                 }
             })
+            return reportRecipientsDuplicate;
         }
+
         function getIdUser(item) {
             id = item.getAttribute("data-value");
             tree = $('#tree').tree({
@@ -228,12 +234,13 @@
                 uiLibrary: 'bootstrap4',
                 dataSource: '/user/' + id + '/role',
                 checkboxes: true,
-                autoLoad:true
+                autoLoad: true
             });
 
             console.log(tree);
             console.log(id);
         }
+
         function getNameRole(tree) {
             var objRole = {};
             var roles = [];
@@ -282,49 +289,49 @@
                     });
                 })
             })
-            checkDuplicate(result);
+            return checkDuplicate(result);
         }
-          $('#btn-hidden').click(function (e){
-              e.preventDefault();
-              tree.destroy();
-          })
-        $('#btn-close').click(function (e){
+
+        $('#btn-hidden').click(function (e) {
             e.preventDefault();
             tree.destroy();
         })
-            $('#role-submit').click(function (e) {
-                e.preventDefault();
+        $('#btn-close').click(function (e) {
+            e.preventDefault();
+            tree.destroy();
+        })
+        $('#role-submit').click(function (e) {
+            e.preventDefault();
+            $overlay.appendTo("#exampleModal");
+            $('#overlay').show();
+            var result = getParentNameByChild(tree);
+            console.log(result);
+            setTimeout(function () {
 
-                $overlay.appendTo("#exampleModal");
-                $('#overlay').show();
+                $.ajax({
+                    type: 'POST',
+                    catch: true,
+                    url: 'user/' + id + '/addRole',
 
-                setTimeout(function (){
-                    getParentNameByChild(tree);
-                    $.ajax({
-                        type: 'POST',
-                        catch: false,
-                        url: 'user/' + id + '/addRole',
-
-                        data: {
-                            "_token": '{{csrf_token()}}',
-                            'data': reportRecipientsDuplicate
-                        },
-                        success: function (data) {
-                            console.log(data.success);
-                            $(".alert-highlighted span").text(data.success);
-                            $('.alert-highlighted').show();
-                            $('#overlay').hide();
-                            $('#exampleModal').modal('hide');
-                            $('.alert-highlighted').fadeOut(5000);
-                            tree.destroy();
-
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                },500)
-            })
+                    data: {
+                        "_token": '{{csrf_token()}}',
+                        'data': result
+                    },
+                    success: function (data) {
+                        console.log(data.success);
+                        $(".alert-highlighted span").text(data.success);
+                        $('.alert-highlighted').show();
+                        $('#overlay').hide();
+                        $('#exampleModal').modal('hide');
+                        $('.alert-highlighted').fadeOut(5000);
+                        tree.destroy();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }, 500)
+        })
 
 
     </script>

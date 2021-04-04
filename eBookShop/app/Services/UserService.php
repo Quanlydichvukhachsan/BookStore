@@ -15,10 +15,8 @@ class UserService implements UserContract
 
     public function getAll()
     {
-       // Permission::create(['name' => 'edit']);
-      //  $user = User::findOrFail(1);
-     //   $user->assignRole('administrator');
-  //  Role::create(['name' => 'staff']);
+        $user = User::findOrFail(156);
+        $user->givePermissionTo('edit');
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
@@ -33,6 +31,7 @@ class UserService implements UserContract
 
     public function create($request)
     {
+
         $user = User::create([
             'firstName' => $request['firstName'],
             'lastName' => $request['lastName'],
@@ -40,7 +39,11 @@ class UserService implements UserContract
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
-        $user->assignRole($request['arrayRole']);
+        if(array_key_exists('arrayRole',$request->all())){
+            $user->assignRole($request['arrayRole']);
+            $permission = Permission::all();
+            $user->syncPermissions($permission);
+        }
         return $user;
     }
 
@@ -92,16 +95,15 @@ class UserService implements UserContract
     {
         $dataChecked = $request->all();
 
-        $checked =[];
+       $checked =[];
        $user = User::findOrFail($id);
         $tempPermissions = [];
-
-        $permissionsArray = DB::table('permissions')->pluck('name');
+        $permissionsArray = DB::table('permissions')->pluck('name')->toArray();
 
        if (array_key_exists('data',$dataChecked)) {
         $checked =$dataChecked['data'];
-            foreach ($checked as $permission) {
-                if (in_array($permission, $permissionsArray) !== false) {
+            foreach ($permissionsArray as $permission) {
+                if (in_array($permission, $checked) !== false) {
                     array_push($tempPermissions, $permission);
                    $index = array_search($permission, $checked);
                    unset($checked[$index]);
@@ -113,12 +115,15 @@ class UserService implements UserContract
             } else {
                 $user->syncRoles($checked);
                 $havePermissions = $user->getAllPermissions();
-                foreach ($havePermissions as $permission) {
-                    if (in_array($permission, $tempPermissions) === false) {
-                        $user->revokePermissionTo($permission);
+                foreach ($havePermissions as $item) {
+                    if (in_array($item, $tempPermissions) === false) {
+                        $user->revokePermissionTo($item);
+                       // $i = array_search($item, $tempPermissions);
+                    //    unset($tempPermissions[$i]);
                     }
                 }
                 $user->givePermissionTo($tempPermissions);
+
             }
         } else {
             $this->removeAllRolePermissionByUser($user);
