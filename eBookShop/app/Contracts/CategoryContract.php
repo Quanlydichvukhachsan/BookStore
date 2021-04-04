@@ -2,7 +2,7 @@
 namespace App\Contracts;
 
 interface CategoryContract{
-    public function getAll();
+    public function getAll($categories, $parent_id);
     public function childview($data);
     public function show($id);
     public function create($request);

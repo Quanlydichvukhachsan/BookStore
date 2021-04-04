@@ -12,13 +12,14 @@ class CategoryService implements CategoryContract{
     }
 
 
-    public function getAll()
+    public function getAll($Categories,$parent_id)
     {
-        $Categorys = Category::where('parent_id', '=', 0)->get();
+
+        $Categories = Category::where('parent_id', '=', $parent_id)->get();
 //        dd($Categorys[1]->childs);
         $tree='<ul class="collapse"  id="category"  data-parent="#sidebar-menu">
                <div class="sub-menu">';
-        foreach ($Categorys as $Category) {
+        foreach ($Categories as $Category) {
            $name=  str_replace(' ', '', $Category->name);
             $tree .='<li class="has-sub"> <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#'.$name.'"
  aria-expanded="true" aria-controls="'.$name.'">
@@ -28,32 +29,34 @@ class CategoryService implements CategoryContract{
                 $tree.="<b class='caret'></b></a>";
                 $tree .=$this->childView($Category);
                 $tree .="</li>";
-
-
             }
             else
             {
                 $tree.="</a></li>";
             }
-
-
-
-
         }
         $tree .='</div></ul>';
         return $tree;
     }
+
     public function childview($Category){
+        $childs =$Category->childs;
         $cate = Category::Where('id','=',$Category->childs[0]->parent_id)->first();
+
         $name=  str_replace(' ', '', $cate->name);
-        $html ='<ul  class="collapse"  id="'.$name.'"><div class="sub-menu">';
-        foreach ($Category->childs as $arr) {
+//        dd($name);
+
+        $html ='<ul  class="collapse" id="'.$name.'">.
+                <div class="sub-menu">';
+
+        foreach ( $childs as $arr) {
             if(count($arr->childs)){
-                $html .='<li>
+          $html .='<li>
                          <a class="sidenav-item-link" href="user-profile.html">
                             '.$arr->name.'
                          </a>';
-                $html.= $this->childView($arr);
+//               $html.= $this->childView($arr);
+                $html.= $this->getAll($arr,$arr->childs[0]->parent_id);
             }else{
                 $html .='<li><a class="sidenav-item-link" href="#">'.$arr->name.'</a>';
                 $html .="</li>";
