@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Models\Genres;
+use App\Contracts\CategoryContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
+
 class CategoryController extends Controller
 {
+    protected $CategoryContract;
+    public function __Construct(CategoryContract $CategoryContract)
+    {
+        $this->CategoryContract = $CategoryContract;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +25,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-       $category = Category::all();
-        return view('admin.category.index',compact('category'));
+        $html = $this->CategoryContract->getAll();
+        return view('admin.category.index',compact('html'));
     }
 
     /**
@@ -124,8 +131,6 @@ class CategoryController extends Controller
         {
             session()->flash('delete-error','Category exiting in Genres!');
         }
-
-
 
         return redirect()->route('category.index');
     }

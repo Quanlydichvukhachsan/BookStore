@@ -12,9 +12,9 @@ class Category extends Model
       'name'
     ];
 
-    public function genres()
+    public function childs()
     {
-        return $this->hasMany('App\Models\Genres');
+        return $this->hasMany('App\Models\Category','parent_id','id');
     }
 
 }
