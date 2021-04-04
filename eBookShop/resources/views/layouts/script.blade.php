@@ -12,7 +12,7 @@
 <script src="assets/plugins/data-tables/datatables.bootstrap4.min.js"></script>
 <script src="assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
 <script src="assets/plugins/select2/js/select2.full.min.js"></script>
-
+<script src="assets/plugins/treeview/gijgo.min.js"></script>
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({
@@ -24,23 +24,6 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
-
-    });
-
-    $(document).ready(function(){
-
-        // Create overlay and append to body:
-        $('<div id="overlay"/>').css({
-            position: 'fixed',
-            display:'none',
-            top: 0,
-            left: 0,
-            color:'#adbcbf',
-            width: '100%',
-            height: $(window).height() + 'px',
-            opacity:0.4,
-            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
-        }).appendTo('#exampleModalForm');
 
     });
 </script>
