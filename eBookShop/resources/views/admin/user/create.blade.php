@@ -14,27 +14,34 @@
                     <div class="form-group">
                         <label for="firstName" class="col-form-label">First Name</label>
                         <input name="firstName" id="firstName" type="text" class="form-control" placeholder="first name" value="">
+                        <div class="invalid-feedback firstName"></div>
+
                     </div>
                     <div class="form-group">
                         <label for="lastName" class="col-form-label">Last Name</label>
                         <input name="lastName" id="lastName" type="text" class="form-control" value="" placeholder="lastname">
+                        <div class="invalid-feedback lastName"></div>
                     </div>
                     <div class="form-group">
-                        <label for="firstName" class="col-form-label">User Name</label>
+                        <label for="userName" class="col-form-label">User Name</label>
                         <input name="userName" id="userName" type="text" class="form-control" placeholder="enter phone number" value="">
+                        <div class="invalid-feedback userName"></div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-form-label">Email</label>
                         <input name="email" id="email" type="text" class="form-control" placeholder="enter address" value="">
+                        <div class="invalid-feedback email"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="col-form-label">Password</label>
                         <input name="password" id="password" type="password" class="form-control" placeholder="password" value="">
+                        <div class="invalid-feedback password"></div>
                     </div>
                     <div class="form-group">
                         <label for="password_confirmation" class="col-form-label">Confirm Password</label>
                         <input name="password_confirmation"  id="password_confirmation" type="password" class="form-control" placeholder="password confirm" value="">
+                        <div class="invalid-feedback password_confirmation"></div>
                     </div>
                     <div class="form-group">
                         <label>Roles</label>
@@ -47,7 +54,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Close</button>
                 <button type="submit" id="btn-submit" class="btn btn-primary btn-pill">Submit</button>
             </div>
         </div>

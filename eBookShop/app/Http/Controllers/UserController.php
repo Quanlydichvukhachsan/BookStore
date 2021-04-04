@@ -1,26 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Contracts\UserContract;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\User;
-use App\Models\Photo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
-    protected  $userContract;
+    protected $userContract;
     use HasRoles;
+
     public function __construct(UserContract $userContract)
-     {
-         $this->middleware('auth');
-         $this->userContract = $userContract;
-     }
+    {
+        $this->middleware('auth');
+        $this->userContract = $userContract;
+    }
 
     /**
      * Display a listing of the resource.
@@ -29,8 +26,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $result =  $this->userContract->getAll();
-         return view('admin.user.index',['user'=>$result['user'],'arrRole'=>$result['arrayRole']]);
+        $result = $this->userContract->getAll();
+        return view('admin.user.index', ['user' => $result['user'], 'arrRole' => $result['arrayRole']]);
 
     }
 
@@ -47,82 +44,81 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store( CreateUserRequest $request)
+    public function store(CreateUserRequest $request)
     {
-         $user = $this->userContract->create($request);
+        $user = $this->userContract->create($request);
 
 
-       return response()->json(['success'=>'Added new records.','user'=>$user]);
+        return response()->json(['success' => 'Added new records.', 'user' => $user]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
 
-        return view('admin.user.show',compact('users'));
+        return view('admin.user.show', compact('users'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
 
-        return view('admin.user.edit',compact('users'));
+        return view('admin.user.edit', compact('users'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request, $id)
     {
 
-         return  redirect()->route('user.index');
+        return redirect()->route('user.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-
         return redirect()->route('user.index');
     }
 
-    public function editRole($id){
-
-
-        return view('admin.user.user_role',compact('role','arrayIdRole','user'));
+    public function editRole($id)
+    {
+        $responseText = $this->userContract->editRole($id);
+        return $responseText;
     }
 
     /**
      * add role user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function addRole( Request $request,$id){
-
-
-           return redirect()->route('user.index');
+    public function addRole(Request $request, $id)
+    {
+        $result = $this->userContract->addRole($request, $id);
+        return response()->json(['success' => $result]);
     }
 }

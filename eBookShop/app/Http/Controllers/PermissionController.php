@@ -120,8 +120,6 @@ class PermissionController extends Controller
             }
         }
 
-
-
         if($checkName === null && $assignRole !== null ||
             $assignRole !== null && $checkName !== null && $checkName->name ===$permission->name){
             $permission->name =$name;

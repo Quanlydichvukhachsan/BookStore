@@ -1,24 +1,31 @@
 <?php namespace App\Services;
+
 use App\Models\Photo;
 use App\Models\User;
 use App\Contracts\UserContract;
-
+use App\viewModels\TreeModels;
+use App\viewModels\childModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-class UserService implements UserContract{
+class UserService implements UserContract
+{
 
     public function getAll()
     {
+        //Permission::create(['name' => 'update']);
+      //  $user = User::findOrFail(1);
+     //   $user->assignRole('administrator');
         $user = User::all();
-        $arrRole =Role::all();
-        $result = array('user'=>$user,'arrayRole'=>$arrRole);
+        $arrRole = Role::all();
+        $result = array('user' => $user, 'arrayRole' => $arrRole);
         return $result;
     }
 
     public function show($id)
     {
-
         $users = User::findOrFail($id);
         return $users;
     }
@@ -32,21 +39,19 @@ class UserService implements UserContract{
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
-
         $user->assignRole($request['arrayRole']);
-
-           return $user;
+        return $user;
     }
 
     public function update($request, $id)
     {
         $user = User::findOrFail($id);
-        $input =  $request->all();
+        $input = $request->all();
 
-        if($file = $request->file('photo_id')){
+        if ($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('images',$name);
-            $photo = Photo::create(['file'=>$name]);
+            $file->move('images', $name);
+            $photo = Photo::create(['file' => $name]);
             $input['photo_id'] = $photo->id;
 
         }
@@ -54,70 +59,132 @@ class UserService implements UserContract{
         $input['password'] = bcrypt($request->password);
         $user->firstName = $request->input('firstName');
         $user->lastName = $request->input('lastName');
-        $user->userName =$request->input('userName');
-        $email = User::all()->where('email',$input['email'])->first();
-        if($email === $user->email &&$email !==null ||$email ===null ){
+        $user->userName = $request->input('userName');
+        $email = User::all()->where('email', $input['email'])->first();
+        if ($email === $user->email && $email !== null || $email === null) {
             $user->email = $request->input('email');
         }
-        $user->password =$input['password'];
-        if(array_key_exists('photo_id',$input)){
-            $user->photo_id =$input['photo_id'];
+        $user->password = $input['password'];
+        if (array_key_exists('photo_id', $input)) {
+            $user->photo_id = $input['photo_id'];
         }
 
         $user->save();
 
-        $request->session()->flash('update-user','User update success!');
+        $request->session()->flash('update-user', 'User update success!');
     }
 
     public function delete($id)
     {
         $user = User::findOrFail($id);
 
-        if($user->photo){
-            unlink( public_path() . $user->photo->file);
+        if ($user->photo) {
+            unlink(public_path() . $user->photo->file);
             $user->photo->delete();
         }
         $user::destroy($id);
 
-        session()->flash('delete-user','Delete  user success!');
+        session()->flash('delete-user', 'Delete  user success!');
     }
 
     public function addRole($request, $id)
     {
-        $user = User::findOrFail($id);
-        $input = $request->all();
-        $arrayNameRole = array();
-        $originRole = Role::all();
+        $dataChecked = $request->all();
+       $user = User::findOrFail($id);
+        $tempPermissions = [];
+        $permissions = DB::table('permissions')->pluck('name');
 
-        foreach ($originRole as $nameRole){
-            array_push($arrayNameRole,$nameRole->name);
-        }
-
-
-        if(array_key_exists('arrayIdRole',$input))
-        {
-            foreach ($originRole as $role){
-                if(in_array($role,$input['arrayIdRole']) == false){
-
-                    $user->removeRole($role);
+       if (array_key_exists('data',$dataChecked)) {
+            //return contains roles
+            foreach ($permissions as $permission) {
+                if (in_array($permission, $dataChecked) !== false) {
+                    array_push($tempPermissions, $permission);
+                   $index = array_search($permission, $dataChecked);
+                   unset($dataChecked[$index]);
                 }
             }
-            $user->assignRole($input['arrayIdRole']);
-        }else{
-            $user->syncRoles([]);
+            if (count($dataChecked) === 0) {
+                $this->removeAllRolePermissionByUser($user);
+
+            } else {
+                $user->syncRoles($dataChecked);
+                $havePermissions = $user->getAllPermissions();
+                foreach ($havePermissions as $permission) {
+                    if (in_array($permission, $tempPermissions) === false) {
+                        $user->revokePermissionTo($permission);
+                    }
+                }
+                $user->givePermissionTo($tempPermissions);
+            }
+        } else {
+            $this->removeAllRolePermissionByUser($user);
         }
-        $request->session()->flash('assignRole-user','Assign role user success!');
+
+        return "Success assign access!";
+    }
+
+    private function removeAllRolePermissionByUser(User $user)
+    {
+        $user->syncRoles([]);
+        $user->syncPermissions([]);
     }
 
     public function editRole($id)
     {
         $user = User::findOrFail($id);
+        $data = $this->showAccess($user);
+        return $data;
+    }
+
+    private function showAccess(User $user)
+    {
+        $arrayJson = array();
         $role = Role::all();
-        $arrayIdRole = array();
-        $IdRole =$user->roles;
-        foreach ($IdRole as $idRoles){
-            array_push($arrayIdRole,$idRoles->id);
+        if (count($role) > 0) {
+            foreach ($role as $roles) {
+                $name = $roles->name;
+                $array = $roles->getPermissionNames();
+                $treeModels = new TreeModels();
+                $checked = $this->checkRoleByUserId($user, $roles);
+                $treeModels->setChecked($checked);
+                $treeModels->setText($name);
+                if (count($array) > 0) {
+                    foreach ($array as $namePer) {
+                        $child = new childModels();
+                        $checked = false;
+                        if ($user->hasRole($roles) && $user->hasDirectPermission($namePer)) {
+                            $checked = $this->checkPermissionByUser($user, $namePer);
+                        } else {
+                            $treeModels->setChecked($checked);
+                        }
+                        $child->setChecked($checked);
+                        $child->setText($namePer);
+                        $treeModels->setChildren($child);
+                    }
+                }
+
+                array_push($arrayJson, $treeModels);
+            }
         }
+        return $arrayJson;
+    }
+
+    private function checkPermissionByUser(User $user, $permission): bool
+    {
+        $check = false;
+        if ($user->hasDirectPermission($permission)) {
+            $check = true;
+        }
+        return $check;
+    }
+
+    private function checkRoleByUserId(User $user, $role): bool
+    {
+        $check = false;
+        if ($user->hasRole($role)) {
+            $check = true;
+        }
+        return $check;
     }
 
     public function edit($id)
