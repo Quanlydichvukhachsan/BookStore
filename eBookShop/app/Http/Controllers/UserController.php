@@ -63,8 +63,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
-        return view('admin.user.show', compact('users'));
+             $user = $this->userContract->show($id);
+        return view('admin.user.show', compact('user'));
     }
 
     /**
