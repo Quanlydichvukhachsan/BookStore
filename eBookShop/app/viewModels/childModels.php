@@ -8,6 +8,14 @@ class childModels
 {
     public $text;
     public $checked;
+  public  $id;
+    function setId($id) {
+        $this->id = $id;
+    }
+    function getId() {
+        return   $this->id;
+    }
+
 
     function setText($text)
     {

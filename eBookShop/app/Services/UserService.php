@@ -91,19 +91,17 @@ class UserService implements UserContract
     public function addRole($request, $id)
     {
         $dataChecked = $request->all();
-        $checked =[];
 
-       // return $checked;
+        $checked =[];
        $user = User::findOrFail($id);
         $tempPermissions = [];
 
-        $permissions = DB::table('permissions')->pluck('name');
+        $permissionsArray = DB::table('permissions')->pluck('name');
 
        if (array_key_exists('data',$dataChecked)) {
         $checked =$dataChecked['data'];
-      //  return $checked;
-            foreach ($permissions as $permission) {
-                if (in_array($permission, $checked) !== false) {
+            foreach ($checked as $permission) {
+                if (in_array($permission, $permissionsArray) !== false) {
                     array_push($tempPermissions, $permission);
                    $index = array_search($permission, $checked);
                    unset($checked[$index]);
@@ -146,23 +144,28 @@ class UserService implements UserContract
     {
         $arrayJson = array();
         $role = Role::all();
-        if (count($role) > 0) {
+       if (count($role) > 0) {
+           $id =0;
+
             foreach ($role as $roles) {
                 $name = $roles->name;
                 $array = $roles->getPermissionNames();
+                $id ++;
                 $treeModels = new TreeModels();
+                $treeModels->setId($id);
                 $checked = $this->checkRoleByUserId($user, $roles);
                 $treeModels->setChecked($checked);
                 $treeModels->setText($name);
                 if (count($array) > 0) {
                     foreach ($array as $namePer) {
+                        $id++;
                         $child = new childModels();
+                        $child->setId($id);
                         $checked = false;
                         if ($user->hasRole($roles) && $user->hasDirectPermission($namePer)) {
                             $checked = $this->checkPermissionByUser($user, $namePer);
                         }
                          else {
-                             //$checked =true;
                             $treeModels->setChecked($checked);
                         }
                         $child->setChecked($checked);

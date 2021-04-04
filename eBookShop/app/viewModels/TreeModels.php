@@ -7,10 +7,18 @@ use App\viewModels\childModels;
 class TreeModels
 {
 // Properties
+     public $id;
     public $text;
     public $children =array();
     public  $checked ;
-    // Methods
+
+    function setId($id) {
+        $this->id = $id;
+    }
+    function getId() {
+        return   $this->id;
+    }
+
     function setText($text) {
         $this->text = $text;
     }

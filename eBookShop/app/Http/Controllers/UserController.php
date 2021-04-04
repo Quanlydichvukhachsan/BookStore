@@ -52,7 +52,7 @@ class UserController extends Controller
         $user = $this->userContract->create($request);
 
 
-        return response()->json(['success' => 'Added new records.', 'user' => $user]);
+        return response()->json(['success' => 'Success add new user!', 'user' => $user]);
     }
 
     /**
