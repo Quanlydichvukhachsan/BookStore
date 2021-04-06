@@ -6,15 +6,9 @@ use Spatie\Permission\Models\Role;
 
 class CategoryService implements CategoryContract{
 
-    public function treeView(){
-
-
-    }
-
 
     public function getAll($Categories,$parent_id)
     {
-
         $Categories = Category::where('parent_id', '=', $parent_id)->get();
 //        dd($Categorys[1]->childs);
         $tree='<ul class="collapse"  id="category"  data-parent="#sidebar-menu">
@@ -49,7 +43,7 @@ class CategoryService implements CategoryContract{
         $html ='<ul  class="collapse" id="'.$name.'">.
                 <div class="sub-menu">';
 
-        foreach ( $childs as $arr) {
+        foreach ($childs as $arr) {
             if(count($arr->childs)){
           $html .='<li>
                          <a class="sidenav-item-link" href="user-profile.html">
@@ -72,19 +66,35 @@ class CategoryService implements CategoryContract{
 
     }
 
-    public function create($request)
+    public function create()
     {
-        $user = User::create([
-            'firstName' => $request['firstName'],
-            'lastName' => $request['lastName'],
-            'userName' => $request['userName'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-
-        $user->assignRole($request['arrayRole']);
-
-           return $user;
+        $html="";
+        $category = Category::where('parent_id','=',0)->get();
+        foreach ($category as $item)
+        {
+            $html.='<option value="' .$item->id. '">'.$item->name.'</option>';
+            if (count($item->childs))
+            {
+                $html.=$this->childOption($item);
+            }
+        }
+        return $html;
+    }
+    public function childOption($category)
+    {
+        $html="";
+        $categories = $category->childs;
+        foreach ($categories as $child)
+        {
+            $html='<option value="'.$child->id.'">'.$child->name.'</option>';
+            dd($child);
+            if (count($child->childs))
+            {
+                dd($child->childs);
+//                $this->childOption($child);
+            }
+        }
+        return $html;
     }
 
     public function update($request, $id)

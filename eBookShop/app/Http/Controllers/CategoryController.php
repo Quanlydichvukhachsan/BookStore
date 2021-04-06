@@ -25,6 +25,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+
+        $htmlOption = $this->CategoryContract->create();
         $html = $this->CategoryContract->getAll(Category::all(),0);
         return view('admin.category.index',compact('html'));
     }
@@ -36,10 +38,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
-
-        //return view('admin.category.update');
-
+//        $htmlOption = $this->CategoryContract->create();
+//        dd($htmlOption);
+//        return redirect('admin.category.index',compact('htmlOption'));
+//        //return view('admin.category.update');
     }
 
     /**
