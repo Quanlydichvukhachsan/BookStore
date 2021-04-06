@@ -6,19 +6,14 @@ use Spatie\Permission\Models\Role;
 
 class CategoryService implements CategoryContract{
 
-    public function treeView(){
 
-
-    }
-
-
-    public function getAll()
+    public function getAll($Categories,$parent_id)
     {
-        $Categorys = Category::where('parent_id', '=', 0)->get();
+        $Categories = Category::where('parent_id', '=', $parent_id)->get();
 //        dd($Categorys[1]->childs);
         $tree='<ul class="collapse"  id="category"  data-parent="#sidebar-menu">
                <div class="sub-menu">';
-        foreach ($Categorys as $Category) {
+        foreach ($Categories as $Category) {
            $name=  str_replace(' ', '', $Category->name);
             $tree .='<li class="has-sub"> <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#'.$name.'"
  aria-expanded="true" aria-controls="'.$name.'">
@@ -28,32 +23,34 @@ class CategoryService implements CategoryContract{
                 $tree.="<b class='caret'></b></a>";
                 $tree .=$this->childView($Category);
                 $tree .="</li>";
-
-
             }
             else
             {
                 $tree.="</a></li>";
             }
-
-
-
-
         }
         $tree .='</div></ul>';
         return $tree;
     }
+
     public function childview($Category){
+        $childs =$Category->childs;
         $cate = Category::Where('id','=',$Category->childs[0]->parent_id)->first();
+
         $name=  str_replace(' ', '', $cate->name);
-        $html ='<ul  class="collapse"  id="'.$name.'"><div class="sub-menu">';
-        foreach ($Category->childs as $arr) {
+//        dd($name);
+
+        $html ='<ul  class="collapse" id="'.$name.'">.
+                <div class="sub-menu">';
+
+        foreach ($childs as $arr) {
             if(count($arr->childs)){
-                $html .='<li>
+          $html .='<li>
                          <a class="sidenav-item-link" href="user-profile.html">
                             '.$arr->name.'
                          </a>';
-                $html.= $this->childView($arr);
+//               $html.= $this->childView($arr);
+                $html.= $this->getAll($arr,$arr->childs[0]->parent_id);
             }else{
                 $html .='<li><a class="sidenav-item-link" href="#">'.$arr->name.'</a>';
                 $html .="</li>";
@@ -69,19 +66,35 @@ class CategoryService implements CategoryContract{
 
     }
 
-    public function create($request)
+    public function create()
     {
-        $user = User::create([
-            'firstName' => $request['firstName'],
-            'lastName' => $request['lastName'],
-            'userName' => $request['userName'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-
-        $user->assignRole($request['arrayRole']);
-
-           return $user;
+        $html="";
+        $category = Category::where('parent_id','=',0)->get();
+        foreach ($category as $item)
+        {
+            $html.='<option value="' .$item->id. '">'.$item->name.'</option>';
+            if (count($item->childs))
+            {
+                $html.=$this->childOption($item);
+            }
+        }
+        return $html;
+    }
+    public function childOption($category)
+    {
+        $html="";
+        $categories = $category->childs;
+        foreach ($categories as $child)
+        {
+            $html='<option value="'.$child->id.'">'.$child->name.'</option>';
+            dd($child);
+            if (count($child->childs))
+            {
+                dd($child->childs);
+//                $this->childOption($child);
+            }
+        }
+        return $html;
     }
 
     public function update($request, $id)

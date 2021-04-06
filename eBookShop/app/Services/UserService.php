@@ -15,8 +15,7 @@ class UserService implements UserContract
 
     public function getAll()
     {
-        $user = User::findOrFail(156);
-        $user->givePermissionTo('edit');
+
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
