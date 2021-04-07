@@ -21,8 +21,8 @@
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
                             <select class="form-select col-9 form-control">
-                                <option selected>--lựa chọn--</option>
-{{--                                {!! $htmlOption !!}--}}
+                                <option value="null">--lựa chọn--</option>
+                                {!! $htmlOption !!}
                             </select>
                         </div>
                     </div>

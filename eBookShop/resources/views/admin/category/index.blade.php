@@ -24,12 +24,13 @@
 
                                     <div class="flex-row d-flex col-12">
                                         <div class="col-10">
-                                        <a class="sidenav-item-link" style="color: #8a909d" href="javascript:void(0)" data-toggle="collapse"
-                                           data-target="#category"
-                                           aria-expanded="false" aria-controls="pages">
-                                            <i class="mdi mdi-image-filter-none"></i>
-                                            <span class="nav-text">Category</span> <b class="caret"></b>
-                                        </a>
+                                            <a class="sidenav-item-link" style="color: #8a909d"
+                                               href="javascript:void(0)" data-toggle="collapse"
+                                               data-target="#category"
+                                               aria-expanded="false" aria-controls="pages">
+                                                <i class="mdi mdi-image-filter-none"></i>
+                                                <span class="nav-text">Category</span> <b class="caret"></b>
+                                            </a>
                                         </div>
                                         @include('admin.category.iconsvg.plus')
                                     </div>
@@ -155,7 +156,30 @@
         </div>
 
     </div>
-    @include('admin.category.addCategory')
+     @include('admin.category.addCategory',['$htmlOption'=>$htmlOption])
+
+
+@endsection
+@section('script')
+{{--    <script>--}}
+{{--        $('#btn-add').click(function () {--}}
+{{--            $.ajax({--}}
+{{--                url: "{{route('category.create')}}",--}}
+{{--                type: 'POST',--}}
+{{--                cache: false,--}}
+{{--                data: {--}}
+{{--                    "_token": '{{csrf_token()}}',--}}
+{{--                },--}}
+{{--                success: function (data) {--}}
+{{--                    console.log(data);--}}
+{{--                    console.log(data.success);--}}
+{{--                },--}}
+{{--                error: function (err) {--}}
+{{--                    console.log(err)--}}
+{{--                },--}}
+{{--            })--}}
+{{--        })--}}
+{{--    </script>--}}
 
 @endsection
 

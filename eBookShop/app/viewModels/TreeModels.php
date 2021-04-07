@@ -9,7 +9,7 @@ class TreeModels
 // Properties
     public $text;
     public $children =array();
-    public  $checked ;
+    public  $checked;
     // Methods
     function setText($text) {
         $this->text = $text;
@@ -31,7 +31,7 @@ class TreeModels
     }
     function getChildren():array {
 
-        return   $this->children;
+        return $this->children;
     }
 
 }

@@ -2,7 +2,10 @@
 use App\Models\Category;
 use App\Contracts\CategoryContract;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\Array_;
 use Spatie\Permission\Models\Role;
+use App\viewModels\showCategoryModel;
+use function GuzzleHttp\Promise\all;
 
 class CategoryService implements CategoryContract{
 
@@ -68,33 +71,34 @@ class CategoryService implements CategoryContract{
 
     public function create()
     {
-        $html="";
+        $htmlOption='';
+
         $category = Category::where('parent_id','=',0)->get();
         foreach ($category as $item)
         {
-            $html.='<option value="' .$item->id. '">'.$item->name.'</option>';
+            $htmlOption.='<option value="'.$item["id"].'">'.$item["name"].'</option>';
+
             if (count($item->childs))
             {
-                $html.=$this->childOption($item);
+                $htmlOption.= $this->childsOption($item);
             }
         }
-        return $html;
+        return $htmlOption;
     }
-    public function childOption($category)
+    public function childsOption($category,)
     {
-        $html="";
-        $categories = $category->childs;
-        foreach ($categories as $child)
+        $htmlOption='';
+        $childs = $category->childs;
+
+        foreach ($childs as $item)
         {
-            $html='<option value="'.$child->id.'">'.$child->name.'</option>';
-            dd($child);
-            if (count($child->childs))
+            $htmlOption.='<option value="'.$item->id.'">'.$item->name.'</option>';
+            if (count($item->childs))
             {
-                dd($child->childs);
-//                $this->childOption($child);
+                $htmlOption.=$this->childsOption($item,$htmlOption);
             }
         }
-        return $html;
+        return $htmlOption;
     }
 
     public function update($request, $id)

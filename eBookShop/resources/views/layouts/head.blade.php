@@ -47,4 +47,7 @@
 
 
     <script src="assets/plugins/nprogress/nprogress.js"></script>
+
+
+
 </head>
