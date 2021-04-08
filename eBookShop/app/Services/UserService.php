@@ -15,7 +15,9 @@ class UserService implements UserContract
 
     public function getAll()
     {
-
+       //$role= Role::create(['name'=>'Staff']);
+      // $permission= Permission::create(['name'=>'psot']);
+      //  $role->givePermissionTo($permission);
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
@@ -128,7 +130,9 @@ class UserService implements UserContract
             $this->removeAllRolePermissionByUser($user);
         }
 
-        return "Success assign access!";
+        $nameRole = $user->getRoleNames();
+
+        return $nameRole;
     }
 
     private function removeAllRolePermissionByUser(User $user)

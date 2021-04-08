@@ -118,7 +118,8 @@ class UserController extends Controller
      */
     public function addRole(Request $request, $id)
     {
+
         $result = $this->userContract->addRole($request, $id);
-        return response()->json(['success' => $result]);
+        return response()->json(['success' =>"Success assign access!",'result'=>$result ]);
     }
 }

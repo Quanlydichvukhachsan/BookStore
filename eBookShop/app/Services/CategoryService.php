@@ -65,7 +65,6 @@ class CategoryService implements CategoryContract{
 
 
     }
-
     public function create()
     {
         $html="";

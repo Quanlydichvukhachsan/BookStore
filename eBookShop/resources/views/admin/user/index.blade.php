@@ -40,7 +40,7 @@
 
                         <tbody>
                         @foreach($user as $users )
-                            <tr>
+                            <tr id="sid{{ $users->id }}">
                                 <td>{{$users->id}}</td>
                                 <td> {{$users->lastName }}</td>
                                 <td> {{$users->firstName }} </td>
@@ -139,6 +139,8 @@
 
         $('#btn-submit').click(function (e) {
             e.preventDefault();
+
+            console.log($('tbody tr').find("td").eq(0).text());
             $overlay.appendTo("#exampleModalForm");
             $('#overlay').show();
             setTimeout(function () {
@@ -318,6 +320,19 @@
                         'data': result
                     },
                     success: function (data) {
+                     //update role name after response success
+                        var rowRole ;
+               if(data.result.length ===0){
+                $("tr#sid"+1).find("td").eq(5).text('');
+                rowRole =  $('<span>No active</span>');
+                $("tr#sid"+1).find("td").eq(5).append(rowRole);
+               }else{
+                $("tr#sid"+1).find("td").eq(5).text('');
+                   $.each(data.result,function(index,value){
+                    rowRole =  $('<span class="mb-2 mr-2 badge badge-pill badge-info">' + value + '</span>');
+                  $("tr#sid"+1).find("td").eq(5).append(rowRole);
+                   })
+               }
                         console.log(data.success);
                         $(".alert-highlighted span").text(data.success);
                         $('.alert-highlighted').show();
@@ -325,6 +340,9 @@
                         $('#exampleModal').modal('hide');
                         $('.alert-highlighted').fadeOut(5000);
                         tree.destroy();
+                        console.log(data.result);
+
+
                     },
                     error: function (error) {
                         console.log(error);
