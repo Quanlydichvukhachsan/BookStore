@@ -48,6 +48,8 @@
 
     <script src="assets/plugins/nprogress/nprogress.js"></script>
 
-
+    <link href="jquery.tree-multiselect.min.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="jquery.tree-multiselect.min.js"></script>
 
 </head>

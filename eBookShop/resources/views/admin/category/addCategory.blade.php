@@ -21,8 +21,26 @@
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
                             <select class="form-select col-9 form-control">
-                                <option value="null">--lựa chọn--</option>
+
+                                    <option value="null">--lựa chọn--</option>
+
                                 {!! $htmlOption !!}
+
+
+
+                            </select>
+                            <select id="demo" multiple="multiple">
+
+                                <option value="one" data-section="top" selected="selected" data-index="3">C++</option>
+
+                                <option value="two" data-section="top" selected="selected" data-index="1">Python</option>
+
+                                <option value="three" data-section="top" selected="selected" data-index="2">Ruby</option>
+
+                                <option value="four" data-section="top">Swift</option>
+
+                                <option value="wow" data-section="JavaScript/Library/Popular">jQuery</option>
+
                             </select>
                         </div>
                     </div>

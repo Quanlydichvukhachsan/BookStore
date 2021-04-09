@@ -180,7 +180,52 @@
 {{--            })--}}
 {{--        })--}}
 {{--    </script>--}}
+<script>
+    $("#demo").treeMultiselect(options);
 
+</script>
+    <script>
+        $("#demo").treeMultiselect({
+
+            allowBatchSelection:true,
+
+            sortable:false,
+
+            collapsible:true,
+
+            enableSelectAll:false,
+
+            selectAllText:'Select All',
+
+            unselectAllText:'Unselect All',
+
+            freeze:false,
+
+            hideSidePanel:false,
+
+            maxSelections: 0,
+
+            onlyBatchSelection:false,
+
+            sectionDelimiter:'/',
+
+            showSectionOnSelected:true,
+
+            startCollapsed:false,
+
+            searchable:false,
+
+            // Set items to be searched. Array must contain 'value', 'text', or 'description', and/or 'section'
+
+            searchParams: ['value','text','description','section'],
+
+            // Callback
+
+            onChange:null
+
+        });
+
+    </script>
 @endsection
 
 
