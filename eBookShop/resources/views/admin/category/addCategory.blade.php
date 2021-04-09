@@ -20,27 +20,14 @@
                     <div class="form-group row">
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
-                            <select class="form-select col-9 form-control">
-
-                                    <option value="null">--lựa chọn--</option>
-
-                                {!! $htmlOption !!}
-
-
-
-                            </select>
                             <select id="demo" multiple="multiple">
-
-                                <option value="one" data-section="top" selected="selected" data-index="3">C++</option>
-
-                                <option value="two" data-section="top" selected="selected" data-index="1">Python</option>
-
-                                <option value="three" data-section="top" selected="selected" data-index="2">Ruby</option>
-
-                                <option value="four" data-section="top">Swift</option>
-
-                                <option value="wow" data-section="JavaScript/Library/Popular">jQuery</option>
-
+                                <option value="blueberry" data-section="Smoothies">Blueberry</option>
+                                <option value="longan" data-description="Really good :o" selected="selected">Longan</option>
+                                <option value="milk tea" data-section="Smoothies/Bubble Tea">Milk Tea</option>
+                                <option value="green apple" data-section="Smoothies/Bubble Tea">Green Apple</option>
+                                <option value="passion fruit" data-section="Smoothies/Bubble Tea" data-description="The greatest flavor" selected="selected">Passion Fruit</option>
+                                <option value="strawberry" data-section="Smoothies">Strawberries</option>
+                                <option value="peach" data-section="Smoothies">Peach</option>
                             </select>
                         </div>
                     </div>

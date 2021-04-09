@@ -8,11 +8,15 @@
 <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="assets/plugins/toastr/toastr.min.js"></script>
 <script src="assets/js/sleek.bundle.js"></script>
+
 <script src="assets/plugins/data-tables/jquery.datatables.min.js"></script>
 <script src="assets/plugins/data-tables/datatables.bootstrap4.min.js"></script>
 <script src="assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
 <script src="assets/plugins/select2/js/select2.full.min.js"></script>
 <script src="assets/plugins/treeview/gijgo.min.js"></script>
+
+<script src="assets/plugins/tree-multiselect/jquery.tree-multiselect.min.js"></script>
+<script src="assets/vendor/jquery-ui.min.js"></script>
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({
@@ -28,7 +32,6 @@
     });
 
     $(document).ready(function(){
-
         // Create overlay and append to body:
         $('<div id="overlay"/>').css({
             position: 'fixed',
