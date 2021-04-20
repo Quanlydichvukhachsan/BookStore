@@ -19,7 +19,7 @@
                         <div class="col-12">
 
                             <ul class="nav sidebar-inner" id="sidebar-menu">
-                                <li class="has-sub">
+                                <cript class="has-sub">
 
 
                                     <div class="flex-row d-flex col-12">
@@ -34,10 +34,34 @@
                                         </div>
                                         @include('admin.category.iconsvg.plus')
                                     </div>
+                                </cript>
 
 
-                                    {!! $html !!}
-                                </li>
+{{--                                                                        {!! $html !!}--}}
+                                <ul id="myUL">
+                                    <li><span class="caret">Beverages</span>
+                                        <ul class="nested">
+                                            <li>Water</li>
+                                            <li>Coffee</li>
+                                            <li><span class="caret">Tea</span>
+                                                <ul class="nested">
+                                                    <li>Black Tea</li>
+                                                    <li>White Tea</li>
+                                                    <li><span class="caret">Green Tea</span>
+                                                        <ul class="nested">
+                                                            <li>Sencha</li>
+                                                            <li>Gyokuro</li>
+                                                            <li>Matcha</li>
+                                                            <li>Pi Lo Chun</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
 
                             </ul>
                         </div>
@@ -156,34 +180,34 @@
         </div>
 
     </div>
-     @include('admin.category.addCategory')
+    @include('admin.category.addCategory')
 
 
 @endsection
 @section('script')
     <script type="text/javascript">
-        $("#demo").treeMultiselect({ enableSelectAll: false, sortable: true, searchable: true });
+        $("#demo").treeMultiselect({maxSelections: 1, sortable: true, searchable: true});
 
     </script>
-{{--    <script>--}}
-{{--        $('#btn-add').click(function () {--}}
-{{--            $.ajax({--}}
-{{--                url: "{{route('category.create')}}",--}}
-{{--                type: 'POST',--}}
-{{--                cache: false,--}}
-{{--                data: {--}}
-{{--                    "_token": '{{csrf_token()}}',--}}
-{{--                },--}}
-{{--                success: function (data) {--}}
-{{--                    console.log(data);--}}
-{{--                    console.log(data.success);--}}
-{{--                },--}}
-{{--                error: function (err) {--}}
-{{--                    console.log(err)--}}
-{{--                },--}}
-{{--            })--}}
-{{--        })--}}
-{{--    </script>--}}
+    {{--    <script>--}}
+    {{--        $('#btn-add').click(function () {--}}
+    {{--            $.ajax({--}}
+    {{--                url: "{{route('category.create')}}",--}}
+    {{--                type: 'POST',--}}
+    {{--                cache: false,--}}
+    {{--                data: {--}}
+    {{--                    "_token": '{{csrf_token()}}',--}}
+    {{--                },--}}
+    {{--                success: function (data) {--}}
+    {{--                    console.log(data);--}}
+    {{--                    console.log(data.success);--}}
+    {{--                },--}}
+    {{--                error: function (err) {--}}
+    {{--                    console.log(err)--}}
+    {{--                },--}}
+    {{--            })--}}
+    {{--        })--}}
+    {{--    </script>--}}
 
 
 @endsection

@@ -21,9 +21,9 @@
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
                             <select id="demo" multiple="multiple">
-                                <option value="blueberry" data-section="Smoothies">Blueberry</option>
+{{--                                <option value="blueberry" data-section="Smoothies">Blueberry</option>--}}
                                 <option value="longan" data-description="Really good :o" selected="selected">Longan</option>
-                                <option value="milk tea" data-section="Smoothies/Bubble Tea">Milk Tea</option>
+                                <option value="milk tea" data-section="Smoothies">Milk Tea</option>
                                 <option value="green apple" data-section="Smoothies/Bubble Tea">Green Apple</option>
                                 <option value="passion fruit" data-section="Smoothies/Bubble Tea" data-description="The greatest flavor" selected="selected">Passion Fruit</option>
                                 <option value="strawberry" data-section="Smoothies">Strawberries</option>

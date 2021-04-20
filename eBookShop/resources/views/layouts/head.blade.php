@@ -48,5 +48,6 @@
     <link href="assets/plugins/tree-multiselect/jquery.tree-multiselect.min.css" rel="stylesheet">
     <script src="assets/plugins/nprogress/nprogress.js"></script>
 
+    <link href="assets/plugins/dynamic-tree/bstreeview.css" rel="stylesheet">
 
 </head>

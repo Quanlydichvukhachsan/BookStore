@@ -16,7 +16,11 @@
 <script src="assets/plugins/treeview/gijgo.min.js"></script>
 
 <script src="assets/plugins/tree-multiselect/jquery.tree-multiselect.min.js"></script>
+<script src="assets/plugins/dynamic-tree/bstreeview.js"></script>
 <script src="assets/vendor/jquery-ui.min.js"></script>
+
+
+
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({
