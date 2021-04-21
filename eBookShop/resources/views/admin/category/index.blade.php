@@ -158,6 +158,8 @@
 
 @endsection
 @section('script')
+    <script src="{{asset("error-handler/exception.js")}}"></script>
+    <script src="{{asset("fillParentCategory/fillParentCategory.js")}}"></script>
     <script type="text/javascript">
         $("#demo").treeMultiselect({maxSelections: 1, sortable: true, searchable: true});
 
@@ -168,23 +170,28 @@
 
         $(document).ready(function(){
             fill_parent_category();
-            function fill_parent_category()
-            {
-                $.ajax({
-                    url:'{{route('category.create')}}',
-                    success:function(data){
-                        $('#paren_id').html(data);
-                    }
-                })
-            }
+            formatText();
+            $.fn.fill_parent_category(0,"--lựa chọn nhóm cha--");
+            {{--function fill_parent_category()--}}
+            {{--{--}}
+            {{--    $.ajax({--}}
+            {{--        url:'{{route('category.create')}}',--}}
+            {{--        success:function(data){--}}
+            {{--            $('#parent_id').html(data);--}}
+            {{--        }--}}
+            {{--    })--}}
+            {{--}--}}
+
             $('#tree-form').on('submit',function (event){
                 event.preventDefault();
                 $.ajax({
                     url:"{{route('category.store')}}",
                     method:"POST",
-
-                     data:$(this).serialize(),
-
+                     data:{
+                         "_token": '{{csrf_token()}}',
+                         "name": $('#name').val(),
+                         "parent_id":$('#parent_id').val()
+                     },
                     success:function (data){
                         fill_parent_category();
                         $('#tree-form')[0].reset();
@@ -192,15 +199,30 @@
                     },
                     error:function (error){
                         console.log(error);
+                        $.fn.handlerError(error);
                     }
 
                 })
             });
 
-        });
 
+        });
+        function formatText(){
+
+            var id = $("#parent_id").val();
+            console.log(id);
+            var text= $('#parent_id option:selected').text();
+            console.log(text);
+            var splitstr = text.split(/\s{4}/);
+            console.log(splitstr);
+            var index =(splitstr.length)-1;
+            $(`#parent_id option:selected[value=${id}]`).text(splitstr[index]);
+            $.fn.fill_parent_category();
+
+        }
 
     </script>
+
 @endsection
 
 

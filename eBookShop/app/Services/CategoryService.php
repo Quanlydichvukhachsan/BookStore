@@ -69,33 +69,37 @@ class CategoryService implements CategoryContract{
 
     }
 
-    public function create()
+    public function create($value, $text)
     {
-        $htmlOption='<option value="null">--lựa chọn nhóm cha--</option>';
+        $space ='';
+        $htmlOption='<option value="'.$value.'">'.$text.'</option>';
 
         $category = Category::where('parent_id','=',0)->get();
         foreach ($category as $item)
         {
-            $htmlOption.='<option value="'.$item["id"].'">'.$item["name"].'</option>';
+            $htmlOption.='<option onclick="formatText()" value="'.$item["id"].'">'.$space.$item["name"].'</option>';
 
             if (count($item->childs))
             {
-                $htmlOption.= $this->childsOption($item);
+                $htmlOption.= $this->childsOption($item,$space);
             }
         }
         return $htmlOption;
     }
-    public function childsOption($category,)
+    public function childsOption($category,$space)
     {
+        $space='&nbsp;&nbsp;&nbsp;&nbsp;';
+
         $htmlOption='';
         $childs = $category->childs;
 
         foreach ($childs as $item)
         {
-            $htmlOption.='<option value="'.$item->id.'">'.$item->name.'</option>';
+            $htmlOption.='<option  value="'.$item->id.'">'.$space.$item->name.'</option>';
             if (count($item->childs))
             {
-                $htmlOption.=$this->childsOption($item,$htmlOption);
+                $space.=$space;
+                $htmlOption.=$this->childsOption($item,$space);
             }
         }
         return $htmlOption;
@@ -147,16 +151,9 @@ class CategoryService implements CategoryContract{
 
     public function store($request)
     {
-
+        //['name' => $category['name'], 'parent_id' =>$category['parent_id']]
         $category = $request->all();
-        $categories = Category::where('name', '=', $category['cate-name'])->first();
-
-        if ($categories === null) {
-            Category::create(['name' => $category['cate-name'], 'parent_id' =>$category['paren_id']]);
-        } else {
-            return redirect()->back()->withErrors(['Name is exists!']);
-        }
-
+        Category::create($category);
     }
 
 

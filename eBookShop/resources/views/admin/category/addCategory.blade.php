@@ -11,34 +11,29 @@
 
             <div class="modal-body">
                 <form id="tree-form" method="post">
+                    @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tên thể loại</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="cate-name" name="cate-name" placeholder="Nhập tên thể loại">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên thể loại">
+                            <div class="invalid-feedback name"></div>
+
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
-                            <select class="form-control" id="paren_id" name="paren_id">
-
-{{--                                {!!$htmlOption!!}--}}
+                            <select class="form-control selectCategory" id="parent_id" onclick="formatText()" name="parent_id">
                             </select>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Lưu
                         </button>
                         <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
-
                     </div>
                 </form>
-
             </div>
-
-
         </div>
     </div>
 </div>

@@ -38,9 +38,9 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($value,$text)
     {
-        $htmlOption = $this->CategoryContract->create();
+        $htmlOption = $this->CategoryContract->create($value,$text);
         return $htmlOption;
 
 
@@ -59,11 +59,11 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
         $this->CategoryContract->store($request);
 
-        return redirect()->route('category.index');
+       return response()->json(['success'=>'Tạo thành công']);
     }
 
     /**
