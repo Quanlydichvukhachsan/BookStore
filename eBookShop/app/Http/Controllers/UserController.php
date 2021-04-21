@@ -63,8 +63,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+          $users = $this->userContract->show($id);
+      return   response()->view('admin.user.show', ['users'=>$users]);
 
-        return view('admin.user.show', compact('users'));
     }
 
     /**
@@ -75,7 +76,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-
+         $users = $this->userContract->edit($id);
         return view('admin.user.edit', compact('users'));
     }
 
@@ -88,7 +89,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-
+          $this->userContract->update($request,$id);
         return redirect()->route('user.index');
     }
 
@@ -100,7 +101,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return redirect()->route('user.index');
+        $message =  $this->userContract->delete($id);
+        return response()->json(['success' => $message]);
     }
 
     public function editRole($id)
@@ -118,7 +120,8 @@ class UserController extends Controller
      */
     public function addRole(Request $request, $id)
     {
+
         $result = $this->userContract->addRole($request, $id);
-        return response()->json(['success' => $result]);
+        return response()->json(['success' =>"Success assign access!",'result'=>$result ]);
     }
 }

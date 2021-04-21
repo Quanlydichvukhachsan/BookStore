@@ -5,7 +5,6 @@
 <body class="header-fixed sidebar-fixed sidebar-light header-light" id="body">
 
 <script>
-
     NProgress.configure({showSpinner: false});
     NProgress.start();
 </script>
@@ -71,9 +70,7 @@
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{route('user.index')}}">
                                         @yield('root')
-                                    </a>
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">@yield('model')</li>
                             </ol>
@@ -96,6 +93,7 @@
     </div>
 </div>
 <!-- jQuery -->
+
 @include('layouts.script')
 @yield('script')
 
