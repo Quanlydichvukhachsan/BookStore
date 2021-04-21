@@ -8,7 +8,7 @@ interface CategoryContract{
     public function create();
     public function update($request,$id);
     public function delete($id);
-    public function addCategory($request ,$id);
+    public function store($request);
     public function editCategory($id);
     public function edit($id);
 

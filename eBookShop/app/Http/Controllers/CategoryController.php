@@ -26,9 +26,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $htmlOption = $this->CategoryContract->create();
+
         $html = $this->CategoryContract->getAll(Category::all(), 0);
-        return view('admin.category.index', compact('html','htmlOption'));
+        $f =Category::All();
+
+        return view('admin.category.index', compact('html'));
     }
 
     /**
@@ -38,6 +40,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $htmlOption = $this->CategoryContract->create();
+        return $htmlOption;
+
 
 
     }
@@ -54,17 +59,10 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCategoryRequest $request)
+    public function store(Request $request)
     {
-        $category = $request->all();
-        $categories = Category::where('name', '=', $category['cate-name'])->first();
+        $this->CategoryContract->store($request);
 
-        if ($categories === null) {
-            Category::create(['name' => $category['cate-name']]);
-        } else {
-            return redirect()->back()->withErrors(['Name is exists!']);
-        }
-        session()->flash('create-category', 'Create Success!');
         return redirect()->route('category.index');
     }
 

@@ -12,9 +12,9 @@
 
                 {{--                {!! $html !!}--}}
                 {{--                <aside class="left-card bg-card">--}}
+
+{{--                category--}}
                 <div class="card-body slim-scroll p-0">
-
-
                     <div id="sidebar" class="sidebar">
                         <div class="col-12">
 
@@ -35,41 +35,14 @@
                                         @include('admin.category.iconsvg.plus')
                                     </div>
                                 </cript>
-
-
-{{--                                                                        {!! $html !!}--}}
-                                <ul id="myUL">
-                                    <li><span class="caret">Beverages</span>
-                                        <ul class="nested">
-                                            <li>Water</li>
-                                            <li>Coffee</li>
-                                            <li><span class="caret">Tea</span>
-                                                <ul class="nested">
-                                                    <li>Black Tea</li>
-                                                    <li>White Tea</li>
-                                                    <li><span class="caret">Green Tea</span>
-                                                        <ul class="nested">
-                                                            <li>Sencha</li>
-                                                            <li>Gyokuro</li>
-                                                            <li>Matcha</li>
-                                                            <li>Pi Lo Chun</li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
-
-
+                                {!! $html !!}
                             </ul>
                         </div>
 
                     </div>
 
                 </div>
-
+{{----}}
 
                 {{--                </aside>--}}
 
@@ -189,27 +162,45 @@
         $("#demo").treeMultiselect({maxSelections: 1, sortable: true, searchable: true});
 
     </script>
-    {{--    <script>--}}
-    {{--        $('#btn-add').click(function () {--}}
-    {{--            $.ajax({--}}
-    {{--                url: "{{route('category.create')}}",--}}
-    {{--                type: 'POST',--}}
-    {{--                cache: false,--}}
-    {{--                data: {--}}
-    {{--                    "_token": '{{csrf_token()}}',--}}
-    {{--                },--}}
-    {{--                success: function (data) {--}}
-    {{--                    console.log(data);--}}
-    {{--                    console.log(data.success);--}}
-    {{--                },--}}
-    {{--                error: function (err) {--}}
-    {{--                    console.log(err)--}}
-    {{--                },--}}
-    {{--            })--}}
-    {{--        })--}}
-    {{--    </script>--}}
 
 
+    <script>
+
+        $(document).ready(function(){
+            fill_parent_category();
+            function fill_parent_category()
+            {
+                $.ajax({
+                    url:'{{route('category.create')}}',
+                    success:function(data){
+                        $('#paren_id').html(data);
+                    }
+                })
+            }
+            $('#tree-form').on('submit',function (event){
+                event.preventDefault();
+                $.ajax({
+                    url:"{{route('category.store')}}",
+                    method:"POST",
+
+                     data:$(this).serialize(),
+
+                    success:function (data){
+                        fill_parent_category();
+                        $('#tree-form')[0].reset();
+                        console.log(data.success);
+                    },
+                    error:function (error){
+                        console.log(error);
+                    }
+
+                })
+            });
+
+        });
+
+
+    </script>
 @endsection
 
 

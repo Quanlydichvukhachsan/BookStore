@@ -71,7 +71,7 @@ class CategoryService implements CategoryContract{
 
     public function create()
     {
-        $htmlOption='';
+        $htmlOption='<option value="null">--lựa chọn nhóm cha--</option>';
 
         $category = Category::where('parent_id','=',0)->get();
         foreach ($category as $item)
@@ -145,32 +145,20 @@ class CategoryService implements CategoryContract{
         session()->flash('delete-user','Delete  user success!');
     }
 
-    public function addCategory($request, $id)
+    public function store($request)
     {
-        $user = User::findOrFail($id);
-        $input = $request->all();
-        $arrayNameRole = array();
-        $originRole = Role::all();
 
-        foreach ($originRole as $nameRole){
-            array_push($arrayNameRole,$nameRole->name);
+        $category = $request->all();
+        $categories = Category::where('name', '=', $category['cate-name'])->first();
+
+        if ($categories === null) {
+            Category::create(['name' => $category['cate-name'], 'parent_id' =>$category['paren_id']]);
+        } else {
+            return redirect()->back()->withErrors(['Name is exists!']);
         }
 
-
-        if(array_key_exists('arrayIdRole',$input))
-        {
-            foreach ($originRole as $role){
-                if(in_array($role,$input['arrayIdRole']) == false){
-
-                    $user->removeRole($role);
-                }
-            }
-            $user->assignRole($input['arrayIdRole']);
-        }else{
-            $user->syncRoles([]);
-        }
-        $request->session()->flash('assignRole-user','Assign role user success!');
     }
+
 
     public function editCategory($id)
     {

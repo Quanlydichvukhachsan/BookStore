@@ -10,38 +10,37 @@
             </div>
 
             <div class="modal-body">
-                <form>
+                <form id="tree-form" method="post">
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tên thể loại</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="inputEmail3" placeholder="Nhập tên thể loại">
+                            <input type="text" class="form-control" id="cate-name" name="cate-name" placeholder="Nhập tên thể loại">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
-                            <select id="demo" multiple="multiple">
-{{--                                <option value="blueberry" data-section="Smoothies">Blueberry</option>--}}
-                                <option value="longan" data-description="Really good :o" selected="selected">Longan</option>
-                                <option value="milk tea" data-section="Smoothies">Milk Tea</option>
-                                <option value="green apple" data-section="Smoothies/Bubble Tea">Green Apple</option>
-                                <option value="passion fruit" data-section="Smoothies/Bubble Tea" data-description="The greatest flavor" selected="selected">Passion Fruit</option>
-                                <option value="strawberry" data-section="Smoothies">Strawberries</option>
-                                <option value="peach" data-section="Smoothies">Peach</option>
+                            <select class="form-control" id="paren_id" name="paren_id">
+
+{{--                                {!!$htmlOption!!}--}}
                             </select>
                         </div>
-                    </div>
 
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Lưu
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
+
+                    </div>
                 </form>
 
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Lưu
-                </button>
-                <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
 
-            </div>
         </div>
     </div>
 </div>
+
+
