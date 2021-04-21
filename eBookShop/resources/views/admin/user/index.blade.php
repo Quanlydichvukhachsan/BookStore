@@ -13,7 +13,7 @@
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                <h2>Basic Data Table</h2>
+                <h2>Basic Data User</h2>
 
                 <button class="btn btn-outline-primary" type="button" data-toggle="modal"
                         data-target="#exampleModalForm">
@@ -127,7 +127,7 @@
 
 @endsection
 @section('script')
-    <script src="error-handler/exception.js"></script>
+    <script src={{asset("error-handler/exception.js")}}></script>
 
     <script>
 
