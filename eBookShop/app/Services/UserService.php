@@ -15,9 +15,9 @@ class UserService implements UserContract
 
     public function getAll()
     {
-       //$role= Role::create(['name'=>'Staff']);
-      // $permission= Permission::create(['name'=>'psot']);
-      //  $role->givePermissionTo($permission);
+     //  $role= Role::create(['name'=>'Administrator']);
+      //  $permission= Permission::create(['name'=>'edit']);
+     //   $role->givePermissionTo($permission);
         $user = User::all();
         $arrRole = Role::all();
         $result = array('user' => $user, 'arrayRole' => $arrRole);
@@ -41,9 +41,17 @@ class UserService implements UserContract
             'password' => Hash::make($request['password']),
         ]);
         if(array_key_exists('arrayRole',$request->all())){
-            $user->assignRole($request['arrayRole']);
-            $permission = Permission::all();
-            $user->syncPermissions($permission);
+            if(in_array("Administrator", $request['arrayRole'])){
+                $user->syncRoles("Administrator");
+                $allPermission =  Permission::all();
+                $user->givePermissionTo($allPermission);
+            }
+            else{
+                $user->assignRole($request['arrayRole']);
+                $permission = Permission::all();
+                $user->syncPermissions($permission);
+            }
+
         }
         return $user;
     }
@@ -89,7 +97,7 @@ class UserService implements UserContract
         }
         $user::destroy($id);
 
-        session()->flash('delete-user', 'Delete  user success!');
+       return "Delete success!";
     }
 
     public function addRole($request, $id)
@@ -114,16 +122,22 @@ class UserService implements UserContract
                 $this->removeAllRolePermissionByUser($user);
 
             } else {
-                $user->syncRoles($checked);
-                $havePermissions = $user->getAllPermissions();
-                foreach ($havePermissions as $item) {
-                    if (in_array($item, $tempPermissions) === false) {
-                        $user->revokePermissionTo($item);
-                       // $i = array_search($item, $tempPermissions);
-                    //    unset($tempPermissions[$i]);
+                if(in_array("Administrator", $checked)){
+                    $user->syncRoles("Administrator");
+                      $allPermission =  Permission::all();
+                    $user->givePermissionTo($allPermission);
+                }else{
+                    $user->syncRoles($checked);
+                    $havePermissions = $user->getAllPermissions();
+                    foreach ($havePermissions as $item) {
+                        if (in_array($item, $tempPermissions) === false) {
+                            $user->revokePermissionTo($item);
+                            // $i = array_search($item, $tempPermissions);
+                            //    unset($tempPermissions[$i]);
+                        }
                     }
+                    $user->givePermissionTo($tempPermissions);
                 }
-                $user->givePermissionTo($tempPermissions);
 
             }
         } else {

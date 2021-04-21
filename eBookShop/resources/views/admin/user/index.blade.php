@@ -51,8 +51,14 @@
                                     <td>{{__('No active')}}</td>
                                 @else
                                     <td>
+
                                         @foreach($users->roles as $role)
+                                            @if($role->name ==="Administrator")
                                             <span class="mb-2 mr-2 badge badge-pill badge-info">{{$role->name}}</span>
+                                                 @break
+                                            @else
+                                                <span class="mb-2 mr-2 badge badge-pill badge-info">{{$role->name}}</span>
+                                            @endif
                                         @endforeach
                                     </td>
                                 @endif
@@ -67,12 +73,12 @@
                                                 <a href="{{route('user.show',$users->id)}}">View</a>
                                             </li>
                                             <li class="dropdown-item">
-                                                <a href="{{route('user.destroy',$users->id)}}">Remove</a>
+                                                <a onclick="deleteUser(this)" data-value="{{$users->id}}" type="button">Remove</a>
                                             </li>
                                             <li class="dropdown-item">
                                                 <a type="button" style="cursor:pointer" data-value="{{$users->id}}"
-                                                   onclick="getIdUser(this)"
-                                                   id="editRole" data-toggle="modal" data-target="#exampleModal">
+                                                   onclick="getIdUser(this)" data-toggle="" data-target=""
+                                                   id="editRole" >
                                                     Assign access </a>
                                             </li>
                                         </ul>
@@ -105,8 +111,8 @@
                                     <button type="button" id="btn-close" class="btn btn-secondary btn-pill"
                                             data-dismiss="modal">Close
                                     </button>
-                                    <button type="submit" id="role-submit" class="btn btn-primary btn-pill">Save
-                                        Changes
+                                    <button type="submit" id="role-submit" class="btn btn-primary btn-pill">
+                                        Save Changes
                                     </button>
                                 </div>
                             </div>
@@ -169,10 +175,10 @@
                             '<a href="' + 'user' + '/show/' + data.user.id + '">' + 'View' + '</a>' +
                             '</li>' +
                             '<li class="dropdown-item">' +
-                            '<a href="' + 'user' + '/destroy/' + data.user.id + '">' + 'Remove' + '</a>' +
+                            '<a onclick="deleteUser(this)" style="cursor:pointer" data-value=' + '"' + data.user.id + '"' + '>' + 'Remove' + '</a>' +
                             '</li>' +
                             '<li class="dropdown-item">' +
-                            '<a data-toggle="modal" data-target="#exampleModal" id="editRole" onclick="getIdUser(this)"' +
+                            '<a data-toggle="" data-target="" id="editRole" onclick="getIdUser(this)"' +
                             ' type="button" style="cursor:pointer" data-value=' + '"' + data.user.id + '"' + '>' + 'Assign access' + '</a>' +
                             '</li>' +
                             '</ul>' +
@@ -180,7 +186,7 @@
                             '</td>';
 
                         var rowName = '<td>' + '<a href="/user/' + data.user.id + '">' + data.user.userName + '</a>' + '</td>'
-                        var $row = $('<tr>' +
+                        var $row = $('<tr id="sid'+data.user.id+'"' +'>' +
                             '<td>' + data.user.id + '</td>' +
                             '<td>' + data.user.lastName + '</td>' +
                             '<td>' + data.user.firstName + '</td>' +
@@ -214,10 +220,8 @@
             }, 500);
 
         });
-
         let tree;
         let id;
-
 
         function checkDuplicate(reportRecipient) {
             var reportRecipientsDuplicate = [];
@@ -230,19 +234,56 @@
         }
 
         function getIdUser(item) {
+
             id = item.getAttribute("data-value");
-            tree = $('#tree').tree({
-                primaryKey: 'id',
-                uiLibrary: 'bootstrap4',
-                dataSource: '/user/' + id + '/role',
-                checkboxes: true,
-                autoLoad: true
-            });
+              @if(\Illuminate\Support\Facades\Auth::check()){
+                  var ids = "{{\Illuminate\Support\Facades\Auth::user()->id }}";
+                               if(ids ===id){
+                                   Swal.fire({
+                                       title: 'You have full access!',
+                                       showClass: {
+                                           popup: 'animate__animated animate__fadeInDown'
+                                       },
+                                       hideClass: {
+                                           popup: 'animate__animated animate__fadeOutUp'
+                                       }
+                                   })
+                               }
+                               else{
+                                   var text = $("tr#sid"+id).find("td").eq(5).text();
+                                   if(text.includes("Administrator")){
+                                       Swal.fire({
+                                           confirmButtonColor: '#29CC97',
+                                           title: 'You have full access!',
+                                           showClass: {
+                                               popup: 'animate__animated animate__fadeInDown'
+                                           },
+                                           hideClass: {
+                                               popup: 'animate__animated animate__fadeOutUp'
+                                           }
+                                       }).then((result) => {
+                                           if (result.isConfirmed) {
+                                               $('#exampleModal').modal('hide');
+                                           }
+                                       })
 
-            console.log(tree);
-            console.log(id);
+
+                                   }else{
+                                       item.setAttribute('data-toggle','modal');
+                                       item.setAttribute('data-target','#exampleModal');
+                                       tree = $('#tree').tree({
+                                           primaryKey: 'id',
+                                           uiLibrary: 'bootstrap4',
+                                           dataSource: '/user/' + id + '/role',
+                                           checkboxes: true,
+                                           autoLoad: true
+                                       });
+                                       console.log(tree);
+                                   }
+                               }
+            }
+            @endif
         }
-
         function getNameRole(tree) {
             var objRole = {};
             var roles = [];
@@ -323,14 +364,14 @@
                      //update role name after response success
                         var rowRole ;
                if(data.result.length ===0){
-                $("tr#sid"+1).find("td").eq(5).text('');
+                $("tr#sid"+id).find("td").eq(5).text('');
                 rowRole =  $('<span>No active</span>');
-                $("tr#sid"+1).find("td").eq(5).append(rowRole);
+                $("tr#sid"+id).find("td").eq(5).append(rowRole);
                }else{
-                $("tr#sid"+1).find("td").eq(5).text('');
+                $("tr#sid"+id).find("td").eq(5).text('');
                    $.each(data.result,function(index,value){
                     rowRole =  $('<span class="mb-2 mr-2 badge badge-pill badge-info">' + value + '</span>');
-                  $("tr#sid"+1).find("td").eq(5).append(rowRole);
+                  $("tr#sid"+id).find("td").eq(5).append(rowRole);
                    })
                }
                         console.log(data.success);
@@ -341,8 +382,6 @@
                         $('.alert-highlighted').fadeOut(5000);
                         tree.destroy();
                         console.log(data.result);
-
-
                     },
                     error: function (error) {
                         console.log(error);
@@ -351,6 +390,43 @@
             }, 500)
         })
 
+        function deleteUser(item){
+
+           var id = item.getAttribute("data-value");
+            Swal.fire({
+                title: 'Are you sure delete user ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#29CC97',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                $overlay.appendTo(".swal2-container");
+                $('#overlay').show();
+                if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
+                            catch: false,
+                            url: 'user/' + id,
+
+                            data: {
+                                "_token": '{{csrf_token()}}'
+                            },
+                            success: function (data) {
+                                $('#overlay').hide();
+                                Swal.fire(
+                                    'Deleted!',
+                                    data.success,
+                                    'success'
+                                )
+                                $("tr#sid"+id).remove();
+
+                            }
+                        })
+                }
+            })
+        }
 
     </script>
 @endsection
