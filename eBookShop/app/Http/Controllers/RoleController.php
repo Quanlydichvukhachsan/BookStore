@@ -70,17 +70,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-       $role = Role::findOrFail($id);
+        $data = $this->accessContract->edit($id);
 
-       $permission = Permission::all();
-
-        $arrayIdPermiss = array();
-        $IdPermiss =$role->permissions;
-        foreach ($IdPermiss as $idPermiss){
-            array_push($arrayIdPermiss,$idPermiss->id);
-        }
-
-      return view('admin.role.edit',compact('role','permission','arrayIdPermiss'));
+      return response()->json(["role"=>$data[0],"permissions"=>$data[1],"arrayRoleHasPermission"=>$data[2]]);
     }
 
     /**

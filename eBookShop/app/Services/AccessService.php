@@ -42,6 +42,18 @@ class AccessService implements  AccessContract
 
     public function edit($id)
     {
-        // TODO: Implement edit() method.
+        $arrayData =array();
+        $arrayRoleHasPermission = array();
+         $role =  Role::findOrFail($id);
+         $permissions = Permission::all();
+        $roleHasPermission =$role->permissions;
+        foreach ($roleHasPermission as $idPermission){
+            array_push($arrayRoleHasPermission,$idPermission->id);
+        }
+        array_push($arrayData, $role);
+        array_push($arrayData, $permissions);
+        array_push($arrayData, $arrayRoleHasPermission);
+
+         return $arrayData;
     }
 }
