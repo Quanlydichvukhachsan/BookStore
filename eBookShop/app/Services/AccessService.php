@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Contracts\AccessContract;
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -40,7 +41,21 @@ class AccessService implements  AccessContract
 
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        $check =false;
+        $result = array('error' => 'error',
+                        'success' =>'success');
+        $role = Role::findOrFail($id);
+        $users = User::all();
+        foreach ($users as $user){
+            if($user->hasRole($role->name)){
+                  $check = true;
+               return  $result['error'];
+            }
+        }
+        if($check ===false){
+            Role::destroy($id);
+        }
+        return $result['success'] ;
     }
 
     public function edit($id)

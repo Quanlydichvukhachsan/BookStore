@@ -32,11 +32,6 @@
     @include('layouts.sidebar')
 
     <div class="page-wrapper">
-        <!--
-         ====================================
-         ——— HEADER
-         =====================================
-       -->
 
         <div aria-live="polite" aria-atomic="true" style="position: relative;">
             <div class="alert alert-success alert-highlighted"

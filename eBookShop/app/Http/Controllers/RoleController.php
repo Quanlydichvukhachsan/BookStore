@@ -17,7 +17,6 @@ class RoleController extends Controller
    public function __construct(AccessContract $accessContract){
          $this->accessContract =$accessContract;
    }
-
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +58,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -97,9 +96,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-      //   $role = Role::findOrDetail($id);
-          Role::destroy($id);
-        \Illuminate\Support\Facades\Session::flash('delete-role','Role delete success!');
-        return redirect()->back();
+        $result = $this->accessContract->delete($id);
+        return response()->json(['result'=>$result]);
     }
 }

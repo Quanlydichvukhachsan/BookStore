@@ -3,7 +3,10 @@
     <h1>Users</h1>
 @endsection
 @section('root')
-    App
+    <a href="{{route('admin.index')}}">
+        App
+    </a>
+
 @endsection
 @section('model')
     Users
@@ -240,6 +243,7 @@
                                if(ids ===id){
                                    Swal.fire({
                                        title: 'You have full access!',
+                                       confirmButtonColor: '#29CC97',
                                        showClass: {
                                            popup: 'animate__animated animate__fadeInDown'
                                        },
@@ -249,25 +253,6 @@
                                    })
                                }
                                else{
-                                   var text = $("tr#sid"+id).find("td").eq(5).text();
-                                   if(text.includes("Administrator")){
-                                       Swal.fire({
-                                           confirmButtonColor: '#29CC97',
-                                           title: 'You have full access!',
-                                           showClass: {
-                                               popup: 'animate__animated animate__fadeInDown'
-                                           },
-                                           hideClass: {
-                                               popup: 'animate__animated animate__fadeOutUp'
-                                           }
-                                       }).then((result) => {
-                                           if (result.isConfirmed) {
-                                               $('#exampleModal').modal('hide');
-                                           }
-                                       })
-
-
-                                   }else{
                                        item.setAttribute('data-toggle','modal');
                                        item.setAttribute('data-target','#exampleModal');
                                        tree = $('#tree').tree({
@@ -278,7 +263,7 @@
                                            autoLoad: true
                                        });
                                        console.log(tree);
-                                   }
+
                                }
             }
             @endif
@@ -421,6 +406,9 @@
                                 )
                                 $("tr#sid"+id).remove();
 
+                            },
+                            error:function (error){
+                                console.log(error);
                             }
                         })
                 }

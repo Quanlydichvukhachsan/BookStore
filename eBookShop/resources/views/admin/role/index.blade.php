@@ -3,7 +3,9 @@
     <h1>Access</h1>
 @endsection
 @section('root')
-    App
+    <a href="{{route('admin.index')}}">
+        App
+    </a>
 @endsection
 @section('model')
     role-permission
@@ -56,7 +58,7 @@
                                 data-target="#exampleModalForm" data-value="{{$roles->id}}" onclick="getRoleId(this)">
                            <span><i class="mdi mdi-pencil"></i></span>
                         </button>
-                         <button class="mb-1 btn btn-danger" data-value="{{$roles->id}}" onclick="getRoleId(this)">
+                         <button class="mb-1 btn btn-danger" data-value="{{$roles->id}}" onclick="deleteRoleById(this)">
                             <span><i class="mdi mdi-trash-can"></i></span>
                          </button>
 
@@ -182,7 +184,6 @@
     let id;
     function getRoleId(item){
        id=  item.getAttribute("data-value");
-        console.log(id);
         $.ajax({
             type: 'GET',
             catch: false,
@@ -248,7 +249,56 @@
     function remove(){
         $('#form-role').children('.form-group').remove();
     }
-
+     function deleteRoleById(item){
+        let id=  item.getAttribute("data-value");
+         Swal.fire({
+             title: 'Are you sure delete role ?',
+             text: "You won't be able to revert this!",
+             icon: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#29CC97',
+             cancelButtonColor: '#d33',
+             confirmButtonText: 'Yes, delete it!'
+         }).then((result) => {
+             $overlay.appendTo(".swal2-container");
+             $('#overlay').show();
+             if (result.isConfirmed) {
+                 $.ajax({
+                     type: 'DELETE',
+                     catch: false,
+                     url: 'role/' + id,
+                     data: {
+                         "_token": '{{csrf_token()}}'
+                     },
+                     success: function (data) {
+                         console.log(data.result)
+                         if(data.result !=='error'){
+                             $('#overlay').hide();
+                             Swal.fire(
+                                 'Deleted!',
+                                 data.result,
+                                 'success'
+                             )
+                             $("tr#sid"+id).remove();
+                             $(".alert-highlighted span").text("Delete role success!");
+                             $('.alert-highlighted').show();
+                             $('.alert-highlighted').fadeOut(5000);
+                         }else{
+                             $('#overlay').hide();
+                             $(".alert-highlighted").removeClass('alert-success');
+                             $(".alert-highlighted").addClass('alert-danger');
+                             $(".alert-highlighted span").text("Already registered! cannot delete role");
+                             $('.alert-highlighted').show();
+                             $('.alert-highlighted').fadeOut(5000);
+                         }
+                     },
+                     error:function (error){
+                         console.log(error);
+                     }
+                 })
+             }
+         })
+     }
 
 
     $('#btn-submit').click(function (e){
