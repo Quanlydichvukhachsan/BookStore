@@ -32,7 +32,10 @@ class AccessService implements  AccessContract
 
     public function update($request, $id)
     {
-        // TODO: Implement update() method.
+        $role = Role::findOrFail($id);
+        $input = $request->all();
+        $role->syncPermissions($input['arrayIdPermission']);
+        return $role->permissions;
     }
 
     public function delete($id)

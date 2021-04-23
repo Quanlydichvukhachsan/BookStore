@@ -34,7 +34,7 @@
               </thead>
               <tbody>
               @foreach($role as $roles )
-                <tr id="sid={{$roles->id}}">
+                <tr id="sid{{$roles->id}}">
                 <td>{{$roles->id}}</td>
                 <td>{{$roles->name}}</td>
                 <td>
@@ -76,20 +76,21 @@
             </table>
                     @include('admin.role.create')
 
-                    <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog"  data-keyboard="false"
+                         data-backdrop="static"   aria-labelledby="exampleModalFormTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalFormTitle">Edit role</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" onclick="remove()" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="form-role">
-                                        @csrf
-                                        @method('POST')
-                                    </form>
+                                        {!! Form::open(['method' => 'PATCH', 'id'=>'form-role']) !!}
+
+                                        {!! Form::close() !!}
+
 
                                 </div>
                                 <div class="modal-footer">
@@ -104,6 +105,7 @@
         </div>
       </div>
     </div>
+
 
 @endsection
 
@@ -137,7 +139,8 @@
     },
     success: function (data) {
 
-        var tools = '<td>'+' <button class="mb-1 btn btn-success"'+' data-value='+'"' +data.role.id +'"'
+        var tools = '<td>'+' <button data-target="#exampleModalForm" ' +
+            'data-toggle="modal" class="mb-1 btn btn-success"'+' data-value='+'"' +data.role.id +'"'
             +' onclick="getRoleId(this)"' + '>'+
             ' <span><i class="mdi mdi-pencil"></i></span> </button>' +
              ' <button class="mb-1 btn btn-danger"'+' data-value='+'"' +data.role.id +'"'
@@ -188,15 +191,11 @@
                 "_token": '{{csrf_token()}}',
             },
             success: function (data) {
-                console.log(data.role);
-                console.log(data.permissions);
-                console.log(data.arrayRoleHasPermission);
-
               var html =
-                  $('<div class="form-group">'+
+                  $( '<div class="form-group">'+
                 '<label for="name" class="col-form-label">Name</label> ' +
-                '<input name="name" id="name" type="text" class="form-control" placeholder="role name" value='+'"'+data.role.name +'"'+'>'+
-                   ' <div class="invalid-feedback name"></div>'+
+                '<input name="name" id="name" type="text" class="form-control" readonly placeholder="role name" value='+'"'+data.role.name +'"'+'>'+
+                   ' <div class="invalid-feedback name"></div>'
            +' </div>'+
                   '<div class="form-group">'+
                   '<label>Permission</label>'
@@ -206,39 +205,36 @@
 
 
               if(data.role.name ==="Administrator"){
-                    html += '<label>You have full permission!</label>';
+                    $label = '<span class="badge badge-success m-sm-3">You have full permission!</span>';
+                  $(html).find("#checkPermission").append($label);
+                  $('#btn-submit').attr('disabled','disabled');
               }else{
+                  $('#btn-submit').removeAttr('disabled');
                   var roleHasPermission =data.permissions;
 
                   roleHasPermission.forEach(function (item) {
                       if(jQuery.inArray(item.id,data.arrayRoleHasPermission) !== -1 && jQuery.isArray(data.arrayRoleHasPermission)){
-                          $row1 = '<div class="col-sm-4">'
-                              + '<div class="form-group">'+
-                              '<div class="form-check">'+
+                          $row =
+                              '<div class="m-sm-3">'+
+                              '<label class="control outlined control-checkbox">'+ item.name
+                            + '<input   name="arrayIdPermission[]" type="checkbox" value='+'"'+
+                              item.name+'"' + ' checked="checked"' +'>' +
+                              '<div class="control-indicator"></div>'
+                              + '</label>'
+                             + '</div>'
 
-                              '<input   name="arrayIdPermission[]" type="checkbox" value='+'"'+
-                              item.name+'"' + ' checked="checked"' +'>'
-                              +   '<label class="control outlined control-checkbox">'+ item.name + '</label>'
-                              +'</div>'
-                              +'</div>'
-                              +'</div>';
-                          $(html).find("#checkPermission").append($row1);
+                          $(html).find("#checkPermission").append($row);
                       }else{
-                          $row = '<div class="col-sm-4">'
-                              + '<div class="form-group">'+
-                              '<div class="form-check">'+
-
-                              '<input   name="arrayIdPermission[]" type="checkbox" value='+'"'+
-                              item.name+'"' + '' +'>'
-                              +   '<label class="control outlined control-checkbox">'+ item.name + '</label>'
-                              +'</div>'
-                              +'</div>'
-                              +'</div>';
+                          $row =  '<div class="m-sm-3">'+
+                              '<label class="control outlined control-checkbox">'+ item.name
+                              + '<input   name="arrayIdPermission[]" type="checkbox" value='+'"'+
+                              item.name+'"' + '' +'>' +
+                              '<div class="control-indicator"></div>'
+                              + '</label>'
+                              + '</div>'
                           $(html).find("#checkPermission").append($row);
                       }
-
                   })
-
               }
             $('#form-role').append(html);
 
@@ -249,10 +245,52 @@
         })
 
     }
-
     function remove(){
-        $('#form-role').children().remove();
+        $('#form-role').children('.form-group').remove();
     }
+
+
+
+    $('#btn-submit').click(function (e){
+        e.preventDefault();
+        $overlay.appendTo("#exampleModalForm");
+        $('#overlay').show();
+        setTimeout(function (){
+            $.ajax({
+                type: 'PUT',
+                catch: false,
+                url: 'role/' + id,
+                data:  $('#form-role').serialize() ,
+                success: function (data) {
+
+                    if(data.result.length ===0){
+                        $("tr#sid"+id).find("td").eq(2).text('');
+                        $rowRole =  $('<span>No active</span>');
+                        $("tr#sid"+id).find("td").eq(2).append($rowRole);
+                    }else{
+                        console.log(id);
+                        $("tr#sid"+id).find("td").eq(2).text('');
+                        $.each(data.result,function(index,value) {
+                            console.log(value.name);
+                            $rowRole = '<span class="badge badge-info">' + value.name + '</span>&nbsp' ;
+                            $("tr#sid"+id).find("td").eq(2).append($rowRole);
+                        })
+                    }
+                    console.log(data.result);
+                    $(".alert-highlighted span").text(data.success);
+                    $('.alert-highlighted').show();
+                    $('#overlay').hide();
+                    $('#exampleModalForm').modal('hide');
+                    $('.alert-highlighted').fadeOut(5000);
+                    remove();
+
+                },
+                error:function (error){
+                    $.fn.handlerError(error);
+                }
+            })
+        },1000)
+    })
 
   </script>
 

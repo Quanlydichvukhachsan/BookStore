@@ -84,33 +84,9 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, $id)
     {
-        $role = Role::findOrFail($id);
-        $input = $request->all();
-        $arrayNamePermission = array();
-        $originPermission = Permission::all();
 
-        foreach ($originPermission as $namePermission){
-            array_push($arrayNamePermission,$namePermission->name);
-        }
-
-
-        if(array_key_exists('arrayIdPermiss',$input))
-        {
-            foreach ($originPermission as $permission){
-                if(in_array($permission,$input['arrayIdPermiss']) === false){
-
-                    $role->revokePermissionTo($permission);
-                }
-            }
-            $role->givePermissionTo($input['arrayIdPermiss']);
-        }else{
-            $role->syncPermissions([]);
-        }
-
-
-        $request->session()->flash('update-role','The Role update success!');
-
-     return redirect()->route('role.index');
+       $permissions = $this->accessContract->update($request,$id);
+        return response()->json(["success"=>"Edit role success!","result"=>$permissions]);
     }
 
     /**
