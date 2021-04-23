@@ -69,10 +69,10 @@ class CategoryService implements CategoryContract{
 
     }
 
-    public function create($value, $text)
+    public function create()
     {
         $space ='';
-        $htmlOption='<option value="'.$value.'">'.$text.'</option>';
+        $htmlOption='<option value="0">'."--Lưa chọn nhóm cha--".'</option>';
 
         $category = Category::where('parent_id','=',0)->get();
         foreach ($category as $item)

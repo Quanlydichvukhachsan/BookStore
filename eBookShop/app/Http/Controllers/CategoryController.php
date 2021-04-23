@@ -38,9 +38,9 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create($value,$text)
+    public function create()
     {
-        $htmlOption = $this->CategoryContract->create($value,$text);
+        $htmlOption = $this->CategoryContract->create();
         return $htmlOption;
 
 

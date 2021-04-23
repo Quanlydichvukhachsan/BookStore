@@ -169,9 +169,9 @@
     <script>
 
         $(document).ready(function(){
-            fill_parent_category();
-            formatText();
-            $.fn.fill_parent_category(0,"--lựa chọn nhóm cha--");
+
+            //formatText();
+            $.fn.fill_parent_category();
             {{--function fill_parent_category()--}}
             {{--{--}}
             {{--    $.ajax({--}}
@@ -190,7 +190,7 @@
                      data:{
                          "_token": '{{csrf_token()}}',
                          "name": $('#name').val(),
-                         "parent_id":$('#parent_id').val()
+                         "parent_id":$('#textResult').val()
                      },
                     success:function (data){
                         fill_parent_category();
@@ -201,23 +201,22 @@
                         console.log(error);
                         $.fn.handlerError(error);
                     }
-
                 })
             });
 
 
         });
-        function formatText(){
 
+        function formatText(){
             var id = $("#parent_id").val();
-            console.log(id);
             var text= $('#parent_id option:selected').text();
-            console.log(text);
             var splitstr = text.split(/\s{4}/);
-            console.log(splitstr);
             var index =(splitstr.length)-1;
-            $(`#parent_id option:selected[value=${id}]`).text(splitstr[index]);
-            $.fn.fill_parent_category();
+            var result=  $(`#parent_id option:selected[value=${id}]`).text(splitstr[index]);
+
+            //  $.fn.fill_parent_category();
+            $("#textResult").val(result.text());
+            $("#parent_id").prop('selectedIndex',0);
 
         }
 

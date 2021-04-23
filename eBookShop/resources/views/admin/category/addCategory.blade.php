@@ -25,6 +25,7 @@
                         <div class="col-9">
                             <select class="form-control selectCategory" id="parent_id" onclick="formatText()" name="parent_id">
                             </select>
+                            <input type="text" readonly="readonly" id="textResult">
                         </div>
                     </div>
                     <div class="modal-footer">
