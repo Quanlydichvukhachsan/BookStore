@@ -90,8 +90,6 @@
                          data-parent="#sidebar-menu">
                         <div class="sub-menu">
 
-
-
                             <li >
                                 <a class="sidenav-item-link" href="{{route('user.index')}}">
                                     <span class="nav-text">Users</span>
@@ -99,23 +97,12 @@
                                 </a>
                             </li>
 
-
-
-
-
-
                             <li >
-                                <a class="sidenav-item-link" href="contacts.html">
-                                    <span class="nav-text">Contacts</span>
+                                <a class="sidenav-item-link" href="{{route('role.index')}}">
+                                    <span class="nav-text">Access Control</span>
 
                                 </a>
                             </li>
-
-
-
-
-
-
                             <li >
                                 <a class="sidenav-item-link" href="team.html">
                                     <span class="nav-text">Team</span>
@@ -123,28 +110,15 @@
                                 </a>
                             </li>
 
-
-
-
-
-
                             <li >
                                 <a class="sidenav-item-link" href="calendar.html">
                                     <span class="nav-text">Calendar</span>
 
                                 </a>
                             </li>
-
-
-
-
                         </div>
                     </ul>
                 </li>
-
-
-
-
 
                 <li  class="has-sub" >
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#components"

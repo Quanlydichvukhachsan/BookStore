@@ -3,7 +3,10 @@
     <h1>Users</h1>
 @endsection
 @section('root')
-    App
+    <a href="{{route('admin.index')}}">
+        App
+    </a>
+
 @endsection
 @section('model')
     Users
@@ -13,7 +16,7 @@
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                <h2>Basic Data Table</h2>
+                <h2>Basic Data User</h2>
 
                 <button class="btn btn-outline-primary" type="button" data-toggle="modal"
                         data-target="#exampleModalForm">
@@ -89,7 +92,6 @@
                         </tbody>
                     </table>
 
-
                     @include('admin.user.create',['arrRoles'=>$arrRole])
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
@@ -127,7 +129,7 @@
 
 @endsection
 @section('script')
-    <script src="error-handler/exception.js"></script>
+    <script src={{asset("error-handler/exception.js")}}></script>
 
     <script>
 
@@ -241,6 +243,7 @@
                                if(ids ===id){
                                    Swal.fire({
                                        title: 'You have full access!',
+                                       confirmButtonColor: '#29CC97',
                                        showClass: {
                                            popup: 'animate__animated animate__fadeInDown'
                                        },
@@ -250,25 +253,6 @@
                                    })
                                }
                                else{
-                                   var text = $("tr#sid"+id).find("td").eq(5).text();
-                                   if(text.includes("Administrator")){
-                                       Swal.fire({
-                                           confirmButtonColor: '#29CC97',
-                                           title: 'You have full access!',
-                                           showClass: {
-                                               popup: 'animate__animated animate__fadeInDown'
-                                           },
-                                           hideClass: {
-                                               popup: 'animate__animated animate__fadeOutUp'
-                                           }
-                                       }).then((result) => {
-                                           if (result.isConfirmed) {
-                                               $('#exampleModal').modal('hide');
-                                           }
-                                       })
-
-
-                                   }else{
                                        item.setAttribute('data-toggle','modal');
                                        item.setAttribute('data-target','#exampleModal');
                                        tree = $('#tree').tree({
@@ -279,7 +263,7 @@
                                            autoLoad: true
                                        });
                                        console.log(tree);
-                                   }
+
                                }
             }
             @endif
@@ -422,6 +406,9 @@
                                 )
                                 $("tr#sid"+id).remove();
 
+                            },
+                            error:function (error){
+                                console.log(error);
                             }
                         })
                 }
