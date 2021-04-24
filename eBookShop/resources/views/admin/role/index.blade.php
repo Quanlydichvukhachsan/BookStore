@@ -180,6 +180,7 @@
                 "_token": '{{csrf_token()}}',
             },
             success: function (data) {
+                console.log(data.role);
               var html =
                   $( '<div class="form-group">'+
                 '<label for="name" class="col-form-label">Name</label> ' +
@@ -191,7 +192,6 @@
                   +'<div id="checkPermission" class="row">' +
                   '</div>'+
                   '</div>') ;
-
 
               if(data.role.name ==="Administrator"){
                     $label = '<span class="badge badge-success m-sm-3">You have full permission!</span>';
@@ -236,6 +236,12 @@
     }
     function remove(){
         $('#form-role').children('.form-group').remove();
+    }
+    function removeFormModalSmall(){
+        $('#arrayPermission option').each(function() {
+                $(this).remove();
+        });
+
     }
      function deleteRoleById(item){
         let id=  item.getAttribute("data-value");
@@ -338,18 +344,10 @@
             data:  $('#form-permission').serialize() ,
             success: function (data) {
                 console.log(data.arrPermissions);
-                 $html = '<div class="form-group">'+
-                    '<label>Permission</label>'+
-                    '<select class="select2bs4" id="arrayPermission" multiple="multiple" data-placeholder="Select a permission" style="width: 100%;">'+
-                    '</select>'+
-                    '</div>';
-
                 data.arrPermissions.forEach(function (item) {
-                     $permission =  '<option>'+item.name +'</option>';
-                    $($html).find('#arrayPermission').append($permission);
+                     var permission =  '<option>'+item.name +'</option>';
+                    $('#form-permission').find('#arrayPermission').append(permission);
                 });
-                $('#form-permission').append($html);
-
                 },
             error:function (error) {
                 console.log(error);
