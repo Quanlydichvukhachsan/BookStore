@@ -90,7 +90,30 @@
             </table>
                     @include('admin.role.create')
                     @include('admin.permission.create')
+                    <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog"  data-keyboard="false"
+                         data-backdrop="static"   aria-labelledby="exampleModalFormTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalFormTitle">Edit role</h5>
+                                    <button type="button" onclick="remove()" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {!! Form::open(['method' => 'PATCH', 'id'=>'form-role']) !!}
 
+                                    {!! Form::close() !!}
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="remove()" class="btn btn-secondary btn-pill" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="btn-submit" class="btn btn-primary btn-pill">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
         </div>
       </div>
@@ -180,7 +203,6 @@
                 "_token": '{{csrf_token()}}',
             },
             success: function (data) {
-                console.log(data.role);
               var html =
                   $( '<div class="form-group">'+
                 '<label for="name" class="col-form-label">Name</label> ' +
@@ -335,7 +357,6 @@
             })
         },1000)
     })
-
     function editPermission(){
         $.ajax({
             type: 'GET',
@@ -347,6 +368,7 @@
                 data.arrPermissions.forEach(function (item) {
                      var permission =  '<option>'+item.name +'</option>';
                     $('#form-permission').find('#arrayPermission').append(permission);
+
                 });
                 },
             error:function (error) {
@@ -354,7 +376,46 @@
             }
         });
     }
+    $('#btn-cancel-register').click(function (e){
+        e.preventDefault();
+        $overlay.appendTo("#exampleModalsmall");
+        $('#overlay').show();
+        setTimeout(function (){
+            $.ajax({
+                type: 'PATCH',
+                catch: false,
+                url: 'permission/'+'updatePermission',
+                data:  $('#form-permission').serialize() ,
+                success: function (data) {
+                    console.log(data.result);
+                  /*  if(data.result.length ===0){
+                        $("tr#sid"+id).find("td").eq(2).text('');
+                        $rowRole =  $('<span>No active</span>');
+                        $("tr#sid"+id).find("td").eq(2).append($rowRole);
+                    }else{
+                        console.log(id);
+                        $("tr#sid"+id).find("td").eq(2).text('');
+                        $.each(data.result,function(index,value) {
+                            console.log(value.name);
+                            $rowRole = '<span class="badge badge-info">' + value.name + '</span>&nbsp' ;
+                            $("tr#sid"+id).find("td").eq(2).append($rowRole);
+                        })
+                    }
+                    console.log(data.result);
+                    $(".alert-highlighted span").text(data.success);
+                    $('.alert-highlighted').show();
+                    $('#overlay').hide();
+                    $('#exampleModalForm').modal('hide');
+                    $('.alert-highlighted').fadeOut(5000);
+                    remove();*/
 
+                },
+                error:function (error){
+                    $.fn.handlerError(error);
+                }
+            })
+        },1000)
+    })
   </script>
 
 @endsection
