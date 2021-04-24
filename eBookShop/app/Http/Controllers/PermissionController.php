@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Contracts\PermissionContract;
 use App\Http\Requests\CreatePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use Spatie\Permission\Models\Role;
@@ -9,6 +10,11 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+
+    public $permissionContract ;
+     public function __construct(PermissionContract $permissionContract ){
+         $this->permissionContract =$permissionContract;
+     }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +22,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission = Permission::all();
-        return view('admin.permission.index',compact('permission'));
+        $arrPermissions =  $this->permissionContract->getAll();
+        return response()->json(['arrPermissions'=>$arrPermissions]);
     }
 
     /**

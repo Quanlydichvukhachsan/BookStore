@@ -16,10 +16,23 @@
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
                 <h2>Data Table Access</h2>
-                <button class="btn btn-outline-primary" type="button" data-toggle="modal"
-                        data-target="#exampleModal">
-                    <i class=" mdi mdi-plus-circle"></i> Create Role
-                </button>
+                <div class="dropdown d-inline-block mb-1">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a  type="button" data-toggle="modal"
+                           data-target="#exampleModal"
+                           class="dropdown-item" href="#">
+                            <i class=" mdi mdi-plus-circle"></i> Create Role
+                        </a>
+                        <a type="button" data-toggle="modal" href="#"
+                           data-target="#exampleModalsmall"
+                           class="dropdown-item" onclick="editPermission()" >Edit permission</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -40,18 +53,17 @@
                 <td>{{$roles->id}}</td>
                 <td>{{$roles->name}}</td>
                 <td>
-
                     @if($roles->name === "Administrator")
                         <span class="badge badge-info">
                         {{ __('Full Permission') }}
                         </span>
                     @endif
 
-                  @foreach($roles->permissions as $permissionsName)
-                <span class="badge badge-info">
+                    @foreach($roles->permissions as $permissionsName)
+                        <span class="badge badge-info">
                         {{$permissionsName->name}}
                 </span>
-                  @endforeach
+                    @endforeach
                 </td>
                     <td>
                         <button class="mb-1 btn btn-success" data-toggle="modal"
@@ -77,31 +89,7 @@
               </tfoot>
             </table>
                     @include('admin.role.create')
-
-                    <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog"  data-keyboard="false"
-                         data-backdrop="static"   aria-labelledby="exampleModalFormTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalFormTitle">Edit role</h5>
-                                    <button type="button" onclick="remove()" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                        {!! Form::open(['method' => 'PATCH', 'id'=>'form-role']) !!}
-
-                                        {!! Form::close() !!}
-
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" onclick="remove()" class="btn btn-secondary btn-pill" data-dismiss="modal">Close</button>
-                                    <button type="submit" id="btn-submit" class="btn btn-primary btn-pill">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include('admin.permission.create')
 
                 </div>
         </div>
@@ -341,6 +329,33 @@
             })
         },1000)
     })
+
+    function editPermission(){
+        $.ajax({
+            type: 'GET',
+            catch: false,
+            url: 'permission/',
+            data:  $('#form-permission').serialize() ,
+            success: function (data) {
+                console.log(data.arrPermissions);
+                 $html = '<div class="form-group">'+
+                    '<label>Permission</label>'+
+                    '<select class="select2bs4" id="arrayPermission" multiple="multiple" data-placeholder="Select a permission" style="width: 100%;">'+
+                    '</select>'+
+                    '</div>';
+
+                data.arrPermissions.forEach(function (item) {
+                     $permission =  '<option>'+item.name +'</option>';
+                    $($html).find('#arrayPermission').append($permission);
+                });
+                $('#form-permission').append($html);
+
+                },
+            error:function (error) {
+                console.log(error);
+            }
+        });
+    }
 
   </script>
 
