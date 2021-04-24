@@ -42,10 +42,6 @@
                     </div>
 
                 </div>
-{{----}}
-
-                {{--                </aside>--}}
-
 
                 <div class="mt-3"></div>
             </div>
@@ -160,27 +156,13 @@
 @section('script')
     <script src="{{asset("error-handler/exception.js")}}"></script>
     <script src="{{asset("fillParentCategory/fillParentCategory.js")}}"></script>
-    <script type="text/javascript">
-        $("#demo").treeMultiselect({maxSelections: 1, sortable: true, searchable: true});
-
-    </script>
-
+    <script type="text/javascript"></script>
 
     <script>
-
         $(document).ready(function(){
 
-            //formatText();
             $.fn.fill_parent_category();
-            {{--function fill_parent_category()--}}
-            {{--{--}}
-            {{--    $.ajax({--}}
-            {{--        url:'{{route('category.create')}}',--}}
-            {{--        success:function(data){--}}
-            {{--            $('#parent_id').html(data);--}}
-            {{--        }--}}
-            {{--    })--}}
-            {{--}--}}
+
 
             $('#tree-form').on('submit',function (event){
                 event.preventDefault();
@@ -190,10 +172,10 @@
                      data:{
                          "_token": '{{csrf_token()}}',
                          "name": $('#name').val(),
-                         "parent_id":$('#textResult').val()
+                         "parent_id":$('#parent_id').val()
                      },
                     success:function (data){
-                        fill_parent_category();
+                        $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
                         console.log(data.success);
                     },
@@ -203,23 +185,14 @@
                     }
                 })
             });
-
-
         });
-
         function formatText(){
             var id = $("#parent_id").val();
-            var text= $('#parent_id option:selected').text();
+            var text= $('#parent_id option:selected').val();
             var splitstr = text.split(/\s{4}/);
             var index =(splitstr.length)-1;
-            var result=  $(`#parent_id option:selected[value=${id}]`).text(splitstr[index]);
-
-            //  $.fn.fill_parent_category();
-            $("#textResult").val(result.text());
-            $("#parent_id").prop('selectedIndex',0);
-
+            $('#parent_id option:selected').val(splitstr[index]);
         }
-
     </script>
 
 @endsection
