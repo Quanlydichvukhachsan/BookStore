@@ -31,6 +31,7 @@
                         <button type="submit" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Lưu
                         </button>
                         <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
+
                     </div>
                 </form>
             </div>

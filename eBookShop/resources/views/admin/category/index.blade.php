@@ -7,6 +7,10 @@
 
                 <div class="card-header card-header-border-bottom">
                     <h2>Thể Loại</h2>
+                   @include('admin.category.iconsvg.plus')
+                </div>
+                <div class="col-md-12">
+                    <div class="nav-treeview" id="treeview"></div>
                 </div>
 
 
@@ -18,32 +22,41 @@
                     <div id="sidebar" class="sidebar">
                         <div class="col-12">
 
-                            <ul class="nav sidebar-inner" id="sidebar-menu">
-                                <cript class="has-sub">
 
+{{--                            <div class="input-group ">--}}
+{{--                                <div class="form-outline">--}}
+{{--                                    <input type="search" id="form1" class="form-control" />--}}
+{{--                                </div>--}}
+{{--                                <button type="submit" class="btn btn-success btn-pill">--}}
+{{--                                    @include('admin.category.iconsvg.plus')--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                          --}}
 
-                                    <div class="flex-row d-flex col-12">
-                                        <div class="col-10">
-                                            <a class="sidenav-item-link" style="color: #8a909d"
-                                               href="javascript:void(0)" data-toggle="collapse"
-                                               data-target="#category"
-                                               aria-expanded="false" aria-controls="pages">
-                                                <i class="mdi mdi-image-filter-none"></i>
-                                                <span class="nav-text">Category</span> <b class="caret"></b>
-                                            </a>
-                                        </div>
-                                        @include('admin.category.iconsvg.plus')
-                                    </div>
-                                </cript>
-                                {!! $html !!}
-                            </ul>
+{{--                            <ul class="nav sidebar-inner" id="sidebar-menu">--}}
+{{--                                <cript class="has-sub">--}}
+
+{{--                                    <div class="flex-row d-flex col-12">--}}
+{{--                                        <div class="col-10">--}}
+{{--                                            <a class="sidenav-item-link" style="color: #8a909d"--}}
+{{--                                               href="javascript:void(0)" data-toggle="collapse"--}}
+{{--                                               data-target="#category"--}}
+{{--                                               aria-expanded="false" aria-controls="pages">--}}
+{{--                                                <i class="mdi mdi-image-filter-none"></i>--}}
+{{--                                                <span class="nav-text">Category</span> <b class="caret"></b>--}}
+{{--                                            </a>--}}
+{{--                                        </div>--}}
+{{--                                        @include('admin.category.iconsvg.plus')--}}
+{{--                                    </div>--}}
+{{--                                </cript>--}}
+{{--                                {!! $html !!}--}}
+{{--                            </ul>--}}
                         </div>
 
                     </div>
 
                 </div>
 
-                <div class="mt-3"></div>
             </div>
 
         </div>
@@ -162,8 +175,18 @@
         $(document).ready(function(){
 
             $.fn.fill_parent_category();
-
-
+            fill_treeviews();
+            function fill_treeviews()
+            {
+                $.ajax({
+                    url:"{{route('category.index')}}",
+                    dataType:"json",
+                    success:function (data){
+                        $('#treeview').treeview();
+                        data:data;
+                    }
+                })
+            }
             $('#tree-form').on('submit',function (event){
                 event.preventDefault();
                 $.ajax({
@@ -172,12 +195,13 @@
                      data:{
                          "_token": '{{csrf_token()}}',
                          "name": $('#name').val(),
-                         "parent_id":$('#parent_id').val()
+                         "parent_id":$('#parent_id').val(),
                      },
                     success:function (data){
                         $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
                         console.log(data.success);
+                      alert(data);
                     },
                     error:function (error){
                         console.log(error);
