@@ -2,69 +2,100 @@
 
 @section('content')
     <div class="row">
-        <div class="col-xl-3">
-            <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389" id="card">
-
+        <div class="col-lg-4">
+            <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-9">Thể Loại</h2><br>
-                                           @include('admin.category.iconsvg.plus')
+                    <h2>Thông tin</h2>
                 </div>
-{{--                <div class="col-md-12">--}}
-{{--                    <div id="treeview">--}}
-{{--                        @csrf--}}
 
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="card-body">
+                    <div id="accordion3" class="accordion accordion-bordered ">
+                        <div class="card">
+                            <div class="card-header col-12" id="heading1">
+                                <button class="btn btn-link col-9" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                    Thê loại
+                                </button>
+                                @include('admin.category.iconsvg.plus')
+                            </div>
 
+                            <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordion3">
+                                <div class="card-body">
+                                    <ul id="treeview">
+                                        <li  data-expanded="true">Inbox
+                                            <ul>
+                                                <li><b>Today (2)</b></li>
+                                                <li>Monday</li>
+                                                <li>Last Week</li>
+                                            </ul>
+                                        </li>
+                                        <li data-icon-cls="fa fa-trash">Trash
+                                        </li>
+                                        <li data-icon-cls="fa fa-calendar">Calendar
+                                            <ul>
+                                                <li>Day</li>
+                                                <li>Week</li>
+                                                <li>Month</li>
+                                            </ul>
+                                        </li>
+                                        <li data-icon-cls="fa fa-user">Contacts
+                                            <ul>
+                                                <li>Alexander Stein</li>
+                                                <li>John Doe</li>
+                                                <li>Paul Smith</li>
+                                                <li>Steward Lynn</li>
+                                            </ul>
+                                        </li>
+                                        <li data-icon-cls="fa fa-folder">Folders
+                                            <ul>
+                                                <li>Backup</li>
+                                                <li>Deleted</li>
+                                                <li>Projects</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
-{{--                --}}{{--                                {!! $html !!}--}}
-{{--                --}}{{--                <aside class="left-card bg-card">--}}
+                        <div class="card">
+                            <div class="card-header" id="heading2">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false"
+                                        aria-controls="collapse2">
+                                    Tác giả
+                                </button>
+                            </div>
 
-{{--                --}}{{--                category--}}
-{{--                <div class="card-body slim-scroll p-0">--}}
-{{--                    <div id="sidebar" class="sidebar">--}}
-{{--                        <div class="col-12">--}}
+                            <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion3">
+                                <div class="card-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.enim
+                                    ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute.
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="card">
+                            <div class="card-header" id="heading3">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false"
+                                        aria-controls="collapse3">
+                                    Hat Black Suits
+                                </button>
+                            </div>
 
-{{--                            --}}{{--                                                        <div class="input-group ">--}}
-{{--                            --}}{{--                                                            <div class="form-outline">--}}
-{{--                            --}}{{--                                                                <input type="search" id="form1" class="form-control" />--}}
-{{--                            --}}{{--                                                            </div>--}}
-{{--                            --}}{{--                                                            <button type="submit" class="btn btn-success btn-pill">--}}
-{{--                            --}}{{--                                                                @include('admin.category.iconsvg.plus')--}}
-{{--                            --}}{{--                                                            </button>--}}
-{{--                            --}}{{--                                                        </div>--}}
-
-{{--                            <ul class="nav sidebar-inner" id="sidebar-menu">--}}
-{{--                                <cript class="has-sub">--}}
-
-{{--                                    <div class="flex-row d-flex col-12">--}}
-{{--                                        <div class="col-10">--}}
-{{--                                            <a class="sidenav-item-link" style="color: #8a909d"--}}
-{{--                                               href="javascript:void(0)" data-toggle="collapse"--}}
-{{--                                               data-target="#category"--}}
-{{--                                               aria-expanded="false" aria-controls="pages">--}}
-{{--                                                <i class="mdi mdi-image-filter-none"></i>--}}
-{{--                                                <span class="nav-text">Category</span> <b class="caret"></b>--}}
-{{--                                            </a>--}}
-{{--                                        </div>--}}
-{{--                                        @include('admin.category.iconsvg.plus')--}}
-{{--                                    </div>--}}
-{{--                                </cript>--}}
-{{--                                {!! $html !!}--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-
-{{--                    </div>--}}
-
-{{--                </div>--}}
-
+                            <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
+                                <div class="card-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.enim
+                                    ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
 
 
-        <div class="col-xl-9 float-right">
+
+        <div class="col-xl-6 float-right">
             <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389">
                 <div class="card-header card-header-border-bottom">
                     <h2>Team Activity</h2>
@@ -173,6 +204,9 @@
     <script src="{{asset("fillParentCategory/fillParentCategory.js")}}"></script>
     <script type="text/javascript"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
+    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
     <script>
         $(document).ready(function () {
 
@@ -223,7 +257,11 @@
             $('#parent_id option:selected').val(splitstr[index]);
         }
     </script>
-
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#treeview").shieldTreeView();
+        });
+    </script>
 @endsection
 
 
