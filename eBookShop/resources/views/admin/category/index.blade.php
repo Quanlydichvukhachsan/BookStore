@@ -6,32 +6,34 @@
             <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389" id="card">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2>Thể Loại</h2>
-                   @include('admin.category.iconsvg.plus')
+                    <h2 class="col-9">Thể Loại</h2><br>
+                                           @include('admin.category.iconsvg.plus')
                 </div>
-                <div class="col-md-12">
-                    <div class="nav-treeview" id="treeview"></div>
-                </div>
+{{--                <div class="col-md-12">--}}
+{{--                    <div id="treeview">--}}
+{{--                        @csrf--}}
+
+{{--                    </div>--}}
+{{--                </div>--}}
 
 
-                {{--                {!! $html !!}--}}
-                {{--                <aside class="left-card bg-card">--}}
+{{--                --}}{{--                                {!! $html !!}--}}
+{{--                --}}{{--                <aside class="left-card bg-card">--}}
 
-{{--                category--}}
-                <div class="card-body slim-scroll p-0">
-                    <div id="sidebar" class="sidebar">
-                        <div class="col-12">
+{{--                --}}{{--                category--}}
+{{--                <div class="card-body slim-scroll p-0">--}}
+{{--                    <div id="sidebar" class="sidebar">--}}
+{{--                        <div class="col-12">--}}
 
 
-{{--                            <div class="input-group ">--}}
-{{--                                <div class="form-outline">--}}
-{{--                                    <input type="search" id="form1" class="form-control" />--}}
-{{--                                </div>--}}
-{{--                                <button type="submit" class="btn btn-success btn-pill">--}}
-{{--                                    @include('admin.category.iconsvg.plus')--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                          --}}
+{{--                            --}}{{--                                                        <div class="input-group ">--}}
+{{--                            --}}{{--                                                            <div class="form-outline">--}}
+{{--                            --}}{{--                                                                <input type="search" id="form1" class="form-control" />--}}
+{{--                            --}}{{--                                                            </div>--}}
+{{--                            --}}{{--                                                            <button type="submit" class="btn btn-success btn-pill">--}}
+{{--                            --}}{{--                                                                @include('admin.category.iconsvg.plus')--}}
+{{--                            --}}{{--                                                            </button>--}}
+{{--                            --}}{{--                                                        </div>--}}
 
 {{--                            <ul class="nav sidebar-inner" id="sidebar-menu">--}}
 {{--                                <cript class="has-sub">--}}
@@ -51,11 +53,11 @@
 {{--                                </cript>--}}
 {{--                                {!! $html !!}--}}
 {{--                            </ul>--}}
-                        </div>
+{{--                        </div>--}}
 
-                    </div>
+{{--                    </div>--}}
 
-                </div>
+{{--                </div>--}}
 
             </div>
 
@@ -172,49 +174,52 @@
     <script type="text/javascript"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
 
             $.fn.fill_parent_category();
-            fill_treeviews();
-            function fill_treeviews()
-            {
+
+            //  fill_treeviews();
+
+            function fill_treeviews() {
                 $.ajax({
-                    url:"{{route('category.index')}}",
-                    dataType:"json",
-                    success:function (data){
-                        $('#treeview').treeview();
+                    url: "{{route('category.displayCategory')}}",
+                    dataType: "json",
+                    success: function (data) {
+                        $(`#treeview`).treeview();
                         data:data;
                     }
                 })
             }
-            $('#tree-form').on('submit',function (event){
+
+            $('#tree-form').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
-                    url:"{{route('category.store')}}",
-                    method:"POST",
-                     data:{
-                         "_token": '{{csrf_token()}}',
-                         "name": $('#name').val(),
-                         "parent_id":$('#parent_id').val(),
-                     },
-                    success:function (data){
+                    url: "{{route('category.store')}}",
+                    method: "POST",
+                    data: {
+                        "_token": '{{csrf_token()}}',
+                        "name": $('#name').val(),
+                        "parent_id": $('#parent_id').val(),
+                    },
+                    success: function (data) {
                         $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
                         console.log(data.success);
-                      alert(data);
+                        alert(data);
                     },
-                    error:function (error){
+                    error: function (error) {
                         console.log(error);
                         $.fn.handlerError(error);
                     }
                 })
             });
         });
-        function formatText(){
+
+        function formatText() {
             var id = $("#parent_id").val();
-            var text= $('#parent_id option:selected').val();
+            var text = $('#parent_id option:selected').val();
             var splitstr = text.split(/\s{4}/);
-            var index =(splitstr.length)-1;
+            var index = (splitstr.length) - 1;
             $('#parent_id option:selected').val(splitstr[index]);
         }
     </script>

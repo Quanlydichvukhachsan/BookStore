@@ -8,6 +8,26 @@ use App\viewModels\showCategoryModel;
 use function GuzzleHttp\Promise\all;
 
 class CategoryService implements CategoryContract{
+    public function index()
+    {
+        $paren_id =0;
+        $data = $this->get_node_parentid($paren_id);
+
+        return json_encode(array_values($data));
+    }
+    public function get_node_parentid($parent_id)
+    {
+        $result = Category::where('parent_id','=',$parent_id)->get();
+        $outPut = array();
+        foreach ($result as $row)
+        {
+            $sub_node = array();
+            $sub_node["text"] = $row["name"];
+            $sub_node["node"] = array_values($this->get_node_parentid($row["id"]));
+            $outPut[] = $sub_node;
+        }
+        return $outPut;
+    }
 
 
     public function getAll($Categories,$parent_id)

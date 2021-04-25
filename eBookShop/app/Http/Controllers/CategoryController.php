@@ -26,11 +26,20 @@ class CategoryController extends Controller
      */
     public function index()
     {
+       // return $this->CategoryContract->index();
+
+      //  $result= $this->CategoryContract->index();
 
         $html = $this->CategoryContract->getAll(Category::all(), 0);
-        $f =Category::All();
 
-        return view('admin.category.index', compact('html'));
+
+        return view('admin.category.index',compact('html'));
+    }
+    public function displayCategory()
+    {
+         $result= $this->CategoryContract->index();
+
+         return $result;
     }
 
     /**
