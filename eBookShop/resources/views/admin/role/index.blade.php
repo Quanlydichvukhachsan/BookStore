@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" onclick="remove()" class="btn btn-secondary btn-pill" data-dismiss="modal">Close</button>
-                                    <button type="submit" id="btn-submit" class="btn btn-primary btn-pill">Submit</button>
+                                    <button type="submit" id="btn-submit" class="btn btn-success btn-pill">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -372,50 +372,70 @@
                 });
                 },
             error:function (error) {
-                console.log(error);
+                $.fn.handlerError(error);
             }
         });
     }
-    $('#btn-cancel-register').click(function (e){
+    $('#btn-cancel-register').click(function (e) {
         e.preventDefault();
         $overlay.appendTo("#exampleModalsmall");
-        $('#overlay').show();
-        setTimeout(function (){
-            $.ajax({
-                type: 'PATCH',
-                catch: false,
-                url: 'permission/'+'updatePermission',
-                data:  $('#form-permission').serialize() ,
-                success: function (data) {
-                    console.log(data.result);
-                  /*  if(data.result.length ===0){
-                        $("tr#sid"+id).find("td").eq(2).text('');
-                        $rowRole =  $('<span>No active</span>');
-                        $("tr#sid"+id).find("td").eq(2).append($rowRole);
-                    }else{
-                        console.log(id);
-                        $("tr#sid"+id).find("td").eq(2).text('');
-                        $.each(data.result,function(index,value) {
-                            console.log(value.name);
-                            $rowRole = '<span class="badge badge-info">' + value.name + '</span>&nbsp' ;
-                            $("tr#sid"+id).find("td").eq(2).append($rowRole);
-                        })
-                    }
-                    console.log(data.result);
-                    $(".alert-highlighted span").text(data.success);
-                    $('.alert-highlighted').show();
-                    $('#overlay').hide();
-                    $('#exampleModalForm').modal('hide');
-                    $('.alert-highlighted').fadeOut(5000);
-                    remove();*/
 
-                },
-                error:function (error){
-                    $.fn.handlerError(error);
-                }
-            })
-        },1000)
-    })
+        Swal.fire({
+            title: 'Are you sure delete permission ?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#29CC97',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#overlay').show();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'PATCH',
+                        catch: false,
+                        url: 'permission/' + 'updatePermission',
+                        data: $('#form-permission').serialize(),
+                        success: function (data) {
+
+                            var result = data.result;
+                            if (result === 'you do not choose' || result === 'Permission name is require!') {
+                                $(".alert-highlighted").removeClass('alert-success');
+                                $(".alert-highlighted").addClass('alert-danger');
+                                $(".alert-highlighted span").text(result);
+                                $('.alert-highlighted').show();
+                                $('#overlay').hide();
+                                $('.alert-highlighted').fadeOut(5000);
+                            } else {
+                                console.log(result);
+                                result.forEach(function (item) {
+                                    if (item.roleHasPermission.length === 0) {
+                                        $("tr#sid" + item.roleId).find("td").eq(2).text('');
+                                    } else {
+                                        $("tr#sid" + item.roleId).find("td").eq(2).text('');
+                                        item.roleHasPermission.forEach(function (permission) {
+                                            $row = '<span class="badge badge-info">' + permission + '</span>&nbsp';
+                                            $("tr#sid" + item.roleId).find("td").eq(2).append($row);
+                                        })
+                                    }
+                                })
+                                $(".alert-highlighted span").text("Success cancel register permission!");
+                                $('.alert-highlighted').show();
+                                $('#overlay').hide();
+                                $('#exampleModalForm').modal('hide');
+                                $('.alert-highlighted').fadeOut(5000);
+                                removeFormModalSmall();
+                            }
+                        },
+                        error: function (error) {
+                            $.fn.handlerError(error);
+                        }
+                    })
+                }, 1000)
+            }
+        })
+    });
   </script>
 
 @endsection

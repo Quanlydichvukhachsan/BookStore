@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Contracts\PermissionContract;
 use App\Models\User;
+use App\viewModels\RoleHasPermissionModels;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -31,10 +32,9 @@ class PermissionService implements PermissionContract
     public function update($request, $id)
     {
         $input =$request->all();
-        $permissions = $request->input(['arrayPermission']);
-        $result = array('error' => 'error',
-            'success' =>'success');
-
+        $result = array();
+       if(array_key_exists('arrayPermission',$input)){
+       $permissions = $request->input(['arrayPermission']);
         if(array_key_exists('cancelUser',$input)){
             $users = User::all();
             foreach ($users as $user){
@@ -43,16 +43,48 @@ class PermissionService implements PermissionContract
         }elseif (array_key_exists('cancelRole',$input)){
             $roles = Role::all();
             foreach ($roles as $role){
-                $role->revokePermissionTo($permissions);
-            }
-        }
+                foreach ($permissions as $item){
+                    if($role->hasPermissionTo($item)){
+                        $role->revokePermissionTo($permissions);
+                        $roleHasPermission =new RoleHasPermissionModels();
+                        $roleHasPermission->setRoleId($role->id);
+                        $arrayNamePermission =array();
+                        foreach ($role->permissions as $permission){
+                            array_push($arrayNamePermission,$permission->name);
+                        }
+                        $roleHasPermission->setPermission($arrayNamePermission);
+                        array_push($result,$roleHasPermission);
+                    }
+                }
 
-        return  $result['success'];
+
+            }
+        }else{
+            return "you do not choose";
+        }
+       }else{
+           return "Permission name is require!";
+       }
+
+        return  $result;
     }
 
-    public function delete($id)
+    public function delete($request ,$id)
     {
-        // TODO: Implement delete() method.
+        $result = array('error' => 'error',
+            'success' =>'success');
+         $input = $request->all();
+        $users = User::all();
+        foreach ($users as $user){
+            foreach ($input['arrayPermission'] as $item){
+                if($user->hasPermissionTo($item)){
+                    return  $result['error'];
+                }else{
+                    Permission::destroy($item->id);
+                }
+            }
+        }
+        return $result['success'] ;
     }
 
     public function edit($id)

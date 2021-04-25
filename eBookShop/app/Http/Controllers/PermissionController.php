@@ -113,22 +113,13 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id)
     {
-        /*$index =0;
-    foreach ($users as $user){
-
-        if($user->hasPermission($permissions[$index]->name)){
-            $check = true;
-            return  $result['error'];
-        }
-        $index++;
-    }*/
-         Permission::destroy($id);
-        session()->flash('delete-permission','The Permission delete success!');
-        return  redirect()->back();
+           $result =  $this->permissionContract->delete($request,$id);
+        return  response()->json(['result'=>$result]);
     }
 }

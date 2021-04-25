@@ -17,6 +17,7 @@
                         <select class="select2bs4" name="arrayPermission[]" id="arrayPermission" multiple="multiple" data-placeholder="Select a permission" style="width: 100%;">
 
                         </select>
+                        <div class="invalid-feedback permission"></div>
                         </div>
                     <div class="m-sm-3">
                         <label class="control outlined control-checkbox"> Cancel register users
@@ -31,13 +32,10 @@
                             <div class="control-indicator"></div>
                         </label>
                     </div>
-
                     {!! Form::close() !!}
-
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="removeFormModalSmall()" class="btn btn-danger btn-pill" data-dismiss="modal">Delete</button>
-                    <button type="button" id="btn-cancel-register" class="btn btn-primary btn-pill">Cancel registration</button>
+                    <button type="button" id="btn-cancel-register" class="btn btn-success btn-pill">Cancel registration</button>
                 </div>
             </div>
         </div>
