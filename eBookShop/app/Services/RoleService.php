@@ -3,12 +3,12 @@
 
 namespace App\Services;
 
-use App\Contracts\AccessContract;
+use App\Contracts\RoleContract;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class AccessService implements  AccessContract
+class RoleService implements  RoleContract
 {
 
     public function getAll()

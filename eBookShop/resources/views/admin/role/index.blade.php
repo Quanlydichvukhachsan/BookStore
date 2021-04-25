@@ -16,10 +16,23 @@
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
                 <h2>Data Table Access</h2>
-                <button class="btn btn-outline-primary" type="button" data-toggle="modal"
-                        data-target="#exampleModal">
-                    <i class=" mdi mdi-plus-circle"></i> Create Role
-                </button>
+                <div class="dropdown d-inline-block mb-1">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a  type="button" data-toggle="modal"
+                           data-target="#exampleModal"
+                           class="dropdown-item" href="#">
+                            <i class=" mdi mdi-plus-circle"></i> Create Role
+                        </a>
+                        <a type="button" data-toggle="modal" href="#"
+                           data-target="#exampleModalsmall"
+                           class="dropdown-item" onclick="editPermission()" >Edit permission</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -40,18 +53,17 @@
                 <td>{{$roles->id}}</td>
                 <td>{{$roles->name}}</td>
                 <td>
-
                     @if($roles->name === "Administrator")
                         <span class="badge badge-info">
                         {{ __('Full Permission') }}
                         </span>
                     @endif
 
-                  @foreach($roles->permissions as $permissionsName)
-                <span class="badge badge-info">
+                    @foreach($roles->permissions as $permissionsName)
+                        <span class="badge badge-info">
                         {{$permissionsName->name}}
                 </span>
-                  @endforeach
+                    @endforeach
                 </td>
                     <td>
                         <button class="mb-1 btn btn-success" data-toggle="modal"
@@ -77,7 +89,7 @@
               </tfoot>
             </table>
                     @include('admin.role.create')
-
+                    @include('admin.permission.create')
                     <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog"  data-keyboard="false"
                          data-backdrop="static"   aria-labelledby="exampleModalFormTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -89,20 +101,19 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                        {!! Form::open(['method' => 'PATCH', 'id'=>'form-role']) !!}
+                                    {!! Form::open(['method' => 'PATCH', 'id'=>'form-role']) !!}
 
-                                        {!! Form::close() !!}
+                                    {!! Form::close() !!}
 
 
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" onclick="remove()" class="btn btn-secondary btn-pill" data-dismiss="modal">Close</button>
-                                    <button type="submit" id="btn-submit" class="btn btn-primary btn-pill">Submit</button>
+                                    <button type="submit" id="btn-submit" class="btn btn-success btn-pill">Save changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
         </div>
       </div>
@@ -204,7 +215,6 @@
                   '</div>'+
                   '</div>') ;
 
-
               if(data.role.name ==="Administrator"){
                     $label = '<span class="badge badge-success m-sm-3">You have full permission!</span>';
                   $(html).find("#checkPermission").append($label);
@@ -248,6 +258,12 @@
     }
     function remove(){
         $('#form-role').children('.form-group').remove();
+    }
+    function removeFormModalSmall(){
+        $('#arrayPermission option').each(function() {
+                $(this).remove();
+        });
+
     }
      function deleteRoleById(item){
         let id=  item.getAttribute("data-value");
@@ -341,7 +357,85 @@
             })
         },1000)
     })
+    function editPermission(){
+        $.ajax({
+            type: 'GET',
+            catch: false,
+            url: 'permission/',
+            data:  $('#form-permission').serialize() ,
+            success: function (data) {
+                console.log(data.arrPermissions);
+                data.arrPermissions.forEach(function (item) {
+                     var permission =  '<option>'+item.name +'</option>';
+                    $('#form-permission').find('#arrayPermission').append(permission);
 
+                });
+                },
+            error:function (error) {
+                $.fn.handlerError(error);
+            }
+        });
+    }
+    $('#btn-cancel-register').click(function (e) {
+        e.preventDefault();
+        $overlay.appendTo("#exampleModalsmall");
+
+        Swal.fire({
+            title: 'Are you sure delete permission ?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#29CC97',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#overlay').show();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'PATCH',
+                        catch: false,
+                        url: 'permission/' + 'updatePermission',
+                        data: $('#form-permission').serialize(),
+                        success: function (data) {
+
+                            var result = data.result;
+                            if (result === 'you do not choose' || result === 'Permission name is require!') {
+                                $(".alert-highlighted").removeClass('alert-success');
+                                $(".alert-highlighted").addClass('alert-danger');
+                                $(".alert-highlighted span").text(result);
+                                $('.alert-highlighted').show();
+                                $('#overlay').hide();
+                                $('.alert-highlighted').fadeOut(5000);
+                            } else {
+                                console.log(result);
+                                result.forEach(function (item) {
+                                    if (item.roleHasPermission.length === 0) {
+                                        $("tr#sid" + item.roleId).find("td").eq(2).text('');
+                                    } else {
+                                        $("tr#sid" + item.roleId).find("td").eq(2).text('');
+                                        item.roleHasPermission.forEach(function (permission) {
+                                            $row = '<span class="badge badge-info">' + permission + '</span>&nbsp';
+                                            $("tr#sid" + item.roleId).find("td").eq(2).append($row);
+                                        })
+                                    }
+                                })
+                                $(".alert-highlighted span").text("Success cancel register permission!");
+                                $('.alert-highlighted').show();
+                                $('#overlay').hide();
+                                $('#exampleModalForm').modal('hide');
+                                $('.alert-highlighted').fadeOut(5000);
+                                removeFormModalSmall();
+                            }
+                        },
+                        error: function (error) {
+                            $.fn.handlerError(error);
+                        }
+                    })
+                }, 1000)
+            }
+        })
+    });
   </script>
 
 @endsection

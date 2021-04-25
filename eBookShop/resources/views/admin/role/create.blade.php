@@ -25,7 +25,7 @@
                 <button type="button" id="btn-close" class="btn btn-secondary btn-pill"
                         data-dismiss="modal">Close
                 </button>
-                <button type="submit" id="role-submit" class="btn btn-primary btn-pill">
+                <button type="submit" id="role-submit" class="btn btn-success btn-pill">
                     Save Changes
                 </button>
             </div>

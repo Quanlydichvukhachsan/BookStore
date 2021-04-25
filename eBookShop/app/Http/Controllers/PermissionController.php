@@ -1,14 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Contracts\PermissionContract;
 use App\Http\Requests\CreatePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+
+    public $permissionContract ;
+     public function __construct(PermissionContract $permissionContract ){
+         $this->permissionContract =$permissionContract;
+     }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +23,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission = Permission::all();
-        return view('admin.permission.index',compact('permission'));
+
+        $arrPermissions =  $this->permissionContract->getAll();
+        return response()->json(['arrPermissions'=>$arrPermissions]);
     }
 
     /**
@@ -93,69 +101,25 @@ class PermissionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePermissionRequest $request, $id)
+    public function update(Request $request,$id)
     {
-        $permission = Permission::findOrFail($id);
-         $assignRole = $request->input('arrayIdRole');
-        $name =  preg_replace('/[-\s]+/', '-', strtolower(trim($request->input('name'))));
-        $checkName = Permission::all()->where('name',$name)->first();
-          $arrRoleHasPermission = $permission->roles;
-          $arrIdRole = array();
-           foreach ($arrRoleHasPermission as $item){
-                    array_push($arrIdRole,$item->id);
-           }
-
-         //remove role_has_permission
-        if($assignRole!==null){
-
-            foreach ($arrIdRole as $role){
-                if(in_array($role,$assignRole) == false){
-
-                     $isRole = Role::findOrFail($role);
-                    $permission->removeRole($isRole);
-                }
-            }
-        }
-
-        if($checkName === null && $assignRole !== null ||
-            $assignRole !== null && $checkName !== null && $checkName->name ===$permission->name){
-            $permission->name =$name;
-            foreach ($assignRole as $items){
-                $role =  Role::findOrFail($items);
-                $permission->assignRole($role);
-
-            }
-            $permission->save();
-
-        }elseif($checkName !== null && $checkName->name !== $permission->name){
-            return redirect()->back()->withErrors(['Name permission is exists!']);
-        }elseif($assignRole === null && $checkName === null
-            ||$assignRole === null && $checkName !== null && $checkName->name ===$permission->name){
-            $permission->name =$name;
-            $permission->save();
-            $permission->syncRoles([]);
-
-            $request->session()->flash('update-permission','The Permission update success!');
-            return redirect()->route('permission.index');
-        }
-
-        $request->session()->flash('update-permission','The Permission update success!');
-        return redirect()->route('permission.index');
+             $result = $this->permissionContract->update($request,$id);
+             return  response()->json(['result'=>$result]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id)
     {
-         Permission::destroy($id);
-        session()->flash('delete-permission','The Permission delete success!');
-        return  redirect()->back();
+           $result =  $this->permissionContract->delete($request,$id);
+        return  response()->json(['result'=>$result]);
     }
 }

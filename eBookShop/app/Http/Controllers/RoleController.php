@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\AccessContract;
+use App\Contracts\RoleContract;
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Contracts\Session\Session;
@@ -14,7 +14,7 @@ class RoleController extends Controller
 {
     protected $accessContract;
 
-   public function __construct(AccessContract $accessContract){
+   public function __construct(RoleContract $accessContract){
          $this->accessContract =$accessContract;
    }
     /**

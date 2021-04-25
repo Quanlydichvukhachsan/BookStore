@@ -1,7 +1,7 @@
 <?php
 namespace App\Contracts;
 
-interface AccessContract{
+interface RoleContract{
     public function getAll();
     public function show($id);
     public function create($request);
