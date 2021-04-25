@@ -21,37 +21,21 @@
                             <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordion3">
                                 <div class="card-body">
                                     <ul id="treeview">
-                                        <li  data-expanded="true">Inbox
-                                            <ul>
-                                                <li><b>Today (2)</b></li>
-                                                <li>Monday</li>
-                                                <li>Last Week</li>
-                                            </ul>
-                                        </li>
-                                        <li data-icon-cls="fa fa-trash">Trash
-                                        </li>
-                                        <li data-icon-cls="fa fa-calendar">Calendar
-                                            <ul>
-                                                <li>Day</li>
-                                                <li>Week</li>
-                                                <li>Month</li>
-                                            </ul>
-                                        </li>
-                                        <li data-icon-cls="fa fa-user">Contacts
-                                            <ul>
-                                                <li>Alexander Stein</li>
-                                                <li>John Doe</li>
-                                                <li>Paul Smith</li>
-                                                <li>Steward Lynn</li>
-                                            </ul>
-                                        </li>
-                                        <li data-icon-cls="fa fa-folder">Folders
-                                            <ul>
-                                                <li>Backup</li>
-                                                <li>Deleted</li>
-                                                <li>Projects</li>
-                                            </ul>
-                                        </li>
+                                        {!! $html !!}
+{{--                                        <li  data-expanded="false">Inbox--}}
+{{--                                            <ul>--}}
+{{--                                                <li  data-expanded="false"><span><span class="col-9">1231</span>@include('admin.category.iconsvg.edit')</span>--}}
+{{--                                                    <ul>--}}
+{{--                                                        <li><span class="col-10">triên</span>@include('admin.category.iconsvg.edit')</li>--}}
+{{--                                                        <li>Week</li>--}}
+{{--                                                        <li>Month</li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </li>--}}
+{{--                                                <li>Today (2)</li>--}}
+{{--                                                <li>Monday</li>--}}
+{{--                                                <li>Last Week</li>--}}
+{{--                                            </ul>--}}
+{{--                                        </li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -95,7 +79,7 @@
 
 
 
-        <div class="col-xl-6 float-right">
+        <div class="col-xl-8 float-right">
             <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389">
                 <div class="card-header card-header-border-bottom">
                     <h2>Team Activity</h2>
@@ -260,7 +244,15 @@
     <script type="text/javascript">
         jQuery(function ($) {
             $("#treeview").shieldTreeView();
+            // $("#btn").hide(function (){
+            //     $(this).css({"display":"none"});
+            // })
+            // $("#treeview").hover(function (){
+            //     $("#btn").css({"display":"inline"})
+            //
+            // });
         });
+
     </script>
 @endsection
 

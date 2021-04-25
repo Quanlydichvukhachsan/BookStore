@@ -30,17 +30,12 @@ class CategoryController extends Controller
 
       //  $result= $this->CategoryContract->index();
 
-        $html = $this->CategoryContract->getAll(Category::all(), 0);
+        $html = $this->CategoryContract->getAll();
 
 
         return view('admin.category.index',compact('html'));
     }
-    public function displayCategory()
-    {
-         $result= $this->CategoryContract->index();
 
-         return $result;
-    }
 
     /**
      * Show the form for creating a new resource.

@@ -2,10 +2,9 @@
 namespace App\Contracts;
 
 interface CategoryContract{
-    public function index();
-    public function get_node_parentid($parent_id);
-    public function getAll($categories, $parent_id);
-    public function childview($data);
+
+    public function getAll();
+    public function childview($parent_id,$html);
     public function show($id);
     public function create();
     public function update($request,$id);
