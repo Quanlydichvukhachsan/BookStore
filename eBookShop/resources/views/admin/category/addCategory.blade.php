@@ -17,13 +17,13 @@
                         <div class="col-9">
                             <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên thể loại">
                             <div class="invalid-feedback name"></div>
-
+                            <input type="text" class="form-control addCategory" id="" value="" name="nameCategory">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">nhóm cha</label>
                         <div class="col-9">
-                            <select class="form-control selectCategory" id="parent_id" onclick="formatText()" name="parent_id">
+                            <select class="form-control selectCategory" id="parent_id"  onclick="formatText()" name="parent_id">
                             </select>
                         </div>
                     </div>

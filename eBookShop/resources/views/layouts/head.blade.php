@@ -50,9 +50,5 @@
 
     <link href="assets/plugins/dynamic-tree/bstreeview.css" rel="stylesheet">
 
-    <script type="text/javascript" charset="utf8" src="assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-{{--    <link rel="stylesheet" href="assets/plugins/bootstrap-treeview/bootstrap.min.css" />--}}
-    <script src="assets/plugins/bootstrap-treeview/jquery.min.js"></script>
-    <link rel="stylesheet" href="assets/plugins/bootstrap-treeview/bootstrap-treeview.min.css" />--}}
 
 </head>

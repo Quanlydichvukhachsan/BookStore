@@ -22,20 +22,7 @@
                                 <div class="card-body">
                                     <ul id="treeview">
                                         {!! $html !!}
-{{--                                        <li  data-expanded="false">Inbox--}}
-{{--                                            <ul>--}}
-{{--                                                <li  data-expanded="false"><span><span class="col-9">1231</span>@include('admin.category.iconsvg.edit')</span>--}}
-{{--                                                    <ul>--}}
-{{--                                                        <li><span class="col-10">triên</span>@include('admin.category.iconsvg.edit')</li>--}}
-{{--                                                        <li>Week</li>--}}
-{{--                                                        <li>Month</li>--}}
-{{--                                                    </ul>--}}
-{{--                                                </li>--}}
-{{--                                                <li>Today (2)</li>--}}
-{{--                                                <li>Monday</li>--}}
-{{--                                                <li>Last Week</li>--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
+
                                     </ul>
                                 </div>
                             </div>
@@ -184,13 +171,12 @@
 
 @endsection
 @section('script')
-    <script src="{{asset("error-handler/exception.js")}}"></script>
-    <script src="{{asset("fillParentCategory/fillParentCategory.js")}}"></script>
-    <script type="text/javascript"></script>
+
+
 
     <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
     <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-
+<script src="{{asset('fillparentCategory/fillparentCategory.js')}}"></script>
     <script>
         $(document).ready(function () {
 
@@ -222,6 +208,7 @@
                     success: function (data) {
                         $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
+
                         console.log(data.success);
                         alert(data);
                     },
@@ -234,12 +221,25 @@
         });
 
         function formatText() {
-            var id = $("#parent_id").val();
-            var text = $('#parent_id option:selected').val();
+
+            var text = $('#parent_id option:selected').text();
+           console.log(text);
             var splitstr = text.split(/\s{4}/);
+
             var index = (splitstr.length) - 1;
-            $('#parent_id option:selected').val(splitstr[index]);
+       //   var id =  $('#parent_id option:selected').val(splitstr[index]);
+          //  var category =  $('#parent_id option:selected').val(splitstr[index]);
+            var category  =splitstr[index];
+          //  console.log(category);
+//            getCategory(category);
+         //   $('#parent_id').html(category);
+
         }
+       function getCategory(text){
+           console.log(text);
+           //document.getElementById('parent_id').value = text;
+$('#parent_id').val(text);
+       }
     </script>
     <script type="text/javascript">
         jQuery(function ($) {

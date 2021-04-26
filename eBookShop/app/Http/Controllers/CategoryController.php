@@ -30,7 +30,7 @@ class CategoryController extends Controller
 
       //  $result= $this->CategoryContract->index();
 
-        $html = $this->CategoryContract->getAll();
+        $html = $this->CategoryContract->getAll(Category::all(),0,'');
 
 
         return view('admin.category.index',compact('html'));

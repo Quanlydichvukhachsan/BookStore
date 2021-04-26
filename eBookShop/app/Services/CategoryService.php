@@ -3,6 +3,7 @@ use App\Models\Category;
 use App\Contracts\CategoryContract;
 use Illuminate\Support\Facades\Hash;
 use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Parent_;
 use Spatie\Permission\Models\Role;
 use App\viewModels\showCategoryModel;
 use function GuzzleHttp\Promise\all;
@@ -12,71 +13,54 @@ class CategoryService implements CategoryContract{
 
 
 
-    public function getAll()
+    public function getAll($Category,$parent_id)
     {
-        $html ='';
-        $category = Category::where('parent_id','=','0')->get();
-        foreach ($category as $cate)
+         $html ='';
+
+        $Category = Category::where('parent_id','=',$parent_id)->get();
+        foreach ($Category as $cate)
         {
-            if ($cate->childs())
+            if (count($cate->childs))
             {
-                $html.='<li data-expanded="false">'
-                    .'<span><span class="col-9">'.$cate['name'].'</span><button class="hide" id="btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-    </svg>
-</button>
-</span>';
-                $this->childview($cate['id'],$html);
+               $html.='<li data-expanded="false">' .$cate->name;
+                $html.=$this->childview($cate);
                 $html.='</li>';
-                dd($html);
+
             }
             else
             {
-                $html.='<li>'.$cate["name"]
-                    .'<span><span class="col-9">1231</span><button class="hide" id="btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-    </svg>
-</button>
-</span></li>';
+                $html.='<li>'.$cate->name.'</li>';
             }
         }
-        return $html;
+
+        return  $html;
 
     }
 
-    public function childview($parent_id,$html)
+    public function childview($Category)
     {
-        $categoryChild= Category::where('parent_id','=',$parent_id)->get();
-        foreach ($categoryChild as $cateChild)
+        $childs =$Category->childs;
+
+        //$Cate = Category::Where('id','=',$Category->childs[0]->parent_id)->first();
+        $htmlS='<ul>';
+        foreach ($childs as $cateChild)
         {
-                $html.='<ul>';
-                    if ($cateChild->childs())
+                    if (count($cateChild->childs))
                     {
-                        $html.='<li  data-expanded="false">'
-                            .'<span><span class="col-9">'.$cateChild['name'].'</span><button class="hide" id="btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-    </svg>
-</button>
-</span>';
-                        $this->childview($cateChild['id'],$html);
-                        $html.='</li>';
+                        $htmlS.='<li data-expanded="false">' .$cateChild->name;
+                        $htmlS.=$this->childview($cateChild);
+
+                        $htmlS.='</li>';
                     }
                     else
                     {
-                        $html='<li>'
-                            .'<span><span class="col-9">'.$cateChild["name"].'</span><button class="hide" id="btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-    </svg>
-</button>
-</span></li>';
+                         $htmlS.='<li>'.$cateChild->name.'</li>';
                     }
-         $html.='</ul>';
-
         }
+        $htmlS.='</ul>';
+
+        return   $htmlS;
+
 
     }
 

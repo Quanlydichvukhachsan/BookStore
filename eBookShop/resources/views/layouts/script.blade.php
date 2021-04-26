@@ -1,4 +1,4 @@
-<script src="assets/plugins/jquery/jquery.min.js"></script>
+<script src={{asset("assets/plugins/jquery/jquery.min.js")}}></script>
 <script src="assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
 <script src="assets/plugins/jekyll-search.min.js"></script>
 <script src="assets/plugins/charts/Chart.min.js"></script>
@@ -13,11 +13,7 @@
 <script src="assets/plugins/data-tables/datatables.bootstrap4.min.js"></script>
 <script src="assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
 <script src="assets/plugins/select2/js/select2.full.min.js"></script>
-<script src="assets/plugins/treeview/gijgo.min.js"></script>
 
-<script src="assets/plugins/tree-multiselect/jquery.tree-multiselect.min.js"></script>
-<script src="assets/plugins/dynamic-tree/bstreeview.js"></script>
-<script src="assets/vendor/jquery-ui.min.js"></script>
 
 
 
