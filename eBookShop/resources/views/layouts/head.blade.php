@@ -49,6 +49,6 @@
     <script src="assets/plugins/nprogress/nprogress.js"></script>
 
     <link href="assets/plugins/dynamic-tree/bstreeview.css" rel="stylesheet">
-
+    <link href="assets/css/myStyles.css" rel="stylesheet">
 
 </head>

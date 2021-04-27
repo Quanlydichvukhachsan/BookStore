@@ -22,14 +22,14 @@ class CategoryService implements CategoryContract{
         {
             if (count($cate->childs))
             {
-               $html.='<li data-expanded="false">' .$cate->name;
+               $html.='<li id="edit" value="'.$cate->id.'" data-expanded="false" class="active"><button type="button" data-toggle="modal" data-target="#exampleModal1">'.$cate->name.'</button>';
                 $html.=$this->childview($cate);
                 $html.='</li>';
 
             }
             else
             {
-                $html.='<li>'.$cate->name.'</li>';
+                $html.='<li value="'.$cate->id.'"  class="active"><button type="button" data-toggle="modal" data-target="#exampleModal1">'.$cate->name.'</button></li>';
             }
         }
 
@@ -47,14 +47,14 @@ class CategoryService implements CategoryContract{
         {
                     if (count($cateChild->childs))
                     {
-                        $htmlS.='<li data-expanded="false">' .$cateChild->name;
+                        $htmlS.='<li id="edit" value="'.$cateChild->id.'" data-expanded="false" class="active"><button type="button" data-toggle="modal" data-target="#exampleModal1" >'.$cateChild->name.'</button>';
                         $htmlS.=$this->childview($cateChild);
 
                         $htmlS.='</li>';
                     }
                     else
                     {
-                         $htmlS.='<li>'.$cateChild->name.'</li>';
+                         $htmlS.='<li><button onclick="myText(this)" id="'.$cateChild->id.'" name="'.$cateChild->id.'" value="'.$cateChild->id.'" data-toggle="modal" data-target="#exampleModal1" >'.$cateChild->name.'</button></li>';
                     }
         }
         $htmlS.='</ul>';
