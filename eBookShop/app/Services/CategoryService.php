@@ -16,25 +16,22 @@ class CategoryService implements CategoryContract{
     public function getAll($Category,$parent_id)
     {
          $html ='';
-
+         $name_default="--Lưa chọn nhóm cha--";
         $Category = Category::where('parent_id','=',$parent_id)->get();
         foreach ($Category as $cate)
         {
             if (count($cate->childs))
             {
-               $html.='<li id="edit" value="'.$cate->id.'" data-expanded="false" class="active"><button type="button" data-toggle="modal" data-target="#exampleModal1">'.$cate->name.'</button>';
+                $html.='<li data-expanded="false"><button onclick="myText(this)" id="'.$cate->id.'" name="'.$name_default.'" value="'.$cate->id.'" data-toggle="modal" data-target="#exampleModal1">'.$cate->name.'</button>';
                 $html.=$this->childview($cate);
                 $html.='</li>';
-
             }
             else
             {
-                $html.='<li value="'.$cate->id.'"  class="active"><button type="button" data-toggle="modal" data-target="#exampleModal1">'.$cate->name.'</button></li>';
+                $html.='<li><button onclick="myText(this)" id="'.$cate->id.'" name="'.$name_default.'" value="'.$cate->id.'" data-toggle="modal" data-target="#exampleModal1">'.$cate->name.'</button></li>';
             }
         }
-
         return  $html;
-
     }
 
     public function childview($Category)
@@ -47,21 +44,18 @@ class CategoryService implements CategoryContract{
         {
                     if (count($cateChild->childs))
                     {
-                        $htmlS.='<li id="edit" value="'.$cateChild->id.'" data-expanded="false" class="active"><button type="button" data-toggle="modal" data-target="#exampleModal1" >'.$cateChild->name.'</button>';
+                        $htmlS.='<li id="edit" value="'.$cateChild->id.'" data-expanded="false" class="active"><button onclick="myText(this)" id="'.$cateChild->id.'" name="'.$Category->name.'" value="'.$cateChild->id.'" data-toggle="modal" data-target="#exampleModal1" >'.$cateChild->name.'</button>';
                         $htmlS.=$this->childview($cateChild);
 
                         $htmlS.='</li>';
                     }
                     else
                     {
-                         $htmlS.='<li><button onclick="myText(this)" id="'.$cateChild->id.'" name="'.$cateChild->id.'" value="'.$cateChild->id.'" data-toggle="modal" data-target="#exampleModal1" >'.$cateChild->name.'</button></li>';
+                         $htmlS.='<li><button onclick="myText(this)" id="'.$cateChild->id.'" name="'.$Category->name.'" value="'.$cateChild->id.'" data-toggle="modal" data-target="#exampleModal1" >'.$cateChild->name.'</button></li>';
                     }
         }
         $htmlS.='</ul>';
-
         return   $htmlS;
-
-
     }
 
     public function show($id)
@@ -79,7 +73,6 @@ class CategoryService implements CategoryContract{
         foreach ($category as $item)
         {
             $htmlOption.='<option onclick="formatText()" value="'.$item["id"].'">'.$space.$item["name"].'</option>';
-
             if (count($item->childs))
             {
                 $htmlOption.= $this->childsOption($item,$space);
@@ -160,6 +153,7 @@ class CategoryService implements CategoryContract{
 
     public function editCategory($id)
     {
+
         $user = User::findOrFail($id);
         $role = Role::all();
         $arrayIdRole = array();

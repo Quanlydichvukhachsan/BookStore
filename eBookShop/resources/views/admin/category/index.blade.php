@@ -199,13 +199,13 @@
     <script type="text/javascript"
             src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script src="{{asset('fillparentCategory/fillparentCategory.js')}}"></script>
-    <script src="{{asset('fillparentCategory/fill_parent_category_update.js')}}"></script>
+
     <script>
         $(document).ready(function () {
 
             $.fn.fill_parent_category();
-            $.fn.fill_parent_category_update();
-            //  fill_treeviews();
+
+             // fill_treeviews();
 
             {{--function fill_treeviews() {--}}
             {{--    $.ajax({--}}
@@ -229,7 +229,7 @@
                         "parent_id": $('#parent_id').val(),
                     },
                     success: function (data) {
-                        fill_treeviews();
+
                         $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
 
@@ -265,23 +265,21 @@
             $('#parent_id').val(text);
         }
         function myText(edit){
-            $.fn.fill_parent_category_update();
+           // $.fn.fill_parent_category();
             id = edit.value;
-            edit.na
+            console.log(name);
             console.log(id);
-            <?php
-
-
-            ?>
-
+            $('#name_update').text()
+            $('#parent_id option').appendTo("#parent_id_update");
+            $('#parent_id_update option:selected').text(edit.name);
         }
+
 
 
     </script>
     <script type="text/javascript">
         jQuery(function ($) {
             $("#treeview").shieldTreeView();
-
         });
 
     </script>

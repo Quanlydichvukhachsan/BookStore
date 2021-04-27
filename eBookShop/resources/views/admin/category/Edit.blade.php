@@ -10,14 +10,13 @@
             </div>
 
             <div class="modal-body">
-                <form id="tree-form" method="post">
+                <form id="tree-form_update" method="post">
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tên thể loại</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="parent_id_update"  placeholder="Nhập tên thể loại">
+                            <input type="text" class="form-control" id="name_update" name="name_update" >
                             <div class="invalid-feedback name"></div>
-
                         </div>
                     </div>
                     <div class="form-group row">
@@ -31,7 +30,6 @@
                         <button type="submit" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Cập nhật
                         </button>
                         <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
-
                     </div>
                 </form>
             </div>
