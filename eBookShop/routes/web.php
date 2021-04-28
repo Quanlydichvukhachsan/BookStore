@@ -77,4 +77,8 @@ Route::resource('order',OrderController::class);
 Route::get('/order/request/confirmation',[OrderController::class, 'orderConfirm'])->name('order.confirmation');
 Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccept'])->name('order.accept');
     Route::delete('/order/request/{order}/delete',[OrderController::class, 'orderDelete'])->name('order.delete');
+
+    Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
+    Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
+
 });

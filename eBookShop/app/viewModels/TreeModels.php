@@ -10,6 +10,7 @@ class TreeModels
      public $id;
     public $text;
     public $children =array();
+
     public  $checked ;
 
     function setId($id) {
@@ -18,6 +19,9 @@ class TreeModels
     function getId() {
         return   $this->id;
     }
+
+
+    // Methods
 
     function setText($text) {
         $this->text = $text;
@@ -39,7 +43,7 @@ class TreeModels
     }
     function getChildren():array {
 
-        return   $this->children;
+        return $this->children;
     }
 
 }

@@ -1,4 +1,4 @@
-<div class="col-2">
+<div class="col-2" id="btn-add">
     <button type="button" data-toggle="modal" data-target="#exampleModal">
                                         <span style="cursor: pointer">
                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

@@ -37,7 +37,10 @@
             <div class="alert alert-success alert-highlighted"
                  style="position: absolute; top: 0; right: 0; display: none;" data-delay="5000">
                 <i class="mdi mdi-chevron-down-circle"></i>
+
                 <span></span>
+
+
             </div>
         </div>
 
