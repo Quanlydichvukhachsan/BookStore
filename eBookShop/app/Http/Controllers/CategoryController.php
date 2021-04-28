@@ -89,8 +89,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-        return view('admin.category.update', compact('category'));
+
     }
 
     /**
@@ -110,21 +109,14 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $categories = Category::findOrFail($id);
-        $check = Genres::where('categories_id', '=', $categories['id'])->exists();
-        //$check = $categories->genres->exists();
-        if (!$check) {
-            Category::destroy($id);
-            session()->flash('delete-category', 'Delete Success!');
-        } else {
-            session()->flash('delete-error', 'Category exiting in Genres!');
-        }
 
-        return redirect()->route('category.index');
+        $result =$this->CategoryContract->delete($id);
+
+        return response()->json(['result'=> $result]);
     }
 }

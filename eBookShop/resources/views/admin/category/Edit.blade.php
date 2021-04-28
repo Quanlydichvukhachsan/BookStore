@@ -10,7 +10,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="tree-form_update" method="patch">
+                <form id="tree-form_update" >
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tên thể loại</label>
@@ -30,7 +30,7 @@
                     <div class="modal-footer">
                         <button type="submit" id="btn-update-category" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Cập nhật
                         </button>
-                        <button type="button" class="btn btn-danger btn-pill">Xoá</button>
+                        <button type="button" class="btn btn-danger btn-pill" onclick="getID(this)" id="btn-delete-category">Xoá</button>
                     </div>
                 </form>
             </div>

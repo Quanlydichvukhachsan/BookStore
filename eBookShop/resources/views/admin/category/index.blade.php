@@ -252,7 +252,7 @@
            $.ajax({
                url:'category/update',
                method:"PATCH",
-               data: $('#tree-form_update').serialize(),
+               data: $('#idCategory').serialize(),
                success:function (data){
                   $result =  data.result;
                   if($result ==='success'){
@@ -276,10 +276,40 @@
                    console.log(error);
                }
 
-
-
            })
         });
+
+        $('#btn-delete-category').click(function (e){
+            e.preventDefault();
+            $.ajax({
+                url:'category/'+id,
+                method:"DELETE",
+                data: $('#idCategory').serialize(),
+
+                success:function (data){
+                    $result =  data.result;
+                    if($result ==='success'){
+                        $('.alert-highlighted').text('Xoá thành công');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+
+                        location.reload();
+
+                    }else{
+                        $('.alert-highlighted').removeClass('alert-success');
+                        $('.alert-highlighted').addClass('alert-highlighted');
+                        $('.alert-highlighted').text('Không thể xoá !');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                    }
+                },
+                error:function (error){
+                    console.log(error);
+                }
+
+            })
+        });
+
 
         function formatText() {
 
@@ -309,9 +339,10 @@
             console.log(edit.getAttribute('data-value'));
             $('#name_update').val(edit.getAttribute('data-value'));
               $('#idCategory').val(edit.value);
+
             $('#parent_id option').appendTo("#parent_id_update");
             $('#parent_id_update option:selected').html(edit.name);
-
+            $("select[id=parent_id_update] option:last").remove();
 
             return edit.value;
         }
@@ -319,7 +350,9 @@
         function clear_option(){
             $('#parent_id_update').children().remove();
         }
-
+        function  getID(item){
+            id = item.getAttribute('data-value');
+        }
 
 
     </script>

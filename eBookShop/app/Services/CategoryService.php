@@ -108,23 +108,27 @@ class CategoryService implements CategoryContract
             $categories->name = $name;
             $categories->parent_id = $parent_id;
             $categories->save();
+            return $result['success'];
         } else {
             return $result['error'];
         }
-        return $result['success'];
+
     }
 
     public function delete($id)
     {
-        $user = User::findOrFail($id);
+        $result = array('error' => 'error', 'success' => 'success');
+        $categories = Category::findOrFail($id);
 
-        if ($user->photo) {
-            unlink(public_path() . $user->photo->file);
-            $user->photo->delete();
+        //$check = $categories->genres->exists();
+        if (count($categories->childs)) {
+            return $result['error'];
+
+        } else {
+            Category::destroy($id);
+            return $result['success'];
         }
-        $user::destroy($id);
 
-        session()->flash('delete-user', 'Delete  user success!');
     }
 
     public function store($request)
