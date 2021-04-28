@@ -1,650 +1,895 @@
+<!--
+          ====================================
+          ——— LEFT SIDEBAR WITH FOOTER
+          =====================================
+        -->
+<aside class="left-sidebar bg-sidebar">
+    <div id="sidebar" class="sidebar">
+        <!-- Aplication Brand -->
+        <div class="app-brand">
+            <a href="{{route('admin.index')}}" title="Sleek Dashboard">
+                <svg
+                    class="brand-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid"
+                    width="30"
+                    height="33"
+                    viewBox="0 0 30 33"
+                >
+                    <g fill="none" fill-rule="evenodd">
+                        <path
+                            class="logo-fill-blue"
+                            fill="#7DBCFF"
+                            d="M0 4v25l8 4V0zM22 4v25l8 4V0z"
+                        />
+                        <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
+                    </g>
+                </svg>
+                <span class="brand-name text-truncate">Sleek Dashboard</span>
+            </a>
+        </div>
+        <!-- begin sidebar scrollbar -->
+        <div class="sidebar-scrollbar">
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-            <img src="{{Auth::user()->photo ? Auth::user()->photo->file : 'no photo'}}"    class="img-circle" alt="User Image">
+            <!-- sidebar menu -->
+            <ul class="nav sidebar-inner" id="sidebar-menu">
+
+
+
+                <li  class="has-sub active expand" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#dashboard"
+                       aria-expanded="false" aria-controls="dashboard">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span class="nav-text">Dashboard</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse show"  id="dashboard"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li  class="active" >
+                                <a class="sidenav-item-link" href="{{route('category.index')}}">
+                                    <span class="nav-text">Ecommerce</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="analytics.html">
+                                    <span class="nav-text">Analytics</span>
+
+                                    <span class="badge badge-success">new</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#app"
+                       aria-expanded="false" aria-controls="app">
+                        <i class="mdi mdi-pencil-box-multiple"></i>
+                        <span class="nav-text">App</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="app"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+                            <li >
+                                <a class="sidenav-item-link" href="{{route('user.index')}}">
+                                    <span class="nav-text">Users</span>
+
+                                </a>
+                            </li>
+
+                            <li >
+                                <a class="sidenav-item-link" href="{{route('role.index')}}">
+                                    <span class="nav-text">Access Control</span>
+
+                                </a>
+                            </li>
+                            <li >
+                                <a class="sidenav-item-link" href="team.html">
+                                    <span class="nav-text">Team</span>
+
+                                </a>
+                            </li>
+
+                            <li >
+                                <a class="sidenav-item-link" href="calendar.html">
+                                    <span class="nav-text">Calendar</span>
+
+                                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#components"
+                       aria-expanded="false" aria-controls="components">
+                        <i class="mdi mdi-folder-multiple-outline"></i>
+                        <span class="nav-text">Components</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="components"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="alert.html">
+                                    <span class="nav-text">Alert</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="badge.html">
+                                    <span class="nav-text">Badge</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="breadcrumb.html">
+                                    <span class="nav-text">Breadcrumb</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="button-default.html">
+                                    <span class="nav-text">Button Default</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="button-dropdown.html">
+                                    <span class="nav-text">Button Dropdown</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="button-group.html">
+                                    <span class="nav-text">Button Group</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="button-social.html">
+                                    <span class="nav-text">Button Social</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="button-loading.html">
+                                    <span class="nav-text">Button Loading</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="card.html">
+                                    <span class="nav-text">Card</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="carousel.html">
+                                    <span class="nav-text">Carousel</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="collapse.html">
+                                    <span class="nav-text">Collapse</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="list-group.html">
+                                    <span class="nav-text">List Group</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="modal.html">
+                                    <span class="nav-text">Modal</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="pagination.html">
+                                    <span class="nav-text">Pagination</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="popover-tooltip.html">
+                                    <span class="nav-text">Popover & Tooltip</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="progress-bar.html">
+                                    <span class="nav-text">Progress Bar</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="spinner.html">
+                                    <span class="nav-text">Spinner</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="switcher.html">
+                                    <span class="nav-text">Switcher</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="tab.html">
+                                    <span class="nav-text">Tab</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#icons"
+                       aria-expanded="false" aria-controls="icons">
+                        <i class="mdi mdi-diamond-stone"></i>
+                        <span class="nav-text">Icons</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="icons"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="material-icon.html">
+                                    <span class="nav-text">Material Icon</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="flag-icon.html">
+                                    <span class="nav-text">Flag Icon</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#forms"
+                       aria-expanded="false" aria-controls="forms">
+                        <i class="mdi mdi-email-mark-as-unread"></i>
+                        <span class="nav-text">Forms</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="forms"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="basic-input.html">
+                                    <span class="nav-text">Basic Input</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="input-group.html">
+                                    <span class="nav-text">Input Group</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="checkbox-radio.html">
+                                    <span class="nav-text">Checkbox & Radio</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="form-validation.html">
+                                    <span class="nav-text">Form Validation</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="form-advance.html">
+                                    <span class="nav-text">Form Advance</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#tables"
+                       aria-expanded="false" aria-controls="tables">
+                        <i class="mdi mdi-table"></i>
+                        <span class="nav-text">Tables</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="tables"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="basic-tables.html">
+                                    <span class="nav-text">Basic Tables</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+                            <li  class="has-sub" >
+                                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#data-tables"
+                                   aria-expanded="false" aria-controls="data-tables">
+                                    <span class="nav-text">Data Tables</span> <b class="caret"></b>
+                                </a>
+                                <ul  class="collapse"  id="data-tables">
+                                    <div class="sub-menu">
+
+                                        <li >
+                                            <a href="basic-data-table.html">Basic Data Table</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="responsive-data-table.html">Responsive Data Table</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="hoverable-data-table.html">Hoverable Data Table</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="expendable-data-table.html">Expendable Data Table</a>
+                                        </li>
+
+                                    </div>
+                                </ul>
+                            </li>
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#maps"
+                       aria-expanded="false" aria-controls="maps">
+                        <i class="mdi mdi-google-maps"></i>
+                        <span class="nav-text">Maps</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="maps"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="google-map.html">
+                                    <span class="nav-text">Google Map</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="vector-map.html">
+                                    <span class="nav-text">Vector Map</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#widgets"
+                       aria-expanded="false" aria-controls="widgets">
+                        <i class="mdi mdi-widgets"></i>
+                        <span class="nav-text">Widgets</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="widgets"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="general-widget.html">
+                                    <span class="nav-text">General Widget</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="chart-widget.html">
+                                    <span class="nav-text">Chart Widget</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#charts"
+                       aria-expanded="false" aria-controls="charts">
+                        <i class="mdi mdi-chart-pie"></i>
+                        <span class="nav-text">Charts</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="charts"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="chartjs.html">
+                                    <span class="nav-text">ChartJS</span>
+
+                                </a>
+                            </li>
+
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pages"
+                       aria-expanded="false" aria-controls="pages">
+                        <i class="mdi mdi-image-filter-none"></i>
+                        <span class="nav-text">Pages</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="pages"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li >
+                                <a class="sidenav-item-link" href="user-profile.html">
+                                    <span class="nav-text">User Profile</span>
+
+                                </a>
+                            </li>
+                            <li  class="has-sub" >
+                                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#authentication"
+                                   aria-expanded="false" aria-controls="authentication">
+                                    <span class="nav-text">Authentication</span> <b class="caret"></b>
+                                </a>
+                                <ul  class="collapse"  id="authentication">
+                                    <div class="sub-menu">
+
+                                        <li >
+                                            <a href="sign-in.html">Sign In</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sign-up.html">Sign Up</a>
+                                        </li>
+
+                                    </div>
+                                </ul>
+                            </li>
+
+
+
+
+                            <li  class="has-sub" >
+                                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#others"
+                                   aria-expanded="false" aria-controls="others">
+                                    <span class="nav-text">Others</span> <b class="caret"></b>
+                                </a>
+                                <ul  class="collapse"  id="others">
+                                    <div class="sub-menu">
+
+                                        <li >
+                                            <a href="invoice.html">Invoice</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="404.html">404 Page</a>
+                                        </li>
+
+                                    </div>
+                                </ul>
+                            </li>
+
+
+
+                        </div>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#documentation"
+                       aria-expanded="false" aria-controls="documentation">
+                        <i class="mdi mdi-book-open-page-variant"></i>
+                        <span class="nav-text">Documentation</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="documentation"
+                         data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+
+
+
+                            <li class="section-title">
+                                Getting Started
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="introduction.html">
+                                    <span class="nav-text">Introduction</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="quick-start.html">
+                                    <span class="nav-text">Quick Start</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="customization.html">
+                                    <span class="nav-text">Customization</span>
+
+                                </a>
+                            </li>
+
+
+
+
+
+
+                            <li class="section-title">
+                                Layouts
+                            </li>
+
+
+
+
+
+                            <li  class="has-sub" >
+                                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#headers"
+                                   aria-expanded="false" aria-controls="headers">
+                                    <span class="nav-text">Header Variations</span> <b class="caret"></b>
+                                </a>
+                                <ul  class="collapse"  id="headers">
+                                    <div class="sub-menu">
+
+                                        <li >
+                                            <a href="header-fixed.html">Header Fixed</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="header-static.html">Header Static</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="header-light.html">Header Light</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="header-dark.html">Header Dark</a>
+                                        </li>
+
+                                    </div>
+                                </ul>
+                            </li>
+
+
+
+
+                            <li  class="has-sub" >
+                                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#sidebar-navs"
+                                   aria-expanded="false" aria-controls="sidebar-navs">
+                                    <span class="nav-text">Sidebar Variations</span> <b class="caret"></b>
+                                </a>
+                                <ul  class="collapse"  id="sidebar-navs">
+                                    <div class="sub-menu">
+
+                                        <li >
+                                            <a href="sidebar-fixed-default.html">Sidebar Fixed Default</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-fixed-minified.html">Sidebar Fixed Minified</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-fixed-offcanvas.html">Sidebar Fixed Offcanvas</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-static-default.html">Sidebar Static Default</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-static-minified.html">Sidebar Static Minified</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-static-offcanvas.html">Sidebar Static Offcanvas</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-with-footer.html">Sidebar With Footer</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="sidebar-without-footer.html">Sidebar Without Footer</a>
+                                        </li>
+
+                                        <li >
+                                            <a href="right-sidebar.html">Right Sidebar</a>
+                                        </li>
+
+                                    </div>
+                                </ul>
+                            </li>
+
+
+
+
+
+                            <li >
+                                <a class="sidenav-item-link" href="rtl.html">
+                                    <span class="nav-text">RTL Direction</span>
+
+                                </a>
+                            </li>
+
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
-        <div class="info">
-            <a href="{{route('user.show',Auth::user()->id)}}" class="d-block">{{ Auth::user()->lastName ." " . Auth::user()->firstName}}</a>
-        </div>
+
     </div>
-
-    <!-- SidebarSearch Form -->
-    <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-sidebar">
-                    <i class="fas fa-search fa-fw"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Product
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('product.index') }}" class="nav-link active">
-
-                            <p>View all</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index2.html" class="nav-link">
-
-                            <p>Create</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index3.html" class="nav-link">
-
-                            <p>Update</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-table"></i>
-                    <p>
-                        User
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="list-inline-item">
-                        <a href="{{ route('user.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>List user</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/tables/data.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>DataTables</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/tables/jsgrid.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>jsGrid</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-table"></i>
-                    <p>
-                        Admin
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="list-inline-item">
-                        <a href="{{ route('role.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Role</p>
-                        </a>
-                    </li>
-
-
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="list-inline-item">
-                        <a href="{{ route('permission.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Permission</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="{{route('category.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Categories
-                        <span class="right badge badge-danger">New</span>
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{route('genres.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Genres
-                        <span class="right badge badge-danger">New</span>
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{route('discount.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>    Discount </p>
-
-
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-chart-pie"></i>
-                    <p>
-                        Order
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{route('order.confirmation')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Request confirmation</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/charts/flot.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Flot</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/charts/inline.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Inline</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/charts/uplot.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>uPlot</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-tree"></i>
-                    <p>
-                        UI Elements
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="pages/UI/general.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>General</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/icons.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/buttons.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Buttons</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/sliders.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Sliders</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/modals.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Modals & Alerts</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/navbar.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Navbar & Tabs</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/timeline.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Timeline</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/UI/ribbons.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Ribbons</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-edit"></i>
-                    <p>
-                        Forms
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="pages/forms/general.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>General Elements</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/forms/advanced.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Advanced Elements</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/forms/editors.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Editors</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/forms/validation.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Validation</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="nav-header">EXAMPLES</li>
-            <li class="nav-item">
-                <a href="pages/calendar.html" class="nav-link">
-                    <i class="nav-icon far fa-calendar-alt"></i>
-                    <p>
-                        Calendar
-                        <span class="badge badge-info right">2</span>
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="pages/gallery.html" class="nav-link">
-                    <i class="nav-icon far fa-image"></i>
-                    <p>
-                        Gallery
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="pages/kanban.html" class="nav-link">
-                    <i class="nav-icon fas fa-columns"></i>
-                    <p>
-                        Kanban Board
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-envelope"></i>
-                    <p>
-                        Mailbox
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="pages/mailbox/mailbox.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Inbox</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/mailbox/compose.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Compose</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/mailbox/read-mail.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Read</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
-                    <p>
-                        Pages
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="pages/examples/invoice.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Invoice</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/profile.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Profile</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/e-commerce.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>E-commerce</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/projects.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Projects</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/project-add.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Project Add</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/project-edit.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Project Edit</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/project-detail.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Project Detail</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/contacts.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Contacts</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/faq.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>FAQ</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/contact-us.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Contact us</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-plus-square"></i>
-                    <p>
-                        Extras
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>
-                                Login & Register v1
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/examples/login.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Login v1</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/register.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Register v1</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/forgot-password.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Forgot Password v1</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/recover-password.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Recover Password v1</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>
-                                Login & Register v2
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/examples/login-v2.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Login v2</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/register-v2.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Register v2</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/forgot-password-v2.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Forgot Password v2</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/recover-password-v2.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Recover Password v2</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/lockscreen.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Lockscreen</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/legacy-user-menu.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Legacy User Menu</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/language-menu.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Language Menu</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/404.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Error 404</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/500.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Error 500</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/pace.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Pace</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/blank.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Blank Page</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="starter.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Starter Page</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-search"></i>
-                    <p>
-                        Search
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="pages/search/simple.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Simple Search</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/search/enhanced.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Enhanced</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-header">MISCELLANEOUS</li>
-            <li class="nav-item">
-                <a href="iframe.html" class="nav-link">
-                    <i class="nav-icon fas fa-ellipsis-h"></i>
-                    <p>Tabbed IFrame Plugin</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-                    <i class="nav-icon fas fa-file"></i>
-                    <p>Documentation</p>
-                </a>
-            </li>
-            <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>Level 1</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle"></i>
-                    <p>
-                        Level 1
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Level 2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>
-                                Level 2
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Level 3</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Level 3</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-dot-circle nav-icon"></i>
-                                    <p>Level 3</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Level 2</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>Level 1</p>
-                </a>
-            </li>
-            <li class="nav-header">LABELS</li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-circle text-danger"></i>
-                    <p class="text">Important</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-circle text-warning"></i>
-                    <p>Warning</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-circle text-info"></i>
-                    <p>Informational</p>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-</div>
+</aside>

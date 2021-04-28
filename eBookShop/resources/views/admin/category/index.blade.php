@@ -1,130 +1,369 @@
 @extends('layouts.main')
 
 @section('content')
-    @if(session('delete-category'))
-        <div class="alert alert-primary" role="alert">
-            {{ session('delete-category') }}
-        </div>
-        @endif
-    @if(session('update-category'))
-        <div class="alert alert-primary" role="alert">
-            {{ session('update-category') }}
-        </div>
-    @endif
-    @if(session('create-category'))
-        <div class="alert alert-primary" role="alert">
-            {{ session('create-category') }}
-        </div>
-    @endif
-    @if(session('delete-error'))
-        <div class="alert alert-danger" role="alert">
-            {{ session('delete-error') }}
-        </div>
-    @endif
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Category</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        {!! Form::open(['action'=>'','method'=>'GET' , 'route' => ['category.create']]) !!}
-                             {{ Form::button('Create', ['class' => 'btn btn-primary m-2','name'=>'action' ,'type' => 'submit','value' => 'add-cate']) }}
-                    {!! Form::close() !!}
-
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Tools</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($category as $cate )
-                                <tr>
-                                    <td>{{$cate->id}}</td>
-                                    <td>{{$cate->name}}</td>
-
-                                    <td>
-                                        <div class="form-group" >
-                                            {!! Form::open(['method'=>'DELETE' , 'route' => ['category.destroy',$cate->id]]) !!}
-                                            {{ Form::button('Delete', ['class' => 'btn btn-danger float-right m-2','type' => 'submit']) }}
-                                            {!! Form::close() !!}
-                                            {!! Form::open(['method'=>'GET' , 'route' => ['category.edit',$cate->id]]) !!}
-                                            {{ Form::button('Update', ['class' => 'btn btn-primary float-right m-2' ,'type' => 'submit']) }}
-                                            {!! Form::close() !!}
-                                        </div>
-                                    </td>
-
-                                </tr>
-                            @endforeach
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Tools</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                    <!-- /.card-body -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>Thông tin</h2>
                 </div>
-                <!-- /.card -->
+                <div class="card-body slim-scroll p-0">
+                    <div class="card-body">
+
+                        <div id="accordion3" class="accordion accordion-bordered ">
+                            <div class="card">
+                                <div class="card-header col-12" id="heading1">
+                                    <button class="btn btn-link col-9" data-toggle="collapse" data-target="#collapse1"
+                                            aria-expanded="true" aria-controls="collapse1">
+                                        Thê loại
+                                    </button>
+                                    @include('admin.category.iconsvg.plus')
+                                </div>
 
 
-                <!-- /.card -->
+                                <div id="collapse1" class="collapse show" aria-labelledby="heading1"
+                                     data-parent="#accordion3">
+                                    <div class="card-body">
+                                        <ul id="treeview">
+                                            {!! $html !!}
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <div class="card">
+                                    <div class="card-header" id="heading2">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                data-target="#collapse2" aria-expanded="false"
+                                                aria-controls="collapse2">
+                                            Tác giả
+                                        </button>
+                                    </div>
+
+                                    <div id="collapse2" class="collapse" aria-labelledby="heading2"
+                                         data-parent="#accordion3">
+                                        <div class="card-body">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod
+                                            tempor
+                                            incididunt ut labore et dolore magna aliqua.enim
+                                            ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip
+                                            ex ea
+                                            commodo consequat duis aute.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="heading3">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                data-target="#collapse3" aria-expanded="false"
+                                                aria-controls="collapse3">
+                                            Hat Black Suits
+                                        </button>
+                                    </div>
+
+                                    <div id="collapse3" class="collapse" aria-labelledby="heading3"
+                                         data-parent="#accordion3">
+                                        <div class="card-body">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod
+                                            tempor
+                                            incididunt ut labore et dolore magna aliqua.enim
+                                            ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip
+                                            ex ea
+                                            commodo consequat duis aute.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
+
+
+        <div class="col-xl-8 float-right">
+            <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389">
+                <div class="card-header card-header-border-bottom">
+                    <h2>Team Activity</h2>
+                </div>
+
+                <div class="card-body slim-scroll p-0">
+                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+                            <i class="mdi mdi-cart-outline font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Emma Smith</a>
+                            <p>Lorem ipsum dolor sit amet</p>
+                        </div>
+
+                        <span class=" font-size-12 d-inline-block"><i
+                                class="mdi mdi-clock-outline"></i> 1 min ago</span>
+                    </div>
+
+                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
+                            <i class="mdi mdi-email-outline font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Sophia Amanda</a>
+                            <p>Donec sit amet justo dignissim</p>
+                        </div>
+                        <span class=" font-size-12 d-inline-block"><i
+                                class="mdi mdi-clock-outline"></i> 5 min ago</span>
+                    </div>
+
+                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
+                            <i class="mdi mdi-stack-exchange font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Emily Disuja</a>
+                            <p>At efficitur turpis hendrerit id</p>
+                        </div>
+                        <span class=" font-size-12 d-inline-block"><i
+                                class="mdi mdi-clock-outline"></i> 1 day ago</span>
+                    </div>
+
+                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+                            <i class="mdi mdi-cart-outline font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">William Camble</a>
+                            <p>Lorem ipsum dolor sit amet</p>
+                        </div>
+                        <span class=" font-size-12 d-inline-block"><i
+                                class="mdi mdi-clock-outline"></i> 10 AM</span>
+                    </div>
+
+                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-info text-white">
+                            <i class="mdi mdi-calendar-blank font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="">Comapny Meetup</a>
+                            <p>Donec sit amet justo dignissim</p>
+                        </div>
+                        <span class=" font-size-12 d-inline-block"><i
+                                class="mdi mdi-clock-outline"></i> 10 AM</span>
+                    </div>
+
+                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
+                            <i class="mdi mdi-stack-exchange font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Support Ticket</a>
+                            <p>At efficitur turpis hendrerit id</p>
+                        </div>
+                        <span class=" font-size-12 d-inline-block"><i
+                                class="mdi mdi-clock-outline"></i> 10 AM</span>
+                    </div>
+
+                    <div class="media py-3 align-items-center justify-content-between px-5">
+                        <div
+                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
+                            <i class="mdi mdi-email-outline font-size-20"></i>
+                        </div>
+                        <div class="media-body pr-3">
+                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">New Enquiry</a>
+                            <p>Phileine has placed an new order</p>
+                        </div>
+                        <span class=" font-size-12 d-inline-block"><i class="mdi mdi-clock-outline"></i> 9 AM</span>
+                    </div>
+                </div>
+                <div class="mt-3"></div>
+            </div>
+        </div>
+
     </div>
-    <!-- /.container-fluid -->
-    <!-- Page specific script -->
+    @include('admin.category.addCategory')
+    @include('admin.category.Edit')
 
 @endsection
-
 @section('script')
-    <!-- DataTables  & Plugins -->
-    <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="/plugins/jszip/jszip.min.js"></script>
-    <script src="/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="/plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <link rel="stylesheet" type="text/css"
+          href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css"/>
+    <script type="text/javascript"
+            src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+    <script src="{{asset('fillparentCategory/fillparentCategory.js')}}"></script>
+    <script src="{{asset('error-handler/exception.js')}}"></script>
+
     <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
+        $(document).ready(function () {
+
+            $.fn.fill_parent_category();
+
+             // fill_treeviews();
+
+            {{--function fill_treeviews() {--}}
+            {{--    $.ajax({--}}
+            {{--        url: "{{route('category.index')}}",--}}
+            {{--        dataType: "json",--}}
+            {{--        success: function (data) {--}}
+
+            {{--            data:data;--}}
+            {{--        }--}}
+            {{--    })--}}
+            {{--}--}}
+
+            $('#tree-form').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "{{route('category.store')}}",
+                    method: "POST",
+                    data: {
+                        "_token": '{{csrf_token()}}',
+                        "name": $('#name').val(),
+                        "parent_id": $('#parent_id').val(),
+                    },
+                    success: function (data) {
+
+                        $.fn.fill_parent_category();
+                        $('#tree-form')[0].reset();
+                        $('.alert-highlighted').text('Thêm thể loại thành công');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                        setTimeout(function (){
+                            location.reload();
+                        },1000);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $.fn.handlerError(error);
+                    }
+                })
             });
         });
+
+        $('#btn-update-category').click(function (e){
+           e.preventDefault();
+           $.ajax({
+               url:'category/update',
+               method:"PATCH",
+               data: $('#idCategory').serialize(),
+               success:function (data){
+                  $result =  data.result;
+                  if($result ==='success'){
+                      $('.alert-highlighted').text('Cập nhật thành công');
+                      $('.alert-highlighted').show();
+                      $('.alert-highlighted').fadeOut(5000);
+
+                      location.reload();
+
+                  }else{
+
+                      $('.alert-highlighted').removeClass('alert-success');
+                      $('.alert-highlighted').addClass('alert-highlighted');
+                      $('.alert-highlighted').text('Tồn tài tên loại , kiểm tra lại!');
+                      $('.alert-highlighted').show();
+                      $('.alert-highlighted').fadeOut(5000);
+
+                  }
+               },
+               error:function (error){
+                   console.log(error);
+               }
+
+           })
+        });
+
+        $('#btn-delete-category').click(function (e){
+            e.preventDefault();
+            $.ajax({
+                url:'category/'+id,
+                method:"DELETE",
+                data: $('#idCategory').serialize(),
+
+                success:function (data){
+                    $result =  data.result;
+                    if($result ==='success'){
+                        $('.alert-highlighted').text('Xoá thành công');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+
+                        location.reload();
+
+                    }else{
+                        $('.alert-highlighted').removeClass('alert-success');
+                        $('.alert-highlighted').addClass('alert-highlighted');
+                        $('.alert-highlighted').text('Không thể xoá !');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                    }
+                },
+                error:function (error){
+                    console.log(error);
+                }
+
+            })
+        });
+
+
+        function formatText() {
+
+            var text = $('#parent_id option:selected').text();
+            console.log(text);
+            var splitstr = text.split(/\s{4}/);
+
+            var index = (splitstr.length) - 1;
+            //   var id =  $('#parent_id option:selected').val(splitstr[index]);
+            //  var category =  $('#parent_id option:selected').val(splitstr[index]);
+            var category = splitstr[index];
+            //  console.log(category);
+//            getCategory(category);
+            //   $('#parent_id').html(category);
+        }
+
+        function getCategory(text) {
+            console.log(text);
+            //document.getElementById('parent_id').value = text;
+            $('#parent_id').val(text);
+        }
+
+
+        function myText(edit){
+            clear_option();
+            $.fn.fill_parent_category();
+            console.log(edit.getAttribute('data-value'));
+            $('#name_update').val(edit.getAttribute('data-value'));
+              $('#idCategory').val(edit.value);
+
+            $('#parent_id option').appendTo("#parent_id_update");
+            $('#parent_id_update option:selected').html(edit.name);
+            $("select[id=parent_id_update] option:last").remove();
+
+            return edit.value;
+        }
+
+        function clear_option(){
+            $('#parent_id_update').children().remove();
+        }
+        function  getID(item){
+            id = item.getAttribute('data-value');
+        }
+
+
     </script>
-    <script>
-        $(function () {
-            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
-                $(".alert").slideUp(500);
-            });
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#treeview").shieldTreeView();
         });
+
     </script>
 @endsection
+
+
+
 

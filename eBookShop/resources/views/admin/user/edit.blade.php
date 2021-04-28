@@ -1,5 +1,16 @@
 @extends('layouts.main')
 @section('content')
+@section('name')
+    <h1>Users</h1>
+@endsection
+@section('root')
+    <a href="{{route('user.show',$users->id)}}">
+    Users detail
+    </a>
+@endsection
+@section('model')
+    users edit
+@endsection
     <div class="container rounded bg-white mt-5 mb-5">
         <form method="POST" action={{route('user.update',$users->id)}} enctype="multipart/form-data">
             @csrf
