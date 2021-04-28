@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::middleware(['auth','role:administrator'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
 
 
@@ -68,7 +68,7 @@ Route::middleware(['auth','role:administrator'])->group(function () {
     Route::resource('permission',PermissionController::class);
 //Add-Role-user
  Route::get('/user/{user}/role',[UserController::class, 'editRole'])->name('user.role');
- Route::put('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
+ Route::post('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
 
  //discount
  Route::resource('discount',DiscountController::class);
@@ -77,4 +77,8 @@ Route::resource('order',OrderController::class);
 Route::get('/order/request/confirmation',[OrderController::class, 'orderConfirm'])->name('order.confirmation');
 Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccept'])->name('order.accept');
     Route::delete('/order/request/{order}/delete',[OrderController::class, 'orderDelete'])->name('order.delete');
+
+    Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
+    Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
+
 });

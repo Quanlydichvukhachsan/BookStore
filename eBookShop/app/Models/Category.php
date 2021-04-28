@@ -9,12 +9,12 @@ class Category extends Model
 {
     use HasFactory;
     protected $fillable=[
-      'name'
+      'name', 'parent_id'
     ];
 
-    public function genres()
+    public function childs()
     {
-        return $this->hasMany('App\Models\Genres');
+        return $this->hasMany('App\Models\Category','parent_id','id');
     }
 
 }
