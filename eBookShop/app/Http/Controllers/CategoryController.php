@@ -97,23 +97,14 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param string $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
-        $input = $request->all();
-        $categories = Category::findOrFail($id);
-        $cate = Category::where('name', '=', $input['name'])->first();
-        if ($cate !== null && $input['name'] === $categories->name || $cate === null) {
-            $categories->name = $input['name'];
-            $categories->save();
-        } else {
-            return redirect()->back()->withErrors('category existed');
-        }
-        session()->flash('update-category', 'Update Success!');
-        return redirect()->route('category.index');
+        $result =$this->CategoryContract->update($request,$id);
 
+       return response()->json(['result'=> $result]);
     }
 
     /**

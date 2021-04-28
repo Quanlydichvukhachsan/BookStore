@@ -26,7 +26,6 @@
                                     <div class="card-body">
                                         <ul id="treeview">
                                             {!! $html !!}
-
                                         </ul>
                                     </div>
                                 </div>
@@ -199,6 +198,7 @@
     <script type="text/javascript"
             src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script src="{{asset('fillparentCategory/fillparentCategory.js')}}"></script>
+    <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
         $(document).ready(function () {
@@ -232,9 +232,12 @@
 
                         $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
-
-                        console.log(data.success);
-                        alert(data);
+                        $('.alert-highlighted').text('Thêm thể loại thành công');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                        setTimeout(function (){
+                            location.reload();
+                        },1000);
                     },
                     error: function (error) {
                         console.log(error);
@@ -242,6 +245,40 @@
                     }
                 })
             });
+        });
+
+        $('#btn-update-category').click(function (e){
+           e.preventDefault();
+           $.ajax({
+               url:'category/update',
+               method:"PATCH",
+               data: $('#tree-form_update').serialize(),
+               success:function (data){
+                  $result =  data.result;
+                  if($result ==='success'){
+                      $('.alert-highlighted').text('Cập nhật thành công');
+                      $('.alert-highlighted').show();
+                      $('.alert-highlighted').fadeOut(5000);
+
+                      location.reload();
+
+                  }else{
+
+                      $('.alert-highlighted').removeClass('alert-success');
+                      $('.alert-highlighted').addClass('alert-highlighted');
+                      $('.alert-highlighted').text('Tồn tài tên loại , kiểm tra lại!');
+                      $('.alert-highlighted').show();
+                      $('.alert-highlighted').fadeOut(5000);
+
+                  }
+               },
+               error:function (error){
+                   console.log(error);
+               }
+
+
+
+           })
         });
 
         function formatText() {
@@ -264,14 +301,23 @@
             //document.getElementById('parent_id').value = text;
             $('#parent_id').val(text);
         }
+
+
         function myText(edit){
-           // $.fn.fill_parent_category();
-            id = edit.value;
-            console.log(name);
-            console.log(id);
-            $('#name_update').text()
+            clear_option();
+            $.fn.fill_parent_category();
+            console.log(edit.getAttribute('data-value'));
+            $('#name_update').val(edit.getAttribute('data-value'));
+              $('#idCategory').val(edit.value);
             $('#parent_id option').appendTo("#parent_id_update");
-            $('#parent_id_update option:selected').text(edit.name);
+            $('#parent_id_update option:selected').html(edit.name);
+
+
+            return edit.value;
+        }
+
+        function clear_option(){
+            $('#parent_id_update').children().remove();
         }
 
 
