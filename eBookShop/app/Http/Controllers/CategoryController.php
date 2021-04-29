@@ -101,21 +101,22 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
-      //  $result =$this->CategoryContract->update($request,$id);
+       $result =$this->CategoryContract->update($request,$id);
 
-       return response()->json(['result'=> $request->all()]);
+       return response()->json(['result'=>$result]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  string $id
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 
-        $result =$this->CategoryContract->delete($id);
+        $result =$this->CategoryContract->delete($request,$id);
 
         return response()->json(['result'=> $result]);
     }

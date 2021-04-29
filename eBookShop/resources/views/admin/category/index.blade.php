@@ -202,21 +202,7 @@
 
     <script>
         $(document).ready(function () {
-
             $.fn.fill_parent_category();
-
-             // fill_treeviews();
-
-            {{--function fill_treeviews() {--}}
-            {{--    $.ajax({--}}
-            {{--        url: "{{route('category.index')}}",--}}
-            {{--        dataType: "json",--}}
-            {{--        success: function (data) {--}}
-
-            {{--            data:data;--}}
-            {{--        }--}}
-            {{--    })--}}
-            {{--}--}}
 
             $('#tree-form').on('submit', function (event) {
                 event.preventDefault();
@@ -229,15 +215,17 @@
                         "parent_id": $('#parent_id').val(),
                     },
                     success: function (data) {
-
+                        $('#exampleModal').hide();
                         $.fn.fill_parent_category();
                         $('#tree-form')[0].reset();
+                        $(".alert-highlighted").removeClass('alert-danger');
+                        $(".alert-highlighted").addClass('alert-success');
                         $('.alert-highlighted').text('Thêm thể loại thành công');
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
-                        setTimeout(function (){
+                        setTimeout(function () {
                             location.reload();
-                        },1000);
+                        }, 1000);
                     },
                     error: function (error) {
                         console.log(error);
@@ -247,68 +235,101 @@
             });
         });
 
-        $('#btn-update-category').click(function (e){
-           e.preventDefault();
-           $.ajax({
-               url:'category/update',
-               method:"PATCH",
-               data: $('#idCategory').serialize(),
-               success:function (data){
-                  $result =  data.result;
-                  if($result ==='success'){
-                      $('.alert-highlighted').text('Cập nhật thành công');
-                      $('.alert-highlighted').show();
-                      $('.alert-highlighted').fadeOut(5000);
-
-                      location.reload();
-
-                  }else{
-
-                      $('.alert-highlighted').removeClass('alert-success');
-                      $('.alert-highlighted').addClass('alert-highlighted');
-                      $('.alert-highlighted').text('Tồn tài tên loại , kiểm tra lại!');
-                      $('.alert-highlighted').show();
-                      $('.alert-highlighted').fadeOut(5000);
-
-                  }
-               },
-               error:function (error){
-                   console.log(error);
-               }
-
-           })
-        });
-
-        $('#btn-delete-category').click(function (e){
+        $('#btn-update-category').click(function (e) {
             e.preventDefault();
             $.ajax({
-                url:'category/'+id,
-                method:"DELETE",
-                data: $('#idCategory').serialize(),
+                url: 'category/update',
+                method: "PATCH",
+                data: $('#tree-form_update').serialize(),
+                success: function (data) {
 
-                success:function (data){
-                    $result =  data.result;
-                    if($result ==='success'){
-                        $('.alert-highlighted').text('Xoá thành công');
+                    $result = data.result;
+                    if ($result !== 'error') {
+                        $('#exampleModal1').hide();
+                        $(".alert-highlighted").removeClass('alert-danger');
+                        $(".alert-highlighted").addClass('alert-success');
+                        $('.alert-highlighted').text('Cập nhật thành công');
                         $('.alert-highlighted').show();
-                        $('.alert-highlighted').fadeOut(5000);
-
+                        //  $('.alert-highlighted').fadeOut(5000);
                         location.reload();
 
-                    }else{
+                    } else {
+                        $('#exampleModal1').hide()
+                        setTimeout(function () {
+                            $('#exampleModal1').show()
+                        }, 2000)
                         $('.alert-highlighted').removeClass('alert-success');
                         $('.alert-highlighted').addClass('alert-highlighted');
-                        $('.alert-highlighted').text('Không thể xoá !');
+                        $('.alert-highlighted').text('Tồn tài tên loại , kiểm tra lại!');
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
+
                     }
                 },
-                error:function (error){
+                error: function (error) {
                     console.log(error);
                 }
 
             })
         });
+
+
+        $('#btn-delete-category').click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure delete role ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#29CC97',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: 'category/destroy',
+                        method: "DELETE",
+                        data: $('#tree-form_update').serialize(),
+
+                        success: function (data) {
+                            $result = data.result;
+
+                            if ($result !== 'error') {
+
+                                $('#exampleModal1').hide();
+                                $(".alert-highlighted").removeClass('alert-danger');
+                                $(".alert-highlighted").addClass('alert-success');
+                                $('.alert-highlighted span').text('Xoá thành công');
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                                // setTimeout(function (){
+                                location.reload();
+                                // },1000)
+
+                            } else {
+                                console.log($result);
+
+                                $('#exampleModal1').hide()
+                                setTimeout(function () {
+                                    $('#exampleModal1').show()
+                                }, 2000)
+                                $(".alert-highlighted").removeClass('alert-success');
+                                $(".alert-highlighted").addClass('alert-danger');
+                                $(".alert-highlighted span").text("Không thể xoá");
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+
+                    })
+
+                }
+            })
+        })
 
 
         function formatText() {
@@ -333,24 +354,22 @@
         }
 
 
-        function myText(edit){
+        function myText(edit) {
             clear_option();
             $.fn.fill_parent_category();
             console.log(edit.getAttribute('data-value'));
             $('#name_update').val(edit.getAttribute('data-value'));
-              $('#idCategory').val(edit.value);
-
+            $('#idCategory').val(edit.value);
             $('#parent_id option').appendTo("#parent_id_update");
             $('#parent_id_update option:selected').html(edit.name);
             $("select[id=parent_id_update] option:last").remove();
-
-            return edit.value;
         }
 
-        function clear_option(){
+        function clear_option() {
             $('#parent_id_update').children().remove();
         }
-        function  getID(item){
+
+        function getID(item) {
             id = item.getAttribute('data-value');
         }
 
