@@ -303,9 +303,9 @@
                                 $('.alert-highlighted span').text('Xoá thành công');
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
-                                // setTimeout(function (){
+                                 setTimeout(function (){
                                 location.reload();
-                                // },1000)
+                                },1000)
 
                             } else {
                                 console.log($result);

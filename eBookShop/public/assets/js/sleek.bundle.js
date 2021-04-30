@@ -10123,7 +10123,7 @@
 	  }
 
 	  /*======== 6. PROGRESS BAR ========*/
-	  NProgress.done();
+	  NProgress.done()
 
 	  /*======== 6. PROGRESS BAR ========*/
 	  $('.slim-scroll-right-sidebar-2').slimScroll({

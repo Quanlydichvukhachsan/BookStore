@@ -4,10 +4,6 @@
 
 <body class="header-fixed sidebar-fixed sidebar-light header-light" id="body">
 
-<script>
-    NProgress.configure({showSpinner: false});
-    NProgress.start();
-</script>
 
 <div id="toaster"></div>
 <div class="wrapper">
