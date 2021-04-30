@@ -114,17 +114,18 @@ class CategoryService implements CategoryContract
 
     }
 
-    public function delete($id)
+    public function delete($request,$id)
     {
+        $ids = $request['idCategory'];
         $result = array('error' => 'error', 'success' => 'success');
-        $categories = Category::findOrFail($id);
+        $categories = Category::findOrFail($ids);
 
         //$check = $categories->genres->exists();
         if (count($categories->childs)) {
             return $result['error'];
 
         } else {
-            Category::destroy($id);
+            Category::destroy($ids);
             return $result['success'];
         }
 

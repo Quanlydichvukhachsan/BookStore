@@ -13,6 +13,7 @@ class RoleService implements  RoleContract
 
     public function getAll()
     {
+
         $role = Role::all();
         return $role;
     }

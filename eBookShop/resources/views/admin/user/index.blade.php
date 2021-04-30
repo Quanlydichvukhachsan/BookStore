@@ -240,7 +240,9 @@
             id = item.getAttribute("data-value");
               @if(\Illuminate\Support\Facades\Auth::check()){
                   var ids = "{{\Illuminate\Support\Facades\Auth::user()->id }}";
-                               if(ids ===id){
+                      var text =  $("tr#sid"+ids).find("td").eq(5).text();
+                       var nameRole =  text.split(/(\s+)/);
+                               if(ids ===id && nameRole === "Administrator"){
                                    Swal.fire({
                                        title: 'You have full access!',
                                        confirmButtonColor: '#29CC97',
