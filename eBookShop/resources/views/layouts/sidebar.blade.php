@@ -50,7 +50,7 @@
 
                             <li  class="active" >
                                 <a class="sidenav-item-link" href="{{route('category.index')}}">
-                                    <span class="nav-text">Ecommerce</span>
+                                    <span class="nav-text">Sách</span>
 
                                 </a>
                             </li>

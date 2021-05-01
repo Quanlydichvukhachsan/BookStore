@@ -1,4 +1,6 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 use App\Models\Category;
 use App\Contracts\CategoryContract;
@@ -139,22 +141,4 @@ class CategoryService implements CategoryContract
     }
 
 
-    public function editCategory($id)
-    {
-
-
-        $user = User::findOrFail($id);
-        $role = Role::all();
-        $arrayIdRole = array();
-        $IdRole = $user->roles;
-        foreach ($IdRole as $idRoles) {
-            array_push($arrayIdRole, $idRoles->id);
-        }
-    }
-
-    public function edit($id)
-    {
-        $users = User::findOrFail($id);
-        return $users;
-    }
 }

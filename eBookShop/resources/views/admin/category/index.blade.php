@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
                     <h2>Thông tin</h2>
@@ -17,7 +17,7 @@
                                             aria-expanded="true" aria-controls="collapse1">
                                         Thê loại
                                     </button>
-                                    @include('admin.category.iconsvg.plus')
+                                    @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
                                 </div>
 
 
@@ -33,44 +33,115 @@
 
                                 <div class="card">
                                     <div class="card-header" id="heading2">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        <button class="btn btn-link collapsed  col-9" data-toggle="collapse"
                                                 data-target="#collapse2" aria-expanded="false"
                                                 aria-controls="collapse2">
                                             Tác giả
                                         </button>
+                                        @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
                                     </div>
 
                                     <div id="collapse2" class="collapse" aria-labelledby="heading2"
                                          data-parent="#accordion3">
                                         <div class="card-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod
-                                            tempor
-                                            incididunt ut labore et dolore magna aliqua.enim
-                                            ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip
-                                            ex ea
-                                            commodo consequat duis aute.
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Họ và Tên Đệm</th>
+                                                        <th scope="col">Last</th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <tr class="table-secondary">
+                                                        <td scope="row">1</td>
+                                                        <td>Nguyễn Đình Phát</td>
+                                                        <td>Triển</td>
+                                                    </tr>
+                                                    <tr class="table-primary">
+                                                        <td scope="row">2</td>
+                                                        <td>Hà Quốc</td>
+                                                        <td>Huy</td>
+                                                    </tr>
+                                                    <tr class="table-primary">
+                                                        <td scope="row">2</td>
+                                                        <td>Nguyễn Mậu </td>
+                                                        <td>Tuấn</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card">
                                     <div class="card-header" id="heading3">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        <button class="btn btn-link collapsed col-9" data-toggle="collapse"
                                                 data-target="#collapse3" aria-expanded="false"
                                                 aria-controls="collapse3">
-                                            Hat Black Suits
+                                            Nhà xuất bản
                                         </button>
+                                        @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
                                     </div>
 
                                     <div id="collapse3" class="collapse" aria-labelledby="heading3"
                                          data-parent="#accordion3">
                                         <div class="card-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod
-                                            tempor
-                                            incididunt ut labore et dolore magna aliqua.enim
-                                            ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip
-                                            ex ea
-                                            commodo consequat duis aute.
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">First</th>
+                                                    <th scope="col">Last</th>
+                                                    <th scope="col">Handle</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <tr class="table-secondary">
+                                                    <td scope="row">1</td>
+                                                    <td>Lucia</td>
+                                                    <td>Christ</td>
+                                                    <td>@Lucia</td>
+                                                </tr>
+
+                                                <tr class="table-primary">
+                                                    <td scope="row">2</td>
+                                                    <td>Catrin</td>
+                                                    <td>Seidl</td>
+                                                    <td>@catrin</td>
+                                                </tr>
+
+                                                <tr class="table-info">
+                                                    <td scope="row">3</td>
+                                                    <td>Lilli</td>
+                                                    <td>Kirsh</td>
+                                                    <td>@lilli</td>
+                                                </tr>
+
+                                                <tr class="table-success">
+                                                    <td scope="row">4</td>
+                                                    <td>Else</td>
+                                                    <td>Voigt</td>
+                                                    <td>@voigt</td>
+                                                </tr>
+
+                                                <tr class="table-danger">
+                                                    <td scope="row">5</td>
+                                                    <td>Ursel</td>
+                                                    <td>Harms</td>
+                                                    <td>@ursel</td>
+                                                </tr>
+
+                                                <tr class="table-warning">
+                                                    <td scope="row">6</td>
+                                                    <td>Anke</td>
+                                                    <td>Sauter</td>
+                                                    <td>@Anke</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +153,7 @@
         </div>
 
 
-        <div class="col-xl-8 float-right">
+        <div class="col-xl-7 float-right">
             <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389">
                 <div class="card-header card-header-border-bottom">
                     <h2>Team Activity</h2>
