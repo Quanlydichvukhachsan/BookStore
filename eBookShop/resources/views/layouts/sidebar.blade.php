@@ -385,19 +385,12 @@
                                 </a>
                             </li>
 
-
-
-
-
-
                             <li >
                                 <a class="sidenav-item-link" href="flag-icon.html">
                                     <span class="nav-text">Flag Icon</span>
 
                                 </a>
                             </li>
-
-
 
 
                         </div>

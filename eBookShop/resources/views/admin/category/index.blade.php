@@ -44,33 +44,7 @@
                                     <div id="collapse2" class="collapse" aria-labelledby="heading2"
                                          data-parent="#accordion3">
                                         <div class="card-body">
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Họ và Tên Đệm</th>
-                                                        <th scope="col">Last</th>
-                                                    </tr>
-                                                    </thead>
-
-                                                    <tbody>
-                                                    <tr class="table-secondary">
-                                                        <td scope="row">1</td>
-                                                        <td>Nguyễn Đình Phát</td>
-                                                        <td>Triển</td>
-                                                    </tr>
-                                                    <tr class="table-primary">
-                                                        <td scope="row">2</td>
-                                                        <td>Hà Quốc</td>
-                                                        <td>Huy</td>
-                                                    </tr>
-                                                    <tr class="table-primary">
-                                                        <td scope="row">2</td>
-                                                        <td>Nguyễn Mậu </td>
-                                                        <td>Tuấn</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                            @include('admin.author.index')
                                         </div>
                                     </div>
                                 </div>

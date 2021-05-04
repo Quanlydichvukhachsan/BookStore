@@ -5,9 +5,17 @@ namespace App\Services;
 
 
 use App\Contracts\AuthorContract;
+use App\Models\Author;
 
 class AuthorService implements AuthorContract
 {
+    public function getAll()
+    {
+        $author= Author::all();
+        return $author;
+
+    }
+
     public function create($request)
     {
 
