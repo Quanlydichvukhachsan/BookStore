@@ -50,7 +50,7 @@
 
                             <li  class="active" >
                                 <a class="sidenav-item-link" href="{{route('category.index')}}">
-                                    <span class="nav-text">Ecommerce</span>
+                                    <span class="nav-text">Sách</span>
 
                                 </a>
                             </li>
@@ -385,19 +385,12 @@
                                 </a>
                             </li>
 
-
-
-
-
-
                             <li >
                                 <a class="sidenav-item-link" href="flag-icon.html">
                                     <span class="nav-text">Flag Icon</span>
 
                                 </a>
                             </li>
-
-
 
 
                         </div>
