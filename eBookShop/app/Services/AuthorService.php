@@ -11,9 +11,8 @@ class AuthorService implements AuthorContract
 {
     public function getAll()
     {
-        $author= Author::all();
+        $author= Author::all()->each->fullname;
         return $author;
-
     }
 
     public function create($request)

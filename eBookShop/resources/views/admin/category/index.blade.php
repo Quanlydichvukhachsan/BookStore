@@ -418,6 +418,14 @@
             id = item.getAttribute('data-value');
         }
 
+        $.ajax({
+            type:'GET',
+            url:'{{route('author.index')}}',
+            cache:false,
+            success: function (data){
+                console.log(data);
+            }
+        })
 
     </script>
     <script type="text/javascript">

@@ -9,5 +9,4 @@ interface UserContract{
     public function addRole($request ,$id);
     public function editRole($id);
     public function edit($id);
-
 }

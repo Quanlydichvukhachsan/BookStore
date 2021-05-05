@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\GenresController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AuthorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,5 +81,5 @@ Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccep
 
     Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
     Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
-
+    Route::resource('author',AuthorController::class);
 });

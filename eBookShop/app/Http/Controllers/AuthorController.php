@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Contracts\AuthorContract;
+use App\Contracts\AuthorContract;
 
 class AuthorController extends Controller
 {
@@ -21,7 +21,8 @@ class AuthorController extends Controller
     public function index()
     {
         $authors= $this->authorContracts->getAll();
-        return  view('admin\author\index',compact('authors'));
+        return $authors;
+        //return  view('admin\author\index',compact('authors'));
     }
 
     /**
