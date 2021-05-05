@@ -27,9 +27,13 @@
                             <i class=" mdi mdi-plus-circle"></i> Create Role
                         </a>
                         <a type="button" data-toggle="modal" href="#"
-                           data-target="#exampleModalsmall"
+                           data-target="#exampleModalsmallEdit"
+                           class="dropdown-item">
+                            <i class=" mdi mdi-plus-circle"></i> Create Permission</a>
+                        <a type="button" data-toggle="modal" href="#"
+                           data-target="#exampleModalsmallPermission"
                            class="dropdown-item" onclick="editPermission()" >Edit permission</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+
                     </div>
                 </div>
 
@@ -90,6 +94,7 @@
             </table>
                     @include('admin.role.create')
                     @include('admin.permission.create')
+                    @include('admin.permission.edit')
                     <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog"  data-keyboard="false"
                          data-backdrop="static"   aria-labelledby="exampleModalFormTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -378,7 +383,7 @@
     }
     $('#btn-cancel-register').click(function (e) {
         e.preventDefault();
-        $overlay.appendTo("#exampleModalsmall");
+        $overlay.appendTo("#exampleModalsmallPermission");
 
         Swal.fire({
             title: 'Are you sure delete permission ?',
@@ -423,7 +428,7 @@
                                 $(".alert-highlighted span").text("Success cancel register permission!");
                                 $('.alert-highlighted').show();
                                 $('#overlay').hide();
-                                $('#exampleModalForm').modal('hide');
+                                $('#exampleModalsmallPermission').modal('hide');
                                 $('.alert-highlighted').fadeOut(5000);
                                 removeFormModalSmall();
                             }
@@ -435,6 +440,33 @@
                 }, 1000)
             }
         })
+    });
+
+    $('#btn-create-permission').click(function (e) {
+        e.preventDefault();
+        $overlay.appendTo("#exampleModalsmallEdit");
+        $('#overlay').show();
+        setTimeout(function () {
+            $.ajax({
+                type: 'POST',
+                catch: false,
+                url: "{{route('permission.store')}}",
+                data: $('#form-create-permission').serialize(),
+                success: function (data) {
+                    $(".alert-highlighted span").text(data.result);
+                    $('.alert-highlighted').show();
+                    $('#overlay').hide();
+                    $('#exampleModalsmallEdit').modal('hide');
+                    $('.alert-highlighted').fadeOut(5000);
+                    setTimeout(function (){
+                        location.reload();
+                    },1000)
+                },
+                error:function (error){
+                    $.fn.handlerError(error);
+                }
+            })
+        }, 1000)
     });
   </script>
 
