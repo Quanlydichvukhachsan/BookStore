@@ -14,7 +14,7 @@
                             <div class="card">
                                 <div class="card-header col-12" id="heading1">
                                     <button class="btn btn-link col-9" data-toggle="collapse" data-target="#collapse1"
-                                            aria-expanded="true" aria-controls="collapse1">
+                                            aria-expanded="false" aria-controls="collapse1">
                                         Thê loại
                                     </button>
                                     @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
@@ -62,60 +62,7 @@
                                     <div id="collapse3" class="collapse" aria-labelledby="heading3"
                                          data-parent="#accordion3">
                                         <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">First</th>
-                                                    <th scope="col">Last</th>
-                                                    <th scope="col">Handle</th>
-                                                </tr>
-                                                </thead>
 
-                                                <tbody>
-                                                <tr class="table-secondary">
-                                                    <td scope="row">1</td>
-                                                    <td>Lucia</td>
-                                                    <td>Christ</td>
-                                                    <td>@Lucia</td>
-                                                </tr>
-
-                                                <tr class="table-primary">
-                                                    <td scope="row">2</td>
-                                                    <td>Catrin</td>
-                                                    <td>Seidl</td>
-                                                    <td>@catrin</td>
-                                                </tr>
-
-                                                <tr class="table-info">
-                                                    <td scope="row">3</td>
-                                                    <td>Lilli</td>
-                                                    <td>Kirsh</td>
-                                                    <td>@lilli</td>
-                                                </tr>
-
-                                                <tr class="table-success">
-                                                    <td scope="row">4</td>
-                                                    <td>Else</td>
-                                                    <td>Voigt</td>
-                                                    <td>@voigt</td>
-                                                </tr>
-
-                                                <tr class="table-danger">
-                                                    <td scope="row">5</td>
-                                                    <td>Ursel</td>
-                                                    <td>Harms</td>
-                                                    <td>@ursel</td>
-                                                </tr>
-
-                                                <tr class="table-warning">
-                                                    <td scope="row">6</td>
-                                                    <td>Anke</td>
-                                                    <td>Sauter</td>
-                                                    <td>@Anke</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +370,7 @@
             url:'{{route('author.index')}}',
             cache:false,
             success: function (data){
-                console.log(data);
+                console.log(data['full_name']);
             }
         })
 
