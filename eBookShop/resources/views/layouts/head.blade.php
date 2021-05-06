@@ -50,5 +50,5 @@
     <script src={{asset("assets/plugins/nprogress/nprogress.js")}}></script>
     <link href={{asset("assets/plugins/tree-multiselect/jquery.tree-multiselect.min.css")}} rel="stylesheet">
     <link href={{asset("assets/plugins/dynamic-tree/bstreeview.css" )}}rel="stylesheet">
-
+    <link rel="stylesheet" href={{asset("assets/plugins/author/author.css")}}>
 </head>

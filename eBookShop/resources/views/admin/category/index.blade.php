@@ -38,7 +38,7 @@
                                                 aria-controls="collapse2">
                                             Tác giả
                                         </button>
-                                        @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
+                                        @include('admin.category.iconsvg.plus',['parameter'=>'#add-author'])
                                     </div>
 
                                     <div id="collapse2" class="collapse" aria-labelledby="heading2"
@@ -228,11 +228,11 @@
                 <div class="mt-3"></div>
             </div>
         </div>
-
     </div>
     @include('admin.category.addCategory')
     @include('admin.category.Edit')
-
+    @include('admin.author.edit')
+    @include('admin.author.add')
 @endsection
 @section('script')
 
