@@ -32,7 +32,7 @@
 
     <link href={{asset("assets/plugins/data-tables/datatables.bootstrap4.min.css")}} rel="stylesheet">
 
-    <link href="https://unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css">
+    <link href={{asset("https://unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css")}}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- SELECT-->
     <link href={{asset("assets/plugins/select2/css/select2.min.css")}} rel="stylesheet" />

@@ -29,7 +29,6 @@ class CategoryController extends Controller
        // return $this->CategoryContract->index();
 
       //  $result= $this->CategoryContract->index();
-
         $html = $this->CategoryContract->getAll(Category::all(),0,'');
 
 
