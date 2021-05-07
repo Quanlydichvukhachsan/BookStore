@@ -31,6 +31,13 @@ class Book extends Model
         return $this->belongsTo('App\Models\Author');
     }
     public function publisher(){
-        return $this->belongsTo('App\Model\Publisher');
+        return $this->belongsTo('App\Models\Publisher');
+    }
+    public function categories(){
+        return $this->belongsTo('App\Models\Category');
+    }
+
+    public function imagebooks(){
+        return $this->hasMany('App\Models\ImageBook',foreignKey: 'book_id',localKey: 'id');
     }
 }

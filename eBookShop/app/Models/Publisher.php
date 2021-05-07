@@ -18,7 +18,13 @@ class Publisher extends Model
         'firstName',
         'lastName',
     ];
+
     public  function books(){
         $this->hasMany('App/Model/Book');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->lastName .' ' .$this->firstName ;
     }
 }

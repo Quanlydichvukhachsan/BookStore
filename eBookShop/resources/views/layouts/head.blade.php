@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!--
     PLUGINS CSS STYLE -->
+    <link rel="stylesheet" href="{{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css")}}">
     <link href={{asset("assets/plugins/nprogress/nprogress.css")}} rel="stylesheet" />
     <link href={{asset("assets/plugins/treeview/gijgo.min.css")}} rel="stylesheet" />
     <!-- No Extra plugin used -->
@@ -32,7 +33,7 @@
 
     <link href={{asset("assets/plugins/data-tables/datatables.bootstrap4.min.css")}} rel="stylesheet">
 
-    <link href="https://unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css">
+    <link href={{asset("https://unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css")}}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- SELECT-->
     <link href={{asset("assets/plugins/select2/css/select2.min.css")}} rel="stylesheet" />

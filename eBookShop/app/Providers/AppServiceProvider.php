@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Contracts\BookContract;
 use App\Contracts\PermissionContract;
 use App\Contracts\RoleContract;
 use App\Contracts\UserContract;
 use App\Models\Category;
+use App\Services\BookService;
 use App\Services\PermissionService;
 use App\Services\RoleService;
 use App\Services\CategoryService;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryContract::class, CategoryService::class);
         $this->app->bind(RoleContract::class,RoleService::class);
         $this->app->bind(PermissionContract::class,PermissionService::class);
+        $this->app->bind(BookContract::class,BookService::class);
     }
 
     /**

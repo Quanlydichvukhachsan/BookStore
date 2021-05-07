@@ -1,5 +1,5 @@
 
-    <div class="modal fade" id="exampleModalsmall" tabindex="-1" role="dialog"  data-backdrop="static"
+    <div class="modal fade" id="exampleModalsmallPermission" tabindex="-1" role="dialog"  data-backdrop="static"
          data-keyboard="false"
          aria-labelledby="exampleModalSmallTitle" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
