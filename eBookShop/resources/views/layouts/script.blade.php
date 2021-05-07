@@ -15,6 +15,11 @@
 <script src={{asset("assets/plugins/treeview/gijgo.min.js")}}></script>
 <script src={{asset("assets/plugins/sweet-alert/sweetalert2.min.js")}}></script>
 <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}> </script>
+
+<script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js")}}"></script>
+<script src="{{asset("https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js")}}"></script>
+<script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js")}}"></script>
+
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({

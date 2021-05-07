@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css")}}">
     <link href={{asset("assets/plugins/nprogress/nprogress.css")}} rel="stylesheet" />
     <link href={{asset("assets/plugins/treeview/gijgo.min.css")}} rel="stylesheet" />
+    <link href={{asset("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css")}} rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css")}}">
     <!-- No Extra plugin used -->
 
     <link href={{asset("assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css")}} rel="stylesheet" />
