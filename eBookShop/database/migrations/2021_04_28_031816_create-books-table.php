@@ -21,7 +21,7 @@ class CreateBooksTable extends Migration
             $table->integer('publisher_id');
             $table->integer('categories_id');
             $table->integer('weight');
-            $table->integer('number of pages');
+            $table->integer('number_of_pages');
             $table->string('formality');
             $table->float('size');
             $table->tinyInteger('foreign_book')->default(0);

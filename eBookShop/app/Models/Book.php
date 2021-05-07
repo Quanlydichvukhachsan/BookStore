@@ -37,7 +37,7 @@ class Book extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
-    public function imagebook(){
-        return $this->hasMany('App\Models\ImageBook');
+    public function imagebooks(){
+        return $this->hasMany('App\Models\ImageBook',foreignKey: 'book_id',localKey: 'id');
     }
 }

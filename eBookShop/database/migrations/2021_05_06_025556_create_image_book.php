@@ -13,7 +13,7 @@ class CreateImageBook extends Migration
      */
     public function up()
     {
-        Schema::create('imageBooks', function (Blueprint $table) {
+        Schema::create('image_books', function (Blueprint $table) {
             $table->id();
             $table->string('file');
             $table->integer('book_id');
