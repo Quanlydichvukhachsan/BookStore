@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateAuthorRequest;
 use Illuminate\Http\Request;
 use App\Contracts\AuthorContract;
 
@@ -41,9 +42,10 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAuthorRequest $request)
     {
-        //
+        $this->authorContracts->create($request);
+        return response()->json(['success'=>'Tạo thành công']);
     }
 
     /**

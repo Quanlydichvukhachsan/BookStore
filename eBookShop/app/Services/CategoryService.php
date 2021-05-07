@@ -132,6 +132,7 @@ class CategoryService implements CategoryContract
         //['name' => $category['name'], 'parent_id' =>$category['parent_id']]
         $category = $request->all();
         Category::create($category);
+
     }
 
 

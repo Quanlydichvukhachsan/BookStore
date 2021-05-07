@@ -195,7 +195,7 @@
     <script>
         $(document).ready(function () {
             $.fn.fill_parent_category();
-
+            loadauthor();
             $('#tree-form').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
@@ -365,13 +365,48 @@
             id = item.getAttribute('data-value');
         }
 
-        $.ajax({
-            type:'GET',
-            url:'{{route('author.index')}}',
-            cache:false,
-            success: function (data){
-                console.log(data['full_name']);
-            }
+        function loadauthor(){
+            $.ajax({
+                type:'GET',
+                url:'{{route('author.index')}}',
+                cache:false,
+                success: function (data){
+                    for (i in data){
+                        $(".listAuthor").append("<li class='col-12 divAuthor'><a href='' class='col-10'>"+data[i]['full_name']+"</a>" +
+                            "<button class='col-2' data-toggle='modal' data-target='#edit-author' id='btn-author-edit'>"+
+                            "<i class='mdi mdi-account-edit'></i></button></li>")
+                    }
+                },
+                error:function (error){
+
+                    console.log(error)
+                }
+            })
+        }
+
+        $('#btn-add-author').click(function (e){
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'{{route('author.store')}}',
+                data: $("#form-add-author").serialize(),
+                cache:false,
+                success: function (data){
+                    loadauthor();
+                    $('#add-author').modal('hide');
+                    $(".alert-highlighted").removeClass('alert-danger');
+                    $(".alert-highlighted").addClass('alert-success');
+                    $('.alert-highlighted').text('Thêm thành công');
+                    $('.alert-highlighted').show();
+                    $('.alert-highlighted').fadeOut(5000);
+                    console.log(data)
+                },
+                error:function (error){
+                    console.log(error)
+                    $.fn.handlerError(error);
+                }
+            })
+
         })
 
     </script>

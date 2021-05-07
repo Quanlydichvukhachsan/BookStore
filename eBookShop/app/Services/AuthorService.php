@@ -17,6 +17,11 @@ class AuthorService implements AuthorContract
 
     public function create($request)
     {
+//        $result = $request->all();
+        Author::create([
+            'firstName' =>$request->input('add-firstname-author'),
+            'lastName' =>$request->input('add-lastname-author')
+        ]);
 
     }
     public function update($Request, $id)
@@ -25,6 +30,6 @@ class AuthorService implements AuthorContract
     }
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+
     }
 }

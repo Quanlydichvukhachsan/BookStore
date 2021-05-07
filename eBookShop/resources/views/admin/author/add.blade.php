@@ -10,27 +10,27 @@
             </div>
 
             <div class="modal-body">
-                <form id="tree-form_update" >
+                <form id="form-add-author" >
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Họ tên lót</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="name_update" name="name_update" >
-                            <input  type="hidden" class="form-control">
-                            <div class="invalid-feedback name"></div>
+                            <input type="text" class="form-control" id="add-lastname-author" name="add-lastname-author" >
+{{--                            <input  type="hidden" class="form-control">--}}
+                            <div class="invalid-feedback add-lastname-author"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">Tên</label>
                         <div class="col-9">
-                            <input  type="text" class="form-control" >
-                            <div class="invalid-feedback name"></div>
+                            <input  type="text" class="form-control" id="add-firstname-author" name="add-firstname-author"  >
+                            <div class="invalid-feedback add-firstname-author"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-update-category" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Cập nhật
+                        <button type="submit" id="btn-add-author" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Thêm
                         </button>
-                        <button type="button" class="btn btn-danger btn-pill"  id="btn-delete-category">Xoá</button>
+                        <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
                     </div>
                 </form>
             </div>
