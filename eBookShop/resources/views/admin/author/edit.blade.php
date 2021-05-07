@@ -15,7 +15,7 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Họ tên lót</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="name_update" name="name_update" >
+                            <input type="text" class="form-control" id="lastname_edit_author" name="lastname_edit_author" >
                             <input  type="hidden" class="form-control">
                             <div class="invalid-feedback name"></div>
                         </div>
@@ -23,14 +23,14 @@
                     <div class="form-group row">
                         <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">Tên</label>
                         <div class="col-9">
-                            <input  type="text" class="form-control" >
+                            <input  type="text" class="form-control" id="firstname_edit_author" name="firstname_edit_author" >
                             <div class="invalid-feedback name"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-update-category" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Cập nhật
+                        <button type="submit" id="btn-edit-author" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Cập nhật
                         </button>
-                        <button type="button" class="btn btn-danger btn-pill"  id="btn-delete-category">Xoá</button>
+                        <button type="button" class="btn btn-danger btn-pill"  id="btn-delete-author">Xoá</button>
                     </div>
                 </form>
             </div>

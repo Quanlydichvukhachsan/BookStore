@@ -373,7 +373,8 @@
                 success: function (data){
                     for (i in data){
                         $(".listAuthor").append("<li class='col-12 divAuthor'><a href='' class='col-10'>"+data[i]['full_name']+"</a>" +
-                            "<button class='col-2' data-toggle='modal' data-target='#edit-author' id='btn-author-edit'>"+
+                            "<button class='col-2' data-toggle='modal' onclick='bind_Author("+data[i]+")' " +
+                            "data-target='#edit-author' id='btn-author-edit'>"+
                             "<i class='mdi mdi-account-edit'></i></button></li>")
                     }
                 },
@@ -406,8 +407,12 @@
                     $.fn.handlerError(error);
                 }
             })
-
         })
+        function bind_Author(data){
+            // $('#lastname_edit_author').val(data['lastName']);
+            // $('#firstname_edit_author').val(data['firstName']);
+            console.log(data);
+        }
 
     </script>
     <script type="text/javascript">
