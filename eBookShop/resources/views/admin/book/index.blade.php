@@ -15,10 +15,16 @@
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                <h2>Expendable Data Table</h2>
-
-                <button id="btn-show-all-children" type="button">Expand All</button>
-                <button id="btn-hide-all-children" type="button">Collapse All</button>
+                <h2>Books</h2>
+                <div class="m-lg-auto">
+                    <button class="btn" id="btn-show-all-children" type="button">Expand All</button>
+                    <button class="btn" id="btn-hide-all-children" type="button">Collapse All</button>
+                </div>
+                {!! Form::open(['method' => 'GET' ,'route' => ['book.create']]) !!}
+                <button class="btn btn-success" type="submit">
+                    <i class=" mdi mdi-plus-circle"></i> Create book
+                </button>
+                {!! Form::close() !!}
             </div>
 
             <div class="card-body">
