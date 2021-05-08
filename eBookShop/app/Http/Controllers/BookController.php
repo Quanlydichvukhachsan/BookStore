@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\BookContract;
+use App\Http\Requests\CreateBookRequest;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -39,9 +40,12 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBookRequest $request)
     {
-        //
+      //  dd($request->input('inputfile')[0]);
+        $result =  $this->BookStore->create($request);
+        $request->session()->flash('create-book',$result);
+        return redirect()->route('book.index');
     }
 
     /**

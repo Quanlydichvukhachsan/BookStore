@@ -13,7 +13,7 @@
 @endsection
 @section('content')
     <div class="container rounded bg-white">
-        <form method="POST" action={{route('book.store')}}>
+        <form method="POST" action={{route('book.store')}} enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="row">
@@ -22,7 +22,7 @@
 
                         <div class="col-md-12">
                             <label for="title" class="labels">Title</label>
-                            <input name="title" type="text" class="form-control" placeholder="title name" value="">
+                            <input id="title" name="title" type="text" class="form-control" placeholder="title name" value="">
                         </div>
 
                     </div>
@@ -50,16 +50,16 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <label>Author</label>
-                            <select class="form-control selectpicker" data-live-search="true">
-                                <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                            <select  class="form-control selectpicker" data-live-search="true" name="author">
+                                <option value="1">Hot Dog, Fries and a Soda</option>
                                 <option data-tokens="mustard">Burger, Shake and a Smile</option>
                                 <option data-tokens="frosting">Sugar, Spice and all things nice</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label>Publisher</label>
-                            <select class="form-control selectpicker" data-live-search="true">
-                                <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                            <select class="form-control selectpicker" data-live-search="true" name="publisher">
+                                <option value="1">Hot Dog, Fries and a Soda</option>
                                 <option data-tokens="mustard">Burger, Shake and a Smile</option>
                                 <option data-tokens="frosting">Sugar, Spice and all things nice</option>
                             </select>
@@ -68,27 +68,27 @@
                     <div  class="row mt-4">
                         <div class="col-md-3">
                             <label>Category</label>
-                            <select class="form-control selectpicker" data-live-search="true">
-                                <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                            <select class="form-control selectpicker" data-live-search="true" name="category">
+                                <option value="1">Hot Dog, Fries and a Soda</option>
                                 <option data-tokens="mustard">Burger, Shake and a Smile</option>
                                 <option data-tokens="frosting">Sugar, Spice and all things nice</option>
                             </select>
                         </div>
                         <div class="col-md-3"><label for="foreign_book" class="labels">Foreign book</label>
-                            <select class="form-control">
+                            <select class="form-control" name="foreign">
                                 <option value="0">Nuoc ngoai</option>
                                 <option value="1">Trong nuoc</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="publisher_date">Publisher date (date and time)</label>
-                            <input class="form-control" type="datetime-local" id="publisher_date" name="publisher_date">
+                            <input class="form-control" type="date" id="publisher_date" name="publisher_date">
                         </div>
 
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-6"><label for="inputfile" class="labels">Images</label>
-                            <input  multiple="multiple" name="inputfile" id="inputfile" type="file" class="form-control" onChange='getoutput()'>
+                            <input  multiple="multiple" name="inputfile[]" id="inputfile[]" type="file" class="form-control" onChange='getoutput()'>
                         </div>
                         <div class="col-md-6"><label for="price" class="labels">Price</label>
                             <input name="price" type="text" class="form-control"
@@ -110,7 +110,16 @@
         </form>
 
     </div>
+    @if(count($errors) >0)
+        <div class="alert alert-danger">
 
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 @endsection
 @section('script')
     <script src={{asset("https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js")}}></script>

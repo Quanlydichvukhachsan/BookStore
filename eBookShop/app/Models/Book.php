@@ -25,6 +25,7 @@ class Book extends Model
         'price',
         'price_discount',
         'percent_discount',
+        'Describe'
     ];
 
     public function author(){
