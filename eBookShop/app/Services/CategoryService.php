@@ -4,13 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Contracts\CategoryContract;
-use Illuminate\Support\Facades\Hash;
-use phpDocumentor\Reflection\Types\Array_;
-use phpDocumentor\Reflection\Types\Parent_;
-use Spatie\Permission\Models\Role;
-use App\viewModels\showCategoryModel;
-use function GuzzleHttp\Promise\all;
-use function Illuminate\Events\queueable;
+
 
 class CategoryService implements CategoryContract
 {
@@ -138,6 +132,7 @@ class CategoryService implements CategoryContract
         //['name' => $category['name'], 'parent_id' =>$category['parent_id']]
         $category = $request->all();
         Category::create($category);
+
     }
 
 

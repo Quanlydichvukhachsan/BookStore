@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     use HasFactory;
-
+  protected $appends =['full_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +23,9 @@ class Author extends Model
     public  function books(){
              $this->hasMany('App/Model/Book');
     }
-    public function getFullNameAttribute()
-    {
-        return $this->lastName .' ' .$this->firstName ;
+
+    public function getFullNameAttribute(){
+      return  "{$this->lastName} {$this->firstName}";
     }
+
 }

@@ -14,7 +14,7 @@
                             <div class="card">
                                 <div class="card-header col-12" id="heading1">
                                     <button class="btn btn-link col-9" data-toggle="collapse" data-target="#collapse1"
-                                            aria-expanded="true" aria-controls="collapse1">
+                                            aria-expanded="false" aria-controls="collapse1">
                                         Thê loại
                                     </button>
                                     @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
@@ -38,7 +38,7 @@
                                                 aria-controls="collapse2">
                                             Tác giả
                                         </button>
-                                        @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
+                                        @include('admin.category.iconsvg.plus',['parameter'=>'#add-author'])
                                     </div>
 
                                     <div id="collapse2" class="collapse" aria-labelledby="heading2"
@@ -62,60 +62,7 @@
                                     <div id="collapse3" class="collapse" aria-labelledby="heading3"
                                          data-parent="#accordion3">
                                         <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">First</th>
-                                                    <th scope="col">Last</th>
-                                                    <th scope="col">Handle</th>
-                                                </tr>
-                                                </thead>
 
-                                                <tbody>
-                                                <tr class="table-secondary">
-                                                    <td scope="row">1</td>
-                                                    <td>Lucia</td>
-                                                    <td>Christ</td>
-                                                    <td>@Lucia</td>
-                                                </tr>
-
-                                                <tr class="table-primary">
-                                                    <td scope="row">2</td>
-                                                    <td>Catrin</td>
-                                                    <td>Seidl</td>
-                                                    <td>@catrin</td>
-                                                </tr>
-
-                                                <tr class="table-info">
-                                                    <td scope="row">3</td>
-                                                    <td>Lilli</td>
-                                                    <td>Kirsh</td>
-                                                    <td>@lilli</td>
-                                                </tr>
-
-                                                <tr class="table-success">
-                                                    <td scope="row">4</td>
-                                                    <td>Else</td>
-                                                    <td>Voigt</td>
-                                                    <td>@voigt</td>
-                                                </tr>
-
-                                                <tr class="table-danger">
-                                                    <td scope="row">5</td>
-                                                    <td>Ursel</td>
-                                                    <td>Harms</td>
-                                                    <td>@ursel</td>
-                                                </tr>
-
-                                                <tr class="table-warning">
-                                                    <td scope="row">6</td>
-                                                    <td>Anke</td>
-                                                    <td>Sauter</td>
-                                                    <td>@Anke</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -228,11 +175,11 @@
                 <div class="mt-3"></div>
             </div>
         </div>
-
     </div>
     @include('admin.category.addCategory')
     @include('admin.category.Edit')
-
+    @include('admin.author.edit')
+    @include('admin.author.add')
 @endsection
 @section('script')
 
@@ -248,7 +195,7 @@
     <script>
         $(document).ready(function () {
             $.fn.fill_parent_category();
-
+            loadauthor();
             $('#tree-form').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
@@ -297,7 +244,6 @@
                         $('.alert-highlighted').show();
                         //  $('.alert-highlighted').fadeOut(5000);
                         location.reload();
-
                     } else {
                         $('#exampleModal1').hide()
                         setTimeout(function () {
@@ -348,9 +294,9 @@
                                 $('.alert-highlighted span').text('Xoá thành công');
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
-                                 setTimeout(function (){
-                                location.reload();
-                                },1000)
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000)
 
                             } else {
                                 console.log($result);
@@ -369,9 +315,7 @@
                         error: function (error) {
                             console.log(error);
                         }
-
                     })
-
                 }
             })
         })
@@ -384,8 +328,7 @@
             var splitstr = text.split(/\s{4}/);
 
             var index = (splitstr.length) - 1;
-            //   var id =  $('#parent_id option:selected').val(splitstr[index]);
-            //  var category =  $('#parent_id option:selected').val(splitstr[index]);
+
             var category = splitstr[index];
             //  console.log(category);
 //            getCategory(category);
@@ -418,6 +361,132 @@
             id = item.getAttribute('data-value');
         }
 
+        // Author
+        function loadauthor() {
+            $.ajax({
+                type: 'GET',
+                url: '{{route('author.index')}}',
+                cache: false,
+                success: function (data) {
+                    for (i in data) {
+                        var result = Object.keys(data[i]).map( (key)=> {
+                            return [key, data[i][key]];
+                        });
+                        console.log(result);
+                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['full_name'] + '</a>' +
+                            '<button class="col-2" data-toggle="modal"'
+                            + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
+                           +'<i class="mdi mdi-account-edit"></i></button></li>';
+                        $(".listAuthor").append(html)
+                    //    console.log(Object.values(data[i]));
+                    }
+                },
+                error: function (error) {
+
+                    console.log(error)
+                }
+            })
+        }
+
+        $('#btn-add-author').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{{route('author.store')}}',
+                data: $("#form-add-author").serialize(),
+                cache: false,
+                success: function (data) {
+                    loadauthor();
+                    $('#add-author').modal('hide');
+                    $(".alert-highlighted").removeClass('alert-danger');
+                    $(".alert-highlighted").addClass('alert-success');
+                    $('.alert-highlighted').text('Thêm thành công');
+                    $('.alert-highlighted').show();
+                    $('.alert-highlighted').fadeOut(5000);
+                    console.log(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                    $.fn.handlerError(error);
+                }
+            })
+        })
+        function bind_Author(result) {
+            console.log(result);
+                var data = result.split(',');
+                var  Author ={};
+                Author.id =data[1];
+                Author.firstName =data[3];
+                Author.lastName = data[5];
+                 $('#lastname_edit_author').val(Author.lastName);
+                 $('#firstname_edit_author').val(Author.firstName);
+                 $('#idAuthor').val(Author.id);
+        }
+        $("#btn-edit-author").click(function (e){
+            e.preventDefault();
+            $.ajax({
+                type:'PATCH',
+                url:'author/update',
+                data:$("#edit_author").serialize(),
+                success:function (data){
+                    loadauthor();
+                    $('#edit-author').modal('hide');
+                    $(".alert-highlighted").removeClass('alert-danger');
+                    $(".alert-highlighted").addClass('alert-success');
+                    $('.alert-highlighted').text(data.result);
+                    $('.alert-highlighted').show();
+                    $('.alert-highlighted').fadeOut(5000);
+                }
+            })
+        });
+        $('#btn-delete-author').click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure delete role ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#29CC97',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: 'author/destroy',
+                        method: "DELETE",
+                        data: $('#edit_author').serialize(),
+
+                        success: function (data) {
+                            $result = data.result;
+                            if ($result !== 'error') {
+                                loadauthor();
+                                $('#edit-author').modal('hide');
+                                $(".alert-highlighted").removeClass('alert-danger');
+                                $(".alert-highlighted").addClass('alert-success');
+                                $('.alert-highlighted span').text('Xoá thành công');
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            } else {
+
+                                $('#edit-author').modal('hide');
+                                setTimeout(function () {
+                                    $('#edit-author').show()
+                                }, 2000)
+                                $(".alert-highlighted").removeClass('alert-success');
+                                $(".alert-highlighted").addClass('alert-danger');
+                                $(".alert-highlighted span").text("Không thể xoá");
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+            })
+        })
 
     </script>
     <script type="text/javascript">

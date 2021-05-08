@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateAuthorRequest;
+use App\Http\Requests\UpdateAuthorRequest;
 use Illuminate\Http\Request;
-use app\Contracts\AuthorContract;
+use App\Contracts\AuthorContract;
 
 class AuthorController extends Controller
 {
@@ -21,7 +23,8 @@ class AuthorController extends Controller
     public function index()
     {
         $authors= $this->authorContracts->getAll();
-        return  view('admin\author\index',compact('authors'));
+        return $authors;
+        //return  view('admin\author\index',compact('authors'));
     }
 
     /**
@@ -40,9 +43,10 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAuthorRequest $request)
     {
-        //
+        $this->authorContracts->create($request);
+        return response()->json(['success'=>'Tạo thành công']);
     }
 
     /**
@@ -74,19 +78,24 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAuthorRequest $request)
     {
-        //
+       $result= $this->authorContracts->update($request);
+
+        return response()->json(['result' =>$result]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $result= $this->authorContracts->delete($request);
+
+        return response()->json(['result' =>$result]);
     }
 }
