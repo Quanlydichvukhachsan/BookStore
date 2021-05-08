@@ -20,7 +20,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Contracts\OrderContract;
 use App\Services\OrderBookService;
 use App\Contracts\CategoryContract;
-
+use App\Contracts\AuthorContract;
+use App\Services\AuthorService;
 class AppServiceProvider extends ServiceProvider
 {
     /**
