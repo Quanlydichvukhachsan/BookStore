@@ -16,10 +16,12 @@ use App\Services\PermissionService;
 use App\Services\RoleService;
 use App\Services\CategoryService;
 use App\Services\UserService;
+use App\Services\AuthorService;
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\OrderContract;
 use App\Services\OrderBookService;
 use App\Contracts\CategoryContract;
+use App\Contracts\AuthorContract;
 
 class AppServiceProvider extends ServiceProvider
 {
