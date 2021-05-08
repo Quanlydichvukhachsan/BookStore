@@ -244,7 +244,6 @@
                         $('.alert-highlighted').show();
                         //  $('.alert-highlighted').fadeOut(5000);
                         location.reload();
-
                     } else {
                         $('#exampleModal1').hide()
                         setTimeout(function () {
@@ -295,9 +294,9 @@
                                 $('.alert-highlighted span').text('Xoá thành công');
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
-                                 setTimeout(function (){
-                                location.reload();
-                                },1000)
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000)
 
                             } else {
                                 console.log($result);
@@ -316,9 +315,7 @@
                         error: function (error) {
                             console.log(error);
                         }
-
                     })
-
                 }
             })
         })
@@ -331,8 +328,7 @@
             var splitstr = text.split(/\s{4}/);
 
             var index = (splitstr.length) - 1;
-            //   var id =  $('#parent_id option:selected').val(splitstr[index]);
-            //  var category =  $('#parent_id option:selected').val(splitstr[index]);
+
             var category = splitstr[index];
             //  console.log(category);
 //            getCategory(category);
@@ -365,34 +361,41 @@
             id = item.getAttribute('data-value');
         }
 
-        function loadauthor(){
+        // Author
+        function loadauthor() {
             $.ajax({
-                type:'GET',
-                url:'{{route('author.index')}}',
-                cache:false,
-                success: function (data){
-                    for (i in data){
-                        $(".listAuthor").append("<li class='col-12 divAuthor'><a href='' class='col-10'>"+data[i]['full_name']+"</a>" +
-                            "<button class='col-2' data-toggle='modal' onclick='bind_Author("+data[i]+")' " +
-                            "data-target='#edit-author' id='btn-author-edit'>"+
-                            "<i class='mdi mdi-account-edit'></i></button></li>")
+                type: 'GET',
+                url: '{{route('author.index')}}',
+                cache: false,
+                success: function (data) {
+                    for (i in data) {
+                        var result = Object.keys(data[i]).map( (key)=> {
+                            return [key, data[i][key]];
+                        });
+                        console.log(result);
+                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['full_name'] + '</a>' +
+                            '<button class="col-2" data-toggle="modal"'
+                            + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
+                           +'<i class="mdi mdi-account-edit"></i></button></li>';
+                        $(".listAuthor").append(html)
+                    //    console.log(Object.values(data[i]));
                     }
                 },
-                error:function (error){
+                error: function (error) {
 
                     console.log(error)
                 }
             })
         }
 
-        $('#btn-add-author').click(function (e){
+        $('#btn-add-author').click(function (e) {
             e.preventDefault();
             $.ajax({
-                type:'POST',
-                url:'{{route('author.store')}}',
+                type: 'POST',
+                url: '{{route('author.store')}}',
                 data: $("#form-add-author").serialize(),
-                cache:false,
-                success: function (data){
+                cache: false,
+                success: function (data) {
                     loadauthor();
                     $('#add-author').modal('hide');
                     $(".alert-highlighted").removeClass('alert-danger');
@@ -402,17 +405,88 @@
                     $('.alert-highlighted').fadeOut(5000);
                     console.log(data)
                 },
-                error:function (error){
+                error: function (error) {
                     console.log(error)
                     $.fn.handlerError(error);
                 }
             })
         })
-        function bind_Author(data){
-            // $('#lastname_edit_author').val(data['lastName']);
-            // $('#firstname_edit_author').val(data['firstName']);
-            console.log(data);
+        function bind_Author(result) {
+            console.log(result);
+                var data = result.split(',');
+                var  Author ={};
+                Author.id =data[1];
+                Author.firstName =data[3];
+                Author.lastName = data[5];
+                 $('#lastname_edit_author').val(Author.lastName);
+                 $('#firstname_edit_author').val(Author.firstName);
+                 $('#idAuthor').val(Author.id);
         }
+        $("#btn-edit-author").click(function (e){
+            e.preventDefault();
+            $.ajax({
+                type:'PATCH',
+                url:'author/update',
+                data:$("#edit_author").serialize(),
+                success:function (data){
+                    loadauthor();
+                    $('#edit-author').modal('hide');
+                    $(".alert-highlighted").removeClass('alert-danger');
+                    $(".alert-highlighted").addClass('alert-success');
+                    $('.alert-highlighted').text(data.result);
+                    $('.alert-highlighted').show();
+                    $('.alert-highlighted').fadeOut(5000);
+                }
+            })
+        });
+        $('#btn-delete-author').click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure delete role ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#29CC97',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: 'author/destroy',
+                        method: "DELETE",
+                        data: $('#edit_author').serialize(),
+
+                        success: function (data) {
+                            $result = data.result;
+                            if ($result !== 'error') {
+                                loadauthor();
+                                $('#edit-author').modal('hide');
+                                $(".alert-highlighted").removeClass('alert-danger');
+                                $(".alert-highlighted").addClass('alert-success');
+                                $('.alert-highlighted span').text('Xoá thành công');
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            } else {
+
+                                $('#edit-author').modal('hide');
+                                setTimeout(function () {
+                                    $('#edit-author').show()
+                                }, 2000)
+                                $(".alert-highlighted").removeClass('alert-success');
+                                $(".alert-highlighted").addClass('alert-danger');
+                                $(".alert-highlighted span").text("Không thể xoá");
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+            })
+        })
 
     </script>
     <script type="text/javascript">

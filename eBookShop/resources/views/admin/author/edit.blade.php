@@ -10,13 +10,13 @@
             </div>
 
             <div class="modal-body">
-                <form id="tree-form_update" >
+                <form id="edit_author" >
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Họ tên lót</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="lastname_edit_author" name="lastname_edit_author" >
-                            <input  type="hidden" class="form-control">
+                            <input type="text" class="form-control" id="lastname_edit_author" name="lastname_edit_author">
+                            <input  type="hidden" class="form-control" id="idAuthor" name="idAuthor">
                             <div class="invalid-feedback name"></div>
                         </div>
                     </div>
