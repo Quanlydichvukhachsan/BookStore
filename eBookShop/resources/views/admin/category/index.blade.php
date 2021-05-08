@@ -368,6 +368,7 @@
                 url: '{{route('author.index')}}',
                 cache: false,
                 success: function (data) {
+                    $(".listAuthor").empty();
                     for (i in data) {
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
@@ -377,6 +378,7 @@
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
                            +'<i class="mdi mdi-account-edit"></i></button></li>';
+
                         $(".listAuthor").append(html)
                     //    console.log(Object.values(data[i]));
                     }
@@ -442,13 +444,13 @@
         $('#btn-delete-author').click(function (e) {
             e.preventDefault();
             Swal.fire({
-                title: 'Are you sure delete role ?',
-                text: "You won't be able to revert this!",
+                title: 'Bạn có chắc chắn sẽ xoá ?',
+                text: "Sẽ không phục hồi !",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#29CC97',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Đồng ý, xoá!'
             }).then((result) => {
                 if (result.isConfirmed) {
 
