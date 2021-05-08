@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers;
@@ -81,5 +82,9 @@ Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccep
 
     Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
     Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
+
     Route::resource('author',AuthorController::class);
+
+    Route::resource('book',BookController::class);
+
 });

@@ -46,23 +46,8 @@ class PermissionController extends Controller
      */
     public function store(CreatePermissionRequest $request)
     {
-        $permission = $request->input('permissions');
-        $stringEdit =  preg_replace('/[-\s]+/', '-', strtolower(trim($permission)));
-        $namePermissions = explode(',', $stringEdit);
-            $count = 0;
-            foreach ($namePermissions as $namePermission) {
-                $result = Permission::all()->where('name', $namePermission)->first();
-
-                if ($result !== null) {
-                    $count = 1;
-                    return redirect()->back()->withErrors(['Permisson is exists!']);
-                }else{
-                     Permission::create(['name' => $namePermission]);
-                }
-
-            }
-        session()->flash('create-permission','The Permission create success!');
-            return redirect()->route('permission.index');
+          $result = $this->permissionContract->create($request);
+           return response()->json(['result'=>$result]);
 
     }
 

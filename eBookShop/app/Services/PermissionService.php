@@ -26,7 +26,15 @@ class PermissionService implements PermissionContract
 
     public function create($request)
     {
-        // TODO: Implement create() method.
+        $input = $request->input('name');
+        $permission = Permission::create(['name'=>$input]);
+        $roles = Role::all();
+        foreach ($roles as $role){
+            $role->givePermissionTo($permission);
+        }
+        $result ="Create permission success!";
+        return  $result;
+
     }
 
     public function update($request, $id)

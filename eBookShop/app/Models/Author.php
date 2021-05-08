@@ -27,4 +27,5 @@ class Author extends Model
     public function getFullNameAttribute(){
       return  "{$this->lastName} {$this->firstName}";
     }
+
 }

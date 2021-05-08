@@ -17,10 +17,11 @@ class CreateBooksTable extends Migration
             $table->id();
              $table->string('title');
              $table->date('publication_date');
-             $table->string('author_id');
-            $table->string('publisher_id');
+             $table->integer('author_id');
+            $table->integer('publisher_id');
+            $table->integer('categories_id');
             $table->integer('weight');
-            $table->integer('number of pages');
+            $table->integer('number_of_pages');
             $table->string('formality');
             $table->float('size');
             $table->tinyInteger('foreign_book')->default(0);
