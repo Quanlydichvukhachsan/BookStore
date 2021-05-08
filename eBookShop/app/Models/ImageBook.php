@@ -10,7 +10,8 @@ class ImageBook extends Model
     use HasFactory;
     protected $uploads = '/imagesBook/';
     protected $fillable=[
-        'file'
+        'file',
+        'book_id'
     ];
     public function book(){
         return $this->belongsTo('App\Models\Book');

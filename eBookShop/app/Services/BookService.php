@@ -24,13 +24,13 @@ class BookService implements BookContract
     public function create($request)
     {
         $input =$request->all();
-        foreach ($request->input('inputfile') as $file){
-                $name = time() . $file;
+          unset($input['inputfile']);
+        $book = Book::create($input);
+        foreach ($request->file('inputfile')  as $file){
+                $name = time() . $file->getClientOriginalName();
                 $file->move('imagesBook', $name);
-                 ImageBook::create(['file' => $name]);
+                 ImageBook::create(['file' => $name,'book_id'=>$book->id]);
         }
-        unset($input['inputfile']);
-         Book::create($input);
         return "Create success!";
     }
 

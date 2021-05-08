@@ -12,6 +12,7 @@
     Books
 @endsection
 @section('content')
+
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
@@ -81,7 +82,7 @@
                                     <td>Trong nuoc</td>
                                    @endif
                                 <td>{{$item->percent_discount}}</td>
-                                <td>{{$item->create_at}}</td>
+                                <td>{{$item->created_at}}</td>
 
                         </tr>
                         @endforeach
@@ -111,6 +112,12 @@
                 table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
             });
         });
+
+        @if(Session::has('create-book'))
+        $(".alert-highlighted span").text("{{session('create-book')}}");
+        $('.alert-highlighted').show();
+        $('.alert-highlighted').fadeOut(5000);
+        @endif
     </script>
 
 @endsection
