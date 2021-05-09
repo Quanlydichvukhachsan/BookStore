@@ -78,7 +78,7 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateePublisherRequest $request)
+    public function update(Request $request)
     {
         $result = $this->publisherContracts->update($request);
         return response()->json(['result'=>$result]);
@@ -94,7 +94,6 @@ class PublisherController extends Controller
     public function destroy(Request $request)
     {
         $result= $this->publisherContracts->delete($request);
-
         return response()->json(['result' =>$result]);
     }
 }

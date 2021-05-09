@@ -10,19 +10,19 @@
             </div>
 
             <div class="modal-body">
-                <form id="form_update_publisher" >
+                <form id="form_update_publisher">
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tên nhà xuất bản</label>
                         <div class="col-9">
-                            <input type="hidden" id="idPublisher">
+                            <input type="hidden" id="idPublisher" name="idPublisher">
                             <input type="text" class="form-control" id="edit_name_publisher" name="edit_name_publisher" >
                             <div class="invalid-feedback edit_name_publisher"></div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" id="btn_update_publisher" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')
+                        <button type="submit" id="btn_edit_publisher" name="btn_edit_publisher" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')
                             Cập nhật
                         </button>
                         <button type="button" class="btn btn-danger btn-pill"  id="btn_delete_publisher">Xoá</button>

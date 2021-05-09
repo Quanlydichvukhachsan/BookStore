@@ -37,36 +37,30 @@ class PublisherService implements PublisherContract
     public function update($Request)
     {
         $result = array('error' => 'error', 'success' => 'success');
+        $ids = $Request['idPublisher'];
         $check = Publisher::where('name','=',$Request['edit_name_publisher'])->first();
-        $publisher = Publisher::where('íd','=',$Request['idPublisher']);
+        $publisher = Publisher::find($ids);
         if ($check === null)
         {
-            $publisher->name = $Request['edit_name_publisher'];
-            $publisher->save($publisher);
+            $publisher->name = $Request->input('edit_name_publisher');
+            $publisher->save();
             return $result['success'];
         }
         else{
             return $result['error'];
         }
-
-
     }
     public function delete($Request)
     {
         $ids = $Request['idPublisher'];
         $result = array('error' => 'error', 'success' => 'success');
-        $publisher = Publisher::findOrFail($ids);
-
-
-//        if (count($author->books)) {
-//            return $result['error'];
-//
-//        } else {
-//            Category::destroy($ids);
-//            return $result['success'];
-//        }
-        Publisher::destroy($ids);
-        return $result['success'];
-
+        $publisher = Publisher::find($ids);
+        if ($publisher !== null){
+            $publisher->delete();
+            return $result['success'];
+        }
+        else{
+            return $result['error'];
+        }
     }
 }
