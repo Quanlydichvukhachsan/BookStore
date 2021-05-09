@@ -3,25 +3,22 @@
 
 namespace App\Services;
 
+use App\Contracts\PublisherContract;
+use App\Models\Publisher;
 
-use App\Contracts\AuthorContract;
-use App\Models\Author;
-use App\Models\Category;
-
-class AuthorService implements AuthorContract
+class PublisherService implements PublisherContract
 {
-    public function getAll()
-    {
-        $author= Author::all()->each->fullname;
-        return $author;
-    }
+   public function getAll()
+   {
+       $publisher = Publisher::all();
+       return $publisher;
+   }
 
     public function create($request)
     {
 //        $result = $request->all();
-          Author::create([
-            'firstName' =>$request->input('add-firstname-author'),
-            'lastName' =>$request->input('add-lastname-author')
+        Author::create([
+            'name' =>$request->input(''),
         ]);
 
     }

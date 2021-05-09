@@ -86,5 +86,5 @@ Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccep
     Route::resource('author',AuthorController::class);
 
     Route::resource('book',BookController::class);
-
+    Route::resource('publisher',Controllers\PublisherController::class);
 });
