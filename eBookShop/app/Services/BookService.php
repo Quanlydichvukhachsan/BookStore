@@ -18,7 +18,8 @@ class BookService implements BookContract
 
     public function show($id)
     {
-
+         $book =  Book::findOrFail($id);
+         return $book;
     }
 
     public function create($request)

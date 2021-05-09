@@ -12,11 +12,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!--
     PLUGINS CSS STYLE -->
-    <link rel="stylesheet" href="{{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css")}}">
+      @yield('style')
     <link href={{asset("assets/plugins/nprogress/nprogress.css")}} rel="stylesheet" />
     <link href={{asset("assets/plugins/treeview/gijgo.min.css")}} rel="stylesheet" />
     <link href={{asset("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css")}} rel="stylesheet" />
     <link rel="stylesheet" href="{{asset("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css")}}">
+
+    <link href={{asset("assets/plugins/slider/unslider.css")}} rel="stylesheet" />
+    <link href={{asset("assets/plugins/slider/unslider-dots.css")}} rel="stylesheet" />
+
     <!-- No Extra plugin used -->
 
     <link href={{asset("assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css")}} rel="stylesheet" />
