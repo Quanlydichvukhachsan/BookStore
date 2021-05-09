@@ -14,7 +14,7 @@ class AddColBooks extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-             $table->string('Describe',1000);
+             $table->string('describe',10000);
         });
     }
 

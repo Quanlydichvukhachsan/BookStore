@@ -37,8 +37,8 @@
                             <input id="size" name="size" type="number" class="form-control" min="0" value="0" step="0.1" placeholder="number size">
                         </div>
                         <div class="col-md-3">
-                            <label for="number_pages" class="labels">Number of pages</label>
-                            <input name="number_pages" id="number_pages" type="text" class="form-control" placeholder="number page" value=""
+                            <label for="number_of_pages" class="labels">Number of pages</label>
+                            <input name="number_of_pages" id="number_of_pages" type="text" class="form-control" placeholder="number page" value=""
                                    onkeypress="javascript:return isNumber(event)">
                         </div>
                         <div class="col-md-3">
@@ -50,15 +50,15 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <label>Author</label>
-                            <select  class="form-control selectpicker" data-live-search="true" name="author">
+                            <select  class="form-control selectpicker" data-live-search="true" name="author_id">
                                 <option value="1">Hot Dog, Fries and a Soda</option>
-                                <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                                <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                                <option value="2">Burger, Shake and a Smile</option>
+
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label>Publisher</label>
-                            <select class="form-control selectpicker" data-live-search="true" name="publisher">
+                            <select class="form-control selectpicker" data-live-search="true" name="publisher_id">
                                 <option value="1">Hot Dog, Fries and a Soda</option>
                                 <option data-tokens="mustard">Burger, Shake and a Smile</option>
                                 <option data-tokens="frosting">Sugar, Spice and all things nice</option>
@@ -68,27 +68,27 @@
                     <div  class="row mt-4">
                         <div class="col-md-3">
                             <label>Category</label>
-                            <select class="form-control selectpicker" data-live-search="true" name="category">
+                            <select class="form-control selectpicker" data-live-search="true" name="categories_id">
                                 <option value="1">Hot Dog, Fries and a Soda</option>
                                 <option data-tokens="mustard">Burger, Shake and a Smile</option>
                                 <option data-tokens="frosting">Sugar, Spice and all things nice</option>
                             </select>
                         </div>
                         <div class="col-md-3"><label for="foreign_book" class="labels">Foreign book</label>
-                            <select class="form-control" name="foreign">
+                            <select class="form-control" name="foreign_book">
                                 <option value="0">Nuoc ngoai</option>
                                 <option value="1">Trong nuoc</option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="publisher_date">Publisher date (date and time)</label>
-                            <input class="form-control" type="date" id="publisher_date" name="publisher_date">
+                            <label for="publication_date">Publisher date (date and time)</label>
+                            <input class="form-control" type="date" id="publication_date" name="publication_date">
                         </div>
 
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-6"><label for="inputfile" class="labels">Images</label>
-                            <input  multiple="multiple" name="inputfile[]" id="inputfile[]" type="file" class="form-control" onChange='getoutput()'>
+                            <input  multiple="multiple" name="inputfile[]" id="inputfile" type="file" class="form-control" onChange='getoutput()'>
                         </div>
                         <div class="col-md-6"><label for="price" class="labels">Price</label>
                             <input name="price" type="text" class="form-control"
@@ -99,8 +99,8 @@
 
                     <div class="row mt-5">
                         <div class="col-md-12">
-                        <label for="editor" class="labels">Describe</label>
-                      <textarea name="editor" class="form-control" rows="10" id="editor"></textarea>
+                        <label for="describe" class="labels">Describe</label>
+                      <textarea name="describe" class="form-control" rows="10" id="describe"></textarea>
                         </div>
                    </div>
                 </div>
@@ -132,7 +132,7 @@
             return true;
         }
         ClassicEditor
-            .create( document.querySelector( '#editor' ) )
+            .create( document.querySelector( '#describe' ) )
             .catch( error => {
                 console.error( error );
             } );

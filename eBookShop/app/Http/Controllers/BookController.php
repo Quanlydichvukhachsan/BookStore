@@ -42,7 +42,6 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
-      //  dd($request->input('inputfile')[0]);
         $result =  $this->BookStore->create($request);
         $request->session()->flash('create-book',$result);
         return redirect()->route('book.index');

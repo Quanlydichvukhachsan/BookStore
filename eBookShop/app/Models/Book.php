@@ -18,14 +18,17 @@ class Book extends Model
         'title',
         'publication_date',
         'weight',
-        'number of pages',
+        'number_of_pages',
         'formality',
         'size',
         'foreign_book',
         'price',
         'price_discount',
         'percent_discount',
-        'Describe'
+        'describe',
+        'author_id',
+        'publisher_id',
+        'categories_id',
     ];
 
     public function author(){
