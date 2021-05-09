@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('style')
+    <link rel="stylesheet" href="{{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css")}}">
+@endsection
 @section('name')
     <h1>Books</h1>
 @endsection
@@ -11,6 +14,7 @@
 @section('model')
     Books
 @endsection
+
 @section('content')
 
     <div class="col-12">
@@ -39,6 +43,7 @@
                             <th>Publication_Date</th>
                             <th>Category</th>
                             <th>Price</th>
+                            <th></th>
                             <th class="none">id</th>
                             <th class="none">image</th>
                             <th class="none">weight</th>
@@ -61,6 +66,7 @@
                                 <td>{{$item->publication_date}}</td>
                                 <td>{{$item->categories->name}}</td>
                                 <td>{{$item->price}}</td>
+                                <td><a href="{{route('book.show',$item->id)}}">View</a></td>
                                 <td>{{$item->id}}</td>
                                 <td>
                                     @if($item->imagebooks->count())

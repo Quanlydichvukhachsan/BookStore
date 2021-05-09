@@ -55,7 +55,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+       $book = $this->BookStore->show($id);
+         return view('admin.book.show',compact('book'));
     }
 
     /**

@@ -19,7 +19,7 @@
 <script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js")}}"></script>
 <script src="{{asset("https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js")}}"></script>
 <script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js")}}"></script>
-
+<script src={{asset("assets/plugins/slider/unslider.js")}}></script>
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({
