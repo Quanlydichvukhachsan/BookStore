@@ -66,7 +66,26 @@
                                 <td>{{$item->publication_date}}</td>
                                 <td>{{$item->categories->name}}</td>
                                 <td>{{$item->price}}</td>
-                                <td><a href="{{route('book.show',$item->id)}}">View</a></td>
+                            <td class="text-right">
+                                <div class="dropdown show d-inline-block widget-dropdown">
+                                    <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
+                                       id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" data-display="static"></a>
+                                    <ul class="dropdown-menu dropdown-menu-right"
+                                        aria-labelledby="dropdown-recent-order5">
+                                        <li class="dropdown-item">
+                                            <a href="{{route('book.show',$item->id)}}">View</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="{{route('book.edit',$item->id)}}">edit</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="{{route('book.destroy',$item->id)}}">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+
                                 <td>{{$item->id}}</td>
                                 <td>
                                     @if($item->imagebooks->count())
@@ -77,7 +96,7 @@
                                         no image
                                     @endif
                                 </td>
-                                    <td>{{$item->weight}}</td>
+                                <td>{{$item->weight}}</td>
                                 <td>{{$item->size}}</td>
                                 <td>{{$item->number_of_pages}}</td>
                                 <td>{{$item->formality}}</td>

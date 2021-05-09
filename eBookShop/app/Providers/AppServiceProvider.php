@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AuthorContract::class,AuthorService::class);
 
         $this->app->bind(BookContract::class,BookService::class);
+
     }
 
     /**

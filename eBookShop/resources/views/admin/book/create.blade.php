@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="publication_date">Publisher date (date and time)</label>
-                            <input class="form-control" type="date" id="publication_date" name="publication_date">
+                            <input class="form-control" type="date" id="publication_date"   name="publication_date">
                         </div>
 
                     </div>

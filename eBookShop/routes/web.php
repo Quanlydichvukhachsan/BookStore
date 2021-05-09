@@ -86,5 +86,6 @@ Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccep
     Route::resource('author',AuthorController::class);
 
     Route::resource('book',BookController::class);
+    Route::post('/book/site/{book}/file-delete',[BookController::class, 'deleteImage'])->name('book.deleteImage');
 
 });

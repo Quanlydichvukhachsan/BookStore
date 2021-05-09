@@ -67,7 +67,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = $this->BookStore->edit($id);
+        return view('admin.book.edit',['book'=>$result[0],'authors'=>$result[1],'publishers'=>$result[2],'categories'=>$result[3]]);
     }
 
     /**
@@ -90,6 +91,16 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+          //
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImage(Request $request,$id){
+           dd($request->all());
     }
 }
