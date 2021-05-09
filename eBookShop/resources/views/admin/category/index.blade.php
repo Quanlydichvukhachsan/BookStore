@@ -62,7 +62,7 @@
                                     <div id="collapse3" class="collapse" aria-labelledby="heading3"
                                          data-parent="#accordion3">
                                         <div class="card-body">
-
+                                            @include('admin.publisher.index')
                                         </div>
                                     </div>
                                 </div>
@@ -486,9 +486,40 @@
                     })
                 }
             })
-        })
+        });
+
+        //publisher
+        loadPublisher();
+        function loadPublisher() {
+            $.ajax({
+                type: 'GET',
+                url: '{{route('publisher.index')}}',
+                cache: false,
+                success: function (data) {
+                    for (i in data) {
+
+                        console.log(data)
+                        var result = Object.keys(data[i]).map( (key)=> {
+                            return [key, data[i][key]];
+                        });
+                        console.log(result);
+                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['name'] + '</a>' +
+                            '<button class="col-2" data-toggle="modal"'
+                            + 'data-target="#edit-author" id="btn-publisher-edit">'
+                            +'<i class="mdi mdi-account-edit"></i></button></li>';
+                        $(".listPublisher").append(html)
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+
 
     </script>
+
+
     <script type="text/javascript">
         jQuery(function ($) {
             $("#treeview").shieldTreeView();

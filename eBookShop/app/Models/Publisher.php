@@ -8,23 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Publisher extends Model
 {
     use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'firstName',
-        'lastName',
+    protected $fillable=[
+      'name'
     ];
-
-    public  function books(){
-        $this->hasMany('App/Model/Book');
-    }
-
-    public function getFullNameAttribute()
-    {
-        return $this->lastName .' ' .$this->firstName ;
+    public function books(){
+        $this->hasMany('App\Models\Book');
     }
 }
