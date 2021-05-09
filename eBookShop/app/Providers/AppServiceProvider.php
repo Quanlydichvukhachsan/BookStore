@@ -18,14 +18,20 @@ use App\Services\PublisherService;
 use App\Services\RoleService;
 use App\Services\CategoryService;
 use App\Services\UserService;
+use App\Services\AuthorService;
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\OrderContract;
 use App\Services\OrderBookService;
 use App\Contracts\CategoryContract;
 use App\Contracts\AuthorContract;
+
 use App\Services\AuthorService;
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 288970748ba905bc3bd9c1dc088d4daf0c7e932d
 class AppServiceProvider extends ServiceProvider
 {
     /**
