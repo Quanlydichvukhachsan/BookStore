@@ -93,7 +93,7 @@ class UserService implements UserContract
             unlink(public_path() . $user->photo->file);
             $user->photo->delete();
         }
-        $user::destroy($id);
+        $user->delete();
 
        return "Delete success!";
     }

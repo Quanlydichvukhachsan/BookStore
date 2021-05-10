@@ -108,9 +108,9 @@
                             <select class="form-control selectpicker" data-live-search="true" name="publisher_id">
                                 @foreach($publishers as $publisher)
                                     @if($book->publisher->id === $publisher->id)
-                                    <option value="{{$publisher->id}}" selected>{{$publisher->full_name}}</option>
+                                    <option value="{{$publisher->id}}" selected>{{$publisher->name}}</option>
                                     @else
-                                        <option value="{{$publisher->id}}">{{$publisher->full_name}}</option>
+                                        <option value="{{$publisher->id}}">{{$publisher->name}}</option>
                                     @endif
                                         @endforeach
 

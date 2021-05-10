@@ -64,7 +64,13 @@ class BookService implements BookContract
 
     public function delete($id)
     {
-
+         $book = Book::findOrFail($id);
+         $images = $book->imagebooks;
+         foreach ($images as $img){
+             ImageBook::destroy($img->id);
+         }
+         $book->delete();
+         return "Delete success!";
     }
 
     public function edit($id)

@@ -59,10 +59,10 @@
 
                         <tbody>
                         @foreach($books as $item)
-                        <tr>
+                        <tr id="sid{{$item->id}}">
                                <td>{{$item->title}}</td>
                                 <td>{{$item->author->full_name}}</td>
-                                <td>{{$item->publisher->full_name}}</td>
+                                <td>{{$item->publisher->name}}</td>
                                 <td>{{$item->publication_date}}</td>
                                 <td>{{$item->categories->name}}</td>
                                 <td>{{$item->price}}</td>
@@ -80,7 +80,7 @@
                                             <a href="{{route('book.edit',$item->id)}}">edit</a>
                                         </li>
                                         <li class="dropdown-item">
-                                            <a href="{{route('book.destroy',$item->id)}}">Delete</a>
+                                            <a type="button" id="btn-delete-book" data-value="{{$item->id}}" onclick="deleteBook(this)">Delete</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -151,6 +151,61 @@
         $('.alert-highlighted').show();
         $('.alert-highlighted').fadeOut(5000);
         @endif
+
+            $overlay = $('<div id="overlay"/>').css({
+            position: 'fixed',
+            display: 'none',
+            top: 0,
+            left: 0,
+            color: '#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity: 0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        })
+        function deleteBook(item){
+
+            var id = item.getAttribute("data-value");
+            console.log(id);
+            Swal.fire({
+                title: 'Are you sure delete book ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#29CC97',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                $overlay.appendTo("body");
+
+                if (result.isConfirmed) {
+                    $('#overlay').show();
+                    $.ajax({
+                        type: 'DELETE',
+                        catch: false,
+                        url: 'book/' + id,
+
+                        data: {
+                            "_token": '{{csrf_token()}}'
+                        },
+                        success: function (data) {
+                            console.log(data.result);
+                            $('#overlay').hide();
+                            Swal.fire(
+                                'Deleted!',
+                                data.result,
+                                'success'
+                            )
+                          $("tr#sid"+id).remove();
+                            $('#overlay').hide();
+                        },
+                        error:function (error){
+                            console.log(error);
+                        }
+                    })
+                }
+            })
+        }
     </script>
 
 @endsection
