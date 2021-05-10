@@ -58,7 +58,7 @@
                             <label>Publisher</label>
                             <select class="form-control selectpicker" data-live-search="true" name="publisher_id">
                                 @foreach($publishers as $publisher)
-                                        <option value="{{$publisher->id}}">{{$publisher->full_name}}</option>
+                                        <option value="{{$publisher->id}}">{{$publisher->name}}</option>
                                 @endforeach
 
                             </select>

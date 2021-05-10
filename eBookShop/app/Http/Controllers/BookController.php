@@ -98,7 +98,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-          //
+         $result = $this->BookStore->delete($id);
+        return  response()->json(['result'=>$result]);
     }
     /**
      * Update the specified resource in storage.

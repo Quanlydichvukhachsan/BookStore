@@ -40,7 +40,7 @@
                             <tr>
                                 <td class="text-dark">Publisher name</td>
 
-                                <td>{{$book->publisher->full_name}}</td>
+                                <td>{{$book->publisher->name}}</td>
                             </tr>
                             <tr>
                                 <td class="text-dark">Author</td>
