@@ -20,6 +20,12 @@
 <script src="{{asset("https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js")}}"></script>
 <script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js")}}"></script>
 <script src={{asset("assets/plugins/slider/unslider.js")}}></script>
+<script src={{asset("assets/plugins/fileInput/fileInput.js")}}></script>
+<script src={{asset("assets/plugins/fileInput/theme.js")}}></script>
+<script src={{asset("assets/plugins/fileInput/explorer-fas/theme.js")}}></script>
+<script src={{asset("assets/plugins/fileInput/piexif.js")}}></script>
+<script src={{asset("assets/plugins/fileInput/sortable.js")}}></script>
+
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({

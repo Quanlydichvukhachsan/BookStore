@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Contracts\BookContract;
 use App\Http\Requests\CreateBookRequest;
+use App\Http\Requests\UpdateBookRequest;
+use App\Models\ImageBook;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -31,7 +34,8 @@ class BookController extends Controller
      */
     public function create()
     {
-         return view('admin.book.create');
+        $result = $this->BookStore->create();
+        return view('admin.book.create',['authors'=>$result[0],'publishers'=>$result[1],'categories'=>$result[2]]);
     }
 
     /**
@@ -42,7 +46,8 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
-        $result =  $this->BookStore->create($request);
+
+        $result =  $this->BookStore->store($request);
         $request->session()->flash('create-book',$result);
         return redirect()->route('book.index');
     }
@@ -67,7 +72,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = $this->BookStore->edit($id);
+        return view('admin.book.edit',['book'=>$result[0],'authors'=>$result[1],'publishers'=>$result[2],'categories'=>$result[3]]);
     }
 
     /**
@@ -77,9 +83,11 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookRequest $request, $id)
     {
-        //
+        $result = $this->BookStore->update($request,$id);
+        $request->session()->flash('update-book',$result);
+        return redirect()->route('book.index');
     }
 
     /**
@@ -90,6 +98,17 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+          //
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImage(Request $request,$id){
+                  $result =  $this->BookStore->deleteImage($request,$id);
+              return  response()->json(['filesuccessremove'=>$result]);
     }
 }

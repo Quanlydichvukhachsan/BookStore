@@ -53,7 +53,7 @@
                             <th class="none">Type</th>
                             <th class="none">discount</th>
                             <th class="none">create_at</th>
-
+                            <th class="none">updated_at</th>
                         </tr>
                         </thead>
 
@@ -66,7 +66,26 @@
                                 <td>{{$item->publication_date}}</td>
                                 <td>{{$item->categories->name}}</td>
                                 <td>{{$item->price}}</td>
-                                <td><a href="{{route('book.show',$item->id)}}">View</a></td>
+                            <td class="text-right">
+                                <div class="dropdown show d-inline-block widget-dropdown">
+                                    <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
+                                       id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" data-display="static"></a>
+                                    <ul class="dropdown-menu dropdown-menu-right"
+                                        aria-labelledby="dropdown-recent-order5">
+                                        <li class="dropdown-item">
+                                            <a href="{{route('book.show',$item->id)}}">View</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="{{route('book.edit',$item->id)}}">edit</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="{{route('book.destroy',$item->id)}}">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+
                                 <td>{{$item->id}}</td>
                                 <td>
                                     @if($item->imagebooks->count())
@@ -77,7 +96,7 @@
                                         no image
                                     @endif
                                 </td>
-                                    <td>{{$item->weight}}</td>
+                                <td>{{$item->weight}}</td>
                                 <td>{{$item->size}}</td>
                                 <td>{{$item->number_of_pages}}</td>
                                 <td>{{$item->formality}}</td>
@@ -87,9 +106,13 @@
                                 @else
                                     <td>Trong nuoc</td>
                                    @endif
+                              @if($item->percent_discount !== null)
                                 <td>{{$item->percent_discount}}</td>
+                            @else
+                                <td>No</td>
+                            @endif
                                 <td>{{$item->created_at}}</td>
-
+                            <td>{{$item->updated_at}}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -121,6 +144,10 @@
 
         @if(Session::has('create-book'))
         $(".alert-highlighted span").text("{{session('create-book')}}");
+        $('.alert-highlighted').show();
+        $('.alert-highlighted').fadeOut(5000);
+        @elseif(Session::has('update-book'))
+        $(".alert-highlighted span").text("{{session('update-book')}}");
         $('.alert-highlighted').show();
         $('.alert-highlighted').fadeOut(5000);
         @endif
