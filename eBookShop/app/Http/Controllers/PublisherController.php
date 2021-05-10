@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePublisherRequest;
+use App\Http\Requests\UpdateePublisherRequest;
 use Illuminate\Http\Request;
 use App\Contracts\PublisherContract;
 
@@ -39,9 +41,12 @@ class PublisherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePublisherRequest $request)
     {
-        //
+
+        $result= $this->publisherContracts->create($request);
+        return response()->json(['result'=>$result]);
+
     }
 
     /**
@@ -73,19 +78,22 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $result = $this->publisherContracts->update($request);
+        return response()->json(['result'=>$result]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $result= $this->publisherContracts->delete($request);
+        return response()->json(['result' =>$result]);
     }
 }

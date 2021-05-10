@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Contracts\PublisherContract;
 use App\Models\Publisher;
+use Symfony\Component\Console\Input\Input;
 
 class PublisherService implements PublisherContract
 {
@@ -16,44 +17,50 @@ class PublisherService implements PublisherContract
 
     public function create($request)
     {
-//        $result = $request->all();
-        Author::create([
-            'name' =>$request->input(''),
-        ]);
+
+        $result = array('error' => 'error', 'success' => 'success');
+        $check = Publisher::where('name','=',$request['add-name-publisher'])->first();
+        if ($check === null){
+            Publisher::create([
+                'name' =>$request->input('add-name-publisher'),
+            ]);
+            return $result['success'];
+        }
+        else{
+            return  $request['error'];
+        }
+
+
+
 
     }
     public function update($Request)
     {
-
-        $input = $Request->all();
-        $firstName = $input['firstname_edit_author'];
-        $lastName = $input['lastname_edit_author'];
-        $id = $input['idAuthor'];
-        $author = Author::findOrFail($id);
-        $author->firstName = $firstName;
-        $author->lastName = $lastName;
-        $author->save();
-        $result= "Cập nhật thành công";
-        return $result;
-
-
+        $result = array('error' => 'error', 'success' => 'success');
+        $ids = $Request['idPublisher'];
+        $check = Publisher::where('name','=',$Request['edit_name_publisher'])->first();
+        $publisher = Publisher::find($ids);
+        if ($check === null)
+        {
+            $publisher->name = $Request->input('edit_name_publisher');
+            $publisher->save();
+            return $result['success'];
+        }
+        else{
+            return $result['error'];
+        }
     }
     public function delete($Request)
     {
-        $ids = $Request['idAuthor'];
+        $ids = $Request['idPublisher'];
         $result = array('error' => 'error', 'success' => 'success');
-        $author = Author::findOrFail($ids);
-
-
-//        if (count($author->books)) {
-//            return $result['error'];
-//
-//        } else {
-//            Category::destroy($ids);
-//            return $result['success'];
-//        }
-        Author::destroy($ids);
-        return $result['success'];
-
+        $publisher = Publisher::find($ids);
+        if ($publisher !== null){
+            $publisher->delete();
+            return $result['success'];
+        }
+        else{
+            return $result['error'];
+        }
     }
 }

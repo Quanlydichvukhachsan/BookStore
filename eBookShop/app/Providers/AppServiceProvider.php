@@ -25,13 +25,9 @@ use App\Services\OrderBookService;
 use App\Contracts\CategoryContract;
 use App\Contracts\AuthorContract;
 
-use App\Services\AuthorService;
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 288970748ba905bc3bd9c1dc088d4daf0c7e932d
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -46,9 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryContract::class, CategoryService::class);
         $this->app->bind(RoleContract::class,RoleService::class);
         $this->app->bind(PermissionContract::class,PermissionService::class);
-
         $this->app->bind(AuthorContract::class,AuthorService::class);
-
         $this->app->bind(BookContract::class,BookService::class);
         $this->app->bind(PublisherContract::class,PublisherService::class);
     }

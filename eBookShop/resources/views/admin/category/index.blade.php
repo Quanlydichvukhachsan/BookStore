@@ -56,7 +56,7 @@
                                                 aria-controls="collapse3">
                                             Nhà xuất bản
                                         </button>
-                                        @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
+                                        @include('admin.category.iconsvg.plus',['parameter'=>'#add_publisher'])
                                     </div>
 
                                     <div id="collapse3" class="collapse" aria-labelledby="heading3"
@@ -176,10 +176,13 @@
             </div>
         </div>
     </div>
+
     @include('admin.category.addCategory')
     @include('admin.category.Edit')
     @include('admin.author.edit')
     @include('admin.author.add')
+    @include('admin.publisher.add')
+    @include('admin.publisher.edit')
 @endsection
 @section('script')
 
@@ -329,14 +332,10 @@
 
             var index = (splitstr.length) - 1;
 
-            var category = splitstr[index];
-            //  console.log(category);
-//            getCategory(category);
-            //   $('#parent_id').html(category);
+
         }
 
         function getCategory(text) {
-            console.log(text);
             //document.getElementById('parent_id').value = text;
             $('#parent_id').val(text);
         }
@@ -345,7 +344,6 @@
         function myText(edit) {
             clear_option();
             $.fn.fill_parent_category();
-            console.log(edit.getAttribute('data-value'));
             $('#name_update').val(edit.getAttribute('data-value'));
             $('#idCategory').val(edit.value);
             $('#parent_id option').appendTo("#parent_id_update");
@@ -373,14 +371,13 @@
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-                        console.log(result);
+
                         var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['full_name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
                            +'<i class="mdi mdi-account-edit"></i></button></li>';
 
                         $(".listAuthor").append(html)
-                    //    console.log(Object.values(data[i]));
                     }
                 },
                 error: function (error) {
@@ -405,7 +402,7 @@
                     $('.alert-highlighted').text('Thêm thành công');
                     $('.alert-highlighted').show();
                     $('.alert-highlighted').fadeOut(5000);
-                    console.log(data)
+
                 },
                 error: function (error) {
                     console.log(error)
@@ -414,7 +411,6 @@
             })
         })
         function bind_Author(result) {
-            console.log(result);
                 var data = result.split(',');
                 var  Author ={};
                 Author.id =data[1];
@@ -453,12 +449,10 @@
                 confirmButtonText: 'Đồng ý, xoá!'
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     $.ajax({
                         url: 'author/destroy',
                         method: "DELETE",
                         data: $('#edit_author').serialize(),
-
                         success: function (data) {
                             $result = data.result;
                             if ($result !== 'error') {
@@ -501,14 +495,13 @@
                     $(".listPublisher").empty();
                     for (i in data) {
 
-                        console.log(data)
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-                        console.log(result);
+
                         var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
-                            + 'data-target="#edit-author" id="btn-publisher-edit">'
+                            + 'data-target="#edit_publisher" id="btn-publisher-edit" onclick="bind_Publisher(\''+result+'\')">'
                             +'<i class="mdi mdi-account-edit"></i></button></li>';
                         $(".listPublisher").append(html)
                     }
@@ -516,12 +509,137 @@
                 error: function (error) {
                     console.log(error)
                 }
-            })
+            });
         }
+
+        $('#btn-add-publisher').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{{route('publisher.store')}}',
+                data: $("#form-add-publisher").serialize(),
+                cache: false,
+                success: function (data) {
+                    loadPublisher();
+                    $result = data.result;
+                    if ($result === 'success'){
+                        loadPublisher();
+                        $('#add_publisher').modal('hide');
+                        $(".alert-highlighted").removeClass('alert-danger');
+                        $(".alert-highlighted").addClass('alert-success');
+                        $('.alert-highlighted').text('Thêm thành công');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                    }else {
+                        $("#add_publisher").hide();
+                        setTimeout(function () {
+                            $('#add_publisher').show()
+                        }, 2000)
+                        $(".alert-highlighted").removeClass('alert-success');
+                        $(".alert-highlighted").addClass('alert-danger');
+                        $(".alert-highlighted span").text("Tên đã tồn tại");
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                    }
+
+                },
+                error: function (error) {
+                    console.log(error)
+                    $.fn.handlerError(error);
+                }
+            })
+        })
+        function bind_Publisher(result) {
+            console.log(result);
+            var data = result.split(',');
+            var  Publisher ={};
+            Publisher.id =data[1];
+            Publisher.name =data[3];
+
+            $('#edit_name_publisher').val( Publisher.name);
+            $('#idPublisher').val(Publisher.id);
+        }
+
+        $('#btn_edit_publisher').click(function (e){
+            e.preventDefault();
+            $.ajax({
+                type:'PATCH',
+                url:'publisher/update',
+                cache: false,
+                data: $("#form_update_publisher").serialize(),
+                success:function (data){
+                   loadPublisher();
+                   $result = data.result;
+                   if ($result ==='success'){
+                       $('#edit_publisher').modal('hide');
+                       $(".alert-highlighted").removeClass('alert-danger');
+                       $(".alert-highlighted").addClass('alert-success');
+                       $('.alert-highlighted').text('Cập nhật thành công');
+                       $('.alert-highlighted').show();
+                       $('.alert-highlighted').fadeOut(5000);
+                   }else {
+                       $("#edit_publisher").hide();
+                       setTimeout(function () {
+                           $('#edit_publisher').show()
+                       }, 2000)
+                       $(".alert-highlighted").removeClass('alert-success');
+                       $(".alert-highlighted").addClass('alert-danger');
+                       $(".alert-highlighted span").text("Kiểm tra lại thông tin");
+                       $('.alert-highlighted').show();
+                       $('.alert-highlighted').fadeOut(5000);
+                   }
+               }
+            });
+        });
+        $('#btn_delete_publisher').click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Bạn có chắc chắn sẽ xoá ?',
+                text: "Sẽ không phục hồi !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#29CC97',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Đồng ý, xoá!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'publisher/destroy',
+                        method: "DELETE",
+                        data: $('#form_update_publisher').serialize(),
+                        success: function (data) {
+                            $result = data.result;
+                            if ($result !== 'error') {
+                                loadPublisher();
+                                $('#edit_publisher').modal('hide');
+                                $(".alert-highlighted").removeClass('alert-danger');
+                                $(".alert-highlighted").addClass('alert-success');
+                                $('.alert-highlighted span').text('Xoá thành công');
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            } else {
+
+                                $('#edit_publisher').hide();
+                                setTimeout(function () {
+                                    $('#edit_publisher').show()
+                                }, 2000)
+                                $(".alert-highlighted").removeClass('alert-success');
+                                $(".alert-highlighted").addClass('alert-danger');
+                                $(".alert-highlighted span").text("Không thể xoá");
+                                $('.alert-highlighted').show();
+                                $('.alert-highlighted').fadeOut(5000);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+            })
+        });
 
 
     </script>
-
 
     <script type="text/javascript">
         jQuery(function ($) {

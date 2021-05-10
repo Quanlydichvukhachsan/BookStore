@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Publisher extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
       'name'
     ];
+
     public function books(){
         $this->hasMany('App\Models\Book');
     }
