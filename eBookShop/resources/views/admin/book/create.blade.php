@@ -13,9 +13,7 @@
 @endsection
 @section('content')
     <div class="container rounded bg-white">
-        <form method="POST" action={{route('book.store')}} enctype="multipart/form-data">
-            @csrf
-            @method('POST')
+        {!! Form::open(['method' => 'POST' ,'route' => ['book.store'],'enctype' => 'multipart/form-data']) !!}
             <div class="row">
                 <div class="p-3 py-3">
                     <div class="row mt-12">
@@ -51,17 +49,18 @@
                         <div class="col-md-6">
                             <label>Author</label>
                             <select  class="form-control selectpicker" data-live-search="true" name="author_id">
-                                <option value="1">Hot Dog, Fries and a Soda</option>
-                                <option value="2">Burger, Shake and a Smile</option>
-
+                                @foreach($authors as $author)
+                                        <option value="{{$author->id}}">{{$author->full_name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label>Publisher</label>
                             <select class="form-control selectpicker" data-live-search="true" name="publisher_id">
-                                <option value="1">Hot Dog, Fries and a Soda</option>
-                                <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                                <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                                @foreach($publishers as $publisher)
+                                        <option value="{{$publisher->id}}">{{$publisher->full_name}}</option>
+                                @endforeach
+
                             </select>
                         </div>
                     </div>
@@ -69,9 +68,9 @@
                         <div class="col-md-3">
                             <label>Category</label>
                             <select class="form-control selectpicker" data-live-search="true" name="categories_id">
-                                <option value="1">Hot Dog, Fries and a Soda</option>
-                                <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                                <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-3"><label for="foreign_book" class="labels">Foreign book</label>
@@ -87,8 +86,8 @@
 
                     </div>
                     <div class="row mt-4">
-                        <div class="col-md-6"><label for="inputfile" class="labels">Images</label>
-                            <input  multiple="multiple" name="inputfile[]" id="inputfile" type="file" class="form-control" onChange='getoutput()'>
+                        <div class="col-md-6">
+
                         </div>
                         <div class="col-md-6"><label for="price" class="labels">Price</label>
                             <input name="price" type="text" class="form-control"
@@ -96,7 +95,14 @@
                                    placeholder="enter price" value="">
                         </div>
                     </div>
-
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <label for="input-file" class="labels">Images</label>
+                            <div class="file-loading">
+                                <input  type="file"  id="input-file" name="input-file[]" accept="image/*" multiple>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mt-5">
                         <div class="col-md-12">
                         <label for="describe" class="labels">Describe</label>
@@ -107,7 +113,7 @@
 
             </div>
             <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Create</button></div>
-        </form>
+        {!! Form::close() !!}
 
     </div>
     @if(count($errors) >0)
@@ -136,7 +142,21 @@
             .catch( error => {
                 console.error( error );
             } );
-
+        $(document).ready(function() {
+            $("#input-file").fileinput({
+                theme: 'fa',
+                initialPreviewAsData: true,
+                overwriteInitial: false,
+                maxFileSize: 100000,
+                showUpload: false
+            }).on('filesorted', function(e, params) {
+                console.log('file sorted', e, params);
+            }).on('fileuploaded', function(e, params) {
+                console.log('file uploaded', e, params);
+            }).on('filesuccessremove', function(e, id) {
+                console.log('file success remove', e, id);
+            });
+        });
     </script>
 
 

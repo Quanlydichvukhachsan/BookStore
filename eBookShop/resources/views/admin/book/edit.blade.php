@@ -57,9 +57,8 @@
 @endsection
 @section('content')
     <div class="container rounded bg-white">
-        <form method="PATCH" action={{route('book.update',$book->id)}} enctype="multipart/form-data">
-            @csrf
-            @method('PATCH')
+        {!! Form::open(['method' => 'PATCH' ,'route' => ['book.update',$book->id],'enctype' => 'multipart/form-data']) !!}
+            <input type="hidden" value="" name="updated_at">
             <div class="row">
                 <div class="p-3 py-3">
                     <div class="row mt-12">
@@ -146,23 +145,26 @@
                         </div>
 
                     </div>
+
                     <div class="row mt-4">
-                        <div class="col-md-6"><label for="inputfile" class="labels">Images</label>
-                            <input  multiple="multiple" name="inputfile[]" id="inputfile" type="file" class="form-control" onChange='getoutput()'>
-                        </div>
-                        <div class="col-md-6"><label for="price" class="labels">Price</label>
-                            <input name="price" type="text" class="form-control"
-                                   onkeypress="javascript:return isNumber(event)"
-                                   placeholder="enter price" value="{{$book->price}}">
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="input-24" class="labels">Image</label>
                             <div class="file-loading">
                                 <input id="input-24" name="input24[]" type="file" multiple>
                             </div>
-
                     </div>
+                    </div>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="price" class="labels">Price</label>
+                                <input name="price" type="text" class="form-control"
+                                       onkeypress="javascript:return isNumber(event)"
+                                       placeholder="enter price" value="{{$book->price}}">
+                            </div>
+
+                        </div>
                     <div class="row mt-5">
                         <div class="col-md-12">
                             <label for="describe" class="labels">Describe</label>
@@ -172,11 +174,10 @@
                 </div>
 
             </div>
-            </div>
             <div class="mt-5 text-center">
                 <button class="btn btn-primary profile-button" type="submit">Update</button>
             </div>
-        </form>
+        {!! Form::close() !!}
 
     </div>
     @if(count($errors) >0)
@@ -210,27 +211,40 @@
             autoplay: true
         });
         $(document).ready(function() {
-          /*  var arrImage =[];
+            const localhost = "http://127.0.0.1:8000";
+           var arrImage =[];
+
+           var initialPreviewConfig =[];
              @foreach($book->imagebooks as $image)
+            var imageConfig ={};
                    var src = "{{$image->file}}";
-                   var img =src.split('/')[2];
-                   arrImage.push(img)
+                  var nameImg =src.split('/')[2];
+                  var img =localhost+src;
+                 imageConfig.caption = nameImg;
+                 imageConfig.downloadUrl =img;
+                 imageConfig.url = localhost +"/book/site/{{$book->id}}/file-delete";
+                 imageConfig.size =930321;
+                 imageConfig.width = "120px";
+                 imageConfig.key = {{$image->id}};
+                 imageConfig.extra = {id: {{$image->id}},_token: "{{csrf_token()}}"};
+            initialPreviewConfig.push(imageConfig);
+                 arrImage.push(img)
             @endforeach
-            console.log(arrImage);*/
-           var url3 ='http://127.0.0.1:8000/imagesBook/8935235226272_1.jpg';
-           // var url1 = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg',
-           //     url2 = 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/600px-Earth_Eastern_Hemisphere.jpg';
+
             $("#input-24").fileinput({
-                initialPreview: [url3],
+                initialPreview: arrImage,
+                theme: 'fa',
                 initialPreviewAsData: true,
-                initialPreviewConfig: [
-                    {caption: "Moon.jpg", downloadUrl:url3, size: 930321, width: "120px", key: 1},
-                    {caption: "Earth.jpg", downloadUrl: url3, size: 1218822, width: "120px", key: 2}
-                ],
-                deleteUrl: "{{asset("/book/site/1/file-delete")}}",
+                initialPreviewConfig: initialPreviewConfig,
                 overwriteInitial: false,
                 maxFileSize: 100000,
                 showUpload: false
+            }).on('filesorted', function(e, params) {
+                console.log('file sorted', e, params);
+            }).on('fileuploaded', function(e, params) {
+                console.log('file uploaded', e, params);
+            }).on('filesuccessremove', function(e, id) {
+                console.log('file success remove', e, id);
             });
         });
     </script>

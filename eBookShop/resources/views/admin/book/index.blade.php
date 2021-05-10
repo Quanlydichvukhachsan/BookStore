@@ -53,7 +53,7 @@
                             <th class="none">Type</th>
                             <th class="none">discount</th>
                             <th class="none">create_at</th>
-
+                            <th class="none">updated_at</th>
                         </tr>
                         </thead>
 
@@ -106,9 +106,13 @@
                                 @else
                                     <td>Trong nuoc</td>
                                    @endif
+                              @if($item->percent_discount !== null)
                                 <td>{{$item->percent_discount}}</td>
+                            @else
+                                <td>No</td>
+                            @endif
                                 <td>{{$item->created_at}}</td>
-
+                            <td>{{$item->updated_at}}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -140,6 +144,10 @@
 
         @if(Session::has('create-book'))
         $(".alert-highlighted span").text("{{session('create-book')}}");
+        $('.alert-highlighted').show();
+        $('.alert-highlighted').fadeOut(5000);
+        @elseif(Session::has('update-book'))
+        $(".alert-highlighted span").text("{{session('update-book')}}");
         $('.alert-highlighted').show();
         $('.alert-highlighted').fadeOut(5000);
         @endif
