@@ -11,4 +11,6 @@ interface BookContract
     public function delete($id);
     public function edit($id);
     public  function deleteImage($request ,$id);
+    public  function discountBook($id);
+    public function updateDiscountBook($request,$id);
 }

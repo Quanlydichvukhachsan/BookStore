@@ -25,7 +25,7 @@
 <script src={{asset("assets/plugins/fileInput/explorer-fas/theme.js")}}></script>
 <script src={{asset("assets/plugins/fileInput/piexif.js")}}></script>
 <script src={{asset("assets/plugins/fileInput/sortable.js")}}></script>
-
+<script src={{asset("assets/plugins/way/way.js")}}></script>
 <script>
     jQuery(document).ready(function() {
         jQuery('#basic-data-table').DataTable({

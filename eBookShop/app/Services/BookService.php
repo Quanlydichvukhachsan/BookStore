@@ -98,6 +98,7 @@ class BookService implements BookContract
     {
         $input =$request->all();
         unset($input['input-file']);
+        $input['original_Price'] =$input['price'];
         $book = Book::create($input);
         if($request['input-file'] !== null) {
             foreach ($request->file('input-file') as $file) {
@@ -107,5 +108,20 @@ class BookService implements BookContract
             }
         }
         return "Create success!";
+    }
+
+    public function discountBook($id)
+    {
+         $data = Book::findOrFail($id)->price_discount;
+         return $data;
+    }
+
+    public function updateDiscountBook($request, $id)
+    {
+        $book = Book::findOrFail($id);
+        $book->price=$request['price'];
+        $book->percent_discount =$request['discount'];
+        $book->save();
+        return "Update price success!";
     }
 }

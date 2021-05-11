@@ -26,7 +26,7 @@ class CreateBooksTable extends Migration
             $table->float('size');
             $table->tinyInteger('foreign_book')->default(0);
             $table->decimal('price',8,3);
-            $table->decimal('price_discount',8,3)->nullable();
+            $table->decimal('original_Price',8,3);
             $table->decimal('percent_discount',8,3)->nullable();
             $table->timestamps();
         });

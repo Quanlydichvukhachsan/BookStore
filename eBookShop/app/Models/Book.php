@@ -23,7 +23,7 @@ class Book extends Model
         'size',
         'foreign_book',
         'price',
-        'price_discount',
+        'original_Price',
         'percent_discount',
         'describe',
         'author_id',
