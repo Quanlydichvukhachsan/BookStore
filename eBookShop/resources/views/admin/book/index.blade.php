@@ -54,6 +54,7 @@
                             <th class="none">discount</th>
                             <th class="none">create_at</th>
                             <th class="none">updated_at</th>
+                            <th class="none"></th>
                         </tr>
                         </thead>
 
@@ -113,10 +114,15 @@
                             @endif
                                 <td>{{$item->created_at}}</td>
                             <td>{{$item->updated_at}}</td>
+                             <td><button data-value="{{$item->id}}" class="btn-sm btn-success" onclick="getPriceDiscount(this)" type="button" data-toggle="modal" href="#"
+                                         data-target="#exampleModalSmall">
+                                     Discount
+                                 </button></td>
                         </tr>
                         @endforeach
                         </tbody>
                     </table>
+                @include('admin.book.discount')
            </div>
     </div>
     </div>
@@ -205,6 +211,71 @@
                     })
                 }
             })
+        }
+        function savePriceChange(){
+                var id =$('#idBook').val();
+            $.ajax({
+                type: 'POST',
+                catch: false,
+                url: 'book/' +id+'/discount/update',
+                data: {
+                    "_token": '{{csrf_token()}}',
+                "price": $('#price').val(),
+                "discount": $('#discount').val(),
+                },
+                success: function (data) {
+                    console.log(data.result);
+                        // $("tr#sid"+id).find("td").eq(5).text('');
+                        // rowRole =  $('<span>No active</span>');
+                        // $("tr#sid"+id).find("td").eq(5).append(rowRole);
+                },
+                error:function (error){
+                    console.log(error);
+                }
+            })
+        }
+  function getPriceDiscount(item){
+
+    var id = item.getAttribute("data-value");
+      $.ajax({
+          type: 'GET',
+          catch: false,
+          url: 'book/' +id+'/discount',
+
+          data: {
+              "_token": '{{csrf_token()}}'
+          },
+          success: function (data) {
+              var price = data.result[0];
+              var discountPercent =data.result[1];
+              $('#price').val(price);
+              if( discountPercent !== null){
+                  $('#discount').val(discountPercent);
+              }
+              $('#idBook').val(id);
+              priceChange(price);
+
+          },
+          error:function (error){
+              console.log(error);
+          }
+      })
+  }
+   function priceCal(price,discountPercent){
+               return (price * discountPercent)/100;
+   }
+   function priceChange(price){
+       $("#discount").bind('keyup mouseup', function () {
+           var discount = $('#discount').val();
+           var resultCal = priceCal(price,discount);
+           way.set("someScope", { with: { something: resultCal }})
+       });
+   }
+        function binderDiscount(item){
+            if (item.value < 0) item.value = 0;
+            if (item.value > 100) item.value = 100;
+            var discount  =  item.value;
+            way.set("someScope", { with: { something: discount }})
         }
     </script>
 

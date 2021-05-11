@@ -108,4 +108,19 @@ class BookService implements BookContract
         }
         return "Create success!";
     }
+
+    public function discountBook($id)
+    {
+         $data = Book::findOrFail($id)->price_discount;
+         return $data;
+    }
+
+    public function updateDiscountBook($request, $id)
+    {
+        $book = Book::findOrFail($id);
+        $book->price_discount=$request['price'];
+        $book->percent_discount =$request['discount'];
+        $book->save();
+        return "Update price success!";
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Contracts\BookContract;
 use App\Http\Requests\CreateBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\UpdatePriceRequest;
+use App\Models\Book;
 use App\Models\ImageBook;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -111,5 +113,27 @@ class BookController extends Controller
     public function deleteImage(Request $request,$id){
                   $result =  $this->BookStore->deleteImage($request,$id);
               return  response()->json(['filesuccessremove'=>$result]);
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function discountBook($id){
+
+        $result = $this->BookStore->discountBook($id);
+       return  response()->json(['result'=>$result]);
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDiscountBook(UpdatePriceRequest $request,$id){
+        $result = $this->BookStore->updateDiscountBook($request,$id);
+        return  response()->json(['result'=>$result]);
     }
 }
