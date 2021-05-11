@@ -108,7 +108,7 @@
                                     <td>Trong nuoc</td>
                                    @endif
                               @if($item->percent_discount !== null)
-                                <td>{{$item->percent_discount}}</td>
+                                <td>{{round ($item->percent_discount * 100 / 100) }}%</td>
                             @else
                                 <td>No</td>
                             @endif
@@ -224,10 +224,7 @@
                 "discount": $('#discount').val(),
                 },
                 success: function (data) {
-                    console.log(data.result);
-                        // $("tr#sid"+id).find("td").eq(5).text('');
-                        // rowRole =  $('<span>No active</span>');
-                        // $("tr#sid"+id).find("td").eq(5).append(rowRole);
+                    location.reload();
                 },
                 error:function (error){
                     console.log(error);

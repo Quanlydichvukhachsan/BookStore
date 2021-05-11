@@ -10,7 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\GenresController;
-use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthorController;
 
@@ -71,8 +70,7 @@ Route::middleware(['auth'])->group(function () {
  Route::get('/user/{user}/role',[UserController::class, 'editRole'])->name('user.role');
  Route::post('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
 
- //discount
- Route::resource('discount',DiscountController::class);
+
 //order
 Route::resource('order',OrderController::class);
 Route::get('/order/request/confirmation',[OrderController::class, 'orderConfirm'])->name('order.confirmation');

@@ -14,6 +14,7 @@
 @section('content')
     <div class="container rounded bg-white">
         {!! Form::open(['method' => 'POST' ,'route' => ['book.store'],'enctype' => 'multipart/form-data']) !!}
+        <input type="hidden" value="" name="original_Price">
             <div class="row">
                 <div class="p-3 py-3">
                     <div class="row mt-12">
