@@ -23,6 +23,16 @@
                         <div class="invalid-feedback lastName"></div>
                     </div>
                     <div class="form-group">
+                        <label for="address" class="col-form-label">Address</label>
+                        <input name="address" id="address" type="text" class="form-control" value="" placeholder="address">
+                        <div class="invalid-feedback address"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber" class="col-form-label">PhoneNumber</label>
+                        <input name="phoneNumber" id="phoneNumber" type="text" class="form-control" value="" placeholder="phoneNumber" onkeypress="javascript:return isNumber(event)" >
+                        <div class="invalid-feedback phoneNumber"></div>
+                    </div>
+                    <div class="form-group">
                         <label for="userName" class="col-form-label">User Name</label>
                         <input name="userName" id="userName" type="text" class="form-control" placeholder="enter phone number" value="">
                         <div class="invalid-feedback userName"></div>

@@ -34,6 +34,8 @@
                             <th>Id</th>
                             <th>Last name</th>
                             <th>First name</th>
+                            <th>Address</th>
+                            <th>Phone number</th>
                             <th>User Name</th>
                             <th>E-mail</th>
                             <th>Role Name</th>
@@ -47,6 +49,8 @@
                                 <td>{{$users->id}}</td>
                                 <td> {{$users->lastName }}</td>
                                 <td> {{$users->firstName }} </td>
+                                <td> {{$users->address }}</td>
+                                <td> {{$users->phoneNumber }} </td>
                                 <td><a href="{{route('user.show',$users->id)}}"> {{$users->userName}}</a></td>
                                 <td>{{$users->email}}</td>
 
@@ -132,6 +136,12 @@
     <script src={{asset("error-handler/exception.js")}}></script>
 
     <script>
+        function isNumber(evt) {
+            var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+            if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+                return false;
+            return true;
+        }
 
         $overlay = $('<div id="overlay"/>').css({
             position: 'fixed',
@@ -160,6 +170,8 @@
                         "_token": '{{csrf_token()}}',
                         "lastName": $('#lastName').val(),
                         "firstName": $('#firstName').val(),
+                        "address": $('#address').val(),
+                        "phoneNumber": $('#phoneNumber').val(),
                         "userName": $('#userName').val(),
                         "email": $('#email').val(),
                         "password": $('#password').val(),
@@ -192,6 +204,8 @@
                             '<td>' + data.user.id + '</td>' +
                             '<td>' + data.user.lastName + '</td>' +
                             '<td>' + data.user.firstName + '</td>' +
+                            '<td>' + data.user.address + '</td>' +
+                            '<td>' + data.user.phoneNumber + '</td>' +
                             rowName +
                             '<td>' + data.user.email + '</td>' +
                             '<td>' + '</td>' +
@@ -202,11 +216,11 @@
                             var array = data.user.roles;
                             array.forEach(function (item) {
                                 rowRoles = '<span class="mb-2 mr-2 badge badge-pill badge-info">' + item.name + '</span>' + '  ';
-                                $row.find("td").eq(5).append(rowRoles);
+                                $row.find("td").eq(7).append(rowRoles);
                             })
                         } else {
 
-                            $row.find("td").eq(5).append(rowRoles);
+                            $row.find("td").eq(7).append(rowRoles);
                         }
                         $('table> tbody:last').append($row);
                         $(".alert-highlighted span").text(data.success);
@@ -350,14 +364,14 @@
                      //update role name after response success
                         var rowRole ;
                if(data.result.length ===0){
-                $("tr#sid"+id).find("td").eq(5).text('');
+                $("tr#sid"+id).find("td").eq(7).text('');
                 rowRole =  $('<span>No active</span>');
-                $("tr#sid"+id).find("td").eq(5).append(rowRole);
+                $("tr#sid"+id).find("td").eq(7).append(rowRole);
                }else{
-                $("tr#sid"+id).find("td").eq(5).text('');
+                $("tr#sid"+id).find("td").eq(7).text('');
                    $.each(data.result,function(index,value){
                     rowRole =  $('<span class="mb-2 mr-2 badge badge-pill badge-info">' + value + '</span>');
-                  $("tr#sid"+id).find("td").eq(5).append(rowRole);
+                  $("tr#sid"+id).find("td").eq(7).append(rowRole);
                    })
                }
                         console.log(data.success);

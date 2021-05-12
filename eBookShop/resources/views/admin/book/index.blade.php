@@ -129,6 +129,7 @@
 @endsection
 
 @section('script')
+    <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}> </script>
     <script>
         $(document).ready(function (){
             var table = $('#expendable-data-table').DataTable({
