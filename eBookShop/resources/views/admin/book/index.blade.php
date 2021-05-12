@@ -36,7 +36,6 @@
                     <table id="expendable-data-table" class="display" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-
                             <th>Title</th>
                             <th>Author</th>
                             <th>Publisher</th>

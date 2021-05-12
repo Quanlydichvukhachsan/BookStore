@@ -15,9 +15,9 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-             $table->string('title');
-             $table->date('publication_date');
-             $table->integer('author_id');
+            $table->string('title');
+            $table->date('publication_date');
+            $table->integer('author_id');
             $table->integer('publisher_id');
             $table->integer('categories_id');
             $table->integer('weight');
@@ -28,6 +28,7 @@ class CreateBooksTable extends Migration
             $table->decimal('price',8,3);
             $table->decimal('original_Price',8,3);
             $table->decimal('percent_discount',8,3)->nullable();
+            $table->string('describe',10000);
             $table->timestamps();
         });
     }
