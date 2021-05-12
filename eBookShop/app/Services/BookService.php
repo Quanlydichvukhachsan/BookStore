@@ -49,7 +49,8 @@ class BookService implements BookContract
         unset($input['_method']);
         $dateUpdate =Carbon::now();
         $input['updated_at'] =$dateUpdate->toDateTimeString();
-
+        $input['original_Price'] = $input['price'];
+        $input['percent_discount'] =0;
         DB::table('books')->where('id', $id)->update($input);
 
         if($request['input24'] !== null){

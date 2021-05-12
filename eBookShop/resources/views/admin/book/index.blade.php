@@ -129,6 +129,7 @@
 @endsection
 
 @section('script')
+    <script src={{asset("error-handler/exception.js")}}></script>
     <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}> </script>
     <script>
         $(document).ready(function (){
@@ -228,7 +229,7 @@
                     location.reload();
                 },
                 error:function (error){
-                    console.log(error);
+                    $.fn.handlerError(error);
                 }
             })
         }
@@ -244,6 +245,7 @@
               "_token": '{{csrf_token()}}'
           },
           success: function (data) {
+
               var price = data.result[0];
               var discountPercent =data.result[1];
               $('#price').val(price);
@@ -254,8 +256,9 @@
               priceChange(price);
 
           },
-          error:function (error){
-              console.log(error);
+          error: function (error){
+              console.log(error)
+
           }
       })
   }

@@ -59,6 +59,8 @@
     <div class="container rounded bg-white">
         {!! Form::open(['method' => 'PATCH' ,'route' => ['book.update',$book->id],'enctype' => 'multipart/form-data']) !!}
             <input type="hidden" value="" name="updated_at">
+        <input type="hidden" value="" name="original_Price">
+        <input type="hidden" value="" name="percent_discount">
             <div class="row">
                 <div class="p-3 py-3">
                     <div class="row mt-12">
