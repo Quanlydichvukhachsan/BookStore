@@ -14,7 +14,7 @@
 <script src={{asset("assets/plugins/select2/js/select2.full.min.js")}}></script>
 <script src={{asset("assets/plugins/treeview/gijgo.min.js")}}></script>
 <script src={{asset("assets/plugins/sweet-alert/sweetalert2.min.js")}}></script>
-<script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}> </script>
+
 
 <script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js")}}"></script>
 <script src="{{asset("https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js")}}"></script>

@@ -34,6 +34,8 @@ class UserService implements UserContract
         $user = User::create([
             'firstName' => $request['firstName'],
             'lastName' => $request['lastName'],
+            'address' => $request['address'],
+            'phoneNumber' => $request['phoneNumber'],
             'userName' => $request['userName'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),

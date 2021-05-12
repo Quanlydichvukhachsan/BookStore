@@ -24,7 +24,7 @@ class UpdatePriceRequest extends FormRequest
     public function rules()
     {
         return [
-            'price' => 'required|min:1',
+            'price' => 'required|min:0|between:0,99.99',
             'discount' =>'required'
         ];
     }

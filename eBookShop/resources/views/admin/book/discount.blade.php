@@ -23,6 +23,7 @@
                                     <div  way-scope="someScope">
                                         <div way-scope="with">
                                             <input  way-data="something" id="price" name="price" type="text" class="form-control" readonly placeholder="" value="">
+                                            <div class="invalid-feedback price"></div>
                                         </div>
                                     </div>
 
@@ -30,15 +31,16 @@
                                 <div class="col-md-6">
                                     <label for="discount"  class="labels">Percent(%)</label>
                                     <input id="discount" name="discount" type="number"  min="0" max="100" step="10" class="form-control" placeholder="discount percent" onkeyup="binderDiscount(this)" value="">
-
+                                    <div class="invalid-feedback discount"></div>
                                 </div>
+
                                     <input id="idBook" type="hidden" value="">
                                 </form>
                             </div>
                             </div>
                     </div>
 
-                    <div class="invalid-feedback discount"></div>
+
                 </div>
                 {!! Form::close() !!}
             </div>

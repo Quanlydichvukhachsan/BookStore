@@ -44,4 +44,11 @@ class Book extends Model
     public function imagebooks(){
         return $this->hasMany('App\Models\ImageBook',foreignKey: 'book_id',localKey: 'id');
     }
+    public function getPriceDiscountAttribute()
+    {
+        $result =[];
+        array_push($result,$this->price);
+        array_push($result, round ($this->percent_discount * 100 / 100));
+        return $result;
+    }
 }
