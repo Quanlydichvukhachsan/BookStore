@@ -1,6 +1,6 @@
 <?php namespace App\viewModels;
 
-class OrderBookRequest{
+class OrderBookRequestModels{
     private $userId;
     private $bookId;
     private $amount;

@@ -63,8 +63,9 @@ class OrderController extends Controller
      */
     public function orderShow($id,  $customer)
     {
-        $result = $this->orderBook->orderShow($id,$customer);
-        dd($result);
+       $result = $this->orderBook->orderShow($id,$customer);
+       dd($result);
+        return view('admin.order.overview');
     }
 
     /**
