@@ -5,20 +5,16 @@ use App\viewModels\OrderBookRequest;
  class OrderBookService implements OrderContract{
 
 
-    protected $order;
-    public function __construct(Order $order )
-    {
-        $this->order = $order;
-    }
-
     public function getAll(){
-        return  $this->order::all();
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return $orders;
     }
 
     public function show($id){
 
             return $this->order::findOrFail($id);
     }
+
 
     public function create(OrderBookRequest $order){
                 return $this->order::create($order);
@@ -34,4 +30,9 @@ use App\viewModels\OrderBookRequest;
      }
 
 
-}
+     public function orderShow($id, $customer)
+     {
+           $bookOrders =  Order::findOrFail($id)->books;
+           return $bookOrders[2]->orders[0]->pivot->amount;
+     }
+ }

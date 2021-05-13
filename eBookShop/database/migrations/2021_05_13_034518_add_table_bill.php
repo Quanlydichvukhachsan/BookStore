@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TableOrders extends Migration
+class AddTableBill extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class TableOrders extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('discount_id')->nullable();
-            $table->boolean('state')->default(0);
-            $table->boolean('active')->default(0);
+            $table->integer('order_id');
+            $table->decimal('totalPrice',8,3);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class TableOrders extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('bills');
     }
 }

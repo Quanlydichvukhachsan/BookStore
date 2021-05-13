@@ -2,8 +2,9 @@
 
 class OrderBookRequest{
     private $userId;
-    private $discountId;
-
+    private $bookId;
+    private $amount;
+    private $status;
     public function setUserId($userId) {
         $this->userId = $userId;
       }
@@ -12,12 +13,26 @@ class OrderBookRequest{
         return $this->userId;
       }
 
-      public function setDiscountId($discountId) {
-        $this->discountId = $discountId;
+      public function setBookId($bookId) {
+        $this->bookId = $bookId;
       }
 
-      public function getDiscountId() {
-        return $this->discountId;
+      public function getBookId() {
+        return $this->bookId;
       }
+    public function setAmount($amount) {
+        $this->amount = $amount;
+    }
+
+    public function getAmount() {
+        return $this->amount;
+    }
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
+    public function getStatus() {
+        return $this->status;
+    }
 
 }

@@ -20,8 +20,8 @@ class OrderController extends Controller
 
     public function index()
     {
-        $order = $this->orderBook->getOrderByActive(1);
-        return view('admin.order.index',compact('order'));
+        $orders = $this->orderBook->getAll();
+        return view('admin.order.index',compact('orders'));
     }
 
     /**
@@ -47,13 +47,24 @@ class OrderController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * @param  int  $customer
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,  $customer)
     {
-        //
+
+    }
+    /**
+     * Display the specified resource.
+     * @param  int  $customer
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function orderShow($id,  $customer)
+    {
+        $result = $this->orderBook->orderShow($id,$customer);
+        dd($result);
     }
 
     /**
@@ -76,7 +87,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-         dd($request->all());
+
     }
 
     /**

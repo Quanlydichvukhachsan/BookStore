@@ -9,7 +9,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\GenresController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthorController;
 
@@ -45,7 +44,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
     })->name('admin.index');
-    Route::resource('genres',GenresController::class);
     Route::resource('category',Controllers\CategoryController::class);
     Route::resource('product', ProductController::class);
 
@@ -75,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('order',OrderController::class);
 Route::get('/order/request/confirmation',[OrderController::class, 'orderConfirm'])->name('order.confirmation');
 Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccept'])->name('order.accept');
+    Route::get('/order/{id}/customer/{idCustomer}/show',[OrderController::class, 'orderShow'])->name('order.orderShow');
     Route::delete('/order/request/{order}/delete',[OrderController::class, 'orderDelete'])->name('order.delete');
 
     Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');

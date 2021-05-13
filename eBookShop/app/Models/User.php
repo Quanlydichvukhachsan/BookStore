@@ -50,6 +50,9 @@ class User extends Authenticatable
     public function photo(){
         return $this->belongsTo('App\Models\Photo');
     }
+    public function getFullNameAttribute(){
+        return  "{$this->lastName} {$this->firstName}";
+    }
 
 
 }
