@@ -151,7 +151,7 @@
          position: absolute;
          font-weight: 800;
          color: #fff;
-         background-color: #0033ff;
+         background-color:#20c997;
          padding-left: 7px;
          border-radius: 50%;
          border: 1px solid #fff;
@@ -351,36 +351,36 @@
         <div class="h5 large">Billing Address</div>
         <div class="row">
             <div class="col-lg-6 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
-                <div class="mobile h5">Billing Address</div>
+
                 <div id="details" class="bg-white rounded pb-5">
                     <form>
-                        <div class="form-group"> <label class="text-muted">Name</label> <input type="text" value="David Smith" class="form-control"> </div>
+                        <div class="form-group"> <label class="text-muted">Name</label> <input type="text" value="{{$item->getName()}}" class="form-control"> </div>
                         <div class="form-group"> <label class="text-muted">Email</label>
-                            <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="email" value="david.343@gmail.com"> <span class="fas fa-check text-success pr-sm-2 pr-0"></span> </div>
+                            <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="email" value="{{$item->getEmail()}}"> <span class="fas fa-check text-success pr-sm-2 pr-0"></span> </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group"> <label>Full name</label>
-                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="Nguyen Mau Tuan"> <span class="fas fa-check text-success pr-2"></span> </div>
+                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="{{$item->getFullName()}}"> <span class="fas fa-check text-success pr-2"></span> </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group"> <label>City</label>
-                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="Houston"> <span class="fas fa-check text-success pr-2"></span> </div>
+                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="{{$item->getCity()}}"> <span class="fas fa-check text-success pr-2"></span> </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group"> <label>Phone number</label>
-                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="0949238337"> <span class="fas fa-check text-success pr-2"></span> </div>
+                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="{{$item->getPhoneNumber()}}"> <span class="fas fa-check text-success pr-2"></span> </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group"> <label>Address</label>
-                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="542 W.14th Street"> <span class="fas fa-check text-success pr-2"></span> </div>
+                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="{{$item->getAddress()}}"> <span class="fas fa-check text-success pr-2"></span> </div>
                                 </div>
                             </div>
 
@@ -388,7 +388,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group"> <label>Country</label>
-                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="542 W.14th Street"> <span class="fas fa-check text-success pr-2"></span> </div>
+                                    <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="text" value="{{$item->getCountry()}}"> <span class="fas fa-check text-success pr-2"></span> </div>
                                 </div>
                             </div>
 
@@ -399,14 +399,13 @@
                     <div class="h5 font-weight-bold text-primary"> Shopping Address </div>
                     <div class="d-md-flex justify-content-md-start align-items-md-center pt-3">
                         <div class="mr-auto"> <b>Home Address</b>
-                            <p class="text-justify text-muted">542 W.14th Street</p>
-                            <p class="text-uppercase text-muted">NY</p>
+                            <p class="text-justify text-muted">{{$item->getAddress()}}</p>
                         </div>
                         <div class="rounded py-2 px-3" id="register">
                             <a href="#"> <b>Phone number</b> </a>
-                            <p class="text-muted">0949238337</p>
+                            <p class="text-muted">{{$item->getPhoneNumber()}}</p>
                             <a href="#"> <b>Name</b> </a>
-                            <p class="text-muted">Nguyen mau tuan</p>
+                            <p class="text-muted">{{$item->getName()}}</p>
                         </div>
 
                     </div>
@@ -418,20 +417,15 @@
                         <div class="h6">Cart Summary</div>
                     </div>
                     <div class="view-order">
+                         @foreach($item->getListBookViewModel() as $bookModel)
                         <div class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom">
-                            <div class="item pr-2"> <img src="https://images.unsplash.com/photo-1569488859134-24b2d490f23f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="" width="80" height="80">
-                                <div class="number">3</div>
+                            <div class="item pr-2"> <img src="{{asset($bookModel->getImages())}}" alt="img-{{$bookModel->getTitle()}}" width="80" height="80">
+                                <div class="number">{{$bookModel->getAmount()}}</div>
                             </div>
-                            <div class="d-flex flex-column px-3"> <b class="h5">BattleCreek Coffee</b> <a href="#" class="h5 text-primary">C-770</a> </div>
-                            <div class="ml-auto"> <b class="h5">$80.93</b> </div>
+                            <div class="d-flex flex-column px-3"> <b class="h5">{{$bookModel->getTitle()}}</b> <a href="{{route('book.show',$bookModel->getId())}}" class="h5 text-primary">B-{{$bookModel->getId()}}</a> </div>
+                            <div class="ml-auto"> <b class="h5"> ${{$bookModel->getPrice()}}</b> </div>
                         </div>
-                        <div class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom">
-                            <div class="item pr-2"> <img src="https://images.unsplash.com/photo-1569488859134-24b2d490f23f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="" width="80" height="80">
-                                <div class="number">2</div>
-                            </div>
-                            <div class="d-flex flex-column px-3"> <b class="h5">BattleCreek Coffee</b> <a href="#" class="h5 text-primary">C-770</a> </div>
-                            <div class="ml-auto"> <b class="h5">$80.9</b> </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <div class="my-3"></div>
@@ -439,13 +433,24 @@
                         <div class="display-5">Total</div>
                         <div class="ml-auto d-flex">
                             <div class="text-primary text-uppercase px-3">vnd</div>
-                            <div class="font-weight-bold">$92.98</div>
+                            <div class="font-weight-bold">{{$item->getTotalPrice()}}</div>
                         </div>
                     </div>
                 </div>
 
                     <p class="text-muted h5">Status Order</p>
-                    <p class="text-danger">Waitting accepted</p>
+                @if($item->getStatus() === "Waiting accepted")
+                    <p class="text-warning">{{$item->getStatus()}}</p>
+                @elseif($item->getStatus() === "Waiting delivery")
+                    <p class="text-secondary">{{$item->getStatus()}}</p>
+                @elseif($item->getStatus() === "Successfully delivered")
+                    <p class="text-success">{{$item->getStatus()}}</p>
+                @elseif($item->getStatus() === "Accepted")
+                    <p class="text-info">{{$item->getStatus()}}</p>
+                @else
+                    <p class="text-danger">{{$item->getStatus()}}</p>
+                @endif
+
 
                     <div class="row pt-lg-3 pt-2 buttons mb-sm-0 mb-2">
                         <div class="col-md-6">

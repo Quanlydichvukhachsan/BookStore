@@ -40,20 +40,18 @@ class OrderBookService implements OrderContract{
            $order =  Order::findOrFail($id);
            $booksOrder =$order->books;
            $user = User::findOrFail($customer);
-           $totalPrice =0;
            foreach ($booksOrder as $item){
+               $totalPrice =0;
                      $bookModel = new bookViewModels();
                $price =$item->price;
                $bookModel->setId($item->id);
                $bookModel->setTitle($item->title);
                $bookModel->setImages($item->imagebooks[0]->file);
                $bookModel->setPrice($price);
-                foreach ($item->orders as $amount){
-                    $bookModel->setAmount($amount->pivot->amount);
-                         $totalPrice += ($price * $amount->pivot->amount);
-               }
+               $bookModel->setAmount($item->pivot->amount);
+               $totalPrice += ($bookModel->getPrice() * $bookModel->getAmount());
                 $orderView->setListBookViewModel($bookModel);
-                $orderView->setTotalPrice($totalPrice);
+                $orderView->setTotalPrice(number_format($totalPrice, 3));
            }
            $orderView->setId($id);
            $orderView->setName($user->userName);
@@ -64,7 +62,19 @@ class OrderBookService implements OrderContract{
           $orderView->setCity($order->city);
           $orderView->setCountry($order->country);
           $orderView->setStatus($order->status);
-           // $bookOrders[2]->orders[0]->pivot->amount;
          return $orderView;
      }
- }
+
+    public function update($request, $id)
+    {
+       $order = Order::findOrFail($id);
+       if($request['status'] !==null){
+           $order->status =$request['status'];
+           $order->save();
+       }else{
+           return "No changed";
+       }
+       return "Update date success";
+
+    }
+}

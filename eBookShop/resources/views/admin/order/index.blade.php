@@ -1,4 +1,5 @@
 @extends('layouts.main')
+
 @section('name')
     <h1>Orders</h1>
 @endsection
@@ -13,23 +14,23 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <!-- Recent Order Table -->
-            <div class="card card-table-border-none" id="recent-orders">
-                <div class="card-header justify-content-between">
-                    <h2>Orders</h2>
-                    <div class="date-range-report ">
-                        <span></span>
+
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                        <h2>Order</h2>
                     </div>
-                </div>
-                <div class="card-body pt-0 pb-5">
-                    <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                <div class="card-body">
+                <div class="basic-data-table">
+
+                    <table id="basic-data-table" class="table nowrap" style="width:100%">
                         <thead>
                         <tr>
                             <th>Order ID</th>
                             <th>Customer Name</th>
                             <th class="d-none d-lg-table-cell">Order Date</th>
+                            <th>City</th>
+                            <th>Country</th>
                             <th>Status</th>
                             <th>Action</th>
                             <th></th>
@@ -37,12 +38,15 @@
                         </thead>
                         <tbody>
                         @foreach($orders as $item)
+
                         <tr>
                             <td>{{$item->id}}</td>
                             <td >
                                 <a class="text-dark" href="{{route('order.orderShow',[$item->id,$item->user->id])}}">{{$item->user->full_name}}</a>
                             </td>
                             <td class="d-none d-lg-table-cell">{{$item->created_at}}</td>
+                            <td>{{$item->city}}</td>
+                            <td>{{$item->country}}</td>
                             <td>
                                 @if($item->status === "Waiting accepted")
                                 <span class="badge badge-warning">{{$item->status}}</span>
@@ -50,37 +54,59 @@
                                     <span class="badge badge-secondary">{{$item->status}}</span>
                                 @elseif($item->status === "Successfully delivered")
                                     <span class="badge badge-success">{{$item->status}}</span>
+                                @elseif($item->status === "Accepted")
+                                    <span class="badge badge-info">{{$item->status}}</span>
                                 @else
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
                             </td>
                             <td>
+
                                     <select class="form-select" data-value="{{$item->id}}" id="setColor{{$item->id}}" onchange="getColor(this)">
+
                                        <option class="badge badge-info" value="0">Accepted</option>
                                         <option class="badge badge-warning" value="1">Waiting accepted</option>
                                         <option class="badge badge-secondary" value="2">Waiting delivery</option>
                                         <option class="badge badge-success" value="3">Successfully delivered</option>
                                         <option class="badge badge-danger" value="4">Cancel</option>
+
                                     </select>
+
                             </td>
                             <td>
-                                <button class="mb-1 btn btn-sm btn-primary" type="button">Save</button>
+                                {!! Form::open(['method' => 'PATCH' ,'route' => ['order.update',$item->id] ]) !!}
+                                             <input id="status{{$item->id}}" name="status" type="hidden" value="">
+                                    <button data-value="{{$item->id}}"   class="mb-1 btn btn-sm btn-primary" type="submit">Save</button>
+                                {!! Form::close() !!}
+
+
                             </td>
+
                         </tr>
+
                         @endforeach
                         </tbody>
                     </table>
+
+                </div>
                 </div>
             </div>
         </div>
-    </div>
+
 @endsection
 @section('script')
     <script>
+        @if(Session::has('update-status'))
+        $(".alert-highlighted span").text("{{session('update-status')}}");
+        $('.alert-highlighted').show();
+        $('.alert-highlighted').fadeOut(5000);
+        @endif
        function getColor(item){
              var id =  item.getAttribute("data-value");
              var htmlId = "#setColor"+id;
-               var val = $(htmlId).find('option:selected').text();
+           var val = $(htmlId).find('option:selected').text();
+
+           $(`input[id="status${id}"]`).val(val);
                console.log(val);
                $(htmlId).removeClass('btn-info');
                $(htmlId).removeClass('btn-success');
@@ -103,6 +129,10 @@
                }
        }
 
-    </script>
+         //  var id =  item.getAttribute("data-value");
+         //  var htmlId = "#setColor"+id;
+        //   var status = $(htmlId).find('option:selected').text();
+
+       </script>
 
 @endsection

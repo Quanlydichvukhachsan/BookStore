@@ -4,6 +4,7 @@ use App\viewModels\OrderBookRequestModels;
 interface OrderContract{
     public function getAll();
     public function show($id);
+    public function update($request,$id);
     public function create(OrderBookRequestModels $orderBookRequest);
     public function orderAccept($id);
     public  function getOrderByActive($active);

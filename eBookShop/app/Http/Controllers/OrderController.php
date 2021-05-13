@@ -63,9 +63,9 @@ class OrderController extends Controller
      */
     public function orderShow($id,  $customer)
     {
-       $result = $this->orderBook->orderShow($id,$customer);
-       dd($result);
-        return view('admin.order.overview');
+       $item = $this->orderBook->orderShow($id,$customer);
+
+      return view('admin.order.overview',compact("item"));
     }
 
     /**
@@ -88,6 +88,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+       $result = $this->orderBook->update($request,$id);
+       if( $result === "Update date success"){
+           $request->session()->flash('update-status',$result);
+       }
+        return redirect()->route('order.index');
 
     }
 
@@ -112,17 +117,7 @@ class OrderController extends Controller
         return view('admin.order.request',compact('order'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     *  @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function orderAccept($id)
-    {
-           $this->orderBook->orderAccept($id);
-           return redirect()->back();
-    }
+
     /**
      * Store a newly created resource in storage.
      *

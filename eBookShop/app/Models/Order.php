@@ -16,7 +16,7 @@ class Order extends Model
     ];
 
     public function books(){
-          return $this->belongsToMany('App\Models\Book','order_book', 'order_id', 'book_id');
+          return $this->belongsToMany('App\Models\Book','order_book', 'order_id', 'book_id')->withPivot('amount');
      }
 
       public function user(){

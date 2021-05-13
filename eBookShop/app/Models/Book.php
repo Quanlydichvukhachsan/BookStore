@@ -46,7 +46,7 @@ class Book extends Model
     }
     public function orders()
     {
-        return $this->belongsToMany('App\Models\Order','order_book', 'book_id', 'order_id')->withPivot('amount');
+        return $this->belongsToMany('App\Models\Order','order_book', 'book_id', 'order_id');
     }
 
     public function getPriceDiscountAttribute()
