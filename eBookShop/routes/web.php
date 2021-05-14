@@ -39,21 +39,24 @@ Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 's
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::group(['middleware' => ['role:Superuser|Administrator|Manager|Accounting|Salesman|Staff|Inventory officer|HR']],function () {
 //admin
     Route::resource('admin',Controllers\AdminController::class);
+});
+
+Route::group(['middleware' => ['role:Administrator|Manager|Salesman|Staff']],function () {
 
     Route::resource('category',Controllers\CategoryController::class);
-    Route::resource('product', ProductController::class);
-
+   //Route::resource('author',AuthorController::class);
+   // Route::resource('publisher',Controllers\PublisherController::class);
 });
 
 Route::middleware(['auth'])->group(function () {
-
-
+    Route::resource('author',AuthorController::class);
+    Route::resource('publisher',Controllers\PublisherController::class);
 //product
 
-
+    Route::resource('product', ProductController::class);
 //user
     Route::resource('user',UserController::class);
 
@@ -75,12 +78,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
     Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
 
-    Route::resource('author',AuthorController::class);
+
 
     Route::resource('book',BookController::class);
 
     Route::post('/book/site/{id}/file-delete',[BookController::class, 'deleteImage'])->name('book.deleteImage');
     Route::get('/book/{id}/discount',[BookController::class, 'discountBook'])->name('book.discount');
     Route::post('/book/{id}/discount/update',[BookController::class, 'updateDiscountBook'])->name('book.UpdateDiscount');
-    Route::resource('publisher',Controllers\PublisherController::class);
+
 });

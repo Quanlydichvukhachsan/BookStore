@@ -28,8 +28,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-add-author" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Thêm
-                        </button>
+                        @if(auth()->user()->hasDirectPermission('Create'))
+                            <button type="submit" id="btn-add-author" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Thêm
+                            </button>
+                        @endif
                         <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
                     </div>
                 </form>

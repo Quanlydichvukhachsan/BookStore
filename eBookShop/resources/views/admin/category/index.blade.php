@@ -1,8 +1,10 @@
 @extends('layouts.main')
-
+@section('style')
+    <link rel="stylesheet" href="{{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css")}}">
+@endsection
 @section('content')
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
                     <h2>Thông tin</h2>
@@ -74,105 +76,86 @@
         </div>
 
 
-        <div class="col-xl-7 float-right">
-            <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389">
+        <div class="col-xl-8 float-right">
+            <div class="card card-default table-responsive">
                 <div class="card-header card-header-border-bottom">
                     <h2>Team Activity</h2>
                 </div>
+                <div class="card-body">
+                    <table id="expendable-data-table" class="display" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Publisher</th>
+                            <th>Publication_Date</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th></th>
+                            <th class="none">id</th>
+                            <th class="none">image</th>
+                            <th class="none">weight</th>
+                            <th class="none">size</th>
+                            <th class="none">number of pages</th>
+                            <th class="none">formality</th>
+                            <th class="none">Type</th>
+                            <th class="none">discount</th>
+                            <th class="none">create_at</th>
+                            <th class="none">updated_at</th>
+                            <th class="none"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="sid">
+                                <td>gdgdgd</td>
+                                <td>rin</td>
+                                <td>uncle ob</td>
+                                <td>2020-1-4</td>
+                                <td>van hoc</td>
+                                <td>300.000</td>
+                                <td class="text-right">
+                                    <div class="dropdown show d-inline-block widget-dropdown">
+                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
+                                           id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false" data-display="static"></a>
+                                        <ul class="dropdown-menu dropdown-menu-right"
+                                            aria-labelledby="dropdown-recent-order5">
+                                            <li class="dropdown-item">
+                                                <a href="#">View</a>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a href="#">edit</a>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a type="button" id="btn-delete-book" data-value="2" >Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
 
-                <div class="card-body slim-scroll p-0">
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
-                            <i class="mdi mdi-cart-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Emma Smith</a>
-                            <p>Lorem ipsum dolor sit amet</p>
-                        </div>
-
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 1 min ago</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
-                            <i class="mdi mdi-email-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Sophia Amanda</a>
-                            <p>Donec sit amet justo dignissim</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 5 min ago</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
-                            <i class="mdi mdi-stack-exchange font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Emily Disuja</a>
-                            <p>At efficitur turpis hendrerit id</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 1 day ago</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
-                            <i class="mdi mdi-cart-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">William Camble</a>
-                            <p>Lorem ipsum dolor sit amet</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 10 AM</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-info text-white">
-                            <i class="mdi mdi-calendar-blank font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="">Comapny Meetup</a>
-                            <p>Donec sit amet justo dignissim</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 10 AM</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
-                            <i class="mdi mdi-stack-exchange font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Support Ticket</a>
-                            <p>At efficitur turpis hendrerit id</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 10 AM</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
-                            <i class="mdi mdi-email-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">New Enquiry</a>
-                            <p>Phileine has placed an new order</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i class="mdi mdi-clock-outline"></i> 9 AM</span>
-                    </div>
+                                <td>32</td>
+                                <td>
+                                    no image
+                                </td>
+                                <td>67</td>
+                                <td>3.9</td>
+                                <td>789</td>
+                                <td>soft cover</td>
+                                <td>Trong nuoc</td>
+                                <td>No</td>
+                                <td>45-78-3435</td>
+                                <td>45-78-3435</td>
+                                <td>
+                                    <button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"
+                                            data-target="#exampleModalSmall">
+                                        Discount
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    @include('admin.book.discount')
                 </div>
-                <div class="mt-3"></div>
             </div>
         </div>
     </div>
@@ -186,7 +169,7 @@
 @endsection
 @section('script')
 
-
+    <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}> </script>
 
     <link rel="stylesheet" type="text/css"
           href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css"/>
@@ -196,6 +179,23 @@
     <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
+        $(document).ready(function (){
+            var table = $('#expendable-data-table').DataTable({
+                'responsive': true
+            });
+
+            // Handle click on "Expand All" button
+            $('#btn-show-all-children').on('click', function(){
+                // Expand row details
+                table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
+            });
+
+            // Handle click on "Collapse All" button
+            $('#btn-hide-all-children').on('click', function(){
+                // Collapse row details
+                table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+            });
+        });
         $(document).ready(function () {
             $.fn.fill_parent_category();
             loadauthor();

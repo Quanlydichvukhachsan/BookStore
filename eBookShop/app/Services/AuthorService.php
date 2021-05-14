@@ -18,6 +18,7 @@ class AuthorService implements AuthorContract
 
     public function create($request)
     {
+        auth()->user()->can('Create');
 //        $result = $request->all();
 
           Author::create([

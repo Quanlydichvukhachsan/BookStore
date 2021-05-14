@@ -28,9 +28,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        @if(auth()->user()->hasDirectPermission('Edit') ||auth()->user()->hasDirectPermission('Update'))
                         <button type="submit" id="btn-edit-author" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Cập nhật
                         </button>
+                        @endif
+                            @if(auth()->user()->can('Delete'))
                         <button type="button" class="btn btn-danger btn-pill"  id="btn-delete-author">Xoá</button>
+                        @endif
                     </div>
                 </form>
             </div>
