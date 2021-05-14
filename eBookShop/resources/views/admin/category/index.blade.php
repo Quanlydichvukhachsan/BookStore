@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-5">
             <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
                     <h2>Thông tin</h2>
@@ -19,7 +19,6 @@
                                     </button>
                                     @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
                                 </div>
-
 
                                 <div id="collapse1" class="collapse show" aria-labelledby="heading1"
                                      data-parent="#accordion3">
@@ -72,8 +71,6 @@
                 </div>
             </div>
         </div>
-
-
 
     </div>
 
@@ -163,7 +160,6 @@
                 error: function (error) {
                     console.log(error);
                 }
-
             })
         });
 
@@ -271,22 +267,37 @@
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-
-                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['full_name'] + '</a>' +
+                        var stringForm = '@csrf';
+                        var html = '<form id="author'+data[i]['id']+'">'
+                            +stringForm
+                            +'<li class="col-12 divAuthor"> <a  onclick="loadBook('+data[i]['id']+')">' + data[i]['full_name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
-                           +'<i class="mdi mdi-account-edit"></i></button></li>';
+                           +'<i class="mdi mdi-account-edit"></i></button></li></form>';
 
                         $(".listAuthor").append(html)
                     }
                 },
                 error: function (error) {
-
                     console.log(error)
                 }
             })
         }
 
+
+        function loadBook($id){
+
+            console.log($id);
+            $.ajax({
+                url:'/author/'+$parameter+'/show',
+                method:'GET',
+                data:JSON.stringify($id),
+                success:function (data){
+                    console.log(data)
+                }
+            });
+
+        }
         $('#btn-add-author').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -398,7 +409,7 @@
                             return [key, data[i][key]];
                         });
 
-                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['name'] + '</a>' +
+                        var html = '<li class="col-12 divAuthor"><a  href="" class="col-10">' + data[i]['name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit_publisher" id="btn-publisher-edit" onclick="bind_Publisher(\''+result+'\')">'
                             +'<i class="mdi mdi-account-edit"></i></button></li>';

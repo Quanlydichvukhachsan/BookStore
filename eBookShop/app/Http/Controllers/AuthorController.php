@@ -24,7 +24,6 @@ class AuthorController extends Controller
     {
         $authors= $this->authorContracts->getAll();
         return $authors;
-        //return  view('admin\author\index',compact('authors'));
     }
 
     /**
@@ -57,7 +56,8 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        //
+        $result = $this->authorContracts->showBook($id);
+        return $result;
     }
 
     /**

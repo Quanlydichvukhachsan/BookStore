@@ -18,17 +18,13 @@ class AuthorService implements AuthorContract
 
     public function create($request)
     {
-//        $result = $request->all();
-
-          Author::create([
+         Author::create([
             'firstName' =>$request->input('add-firstname-author'),
             'lastName' =>$request->input('add-lastname-author')
         ]);
-
     }
     public function update($Request)
     {
-
         $input = $Request->all();
         $firstName = $input['firstname_edit_author'];
         $lastName = $input['lastname_edit_author'];
@@ -39,25 +35,17 @@ class AuthorService implements AuthorContract
         $author->save();
         $result= "Cập nhật thành công";
         return $result;
-
-
     }
     public function delete($Request)
     {
         $ids = $Request['idAuthor'];
         $result = array('error' => 'error', 'success' => 'success');
-        $author = Author::findOrFail($ids);
-
-
-//        if (count($author->books)) {
-//            return $result['error'];
-//
-//        } else {
-//            Category::destroy($ids);
-//            return $result['success'];
-//        }
         Author::destroy($ids);
         return $result['success'];
-
+    }
+    public function showBook($id)
+    {
+        $book = Author::find($id);
+        return $book;
     }
 }

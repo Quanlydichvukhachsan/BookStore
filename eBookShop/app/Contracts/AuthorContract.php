@@ -7,4 +7,5 @@ interface AuthorContract{
     public function create($request);
     public function update($Request);
     public function delete($Request);
+    public function showBook($id);
 }
