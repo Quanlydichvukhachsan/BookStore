@@ -153,7 +153,18 @@
             height: $(window).height() + 'px',
             opacity: 0.4,
             background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
-        })
+        });
+        $overlayRole = $('<div id="overlayRole"/>').css({
+            position: 'fixed',
+            display: 'none',
+            top: 0,
+            left: 0,
+            color: '#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity: 0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        });
 
         $('#btn-submit').click(function (e) {
             e.preventDefault();
@@ -345,10 +356,9 @@
         })
         $('#role-submit').click(function (e) {
             e.preventDefault();
-            $overlay.appendTo("#exampleModal");
-            $('#overlay').show();
+            $overlayRole.appendTo("#exampleModal");
+            $('#overlayRole').show();
             var result = getParentNameByChild(tree);
-            console.log(result);
             setTimeout(function () {
 
                 $.ajax({
@@ -377,7 +387,7 @@
                         console.log(data.success);
                         $(".alert-highlighted span").text(data.success);
                         $('.alert-highlighted').show();
-                        $('#overlay').hide();
+                        $('#overlayRole').hide();
                         $('#exampleModal').modal('hide');
                         $('.alert-highlighted').fadeOut(5000);
                         tree.destroy();
@@ -387,7 +397,7 @@
                         console.log(error);
                     }
                 });
-            }, 500)
+            }, 1000)
         })
 
         function deleteUser(item){

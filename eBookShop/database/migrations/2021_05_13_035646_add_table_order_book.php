@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TableBookOrder extends Migration
+class AddTableOrderBook extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,11 @@ class TableBookOrder extends Migration
     public function up()
     {
         Schema::create('order_book', function (Blueprint $table) {
-            $table->integer('book_id');
+            $table->id();
             $table->integer('order_id');
-            $table->decimal('amount',8,3);
-
+            $table->integer('book_id');
+            $table->integer('amount');
+            $table->timestamps();
         });
     }
 
