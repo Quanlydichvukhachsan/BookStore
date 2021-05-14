@@ -100,6 +100,10 @@
         $(".alert-highlighted span").text("{{session('update-status')}}");
         $('.alert-highlighted').show();
         $('.alert-highlighted').fadeOut(5000);
+        @elseif(Session::has('delete-success'))
+        $(".alert-highlighted span").text("{{session('delete-success')}}");
+        $('.alert-highlighted').show();
+        $('.alert-highlighted').fadeOut(5000);
         @endif
        function getColor(item){
              var id =  item.getAttribute("data-value");
@@ -129,9 +133,6 @@
                }
        }
 
-         //  var id =  item.getAttribute("data-value");
-         //  var htmlId = "#setColor"+id;
-        //   var status = $(htmlId).find('option:selected').text();
 
        </script>
 

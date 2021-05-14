@@ -53,33 +53,34 @@
               </thead>
               <tbody>
               @foreach($role as $roles )
-                <tr id="sid{{$roles->id}}">
-                <td>{{$roles->id}}</td>
-                <td>{{$roles->name}}</td>
-                <td>
-                    @if($roles->name === "Administrator")
-                        <span class="badge badge-info">
-                        {{ __('Full Permission') }}
-                        </span>
-                    @endif
+                  <tr id="sid{{$roles->id}}">
+                      <td>{{$roles->id}}</td>
+                      <td>{{$roles->name}}</td>
+                      <td>
+                                  @if($roles->name === "Administrator")
+                                      <span class="badge badge-info">
+                                    {{ __('Full Permission') }}
+                                      </span>
+                                      @else
+                              @foreach($roles->permissions as $permissionsName)
+                                  <span class="badge badge-info">
+                                       {{ __($permissionsName->name)}}
 
-                    @foreach($roles->permissions as $permissionsName)
-                        <span class="badge badge-info">
-                        {{$permissionsName->name}}
-                </span>
-                    @endforeach
-                </td>
-                    <td>
-                        <button class="mb-1 btn btn-success" data-toggle="modal"
-                                data-target="#exampleModalForm" data-value="{{$roles->id}}" onclick="getRoleId(this)">
-                           <span><i class="mdi mdi-pencil"></i></span>
-                        </button>
-                         <button class="mb-1 btn btn-danger" data-value="{{$roles->id}}" onclick="deleteRoleById(this)">
-                            <span><i class="mdi mdi-trash-can"></i></span>
-                         </button>
+                                 </span>
+                              @endforeach
+                                  @endif
+                      </td>
+                      <td>
+                          <button class="mb-1 btn btn-success" data-toggle="modal"
+                                  data-target="#exampleModalForm" data-value="{{$roles->id}}" onclick="getRoleId(this)">
+                              <span><i class="mdi mdi-pencil"></i></span>
+                          </button>
+                          <button class="mb-1 btn btn-danger" data-value="{{$roles->id}}" onclick="deleteRoleById(this)">
+                              <span><i class="mdi mdi-trash-can"></i></span>
+                          </button>
 
-                    </td>
-              </tr>
+                      </td>
+                  </tr>
 
               @endforeach
               </tbody>

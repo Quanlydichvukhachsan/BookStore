@@ -23,16 +23,6 @@ class OrderBookService implements OrderContract{
     public function create(OrderBookRequestModels $order){
                 return $this->order::create($order);
     }
-     public function orderAccept($id){
-
-         $order = $this->order::findOrFail($id);
-         $order->active =1;
-         return $order->save();
-     }
-     public function  getOrderByActive($active){
-         return  $this->order->where('active', '=', $active)->get();
-     }
-
 
      public function orderShow($id, $customer)
      {
@@ -54,6 +44,7 @@ class OrderBookService implements OrderContract{
                 $orderView->setTotalPrice(number_format($totalPrice, 3));
            }
            $orderView->setId($id);
+         $orderView->setUserId($user->id);
            $orderView->setName($user->userName);
           $orderView->setFullName($user->full_name);
           $orderView->setAddress($user->address);
@@ -75,6 +66,24 @@ class OrderBookService implements OrderContract{
            return "No changed";
        }
        return "Update date success";
+
+    }
+    public function destroy($id)
+    {
+       $order =  Order::findOrFail($id);
+      global $message ;
+       if($order->status === "Cancel"){
+           $booksOrder =$order->books;
+           foreach ($booksOrder as $item){
+               $order->books()->detach($item->id);
+           }
+               $order->delete();
+               $message ="Delete success!";
+       }else{
+           $message ="Cannot delete!";
+           return $message;
+       }
+       return $message;
 
     }
 }

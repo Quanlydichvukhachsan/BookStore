@@ -350,10 +350,11 @@
 
         <div class="h5 large">Billing Address</div>
         <div class="row">
+
             <div class="col-lg-6 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
 
                 <div id="details" class="bg-white rounded pb-5">
-                    <form>
+
                         <div class="form-group"> <label class="text-muted">Name</label> <input type="text" value="{{$item->getName()}}" class="form-control"> </div>
                         <div class="form-group"> <label class="text-muted">Email</label>
                             <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input type="email" value="{{$item->getEmail()}}"> <span class="fas fa-check text-success pr-sm-2 pr-0"></span> </div>
@@ -393,7 +394,7 @@
                             </div>
 
                         </div>
-                    </form>
+
                 </div> <input type="checkbox" checked> <label>Shipping address is same as billing</label>
                 <div id="address" class="bg-light rounded mt-3">
                     <div class="h5 font-weight-bold text-primary"> Shopping Address </div>
@@ -456,16 +457,92 @@
                         <div class="col-md-6">
                             <div> <a class="btn text-uppercase" href="{{route('order.index')}}">back to order</a> </div>
                         </div>
+                         <form>
+                             @csrf
+                             @method("DELETE")
                         <div class="col-md-6 pt-md-0 pt-3">
-                            <div class="btn text-white ml-auto"> <span class="fas fa-lock"></span> Clear order </div>
+                            <button class="btn text-white ml-auto" onclick="deleteOrder(this)" data-user="{{$item->getUserId()}}" data-value="{{$item->getId()}}" type="button"><span class="fas fa-lock"></span> Clear order</button>
                         </div>
+                         </form>
                     </div>
 
 
 
                 <div class="text-muted pt-3" id="mobile"> <span class="fas fa-lock"></span> Your information is save </div>
             </div>
+
         </div>
+
         <div class="text-muted"> <span class="fas fa-lock"></span> Your information is save </div>
+
+@endsection
+@section('script')
+    <script>
+        $overlay = $('<div id="overlay"/>').css({
+            position: 'fixed',
+            display: 'none',
+            top: 0,
+            left: 0,
+            color: '#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity: 0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        })
+
+      function deleteOrder(item){
+
+          var id = item.getAttribute("data-value");
+          var userId = item.getAttribute("data-user");
+          Swal.fire({
+              title: 'Are you sure delete order ?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#29CC97',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+              $overlay.appendTo(".swal2-container");
+              $('#overlay').show();
+              if (result.isConfirmed) {
+                  $.ajax({
+                      type: 'DELETE',
+                      catch: false,
+                      url: '/order/'+id+'/customer/'+userId+'/delete',
+
+                      data: {
+                          "_token": '{{csrf_token()}}'
+                      },
+                      success: function (data) {
+                          console.log(data.result);
+                          if(data.result.localeCompare("Delete success!") === -1){
+                              $('#overlay').hide();
+                              $(".alert-highlighted").removeClass('alert-success');
+                              $(".alert-highlighted").addClass('alert-danger');
+                              $(".alert-highlighted span").text(data.result);
+                              $('.alert-highlighted').show();
+                              $('.alert-highlighted').fadeOut(5000);
+
+                          }else{
+                              $('#overlay').hide();
+                              Swal.fire(
+                                  'Deleted!',
+                                  data.result,
+                                  'success'
+                              )
+                              window.location = '/order/';
+                          }
+
+                      },
+                      error:function (error){
+                          console.log(error);
+                      }
+                  })
+              }
+          })
+      }
+    </script>
+
 
 @endsection

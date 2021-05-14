@@ -97,16 +97,27 @@ class OrderController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
-    }
 
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function orderDelete($id,$userId){
+        $result = $this->orderBook->destroy($id);
+        return response()->json(['result'=>$result]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -118,15 +129,5 @@ class OrderController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     *  @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function orderDelete($id)
-    {
-        //
-    }
 
 }

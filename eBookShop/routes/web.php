@@ -41,9 +41,8 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 //admin
-    Route::get('/admin', function () {
-        return view('admin.index');
-    })->name('admin.index');
+    Route::resource('admin',Controllers\AdminController::class);
+
     Route::resource('category',Controllers\CategoryController::class);
     Route::resource('product', ProductController::class);
 
@@ -70,12 +69,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 //order
-Route::resource('order',OrderController::class);
-//Route::get('/order/request/confirmation',[OrderController::class, 'orderConfirm'])->name('order.confirmation');
-//Route::post('/order/request/{order}/accept',[OrderController::class, 'orderAccept'])->name('order.accept');
+  Route::resource('order',OrderController::class);
+    Route::delete('/order/{id}/customer/{idCustomer}/delete',[OrderController::class, 'orderDelete'])->name('order.orderDelete');
     Route::get('/order/{id}/customer/{idCustomer}/show',[OrderController::class, 'orderShow'])->name('order.orderShow');
-    Route::delete('/order/request/{order}/delete',[OrderController::class, 'orderDelete'])->name('order.delete');
-
     Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
     Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
 

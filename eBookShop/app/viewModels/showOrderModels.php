@@ -7,6 +7,7 @@ namespace App\viewModels;
 class showOrderModels
 {
     private $id;
+    private $userId;
     private $name;
     private $fullName;
     private $email;
@@ -16,13 +17,30 @@ class showOrderModels
     private $country;
     private $totalPrice;
     private $status;
+    private $create_at;
     private $listBookViewModel =array();
+
+    public function setCreate_at($create_at) {
+        $this->create_at = $create_at;
+    }
+
+    public function getCreate_at() {
+        return $this->create_at;
+    }
+
     public function setId($id) {
         $this->id = $id;
     }
 
     public function getId() {
         return $this->id;
+    }
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+
+    public function getUserId() {
+        return $this->userId;
     }
 
     public function setName($name) {

@@ -68,37 +68,45 @@
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <img src="assets/img/user/user.png" class="user-image" alt="User Image" />
-                        <span class="d-none d-lg-inline-block">Abdus Salam</span>
+                        <img src="{{asset(Auth::user()->photo ? Auth::user()->photo->file : 'no user photo')}}" class="user-image"  alt="User Image" />
+                        <span class="d-none d-lg-inline-block">  {{ Auth::user()->full_name }} </span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <!-- User image -->
                         <li class="dropdown-header">
-                            <img src="assets/img/user/user.png" class="img-circle" alt="User Image" />
+                            <img src="{{asset(Auth::user()->photo ? Auth::user()->photo->file : 'no user photo')}}" class="img-circle" alt="User Image" />
                             <div class="d-inline-block">
-                                Abdus Salam <small class="pt-1">iamabdus@gmail.com</small>
+                                {{ Auth::user()->full_name }} <small class="pt-1">{{ Auth::user()->email }}</small>
                             </div>
                         </li>
 
                         <li>
-                            <a href="user-profile.html">
+                            @if(Auth::check())
+                            <a href="{{route('user.show',Auth::user()->id)}}">
                                 <i class="mdi mdi-account"></i> My Profile
                             </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="mdi mdi-email"></i> Message
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"> <i class="mdi mdi-diamond-stone"></i> Projects </a>
+                            @endif
                         </li>
                         <li class="right-sidebar-in">
-                            <a href="javascript:0"> <i class="mdi mdi-settings"></i> Setting </a>
+                            @if(Auth::check())
+                                <a href="{{route('user.edit',Auth::user()->id)}}">
+                                    <i class="mdi mdi-settings"></i> Setting
+                                </a>
+                            @endif
+
                         </li>
 
                         <li class="dropdown-footer">
-                            <a href="index.html"> <i class="mdi mdi-logout"></i> Log Out </a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
+                                <i class="mdi mdi-logout"></i>
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </li>

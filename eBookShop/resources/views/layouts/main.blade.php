@@ -50,8 +50,8 @@
         =====================================
       -->
                 @if(\Illuminate\Support\Facades\Route::currentRouteName()==="admin.index")
-                    @include('layouts.overview-order')
-
+{{--                    @include('layouts.overview-order')--}}
+                    @yield('overview-order')
                 @else
 
                     <div class="breadcrumb-wrapper">
