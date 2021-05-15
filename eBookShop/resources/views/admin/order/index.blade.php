@@ -61,7 +61,7 @@
                                     @endif
                             </td>
                             <td>
-
+                                @if(auth()->user()->hasDirectPermission('Update')||auth()->user()->hasRole('Administrator'))
                                     <select class="form-select" data-value="{{$item->id}}" id="setColor{{$item->id}}" onchange="getColor(this)">
 
                                        <option class="badge badge-info" value="0">Accepted</option>
@@ -71,14 +71,16 @@
                                         <option class="badge badge-danger" value="4">Cancel</option>
 
                                     </select>
+                                    @endif
 
                             </td>
                             <td>
+                                @if(auth()->user()->hasDirectPermission('Update')||auth()->user()->hasRole('Administrator'))
                                 {!! Form::open(['method' => 'PATCH' ,'route' => ['order.update',$item->id] ]) !!}
                                              <input id="status{{$item->id}}" name="status" type="hidden" value="">
                                     <button data-value="{{$item->id}}"   class="mb-1 btn btn-sm btn-primary" type="submit">Save</button>
                                 {!! Form::close() !!}
-
+                                 @endif
 
                             </td>
 

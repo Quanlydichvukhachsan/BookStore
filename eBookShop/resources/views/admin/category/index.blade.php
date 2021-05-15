@@ -229,7 +229,6 @@
                 })
             });
         });
-
         $('#btn-update-category').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -237,7 +236,6 @@
                 method: "PATCH",
                 data: $('#tree-form_update').serialize(),
                 success: function (data) {
-
                     $result = data.result;
                     if ($result !== 'error') {
                         $('#exampleModal1').hide();
@@ -257,17 +255,13 @@
                         $('.alert-highlighted').text('Tồn tài tên loại , kiểm tra lại!');
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
-
                     }
                 },
                 error: function (error) {
                     console.log(error);
                 }
-
             })
         });
-
-
         $('#btn-delete-category').click(function (e) {
             e.preventDefault();
             Swal.fire({
@@ -280,17 +274,13 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     $.ajax({
                         url: 'category/destroy',
                         method: "DELETE",
                         data: $('#tree-form_update').serialize(),
-
                         success: function (data) {
                             $result = data.result;
-
                             if ($result !== 'error') {
-
                                 $('#exampleModal1').hide();
                                 $(".alert-highlighted").removeClass('alert-danger');
                                 $(".alert-highlighted").addClass('alert-success');
@@ -300,10 +290,8 @@
                                 setTimeout(function () {
                                     location.reload();
                                 }, 1000)
-
                             } else {
                                 console.log($result);
-
                                 $('#exampleModal1').hide()
                                 setTimeout(function () {
                                     $('#exampleModal1').show()
@@ -322,25 +310,16 @@
                 }
             })
         })
-
-
         function formatText() {
-
             var text = $('#parent_id option:selected').text();
             console.log(text);
             var splitstr = text.split(/\s{4}/);
-
             var index = (splitstr.length) - 1;
-
-
         }
-
         function getCategory(text) {
             //document.getElementById('parent_id').value = text;
             $('#parent_id').val(text);
         }
-
-
         function myText(edit) {
             clear_option();
             $.fn.fill_parent_category();
@@ -350,15 +329,12 @@
             $('#parent_id_update option:selected').html(edit.name);
             $("select[id=parent_id_update] option:last").remove();
         }
-
         function clear_option() {
             $('#parent_id_update').children().remove();
         }
-
         function getID(item) {
             id = item.getAttribute('data-value');
         }
-
         // Author
         function loadauthor() {
             $.ajax({
@@ -371,22 +347,18 @@
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-
                         var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['full_name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
-                           +'<i class="mdi mdi-account-edit"></i></button></li>';
-
+                            +'<i class="mdi mdi-account-edit"></i></button></li>';
                         $(".listAuthor").append(html)
                     }
                 },
                 error: function (error) {
-
                     console.log(error)
                 }
             })
         }
-
         $('#btn-add-author').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -402,7 +374,6 @@
                     $('.alert-highlighted').text('Thêm thành công');
                     $('.alert-highlighted').show();
                     $('.alert-highlighted').fadeOut(5000);
-
                 },
                 error: function (error) {
                     console.log(error)
@@ -411,14 +382,14 @@
             })
         })
         function bind_Author(result) {
-                var data = result.split(',');
-                var  Author ={};
-                Author.id =data[1];
-                Author.firstName =data[3];
-                Author.lastName = data[5];
-                 $('#lastname_edit_author').val(Author.lastName);
-                 $('#firstname_edit_author').val(Author.firstName);
-                 $('#idAuthor').val(Author.id);
+            var data = result.split(',');
+            var  Author ={};
+            Author.id =data[1];
+            Author.firstName =data[3];
+            Author.lastName = data[5];
+            $('#lastname_edit_author').val(Author.lastName);
+            $('#firstname_edit_author').val(Author.firstName);
+            $('#idAuthor').val(Author.id);
         }
         $("#btn-edit-author").click(function (e){
             e.preventDefault();
@@ -464,7 +435,6 @@
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
                             } else {
-
                                 $('#edit-author').modal('hide');
                                 setTimeout(function () {
                                     $('#edit-author').show()
@@ -483,7 +453,6 @@
                 }
             })
         });
-
         //publisher
         loadPublisher();
         function loadPublisher() {
@@ -494,11 +463,9 @@
                 success: function (data) {
                     $(".listPublisher").empty();
                     for (i in data) {
-
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-
                         var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit_publisher" id="btn-publisher-edit" onclick="bind_Publisher(\''+result+'\')">'
@@ -511,7 +478,6 @@
                 }
             });
         }
-
         $('#btn-add-publisher').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -541,7 +507,6 @@
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
                     }
-
                 },
                 error: function (error) {
                     console.log(error)
@@ -555,11 +520,9 @@
             var  Publisher ={};
             Publisher.id =data[1];
             Publisher.name =data[3];
-
             $('#edit_name_publisher').val( Publisher.name);
             $('#idPublisher').val(Publisher.id);
         }
-
         $('#btn_edit_publisher').click(function (e){
             e.preventDefault();
             $.ajax({
@@ -568,27 +531,27 @@
                 cache: false,
                 data: $("#form_update_publisher").serialize(),
                 success:function (data){
-                   loadPublisher();
-                   $result = data.result;
-                   if ($result ==='success'){
-                       $('#edit_publisher').modal('hide');
-                       $(".alert-highlighted").removeClass('alert-danger');
-                       $(".alert-highlighted").addClass('alert-success');
-                       $('.alert-highlighted').text('Cập nhật thành công');
-                       $('.alert-highlighted').show();
-                       $('.alert-highlighted').fadeOut(5000);
-                   }else {
-                       $("#edit_publisher").hide();
-                       setTimeout(function () {
-                           $('#edit_publisher').show()
-                       }, 2000)
-                       $(".alert-highlighted").removeClass('alert-success');
-                       $(".alert-highlighted").addClass('alert-danger');
-                       $(".alert-highlighted span").text("Kiểm tra lại thông tin");
-                       $('.alert-highlighted').show();
-                       $('.alert-highlighted').fadeOut(5000);
-                   }
-               }
+                    loadPublisher();
+                    $result = data.result;
+                    if ($result ==='success'){
+                        $('#edit_publisher').modal('hide');
+                        $(".alert-highlighted").removeClass('alert-danger');
+                        $(".alert-highlighted").addClass('alert-success');
+                        $('.alert-highlighted').text('Cập nhật thành công');
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                    }else {
+                        $("#edit_publisher").hide();
+                        setTimeout(function () {
+                            $('#edit_publisher').show()
+                        }, 2000)
+                        $(".alert-highlighted").removeClass('alert-success');
+                        $(".alert-highlighted").addClass('alert-danger');
+                        $(".alert-highlighted span").text("Kiểm tra lại thông tin");
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(5000);
+                    }
+                }
             });
         });
         $('#btn_delete_publisher').click(function (e) {
@@ -618,7 +581,6 @@
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
                             } else {
-
                                 $('#edit_publisher').hide();
                                 setTimeout(function () {
                                     $('#edit_publisher').show()
@@ -637,18 +599,12 @@
                 }
             })
         });
-
-
     </script>
 
     <script type="text/javascript">
         jQuery(function ($) {
             $("#treeview").shieldTreeView();
         });
-
     </script>
 @endsection
-
-
-
 

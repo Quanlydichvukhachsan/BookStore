@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
@@ -39,48 +38,39 @@ Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 's
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
-//admin
+Route::group(['middleware' => ['auth','role:Superuser|Administrator|Manager|Accounting|Salesman|Staff|Inventory officer|HR']],function () {
+
     Route::resource('admin',Controllers\AdminController::class);
-
-    Route::resource('category',Controllers\CategoryController::class);
-    Route::resource('product', ProductController::class);
-
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::group(['middleware' => ['auth','role:Administrator|Manager|Salesman|Staff']],function () {
 
-
-//product
-
-
-//user
-    Route::resource('user',UserController::class);
-
-//role
-    Route::resource('role',RoleController::class);
-
-
-//permission
-    Route::resource('permission',PermissionController::class);
-//Add-Role-user
- Route::get('/user/{user}/role',[UserController::class, 'editRole'])->name('user.role');
- Route::post('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
-
-
-//order
-  Route::resource('order',OrderController::class);
-    Route::delete('/order/{id}/customer/{idCustomer}/delete',[OrderController::class, 'orderDelete'])->name('order.orderDelete');
-    Route::get('/order/{id}/customer/{idCustomer}/show',[OrderController::class, 'orderShow'])->name('order.orderShow');
-    Route::post('/category/getCategory',[CategoryController::class, 'getCategory'])->name('category.getCategory');
-    Route::post('/category/getCategory',[CategoryController::class, 'displayCategory'])->name('category.displayCategory');
-
+    Route::resource('category',Controllers\CategoryController::class);
     Route::resource('author',AuthorController::class);
-
+    Route::resource('publisher',Controllers\PublisherController::class);
     Route::resource('book',BookController::class);
 
     Route::post('/book/site/{id}/file-delete',[BookController::class, 'deleteImage'])->name('book.deleteImage');
     Route::get('/book/{id}/discount',[BookController::class, 'discountBook'])->name('book.discount');
     Route::post('/book/{id}/discount/update',[BookController::class, 'updateDiscountBook'])->name('book.UpdateDiscount');
-    Route::resource('publisher',Controllers\PublisherController::class);
+
+
 });
+Route::group(['middleware' => ['auth','role:Administrator|Manager']],function () {
+    Route::resource('user',UserController::class);
+
+});
+
+Route::group(['middleware' => ['auth','role:Administrator']],function () {
+    Route::resource('role',RoleController::class);
+    Route::resource('permission',PermissionController::class);
+    Route::get('/user/{user}/role',[UserController::class, 'editRole'])->name('user.role');
+    Route::post('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
+
+});
+Route::group(['middleware' => ['auth','role:Superuser|Administrator|Manager|Accounting|Salesman|Inventory officer']],function () {
+    Route::resource('order',OrderController::class);
+    Route::delete('/order/{id}/customer/{idCustomer}/delete',[OrderController::class, 'orderDelete'])->name('order.orderDelete');
+    Route::get('/order/{id}/customer/{idCustomer}/show',[OrderController::class, 'orderShow'])->name('order.orderShow');
+});
+

@@ -457,6 +457,7 @@
                         <div class="col-md-6">
                             <div> <a class="btn text-uppercase" href="{{route('order.index')}}">back to order</a> </div>
                         </div>
+                        @if(auth()->user()->hasDirectPermission('Delete')||auth()->user()->hasRole('Administrator'))
                          <form>
                              @csrf
                              @method("DELETE")
@@ -464,6 +465,7 @@
                             <button class="btn text-white ml-auto" onclick="deleteOrder(this)" data-user="{{$item->getUserId()}}" data-value="{{$item->getId()}}" type="button"><span class="fas fa-lock"></span> Clear order</button>
                         </div>
                          </form>
+                            @endif
                     </div>
 
 

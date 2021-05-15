@@ -22,10 +22,14 @@
                     </div>
 
                     <div class="modal-footer">
+                        @if(auth()->user()->hasDirectPermission('Edit') ||auth()->user()->hasDirectPermission('Update')||auth()->user()->hasRole('Administrator'))
                         <button type="submit" id="btn_edit_publisher" name="btn_edit_publisher" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')
                             Cập nhật
                         </button>
+                        @endif
+                            @if(auth()->user()->can('Delete')||auth()->user()->hasRole('Administrator'))
                         <button type="button" class="btn btn-danger btn-pill"  id="btn_delete_publisher">Xoá</button>
+                             @endif
                         <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
                     </div>
                 </form>

@@ -17,6 +17,7 @@ class CategoryController extends Controller
     public function __Construct(CategoryContract $CategoryContract)
     {
         $this->CategoryContract = $CategoryContract;
+
     }
 
     /**

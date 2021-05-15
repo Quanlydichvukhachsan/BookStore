@@ -69,7 +69,7 @@ class UserService implements UserContract
 
         }
 
-        $input['password'] = bcrypt($request->password);
+
         $user->firstName = $request->input('firstName');
         $user->lastName = $request->input('lastName');
         $user->userName = $request->input('userName');
@@ -77,7 +77,11 @@ class UserService implements UserContract
         if ($email === $user->email && $email !== null || $email === null) {
             $user->email = $request->input('email');
         }
-        $user->password = $input['password'];
+
+        if($request->password !==null){
+            $input['password'] = bcrypt($request->password);
+            $user->password = $input['password'];
+        }
         if (array_key_exists('photo_id', $input)) {
             $user->photo_id = $input['photo_id'];
         }

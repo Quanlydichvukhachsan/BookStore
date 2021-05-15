@@ -77,20 +77,22 @@
                     <ul  class="collapse"  id="app"
                          data-parent="#sidebar-menu">
                         <div class="sub-menu">
-
+                            @if(auth()->user()->hasRole('Administrator')||auth()->user()->hasRole('Manager') || auth()->user()->hasRole('HR'))
                             <li >
                                 <a class="sidenav-item-link" href="{{route('user.index')}}">
                                     <span class="nav-text">Users</span>
 
                                 </a>
                             </li>
-
+                            @endif
+                             @if(auth()->user()->hasRole('Administrator'))
                             <li >
                                 <a class="sidenav-item-link" href="{{route('role.index')}}">
                                     <span class="nav-text">Access Control</span>
 
                                 </a>
                             </li>
+                            @endif
                             <li >
                                 <a class="sidenav-item-link" href="{{route('order.index')}}">
                                     <span class="nav-text">Order</span>

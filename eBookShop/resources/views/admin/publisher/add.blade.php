@@ -21,8 +21,10 @@
                     </div>
 
                     <div class="modal-footer">
+                        @if(auth()->user()->hasDirectPermission('Create')||auth()->user()->hasRole('Administrator'))
                         <button type="submit" id="btn-add-publisher" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Thêm
                         </button>
+                        @endif
                         <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Bỏ qua</button>
                     </div>
                 </form>
