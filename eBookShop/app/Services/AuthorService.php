@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Contracts\AuthorContract;
 use App\Models\Author;
+use App\Models\Book;
 use App\Models\Category;
 
 class AuthorService implements AuthorContract
@@ -45,7 +46,7 @@ class AuthorService implements AuthorContract
     }
     public function showBook($id)
     {
-        $book = Author::find($id);
-        return $book;
+       $books = Book::where('author_id','=',22)->get();
+       return $books;
     }
 }

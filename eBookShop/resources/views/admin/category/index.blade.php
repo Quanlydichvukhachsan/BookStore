@@ -134,7 +134,6 @@
                 method: "PATCH",
                 data: $('#tree-form_update').serialize(),
                 success: function (data) {
-
                     $result = data.result;
                     if ($result !== 'error') {
                         $('#exampleModal1').hide();
@@ -267,10 +266,8 @@
                         var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-                        var stringForm = '@csrf';
-                        var html = '<form id="author'+data[i]['id']+'">'
-                            +stringForm
-                            +'<li class="col-12 divAuthor"> <a  onclick="loadBook('+data[i]['id']+')">' + data[i]['full_name'] + '</a>' +
+
+                        var html = '<li class="col-12 divAuthor"> <a href="javascript:loadBook('+data[i]['id']+')" >' + data[i]['full_name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
                            +'<i class="mdi mdi-account-edit"></i></button></li></form>';
@@ -289,9 +286,8 @@
 
             console.log($id);
             $.ajax({
-                url:'/author/'+$parameter+'/show',
+                url:'/author/'+$id+'show',
                 method:'GET',
-                data:JSON.stringify($id),
                 success:function (data){
                     console.log(data)
                 }
@@ -421,7 +417,6 @@
                 }
             });
         }
-
         $('#btn-add-publisher').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -451,7 +446,6 @@
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
                     }
-
                 },
                 error: function (error) {
                     console.log(error)
