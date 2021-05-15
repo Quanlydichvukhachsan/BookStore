@@ -28,7 +28,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @if(auth()->user()->hasDirectPermission('Create'))
+
+                        @if(auth()->user()->hasDirectPermission('Create')||auth()->user()->hasRole('Administrator'))
                             <button type="submit" id="btn-add-author" class="btn btn-success btn-pill">@include('admin.category.iconsvg.save')Thêm
                             </button>
                         @endif
