@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\HomeContract;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,9 +12,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    private  $homeContract;
+    public function __construct(HomeContract $homeContract)
     {
-
+             $this->homeContract =$homeContract;
     }
 
     /**
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('app.home');
+        $products =  $this->homeContract->getAll();
+      // dd($products);
+        return view('app.home',compact('products'));
     }
 }

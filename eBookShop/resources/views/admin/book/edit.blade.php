@@ -134,11 +134,11 @@
                         </div>
                         <div class="col-md-3"><label for="foreign_book" class="labels">Foreign book</label>
                             <select class="form-control" name="foreign_book">
-                                    @if($book->foreign_book === 0)
+
                                 <option value="0">Nuoc ngoai</option>
-                                @else
+
                                 <option value="1">Trong nuoc</option>
-                                @endif
+
                             </select>
                         </div>
                         <div class="col-md-6">
