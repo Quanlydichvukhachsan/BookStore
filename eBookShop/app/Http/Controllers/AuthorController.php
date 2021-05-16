@@ -49,15 +49,16 @@ class AuthorController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $result = $this->authorContracts->showBook($id);
-        return $result;
+        return response()->json($result);
     }
 
     /**
@@ -94,6 +95,7 @@ class AuthorController extends Controller
      */
     public function destroy(Request $request)
     {
+
         $result= $this->authorContracts->delete($request);
 
         return response()->json(['result' =>$result]);

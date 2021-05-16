@@ -8,6 +8,7 @@ use App\Contracts\AuthorContract;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorService implements AuthorContract
 {
@@ -46,7 +47,7 @@ class AuthorService implements AuthorContract
     }
     public function showBook($id)
     {
-       $books = Book::where('author_id','=',22)->get();
-       return $books;
+        $books = Book::where('author_id','=',$id)->get();
+        return $books;
     }
 }
