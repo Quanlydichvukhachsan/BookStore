@@ -21,7 +21,7 @@ class Author extends Model
     ];
 
     public  function books(){
-             return $this->hasMany('App/Models/Book','author_id','id');
+             return $this->hasMany('App\Models\Book','author_id','id');
     }
 
     public function getFullNameAttribute(){

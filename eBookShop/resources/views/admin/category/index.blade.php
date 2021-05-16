@@ -148,7 +148,8 @@
                             <td>45-78-3435</td>
                             <td>45-78-3435</td>
                             <td>
-                                <button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"
+                                <button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal"
+                                        href="#"
                                         data-target="#exampleModalSmall">
                                     Discount
                                 </button>
@@ -171,7 +172,7 @@
 @endsection
 @section('script')
 
-    <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}> </script>
+    <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}></script>
 
     <link rel="stylesheet" type="text/css"
           href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css"/>
@@ -181,19 +182,19 @@
     <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
             var table = $('#expendable-data-table').DataTable({
                 'responsive': true
             });
 
             // Handle click on "Expand All" button
-            $('#btn-show-all-children').on('click', function(){
+            $('#btn-show-all-children').on('click', function () {
                 // Expand row details
                 table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
             });
 
             // Handle click on "Collapse All" button
-            $('#btn-hide-all-children').on('click', function(){
+            $('#btn-hide-all-children').on('click', function () {
                 // Collapse row details
                 table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
             });
@@ -394,58 +395,60 @@
             $.ajax({
                 url: '/author/' + $id + 'show',
                 method: 'GET',
-                dataType:'json',
-                contentType:'application/json',
+                dataType: 'json',
+                contentType: 'application/json',
                 success: function (data) {
                     console.log(data)
-                    $("#sid").html("");
-                    $.each(data,function (key,val) {
-                        var html ='<td>'+val.name+'</td>'
-                            +'<td>rin</td>'
-                            +'<td>uncle ob</td>'
-                            +'<td>2020-1-4</td>'
-                            +'<td>van hoc</td>'
-                            +'<td>300.000</td>'
-                            +'<td class="text-right">'
-                            +'<div class="dropdown show d-inline-block widget-dropdown">'
-                            +'<a class="dropdown-toggle icon-burger-mini" href="#" role="button"'
-                            +'id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"'
-                            +'aria-expanded="false" data-display="static"></a>'
-                            +'<ul class="dropdown-menu dropdown-menu-right"'
-                            +'aria-labelledby="dropdown-recent-order5">'
-                            +'<li class="dropdown-item">'
-                            +'<a href="#">View</a>'
-                            +'</li>'
-                            +'<li class="dropdown-item">'
-                            +'<a href="#">edit</a>'
-                            +'</li>'
-                            +'<li class="dropdown-item">'
-                            +'<a type="button" id="btn-delete-book" data-value="2" >Delete</a>'
-                            +'</li>x'
-                            +'</ul>'
-                            +'</div>'
-                            +'</td>'
-                            +'<td>32</td>'
-                            +'<td>'
-                            +'no image'
-                            +'</td>'
-                            +'<td>67</td>'
-                            +'<td>3.9</td>'
-                            +'<td>789</td>'
-                            +'<td>soft cover</td>'
-                            +'<td>Trong nuoc</td>'
-                            +'<td>No</td>'
-                            +'<td>45-78-3435</td>'
-                            +'<td>45-78-3435</td>'
-                            +'<td>'
-                            +'<button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"'
-                            +'data-target="#exampleModalSmall">'
-                            +'Discount'
-                            +'</button>'
-                            +'</td>';
-
-                        $("#sid").append(html);
-
+                    $("#expendable-data-table tbody").empty();
+                    $.each(data, function (key, val) {
+                        var html =
+                            '<tr>'
+                            + '<td>dfdf</td>'
+                            + '<td>rin</td>'
+                            + '<td>uncle ob</td>'
+                            + '<td>2020-1-4</td>'
+                            + '<td>van hoc</td>'
+                            + '<td>300.000</td>'
+                            + '<td class="text-right">'
+                            + '<div class="dropdown show d-inline-block widget-dropdown">'
+                            + '<a class="dropdown-toggle icon-burger-mini" href="#" role="button"'
+                            + 'id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"'
+                            + 'aria-expanded="false" data-display="static"></a>'
+                            + '<ul class="dropdown-menu dropdown-menu-right"'
+                            + 'aria-labelledby="dropdown-recent-order5">'
+                            + '<li class="dropdown-item">'
+                            + '<a href="#">View</a>'
+                            + '</li>'
+                            + '<li class="dropdown-item">'
+                            + '<a href="#">edit</a>'
+                            + '</li>'
+                            + '<li class="dropdown-item">'
+                            + '<a type="button" id="btn-delete-book" data-value="2" >Delete</a>'
+                            + '</li>x'
+                            + '</ul>'
+                            + '</div>'
+                            + '</td>'
+                            + '<td>32</td>'
+                            + '<td>'
+                            + 'no image'
+                            + '</td>'
+                            + '<td>67</td>'
+                            + '<td>3.9</td>'
+                            + '<td>789</td>'
+                            + '<td>soft cover</td>'
+                            + '<td>Trong nuoc</td>'
+                            + '<td>No</td>'
+                            + '<td>45-78-3435</td>'
+                            + '<td>45-78-3435</td>'
+                            + '<td>'
+                            + '<button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"'
+                            + 'data-target="#exampleModalSmall">'
+                            + 'Discount'
+                            + '</button>'
+                            + '</td>'
+                            + '</tr>'
+                            //+'</thead>';
+                        $("#expendable-data-table tbody").append(html);
                     });
 
                 }
