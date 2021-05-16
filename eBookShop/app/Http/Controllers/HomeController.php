@@ -29,4 +29,16 @@ class HomeController extends Controller
       // dd($products);
         return view('app.home',compact('products'));
     }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @param string $name
+     * @return \Illuminate\Http\Response
+     */
+    public function getByCategory($name,$id){
+
+        return view('app.product');
+    }
 }

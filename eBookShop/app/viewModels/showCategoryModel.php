@@ -7,9 +7,20 @@ namespace App\viewModels;
 class showCategoryModel
 {
     private $id;
+    private $titleSlug;
     private $name;
     private $parent_id;
     private $childs = array();
+
+
+    public function setTitleSlug($titleSlug)
+    {
+        $this->titleSlug = $titleSlug;
+    }
+    public function getTitleSlug()
+    {
+        return $this->titleSlug;
+    }
     public function getId()
     {
         return $this->id;

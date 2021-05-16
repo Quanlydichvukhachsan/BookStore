@@ -15,7 +15,9 @@ header{
     z-index: 999;
 }
 
-
+#span-collapse{
+    cursor: pointer;
+}
 i {
     color:black;
 
