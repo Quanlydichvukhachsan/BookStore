@@ -365,11 +365,11 @@
                         var html =
                             '<tr>'
                             + '<td>' + val.id + '</td>'
-                            + '<td>'+val.formality+'</td>'
-                            + '<td>uncle ob</td>'
+                            + '<td>'+val.author_id+'</td>'
+                            + '<td>'+val.publisher_id+'</td>'
                             + '<td>2020-1-4</td>'
                             + '<td>van hoc</td>'
-                            + '<td>300.000</td>'
+                            + '<td>'+val.original_Price+'</td>'
                             + '<td class="text-right">'
                             + '<div class="dropdown show d-inline-block widget-dropdown">'
                             + '<a class="dropdown-toggle icon-burger-mini" href="#" role="button"'
@@ -389,18 +389,18 @@
                             + '</ul>'
                             + '</div>'
                             + '</td>'
-                            + '<td>31</td>'
+                            + '<td>'+val.id+'</td>'
                             + '<td>'
                             + 'no image'
                             + '</td>'
-                            + '<td>67</td>'
-                            + '<td>3.9</td>'
-                            + '<td>789</td>'
-                            + '<td>soft cover</td>'
-                            + '<td>Trong nuoc</td>'
+                            + '<td>'+val.weight+'</td>'
+                            + '<td>'+val.size+'</td>'
+                            + '<td>'+val.number_of_pages+'</td>'
+                            + '<td>'+val.formality+'</td>'
+                            + '<td>'+val.foreign_book+'</td>'
                             + '<td>No</td>'
-                            + '<td>45-78-3435</td>'
-                            + '<td>45-78-3435</td>'
+                            + '<td>'+val.created_at+'</td>'
+                            + '<td>'+val.updated_at+'</td>'
                             + '<td>'
                             + '<button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"'
                             + 'data-target="#exampleModalSmall">'
@@ -514,7 +514,7 @@
             })
         });
 
-        //publisher
+
         loadPublisher();
 
         function loadPublisher() {
