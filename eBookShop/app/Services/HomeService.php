@@ -47,11 +47,58 @@ class HomeService implements HomeContract
          $titleSlug =  join("-",$arrFormat);
          return $titleSlug;
      }
+     public function setProductByCategory($category,$name ,$booksByCategory){
+         global  $parentCategory  ;
+         $productViewModels =new productViewModels();
+         $productViewModels->setpathName($name);
+         $productViewModels->setpathId($category->id);
+         if($category->slug_name === $name){
+
+             if(count($booksByCategory))
+             {
+
+                 foreach ($booksByCategory as $book){
+                     $bookViewModels =new bookViewModels();
+                     $bookViewModels->setId($book->id);
+                     $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
+                     $bookViewModels->setPrice($book->price);
+                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     $bookViewModels->setTitle($book->title);
+                     $productViewModels->setListBook($bookViewModels);
+                 }
+             }
+
+             if($category->parent_id !== 0) {
+                 $parentCategory = Category::findOrFail($category->parent_id);
+             }else{
+                 $parentCategory =$category;
+             }
+
+         }else{
+             $parentCategory =$category;
+         }
+         $showCategoryModel =new showCategoryModel();
+         $showCategoryModel->setId($parentCategory->id);
+         $showCategoryModel->setName($parentCategory->name);
+         $showCategoryModel->setTitleSlug($this->formatNameToSlug($parentCategory->name));
+         if($parentCategory->childs->count() >0){
+             foreach ($parentCategory->childs as $child) {
+                 $childModel =new showCategoryModel();
+                 $childModel->setId($child->id);
+                 $childModel->setName($child->name);
+                 $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                 $showCategoryModel->setChilds($childModel);
+             }
+         }
+         $productViewModels->setListCategory($showCategoryModel);
+         return $productViewModels;
+     }
     public function getAll()
     {
          $books =  Book::all()->take(10);
          $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
+
          foreach ($books as $book){
 
                $bookViewModels =new bookViewModels();
@@ -59,6 +106,7 @@ class HomeService implements HomeContract
                $bookViewModels->setPrice($book->price);
                $bookViewModels->setImages($book->imagebooks[0]->file);
                $bookViewModels->setTitle($book->title);
+               $bookViewModels->setAuthor($book->author->full_name);
              $productViewModels->setListBook($bookViewModels);
 
          }
@@ -83,4 +131,140 @@ class HomeService implements HomeContract
        return $productViewModels ;
     }
 
+    public function getByCategory($name, $id,$key)
+    {
+        $category =  Category::findOrFail($id);
+
+        if($key !== ""){
+            if($key === 'gia-thap'){
+                $arrSort = $category->books->sortBy("price");
+
+            } elseif($key === 'gia-giam'){
+                $arrSort = $category->books->sortByDesc("price");
+
+            }
+            elseif ($key === 'ten-giam') {
+                $arrSort = $category->books->sortByDesc("title");
+
+            }elseif ($key === 'ten-tang'){
+                $arrSort = $category->books->sortBy("title");
+
+            }elseif ($key === 'biaMem') {
+                $arrSort = $category->books->where('formality','=','Soft Cover');
+
+            }
+            else{
+                $arrSort = $category->books->where('formality','=','Hard Cover');
+
+            }
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+
+        }else{
+            $productViewModels = $this->setProductByCategory($category,$name,$category->books);
+        }
+
+        return $productViewModels;
+
+    }
+    public function setHtml($products){
+        global $html  ;
+        if(count($products->getListBook())) {
+            foreach ($products->getListBook() as $item) {
+                $html .= '<div class="col-sm-4">' .
+                    '<div class="product-image-wrapper">' .
+                    '<div class="single-products">' .
+                    '<div class="productinfo text-center">' .
+                    '<img src="' . $item->getImages() . '"' . ' alt="img-' . $item->getTitle() . '"/>' .
+                    '<h2>' . $item->getPrice() . 'đ</h2>' .
+                    '<p>' . $item->getTitle() . '</p>' .
+                    '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>' .
+                    '</div>' .
+                    '<div class="product-overlay" >' .
+                    '<div class="overlay-content" >' .
+                    '<h2>' . $item->getPrice() . 'đ</h2>' .
+                    '<p>' . $item->getTitle() . '</p>' .
+                    '<a href = "#" class="btn btn-default add-to-cart" ><i class="fa fa-shopping-cart" ></i > Thêm vào giỏ </a >' .
+                    '</div>' .
+                    '</div>' .
+                    '</div>' .
+                    '<div class="choose">' .
+                    '<ul class="nav nav-pills nav-justified" >' .
+                    '<li ><a href = "" ><i class="fa fa-plus-square" ></i > Thêm Vào Danh Sách Yêu Thích </a ></li >' .
+                    '</ul>' .
+                    '</div>' .
+                    '</div>' .
+                    '</div>';
+            }
+            $html .= '<ul class="pagination">' .
+                '<li class="active" ><a href = "" > 1</a ></li >' .
+                '<li ><a href = "" > 2</a ></li >' .
+                '<li ><a href = "" > 3</a ></li >' .
+                '<li ><a href = "" >&raquo;</a ></li >' .
+                '</ul>';
+        }else{
+
+            $html =  '<div class="content-404">'.
+                '<p > Sản phẩm không có </p >'.
+                '</div>';
+        }
+
+        return $html;
+    }
+
+
+    public function getByProductByCategory($name,$id)
+    {
+
+        $products = $this->getByCategory($name,$id,"");
+         $html = $this->setHtml($products);
+          return $html;
+    }
+
+    public function sortPriceById($name, $id, $key)
+    {
+
+       global $productViewModels ;
+        $category =  Category::findOrFail($id);
+        if($key === 'gia-thap'){
+         $arrSort = $category->books->sortBy("price");
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        }else{
+            $arrSort = $category->books->sortByDesc("price");
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        }
+        $html = $this->setHtml($productViewModels);
+        return $html;
+    }
+
+    public function sortNameById($name, $id, $key)
+    {
+        global $productViewModels ;
+        $category =  Category::findOrFail($id);
+        if($key === 'ten-tang'){
+            $arrSort = $category->books->sortBy("title");
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        }else{
+            $arrSort = $category->books->sortByDesc("title");
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        }
+        $html = $this->setHtml($productViewModels);
+        return $html;
+    }
+
+    public function sortFormalityById($name, $id, $key)
+    {
+        global $productViewModels ;
+        $category =  Category::findOrFail($id);
+        if($key === 'biaMem'){
+            $arrSort = $category->books->where('formality','=','Soft Cover');
+
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        }else{
+            $arrSort = $category->books->where('formality','=','Hard Cover');
+
+            $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        }
+        $html = $this->setHtml($productViewModels);
+        return $html;
+    }
 }

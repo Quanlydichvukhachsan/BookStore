@@ -10,7 +10,26 @@ class productViewModels
 {
     private $listBook =array();
     private $listCategory =array();
+    private $pathName;
+    private $pathId;
 
+    public function setpathName($name) {
+       $this->pathName =$name;
+    }
+
+
+    public function getpathName()  {
+        return $this->pathName;
+    }
+
+    public function setpathId($id) {
+        $this->pathId =$id;
+    }
+
+
+    public function getpathId()  {
+        return $this->pathId;
+    }
     public function setListBook($books) {
         array_push($this->listBook,$books);
     }

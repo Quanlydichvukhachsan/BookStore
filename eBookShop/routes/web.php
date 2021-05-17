@@ -27,6 +27,9 @@ use App\Http\Controllers\AuthorController;
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::class, 'getByCategory'])->name('home.product');
+
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+//Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');
 Auth::routes();
 
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
