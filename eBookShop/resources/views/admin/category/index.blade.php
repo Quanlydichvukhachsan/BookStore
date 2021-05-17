@@ -86,78 +86,17 @@
         <div class="col-lg-8">
             <div class="card card-default table-responsive">
                 <div class="card-header card-header-border-bottom">
-                    <h2>Team Activity</h2>
+                    <h2>Sách</h2>
                 </div>
                 <div class="card-body">
                     <table id="expendable-data-table" class="display" cellspacing="0" width="100%">
                         <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Publisher</th>
-                            <th>Publication_Date</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th></th>
-                            <th class="none">id</th>
-                            <th class="none">image</th>
-                            <th class="none">weight</th>
-                            <th class="none">size</th>
-                            <th class="none">number of pages</th>
-                            <th class="none">formality</th>
-                            <th class="none">Type</th>
-                            <th class="none">discount</th>
-                            <th class="none">create_at</th>
-                            <th class="none">updated_at</th>
-                            <th class="none"></th>
-                        </tr>
+
                         </thead>
                         <tbody>
-                        <tr id="sid">
-                            <td>gdgdgd</td>
-                            <td>rin</td>
-                            <td>uncle ob</td>
-                            <td>2020-1-4</td>
-                            <td>van hoc</td>
-                            <td>300.000</td>
-                            <td class="text-right">
-                                <div class="dropdown show d-inline-block widget-dropdown">
-                                    <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
-                                       id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false" data-display="static"></a>
-                                    <ul class="dropdown-menu dropdown-menu-right"
-                                        aria-labelledby="dropdown-recent-order5">
-                                        <li class="dropdown-item">
-                                            <a href="#">View</a>
-                                        </li>
 
-
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>32</td>
-                            <td>
-                                no image
-                            </td>
-                            <td>67</td>
-                            <td>3.9</td>
-                            <td>789</td>
-                            <td>soft cover</td>
-                            <td>Trong nuoc</td>
-                            <td>No</td>
-                            <td>45-78-3435</td>
-                            <td>45-78-3435</td>
-                            <td>
-                                <button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal"
-                                        href="#"
-                                        data-target="#exampleModalSmall">
-                                    Discount
-                                </button>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -182,23 +121,31 @@
     <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
-        $(document).ready(function () {
-            var table = $('#expendable-data-table').DataTable({
-                'responsive': true
-            });
 
-            // Handle click on "Expand All" button
-            $('#btn-show-all-children').on('click', function () {
-                // Expand row details
-                table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
-            });
+        function responsiveTable () {
 
-            // Handle click on "Collapse All" button
-            $('#btn-hide-all-children').on('click', function () {
-                // Collapse row details
-                table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
-            });
-        });
+                $(document).ready(function () {
+
+                    var table = $('#expendable-data-table').DataTable({
+                        destroy: true,
+                        responsive: true,
+                    });
+                    // Handle click on "Expand All" button
+                    $('#btn-show-all-children').on('click', function () {
+                        // Expand row details
+                        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
+                    });
+                    // Handle click on "Collapse All" button
+                    $('#btn-hide-all-children').on('click', function () {
+                        // Collapse row details
+                        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+                    });
+
+                });
+
+
+        }
+
 
         $(document).ready(function () {
             $.fn.fill_parent_category();
@@ -260,7 +207,6 @@
                         $('.alert-highlighted').text('Tồn tài tên loại , kiểm tra lại!');
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
-
                     }
                 },
                 error: function (error) {
@@ -282,7 +228,6 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     $.ajax({
                         url: 'category/destroy',
                         method: "DELETE",
@@ -290,9 +235,7 @@
 
                         success: function (data) {
                             $result = data.result;
-
                             if ($result !== 'error') {
-
                                 $('#exampleModal1').hide();
                                 $(".alert-highlighted").removeClass('alert-danger');
                                 $(".alert-highlighted").addClass('alert-success');
@@ -302,7 +245,6 @@
                                 setTimeout(function () {
                                     location.reload();
                                 }, 1000)
-
                             } else {
                                 console.log($result);
 
@@ -325,20 +267,14 @@
             })
         })
 
-
         function formatText() {
-
             var text = $('#parent_id option:selected').text();
             console.log(text);
             var splitstr = text.split(/\s{4}/);
-
             var index = (splitstr.length) - 1;
-
-
         }
 
         function getCategory(text) {
-            //document.getElementById('parent_id').value = text;
             $('#parent_id').val(text);
         }
 
@@ -362,6 +298,7 @@
         }
 
         // Author
+
         function loadauthor() {
             $.ajax({
                 type: 'GET',
@@ -388,23 +325,47 @@
             })
         }
 
-
         function loadBook($id) {
-
             console.log($id);
+
             $.ajax({
-                url: '/author/' + $id + 'show',
+                url: '/author/' + $id,
                 method: 'GET',
                 dataType: 'json',
-                contentType: 'application/json',
+              //  contentType: 'application/json',
                 success: function (data) {
                     console.log(data)
-                    $("#expendable-data-table tbody").empty();
+                    responsiveTable();
+                    $("#expendable-data-table tbody").html("");
+                    $("#expendable-data-table thead").html("");
+                    var htmlTitle ='<tr>'
+                        +'<th>Title</th>'
+                        + '<th>Author</th>'
+                        + '<th>Publisher</th>'
+                        + '<th>Publication_Date</th>'
+                        + '<th>Category</th>'
+                        + '<th>Price</th>'
+                        + '<th></th>'
+                        + '<th class="none">id</th>'
+                        + '<th class="none">image</th>'
+                        + '<th class="none">weight</th>'
+                        + '<th class="none">size</th>'
+                        + '<th class="none">number of pages</th>'
+                        + ' <th class="none">formality</th>'
+                        + '<th class="none">Type</th>'
+                        + '<th class="none">discount</th>'
+                        + '<th class="none">create_at</th>'
+                        + '<th class="none">updated_at</th>'
+                        + '<th class="none"></th>'
+                        + '</tr>';
+
+                    $("#expendable-data-table thead").append(htmlTitle);
+
                     $.each(data, function (key, val) {
                         var html =
                             '<tr>'
-                            + '<td>dfdf</td>'
-                            + '<td>rin</td>'
+                            + '<td>' + val.id + '</td>'
+                            + '<td>'+val.formality+'</td>'
                             + '<td>uncle ob</td>'
                             + '<td>2020-1-4</td>'
                             + '<td>van hoc</td>'
@@ -428,7 +389,7 @@
                             + '</ul>'
                             + '</div>'
                             + '</td>'
-                            + '<td>32</td>'
+                            + '<td>31</td>'
                             + '<td>'
                             + 'no image'
                             + '</td>'
@@ -446,11 +407,9 @@
                             + 'Discount'
                             + '</button>'
                             + '</td>'
-                            + '</tr>'
-                            //+'</thead>';
-                        $("#expendable-data-table tbody").append(html);
+                            + '</tr>';
+                         $("#expendable-data-table tbody").append(html);
                     });
-
                 }
             });
 

@@ -59,6 +59,7 @@ class AuthorController extends Controller
     {
         $result = $this->authorContracts->showBook($id);
         return response()->json($result);
+
     }
 
     /**
