@@ -325,14 +325,15 @@
             })
         }
 
-        function loadBook($id) {
-            console.log($id);
+        function loadBook(id) {
+            console.log(id);
 
             $.ajax({
-                url: '/author/' + $id,
+                url: '/author/'+id,
                 method: 'GET',
+                data: {id:id},
                 dataType: 'json',
-              //  contentType: 'application/json',
+               contentType: 'application/json',
                 success: function (data) {
                     console.log(data)
                     responsiveTable();
@@ -361,11 +362,12 @@
 
                     $("#expendable-data-table thead").append(htmlTitle);
 
-                    $.each(data, function (key, val) {
+                    $.each(data.books, function(key,val) {
+
                         var html =
                             '<tr>'
-                            + '<td>' + val.id + '</td>'
-                            + '<td>'+val.author_id+'</td>'
+                            + '<td>' + val.title+ '</td>'
+                            + '<td>'+data.nameAuthor+'</td>'
                             + '<td>'+val.publisher_id+'</td>'
                             + '<td>2020-1-4</td>'
                             + '<td>van hoc</td>'
@@ -412,8 +414,8 @@
                     });
                 }
             });
-
         }
+
 
         $('#btn-add-author').click(function (e) {
             e.preventDefault();

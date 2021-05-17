@@ -47,16 +47,11 @@ class AuthorService implements AuthorContract
     }
     public function showBook($id)
     {
-
         $author = Author::findOrFail($id);
-        $books = $author->books;
-//        foreach ($books as $book) {
-//
-////            $fullname= $book->author->fullname;
-//
-//        }
 
-        return $books;
+        $books = $author->books;
+
+        return response(['books'=>$books,'nameAuthor'=>$author->fullname]);
 
     }
 }

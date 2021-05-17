@@ -55,11 +55,12 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $result = $this->authorContracts->showBook($id);
-        return response()->json($result);
-
+        $result = $this->authorContracts->showBook($request['id']);
+        if ($request->ajax()) {
+            return $result;
+        }
     }
 
     /**
