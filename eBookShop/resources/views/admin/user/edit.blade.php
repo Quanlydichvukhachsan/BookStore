@@ -39,6 +39,16 @@
                                 <input name="lastName" type="text" class="form-control" value="{{$users->lastName}}" placeholder="lastname">
                             </div>
                         </div>
+                        <div class="row mt-3">
+
+                            <div class="col-md-6">
+                                <label for="address" class="labels">Address</label>
+                                <input name="address" type="text" class="form-control" placeholder="address" value="{{$users->address}}">
+                            </div>
+                            <div class="col-md-6"><label for="phoneNumber" class="labels">Phone number</label>
+                                <input name="phoneNumber" type="text" class="form-control" value="{{$users->phoneNumber}}" placeholder="phoneNumber" onkeypress="javascript:return isNumber(event)">
+                            </div>
+                        </div>
 
                         <div class="row mt-3">
                             <div class="col-md-12"><label for="userName" class="labels">User name</label>
@@ -70,4 +80,14 @@
             </ul>
         </div>
     @endif
+@endsection
+@section('script')
+    <script>
+        function isNumber(evt) {
+            var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+            if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+                return false;
+            return true;
+        }
+    </script>
 @endsection

@@ -68,7 +68,9 @@ class BookService implements BookContract
          $book = Book::findOrFail($id);
          $images = $book->imagebooks;
          foreach ($images as $img){
+             unlink(public_path() . $img->file);
              ImageBook::destroy($img->id);
+
          }
          $book->delete();
          return "Delete success!";
@@ -92,6 +94,8 @@ class BookService implements BookContract
     {
 
         ImageBook::destroy($request['id']);
+
+
         return "Delete success!";
     }
 

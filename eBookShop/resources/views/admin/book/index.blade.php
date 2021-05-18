@@ -25,11 +25,13 @@
                     <button class="btn" id="btn-show-all-children" type="button">Expand All</button>
                     <button class="btn" id="btn-hide-all-children" type="button">Collapse All</button>
                 </div>
+                @if(auth()->user()->hasDirectPermission('Create')||auth()->user()->hasRole('Administrator'))
                 {!! Form::open(['method' => 'GET' ,'route' => ['book.create']]) !!}
                 <button class="btn btn-success" type="submit">
                     <i class=" mdi mdi-plus-circle"></i> Create book
                 </button>
                 {!! Form::close() !!}
+                    @endif
             </div>
 
             <div class="card-body">
@@ -76,12 +78,16 @@
                                         <li class="dropdown-item">
                                             <a href="{{route('book.show',$item->id)}}">View</a>
                                         </li>
+                                        @if(auth()->user()->hasDirectPermission('Edit')||auth()->user()->hasRole('Administrator'))
                                         <li class="dropdown-item">
                                             <a href="{{route('book.edit',$item->id)}}">edit</a>
                                         </li>
+                                        @endif
+                                        @if(auth()->user()->hasDirectPermission('Delete')||auth()->user()->hasRole('Administrator'))
                                         <li class="dropdown-item">
                                             <a type="button" id="btn-delete-book" data-value="{{$item->id}}" onclick="deleteBook(this)">Delete</a>
                                         </li>
+                                            @endif
                                     </ul>
                                 </div>
                             </td>
@@ -113,10 +119,14 @@
                             @endif
                                 <td>{{$item->created_at}}</td>
                             <td>{{$item->updated_at}}</td>
-                             <td><button data-value="{{$item->id}}" class="btn-sm btn-success" onclick="getPriceDiscount(this)" type="button" data-toggle="modal" href="#"
+                             <td>
+                                 @if(auth()->user()->hasDirectPermission('Update'))
+                                 <button data-value="{{$item->id}}" class="btn-sm btn-success" onclick="getPriceDiscount(this)" type="button" data-toggle="modal" href="#"
                                          data-target="#exampleModalSmall">
                                      Discount
-                                 </button></td>
+                                 </button>
+                                     @endif
+                             </td>
                         </tr>
                         @endforeach
                         </tbody>

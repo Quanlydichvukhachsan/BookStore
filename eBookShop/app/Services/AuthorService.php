@@ -20,7 +20,7 @@ class AuthorService implements AuthorContract
 
     public function create($request)
     {
-         Author::create([
+          Author::create([
             'firstName' =>$request->input('add-firstname-author'),
             'lastName' =>$request->input('add-lastname-author')
         ]);

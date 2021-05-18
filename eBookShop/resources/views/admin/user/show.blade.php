@@ -48,9 +48,11 @@
                         </a>
                         <div class="row justify-content-center">
                               <div class="m-sm-1">
+                                  @if(Auth::user()->id === $users->id || auth()->user()->hasRole('Administrator'))
                             {!! Form::open(['method'=>'GET' , 'route' => ['user.edit',$users->id]]) !!}
                             {{ Form::button('Update', ['class' => 'btn btn-outline-primary', 'type' => 'submit']) }}
                             {!! Form::close() !!}
+                                      @endif
                               </div>
 
                         </div>

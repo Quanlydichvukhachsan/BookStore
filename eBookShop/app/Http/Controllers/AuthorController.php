@@ -12,6 +12,7 @@ class AuthorController extends Controller
     protected $authorContracts;
     public function __Construct(AuthorContract $authorContract)
     {
+      //  $this->middleware(['permission:post','role:Manager']);
         $this->authorContracts = $authorContract;
 
     }
@@ -44,6 +45,7 @@ class AuthorController extends Controller
      */
     public function store(CreateAuthorRequest $request)
     {
+
         $this->authorContracts->create($request);
         return response()->json(['success'=>'Tạo thành công']);
     }

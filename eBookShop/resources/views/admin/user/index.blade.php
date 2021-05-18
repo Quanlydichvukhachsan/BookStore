@@ -16,14 +16,14 @@
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                <h2>Basic Data User</h2>
-
+                <h2>User</h2>
+                @if(auth()->user()->hasDirectPermission('Create')||auth()->user()->hasRole('Administrator') ||auth()->user()->hasRole('HR'))
                 <button class="btn btn-outline-primary" type="button" data-toggle="modal"
                         data-target="#exampleModalForm">
                     <i class=" mdi mdi-plus-circle"></i> Create User
 
                 </button>
-
+               @endif
             </div>
 
             <div class="card-body">
@@ -79,15 +79,19 @@
                                             <li class="dropdown-item">
                                                 <a href="{{route('user.show',$users->id)}}">View</a>
                                             </li>
+                                            @if(auth()->user()->hasDirectPermission('Delete') ||auth()->user()->hasRole('Administrator'))
                                             <li class="dropdown-item">
                                                 <a onclick="deleteUser(this)" data-value="{{$users->id}}" type="button">Remove</a>
                                             </li>
+                                            @endif
+                                            @if(auth()->user()->hasDirectPermission('Edit')||auth()->user()->hasRole('Administrator'))
                                             <li class="dropdown-item">
                                                 <a type="button" style="cursor:pointer" data-value="{{$users->id}}"
                                                    onclick="getIdUser(this)" data-toggle="" data-target=""
                                                    id="editRole" >
                                                     Assign access </a>
                                             </li>
+                                                @endif
                                         </ul>
                                     </div>
                                 </td>
@@ -153,7 +157,18 @@
             height: $(window).height() + 'px',
             opacity: 0.4,
             background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
-        })
+        });
+        $overlayRole = $('<div id="overlayRole"/>').css({
+            position: 'fixed',
+            display: 'none',
+            top: 0,
+            left: 0,
+            color: '#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity: 0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        });
 
         $('#btn-submit').click(function (e) {
             e.preventDefault();
@@ -345,10 +360,9 @@
         })
         $('#role-submit').click(function (e) {
             e.preventDefault();
-            $overlay.appendTo("#exampleModal");
-            $('#overlay').show();
+            $overlayRole.appendTo("#exampleModal");
+            $('#overlayRole').show();
             var result = getParentNameByChild(tree);
-            console.log(result);
             setTimeout(function () {
 
                 $.ajax({
@@ -377,7 +391,7 @@
                         console.log(data.success);
                         $(".alert-highlighted span").text(data.success);
                         $('.alert-highlighted').show();
-                        $('#overlay').hide();
+                        $('#overlayRole').hide();
                         $('#exampleModal').modal('hide');
                         $('.alert-highlighted').fadeOut(5000);
                         tree.destroy();
@@ -387,7 +401,7 @@
                         console.log(error);
                     }
                 });
-            }, 500)
+            }, 1000)
         })
 
         function deleteUser(item){

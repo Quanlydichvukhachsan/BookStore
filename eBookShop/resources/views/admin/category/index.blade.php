@@ -180,7 +180,6 @@
                 })
             });
         });
-
         $('#btn-update-category').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -214,8 +213,6 @@
                 }
             })
         });
-
-
         $('#btn-delete-category').click(function (e) {
             e.preventDefault();
             Swal.fire({
@@ -232,7 +229,6 @@
                         url: 'category/destroy',
                         method: "DELETE",
                         data: $('#tree-form_update').serialize(),
-
                         success: function (data) {
                             $result = data.result;
                             if ($result !== 'error') {
@@ -247,7 +243,6 @@
                                 }, 1000)
                             } else {
                                 console.log($result);
-
                                 $('#exampleModal1').hide()
                                 setTimeout(function () {
                                     $('#exampleModal1').show()
@@ -273,12 +268,9 @@
             var splitstr = text.split(/\s{4}/);
             var index = (splitstr.length) - 1;
         }
-
         function getCategory(text) {
             $('#parent_id').val(text);
         }
-
-
         function myText(edit) {
             clear_option();
             $.fn.fill_parent_category();
@@ -288,15 +280,12 @@
             $('#parent_id_update option:selected').html(edit.name);
             $("select[id=parent_id_update] option:last").remove();
         }
-
         function clear_option() {
             $('#parent_id_update').children().remove();
         }
-
         function getID(item) {
             id = item.getAttribute('data-value');
         }
-
         // Author
 
         function loadauthor() {
@@ -311,6 +300,7 @@
                             return [key, data[i][key]];
                         });
 
+
                         var html = '<li class="col-12 divAuthor"> <a href="javascript:loadBook(' + data[i]['id'] + ')" >' + data[i]['full_name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\'' + result + '\')">'
@@ -324,6 +314,7 @@
                 }
             })
         }
+
 
         function loadBook(id) {
             console.log(id);
@@ -416,7 +407,6 @@
             });
         }
 
-
         $('#btn-add-author').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -432,7 +422,6 @@
                     $('.alert-highlighted').text('Thêm thành công');
                     $('.alert-highlighted').show();
                     $('.alert-highlighted').fadeOut(5000);
-
                 },
                 error: function (error) {
                     console.log(error)
@@ -443,9 +432,9 @@
 
         function bind_Author(result) {
             var data = result.split(',');
-            var Author = {};
-            Author.id = data[1];
-            Author.firstName = data[3];
+            var  Author ={};
+            Author.id =data[1];
+            Author.firstName =data[3];
             Author.lastName = data[5];
             $('#lastname_edit_author').val(Author.lastName);
             $('#firstname_edit_author').val(Author.firstName);
@@ -496,7 +485,6 @@
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
                             } else {
-
                                 $('#edit-author').modal('hide');
                                 setTimeout(function () {
                                     $('#edit-author').show()
@@ -516,7 +504,7 @@
             })
         });
 
-
+        //publisher
         loadPublisher();
 
         function loadPublisher() {
@@ -527,11 +515,10 @@
                 success: function (data) {
                     $(".listPublisher").empty();
                     for (i in data) {
-                        var result = Object.keys(data[i]).map((key) => {
+                        var result = Object.keys(data[i]).map( (key)=> {
                             return [key, data[i][key]];
                         });
-
-                        var html = '<li class="col-12 divAuthor"><a  href="" class="col-10">' + data[i]['name'] + '</a>' +
+                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
                             + 'data-target="#edit_publisher" id="btn-publisher-edit" onclick="bind_Publisher(\'' + result + '\')">'
                             + '<i class="mdi mdi-account-edit"></i></button></li>';
@@ -543,7 +530,6 @@
                 }
             });
         }
-
         $('#btn-add-publisher').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -584,32 +570,31 @@
         function bind_Publisher(result) {
             console.log(result);
             var data = result.split(',');
-            var Publisher = {};
-            Publisher.id = data[1];
-            Publisher.name = data[3];
-
-            $('#edit_name_publisher').val(Publisher.name);
+            var  Publisher ={};
+            Publisher.id =data[1];
+            Publisher.name =data[3];
+            $('#edit_name_publisher').val( Publisher.name);
             $('#idPublisher').val(Publisher.id);
         }
+        $('#btn_edit_publisher').click(function (e){
 
-        $('#btn_edit_publisher').click(function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'PATCH',
                 url: 'publisher/update',
                 cache: false,
                 data: $("#form_update_publisher").serialize(),
-                success: function (data) {
+                success:function (data){
                     loadPublisher();
                     $result = data.result;
-                    if ($result === 'success') {
+                    if ($result ==='success'){
                         $('#edit_publisher').modal('hide');
                         $(".alert-highlighted").removeClass('alert-danger');
                         $(".alert-highlighted").addClass('alert-success');
                         $('.alert-highlighted').text('Cập nhật thành công');
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
-                    } else {
+                    }else {
                         $("#edit_publisher").hide();
                         setTimeout(function () {
                             $('#edit_publisher').show()
@@ -650,7 +635,6 @@
                                 $('.alert-highlighted').show();
                                 $('.alert-highlighted').fadeOut(5000);
                             } else {
-
                                 $('#edit_publisher').hide();
                                 setTimeout(function () {
                                     $('#edit_publisher').show()
@@ -678,7 +662,4 @@
         });
     </script>
 @endsection
-
-
-
 

@@ -17,6 +17,7 @@ class BookController extends Controller
 
     public function __construct(BookContract $BookStore){
          $this->BookStore = $BookStore;
+
     }
     /**
      * Display a listing of the resource.
