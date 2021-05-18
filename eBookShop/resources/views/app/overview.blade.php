@@ -48,7 +48,6 @@
         window.onload = function() {
             // adding data to localstorage
             const attToCartBtn = document.getElementsByClassName('attToCart');
-            console.log(attToCartBtn);
             let items = [];
             for(let i=0; i<attToCartBtn.length; i++){
                 attToCartBtn[i].addEventListener("click",function(e){
@@ -78,7 +77,7 @@
                             });
                             items.push(item);
                             localStorage.setItem('items',JSON.stringify(items));
-                            window.location.reload();
+                           window.location.reload();
                         }
 
                     }else{

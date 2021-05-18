@@ -29,6 +29,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::class, 'getByCategory'])->name('home.product');
 
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+Route::group(['middleware' => ['auth']],function (){
+    Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
+});
+
 //Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');
 Auth::routes();
 

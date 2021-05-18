@@ -35,6 +35,7 @@
                 <div class="col-sm-6">
 
                         <div class="col-md-6">
+                            @if(!Auth::check())
                             <div class="login-form"><!--login form-->
                                 <h2>Đăng nhập tài khoản</h2>
                                 <form action="#">
@@ -47,6 +48,7 @@
                                     <button type="submit" class="btn btn-default">Đăng nhập</button>
                                 </form>
                             </div><!--/login form-->
+                                @endif
                         </div>
 
 
@@ -56,13 +58,11 @@
 
                     <div class="total_area">
 
-                        <ul>
+                        <ul class="total_price">
                             <li>Tổng Số Giỏ Hàng <span>1</span></li>
-
-                            <li>Giá Vận Chuyển <span>Free</span></li>
                             <li>Tổng Tiền <span>300.000 đ</span></li>
                         </ul>
-                        <a class="btn btn-default update" href="">Đặt Hàng</a>
+                        <a class="btn btn-default update" href="{{route('cart.checkout')}}">Đặt Hàng</a>
 
                     </div>
                 </div>
@@ -81,10 +81,22 @@
             // adding data to shopping cart
             const iconShoppingP = document.querySelector('.notification span');
             let no = 0;
+            let total =0;
+            //update amount and quantity total
             JSON.parse(localStorage.getItem('items')).map(data=>{
-                no = no+data.no
-                ;	});
+                no = no+data.no;
+                total = total + (parseFloat(data.price) * data.no);
+                	});
             iconShoppingP.innerHTML = no;
+            var formatSum = (total).toLocaleString(
+                undefined,
+                { minimumFractionDigits: 3 }
+            );
+            var  totalQuantity =$('.total_price li:first-child span').text("");
+            totalQuantity.text(no);
+         var totalPrice =   $('.total_price li:last-child span').text("");
+           totalPrice.text(formatSum+' đ');
+
                 //adding cartbox data in table
             const cartBox = document.querySelector('.cartBox');
             const cardBoxTable = cartBox.querySelector('tbody');
@@ -103,13 +115,13 @@
                             '<p>'+ 'Tác giả:' + data.author +'</p>'+
                         '</td>'+
                         '<td class="cart_price">'+
-                            '<p>'+data.price+'</p>'+
+                            '<p class="price_product">'+data.price+'</p>'+
                         '</td>'+
                         '<td class="cart_quantity">'+
                             '<div class="cart_quantity_button">'+
-                                '<a class="cart_quantity_up" href="#">' +'+'+ '</a>'+
-                                '<span class="cart_quantity_input">'+data.no+'</span>'+
-                                    '<a class="cart_quantity_down" href="#">'+ '-'+ '</a>'
+                                '<a class="cart_quantity_up" href="">' +'+'+ '</a>'+
+                                '<input class="cart_quantity_input" type="text" data-value="'+data.id+'" name="quantity" value="'+data.no+'" autocomplete="off" size="2">'+
+                                    '<a class="cart_quantity_down" href="">'+ '-'+ '</a>'
                             +'</div>'+
                         '</td>'+
                         '<td class="cart_total">'+
@@ -123,15 +135,26 @@
             }
             cardBoxTable.innerHTML = tableData;
 
-            const table = document.getElementById("table-cart");
-            for (var i = 0, row; row = table.rows[i]; i++) {
-                //iterate through rows
-                console.log(row.cells[2].firstChild.innerHTML)
-                //rosws would be accessed using the "row" variable assigned in the for loop
-                    var amount = row.cells[3].childNodes[0].childNodes[1];
+            $(document).ready(function (){
+                $('.cart_quantity_input').on('keyup keypress',function (e){
+                    update_amounts();
+                })
+              //increment quantity
+                $(".cart_quantity_up").click(function (e){
+                    e.preventDefault();
+                    var $n = $(this).parent(".cart_quantity_button").find(".cart_quantity_input");
+                    $n.val(Number($n.val())+1);
+                    update_amounts();
+                })
+                //decrement quantity
+                $(".cart_quantity_down").click(function (e){
+                    e.preventDefault();
+                    var $n = $(this).parent(".cart_quantity_button").find(".cart_quantity_input");
+                    $n.val(Number($n.val())-1);
+                    update_amounts();
+                })
 
-                console.log(amount.text());
-            }
+            });
 
         }
         function deleteCart(item){
@@ -145,6 +168,46 @@
               localStorage.setItem('items',JSON.stringify(items));
               window.location.reload();
         }
+
+        function update_amounts(){
+            var sum =0;
+         var countQuantity =0;
+            $('#table-cart > tbody >tr').each(function (){
+                var quantity =$(this).find('.cart_quantity_input').val();
+
+                var price = $(this).find('.price_product').text();
+                var amount =(quantity * price);
+                var value = (amount).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+                sum +=amount;
+                var formatSum = (sum).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+
+                $(this).find('.cart_total_price').text(''+value);
+                 var  totalQuantity =$('.total_price li:first-child span').text("");
+                countQuantity += parseInt(quantity);
+                totalQuantity.text(countQuantity);
+               var total =   $('.total_price li:last-child span').text("");
+                    total.text(formatSum+' đ');
+                var id = $(this).find('.cart_quantity_input').attr('data-value');
+
+                const localItems =  JSON.parse(localStorage.getItem('items'));
+                localItems.map(data=>{
+                    if(data.id === id){
+                        data.no = parseInt(quantity);
+                    }
+                });
+                localStorage.setItem('items', JSON.stringify(localItems));
+                const iconShoppingP = document.querySelector('.notification span');
+                iconShoppingP.innerHTML =countQuantity;
+            })
+        }
+
+
 
     </script>
 @endsection

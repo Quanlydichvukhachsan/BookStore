@@ -51,7 +51,9 @@ class HomeService implements HomeContract
          global  $parentCategory  ;
          $productViewModels =new productViewModels();
          $productViewModels->setpathName($name);
+
          $productViewModels->setpathId($category->id);
+
          if($category->slug_name === $name){
 
              if(count($booksByCategory))
@@ -91,6 +93,7 @@ class HomeService implements HomeContract
              }
          }
          $productViewModels->setListCategory($showCategoryModel);
+
          return $productViewModels;
      }
     public function getAll()
@@ -133,13 +136,15 @@ class HomeService implements HomeContract
 
     public function getByCategory($name, $id,$key)
     {
+        global $productViewModels;
         $category =  Category::findOrFail($id);
 
-        if($key !== ""){
+        if($key !== null ){
+
             if($key === 'gia-thap'){
                 $arrSort = $category->books->sortBy("price");
 
-            } elseif($key === 'gia-giam'){
+            } elseif($key === 'gia-cao'){
                 $arrSort = $category->books->sortByDesc("price");
 
             }
@@ -160,7 +165,9 @@ class HomeService implements HomeContract
             $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
 
         }else{
+
             $productViewModels = $this->setProductByCategory($category,$name,$category->books);
+
         }
 
         return $productViewModels;
@@ -168,8 +175,12 @@ class HomeService implements HomeContract
     }
     public function setHtml($products){
         global $html  ;
+
+        $arrHtml =array();
         if(count($products->getListBook())) {
+
             foreach ($products->getListBook() as $item) {
+
                 $html .= '<div class="col-sm-4">' .
                     '<div class="product-image-wrapper">' .
                     '<div class="single-products">' .
@@ -177,13 +188,12 @@ class HomeService implements HomeContract
                     '<img src="' . $item->getImages() . '"' . ' alt="img-' . $item->getTitle() . '"/>' .
                     '<h2>' . $item->getPrice() . 'đ</h2>' .
                     '<p>' . $item->getTitle() . '</p>' .
-                    '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>' .
                     '</div>' .
                     '<div class="product-overlay" >' .
                     '<div class="overlay-content" >' .
                     '<h2>' . $item->getPrice() . 'đ</h2>' .
                     '<p>' . $item->getTitle() . '</p>' .
-                    '<a href = "#" class="btn btn-default add-to-cart" ><i class="fa fa-shopping-cart" ></i > Thêm vào giỏ </a >' .
+                    '<a data-img="' . $item->getImages() . '" data-author="'. $item->getAuthor() .'" data-value="'. $item->getId() .'" class="btn btn-default add-to-cart attToCart"></i > Thêm vào giỏ </a >' .
                     '</div>' .
                     '</div>' .
                     '</div>' .
@@ -207,16 +217,52 @@ class HomeService implements HomeContract
                 '<p > Sản phẩm không có </p >'.
                 '</div>';
         }
+      $sideBarHtml =  '<div class="brands-name">'.
+           '<ul class="nav nav-pills nav-stacked">'.
+               '<li><a  id="category" data-name="'.$products->getpathName() .'" data-sort="biaMem"  data-type="sortFormality"'.
+                       ' data-value="'.$products->getpathId().'" href="'.route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sortFormality'=>'biaMem']).'" >'.
+                       '<span class="pull-right"></span>Bìa Mềm</a>'.
+               '</li>'.
+              '<li><a   id="category" data-name="' .$products->getpathName() .'" data-sort="biaCung"  data-type="sortFormality"'.
+                        ' data-value="'. $products->getpathId() .'" href="' . route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sortFormality'=>'biaCung']). '"> <span class="pull-right"></span>Bìa Cứng</a></li>'.
+         '</ul>'.
+       '</div>';
 
-        return $html;
+        $sideBarSortHtml = '<h2>Sắp xếp theo</h2>'.
+             '<div class="brands-name">'.
+            '<ul class="nav nav-pills nav-stacked">'.
+                '<li><a id="category" data-name="{{$products->getpathName()}}" data-sort="gia-cao" data-type="sort"'.
+                       ' data-value="' . $products->getpathId() . '" href="' . route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sort'=>'gia-cao']). '">'.
+                        '<span class="pull-right"></span>Giá cao</a></li>'.
+                '<li><a id="category" data-name="' . $products->getpathName() . '" data-sort="gia-thap" data-type="sort"'.
+                       ' data-value="'. $products->getpathId() .'" href="' .route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sort'=>'gia-thap']) .'">'.
+                        '<span class="pull-right"></span>Giá rẽ</a>'.
+                '</li>'.
+                '<li><a id="category" data-name="{{$products->getpathName()}}" data-sort="ten-giam" data-type="sortname"'.
+                       ' data-value="' .$products->getpathId() . '" href="' . route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sortname'=>'ten-giam']) .'">'.
+                        ' <span class="pull-right"></span>Giảm theo tên sách</a>'.
+                '</li>'.
+                '<li><a  id="category" data-name="' .$products->getpathName() . '" data-sort="ten-tang" data-type="sortname"'.
+                        ' data-value="' . $products->getpathId() . '" href="' . route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sortname'=>'ten-tang']).'">'.
+                        '<span class="pull-right"></span>Tăng theo tên sách</a></li>'.
+            '</ul>'.
+        '</div>'.
+    '</div>';
+
+     array_push($arrHtml,$html);
+       array_push($arrHtml, $sideBarHtml);
+       array_push($arrHtml,$sideBarSortHtml);
+        return $arrHtml;
     }
 
 
     public function getByProductByCategory($name,$id)
     {
 
-        $products = $this->getByCategory($name,$id,"");
+       $products = $this->getByCategory($name,$id,null);
+
          $html = $this->setHtml($products);
+
           return $html;
     }
 
@@ -232,7 +278,7 @@ class HomeService implements HomeContract
             $arrSort = $category->books->sortByDesc("price");
             $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
         }
-        $html = $this->setHtml($productViewModels);
+        $html = $this->setHtml($productViewModels)[0];
         return $html;
     }
 
@@ -247,7 +293,7 @@ class HomeService implements HomeContract
             $arrSort = $category->books->sortByDesc("title");
             $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
         }
-        $html = $this->setHtml($productViewModels);
+        $html = $this->setHtml($productViewModels)[0];
         return $html;
     }
 
@@ -264,7 +310,8 @@ class HomeService implements HomeContract
 
             $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
         }
-        $html = $this->setHtml($productViewModels);
+        $html = $this->setHtml($productViewModels)[0];
+
         return $html;
     }
 }

@@ -54,10 +54,12 @@ class HomeController extends Controller
 
                 $key = $request->input('sortFormality');
                 $products = $this->homeContract->sortFormalityById($name, $id, $key);
+
             }
             else {
 
                 $products = $this->homeContract->getByProductByCategory($name, $id);
+
             }
 
             return response()->json($products);
@@ -67,12 +69,14 @@ class HomeController extends Controller
 
             if ($request->has('sort')) {
                 $key = $request->input('sort');
+
                 $products = $this->homeContract->getByCategory($name, $id, $key);
             }elseif ($request->has('sortname')){
                 $key = $request->input('sortname');
                 $products = $this->homeContract->getByCategory($name, $id, $key);
             }elseif ('sortFormality'){
                 $key = $request->input('sortFormality');
+
                 $products = $this->homeContract->getByCategory($name, $id, $key);
             }
             else{

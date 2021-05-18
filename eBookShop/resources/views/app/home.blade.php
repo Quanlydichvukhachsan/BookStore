@@ -8,7 +8,7 @@
 <section class="show-sticky" id="advertisement">
 
 </section>
-@if(\Illuminate\Support\Facades\Route::currentRouteName()==="cart")
+@if(\Illuminate\Support\Facades\Route::currentRouteName()==="cart" ||\Illuminate\Support\Facades\Route::currentRouteName()==="cart.checkout")
     <section id="cart_items">
     @yield('content')
     </section>

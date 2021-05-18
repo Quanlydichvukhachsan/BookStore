@@ -38,21 +38,21 @@
 
     </div><!--/category-products-->
 
-    <div class="brands_products"><!--brands_products-->
+    <div class="brands_products formality_sidebar"><!--brands_products-->
         <h2>Hình Thức</h2>
         <div class="brands-name">
             <ul class="nav nav-pills nav-stacked">
-                <li><a  id="category" data-name="{{$products->getpathName()}}" data-sort="biaMem"  data-type="sortFormality"
+                <li><a id="category"  data-name="{{$products->getpathName()}}" data-sort="biaMem"  data-type="sortFormality"
                         data-value="{{$products->getpathId()}}" href="{{route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sortFormality'=>'biaMem'])}}" >
                         <span class="pull-right"></span>Bìa Mềm</a>
 
                 </li>
-                <li><a   id="category" data-name="{{$products->getpathName()}}" data-sort="biaCung"  data-type="sortFormality"
+                <li><a id="category"  data-name="{{$products->getpathName()}}" data-sort="biaCung"  data-type="sortFormality"
                          data-value="{{$products->getpathId()}}" href="{{route('home.product',['category'=>$products->getpathName(),'id'=>$products->getpathId(),'sortFormality'=>'biaCung'])}}"> <span class="pull-right"></span>Bìa Cứng</a></li>
             </ul>
         </div>
     </div><!--/brands_products-->
-    <div class="brands_products"><!--brands_products-->
+    <div class="brands_products sort_sidebar"><!--brands_products-->
         <h2>Sắp xếp theo</h2>
         <div class="brands-name">
             <ul class="nav nav-pills nav-stacked">

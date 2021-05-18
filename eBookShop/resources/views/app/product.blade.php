@@ -15,13 +15,12 @@
                             <img src="{{$item->getImages()}}" alt="img-{{$item->getTitle()}}" />
                             <h2>{{$item->getPrice()}} đ</h2>
                             <p>{{$item->getTitle()}}</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
                         </div>
                         <div class="product-overlay">
                             <div class="overlay-content">
                                 <h2>{{$item->getPrice()}} đ</h2>
                                 <p>{{$item->getTitle()}}</p>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
+                                <a data-img="{{$item->getImages()}}" data-author="{{$item->getAuthor()}}" data-value="{{$item->getId()}}" class="btn btn-default add-to-cart attToCart"></i>Thêm vào giỏ</a>
                             </div>
                         </div>
                     </div>
@@ -52,6 +51,58 @@
 @endsection
 @section('script')
     <script>
+        window.onload = function() {
+            // adding data to localstorage
+            const attToCartBtn = document.getElementsByClassName('attToCart');
+            let items = [];
+            for(let i=0; i<attToCartBtn.length; i++){
+                attToCartBtn[i].addEventListener("click",function(e){
+                    e.preventDefault();
+
+                    if(typeof(Storage) !== 'undefined'){
+                        let item = {
+                            id:this.getAttribute('data-value'),
+                            name:e.target.parentElement.children[1].textContent,
+                            price:e.target.parentElement.children[0].textContent.replace('đ',''),
+                            author:this.getAttribute('data-author'),
+                            img :this.getAttribute('data-img'),
+                            no:1
+                        };
+                        if(JSON.parse(localStorage.getItem('items')) === null){
+                            items.push(item);
+                            localStorage.setItem("items",JSON.stringify(items));
+                            window.location.reload();
+                        }else{
+                            const localItems = JSON.parse(localStorage.getItem("items"));
+                            localItems.map(data=>{
+                                if(item.id == data.id){
+                                    item.no = data.no + 1;
+                                }else{
+                                    items.push(data);
+                                }
+                            });
+                            items.push(item);
+                            localStorage.setItem('items',JSON.stringify(items));
+                            window.location.reload();
+                        }
+
+                    }else{
+                        alert('local storage is not working on your browser');
+                    }
+
+                });
+            }
+            // adding data to shopping cart
+            const iconShoppingP = document.querySelector('.notification span');
+            let no = 0;
+            JSON.parse(localStorage.getItem('items')).map(data=>{
+                no = no+data.no
+                ;	});
+            iconShoppingP.innerHTML = no;
+
+        }
+
+
         function removeVietnameseTones(str) {
             str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
             str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
@@ -101,44 +152,60 @@
             background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
         });
 
-        $('a#category').click(function(event) {
-            event.preventDefault();
-            var href;
-            var id =$(this).attr('data-value');
-            var name =$(this).attr('data-name');
-            var nameSort =$(this).attr('data-sort');
-            var type =$(this).attr('data-type');
-            if(type === "sort"){
-                href  = '/product/'+name+'/' +id +'?sort=' +nameSort;
-            }else if(type === "sortname"){
-                href  = '/product/'+name+'/' +id +'?sortname=' +nameSort;
-            }else if(type === "sortFormality"){
-                href  = '/product/'+name+'/' +id +'?sortFormality=' +nameSort;
-            }
-            else{
-                href  = '/product/'+name+'/' +id;
-            }
-            console.log(href);
-            $overlay.appendTo("body");
-            $('#overlay').show();
-            setTimeout(function (){
-                $.ajax({
-                    method :"GET",
-                    url: href,
-                    success: function(data) {
-                        $(".features_items").html("");
-                        var html ='<h2 class="title text-center">Mục Sản Phẩm</h2>';
-                        html +=data;
-                        $(".features_items").append(html);
-                        $('#overlay').hide();
-                        window.history.pushState("", "", href);
+          $('a#category').on('click',function(event) {
+              event.preventDefault();
+              var href;
+              var id =$(this).attr('data-value');
+              var name =$(this).attr('data-name');
+              var nameSort =$(this).attr('data-sort');
+              var type =$(this).attr('data-type');
 
-                    }
-                });
-            },500);
-            return false;
-        });
+              if(type === "sort"){
+                  href  = '/product/'+name+'/' +id +'?sort=' +nameSort;
+              }else if(type === "sortname"){
+                  href  = '/product/'+name+'/' +id +'?sortname=' +nameSort;
+              }else if(type === "sortFormality"){
+                  href  = '/product/'+name+'/' +id +'?sortFormality=' +nameSort;
+              }
+              else{
+                  href  = '/product/'+name+'/' +id;
+              }
+
+              $overlay.appendTo("body");
+              $('#overlay').show();
+              setTimeout(function (){
+                  $.ajax({
+                      method :"GET",
+                      url: href,
+                      success: function(data) {
+                          $(".features_items").html("");
+                          var htmlSidebar ='<h2>Hình Thức</h2>';
+                          var html ='<h2 class="title text-center">Mục Sản Phẩm</h2>';
+                          if(Array.isArray(data)){
+                              html +=data[0];
+                              htmlSidebar +=data[1];
+                              var htmtSidebarSort =data[2];
+                              $(".sort_sidebar").html("");
+                              $(".formality_sidebar").html("");
+                              $(".formality_sidebar").append(htmlSidebar);
+                              $(".sort_sidebar").append(htmtSidebarSort);
+                          }else{
+                              html =data;
+                          }
+                          $(".features_items").append(html);
+
+                          $('#overlay').hide();
+
+                          window.history.pushState("", "", href);
+                          window.location.reload();
+                      }
+                  });
+              },500);
+              return false;
+          });
 
 
     </script>
+
 @endsection
+
