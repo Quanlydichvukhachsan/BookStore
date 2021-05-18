@@ -31,6 +31,7 @@ Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::cla
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::group(['middleware' => ['auth']],function (){
     Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/checkout/{id}/order', [App\Http\Controllers\CartController::class, 'order'])->name('cart.order');
 });
 
 //Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');

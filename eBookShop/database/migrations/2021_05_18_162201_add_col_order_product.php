@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColUser extends Migration
+class AddColOrderProduct extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class AddColUser extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('phoneNumber')->unique()->nullable();
-            $table->string('address')->nullable();
-
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('district');
+            $table->string('note')->nullable();
+            $table->decimal('totalPrice',8,3);
+            $table->decimal('totalPriceFee',8,3);
+            $table->integer('quantity');
         });
     }
 
@@ -27,7 +29,7 @@ class AddColUser extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
         });
     }

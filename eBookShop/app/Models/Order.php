@@ -12,7 +12,15 @@ class Order extends Model
     protected $fillable=[
         'book_id',
         'user_id',
-        'status'
+        'status',
+        'city',
+        'country',
+        'district',
+        'note',
+        'totalPrice',
+        'totalPriceFee',
+        'quantity',
+        'nameReceive',
     ];
 
     public function books(){

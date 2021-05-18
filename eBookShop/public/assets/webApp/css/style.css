@@ -33,6 +33,9 @@ i {
     color:black;
 
 }
+.invalid-feedback{
+    color: red;
+}
 .nav-item::after {
     content: '';
     display: block;

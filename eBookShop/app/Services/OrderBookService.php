@@ -16,12 +16,28 @@ class OrderBookService implements OrderContract{
 
     public function show($id){
 
-            return $this->order::findOrFail($id);
+
     }
 
 
-    public function create(OrderBookRequestModels $order){
-                return $this->order::create($order);
+    public function create($request,$id){
+          $input = $request->all();
+         $user = User::findOrFail($id);
+           if(!count($user->getRoleNames())){
+                    $user->address = $input['address'];
+               $user->phoneNumber = $input['phoneNumber'];
+               $user->save();
+           }
+            $order = Order::create(['user_id'=>$id,'city'=>$input['city'],'country'=>$input['national'],'district'=>$input['district'],
+                 'note'=>$input['message'],'totalPrice'=>number_format((float)$input['totalPrice'], 3, '.', ''),
+                'totalPriceFee'=>number_format((float)$input['totalPriceOrder'], 3, '.', ''),
+                 'nameReceive'=>$input['name'],'quantity'=>$input['quantity']]);
+           foreach ($input['book']as $item){
+               $order->books()->attach($item['id'],array('amount'=>$item['no']));
+           }
+
+           return "Success";
+
     }
 
      public function orderShow($id, $customer)

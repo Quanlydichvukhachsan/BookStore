@@ -8,19 +8,18 @@
                 <li class="active">Checkout</li>
             </ol>
         </div>
+        <form id="form-order" method="post">
+            @csrf
+            @method('POST')
         <div class="shopper-informations">
             <div class="row">
                 <div class="col-sm-3">
                     <div class="shopper-info">
                         <p>Thông tin người mua hàng</p>
                         <form>
-                            <input type="text" placeholder="Tên hiển thị">
-                            <input type="text" placeholder="Tên người dùng">
-                            <input type="password" placeholder="Mật khẩu">
-                            <input type="password" placeholder="Xác nhận mật khẩu">
+
                         </form>
 
-                        <a class="btn btn-primary" href="">Tiếp tục</a>
                     </div>
                 </div>
                 <div class="col-sm-5 clearfix">
@@ -28,18 +27,18 @@
                         <p>Chi tiết hoá đơn</p>
                         <div class="form-one">
                             <form>
-                                <input type="text" placeholder="Họ và Tên người nhận">
-                                <input type="text" placeholder="Email*">
-
-
-                                <input type="text" placeholder="Số điện thoại *">
-
+                                <input type="text" id="nameReceive"  name="nameReceive" placeholder="Họ và Tên người nhận" value="{{Auth::user()->full_name}}">
+                                <div class="invalid-feedback nameReceive"></div>
+                                <input type="text" id="email" name="email" readonly placeholder="Email*" value="{{Auth::user()->email}}">
+                                <div class="invalid-feedback email"></div>
+                                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Số điện thoại *">
+                                <div class="invalid-feedback phoneNumber"></div>
                             </form>
                         </div>
                         <div class="form-two">
                             <form>
 
-                                <select>
+                                <select id="national">
                                     <option>-- Quốc gia --</option>
                                     <option>Việt Nam</option>
                                     <option>Mỹ</option>
@@ -50,7 +49,7 @@
                                     <option>Hàn Quốc</option>
                                     <option>Nhật Bản</option>
                                 </select>
-                                <select>
+                                <select id="city">
                                     <option>-- Tỉnh/Thành phố --</option>
                                     <option>Cần Thơ</option>
                                     <option>Đà Nẵng</option>
@@ -118,7 +117,7 @@
 
 
                                 </select>
-                                <select>
+                                <select id="district">
                                     <option>-- Quận/Huyện --</option>
                                     <option>United States</option>
                                     <option>Bangladesh</option>
@@ -129,8 +128,9 @@
                                     <option>Canada</option>
                                     <option>Dubai</option>
                                 </select>
-                                <input type="text" placeholder="Địa chỉ nhận hàng">
-                                <select>
+                                <input type="text" id="address" name="address" placeholder="Địa chỉ nhận hàng">
+                                <div class="invalid-feedback address"></div>
+                                <select id="payment">
                                     <option>-- Phương thức thanh toán --</option>
                                     <option>Thanh toán khi nhận hàng</option>
 
@@ -143,12 +143,14 @@
                 <div class="col-sm-4">
                     <div class="order-message">
                         <p>Ghi chú</p>
-                        <textarea name="message"  placeholder="" rows="16"></textarea>
+                        <textarea name="message" id="message" placeholder="" rows="16"></textarea>
                         <label><input type="checkbox">Vận chuyển đến địa điểm thanh toán</label>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div class="review-payment">
             <h2>Kiểm tra & Thanh toán</h2>
         </div>
@@ -169,12 +171,19 @@
                 </tbody>
             </table>
         </div>
+
+        <button type="submit" class="btn btn-dathang" >Đặt hàng</button>
+        </form>
     </div>
+
+
 
 @endsection
 
 @section('script')
+    <script src={{asset("error-handler/exception.js")}}></script>
     <script>
+
         window.onload = function() {
 
             // adding data to shopping cart
@@ -347,7 +356,67 @@
             })
         }
 
+        $('button.btn-dathang').on('click',function(event) {
+            event.preventDefault();
+          var arrBook =[];
+            const localItems =  JSON.parse(localStorage.getItem('items'));
+            localItems.map(data=>{
+                   var book ={};
+                   book.id =data.id;
+                   book.no =data.no;
+                arrBook.push(book);
+            });
 
+            var nameReceive = $('#nameReceive').val();
+            var phoneNumber = $('#phoneNumber').val();
+            var national =$('#national').val();
+            var city = $('#city').val();
+            var district =$('#district').val();
+            var address = $('#address').val();
+            var payment = $('#payment').val();
+            var message = $('#message').val();
+            var quantity =parseInt($('.totalQuantity').text());
+            var totalPriceOrder = $('.totalPrice').text().split("đ")[0];
+            var totalPrice = $('.totalSum').text().split("đ")[0];
+            console.log(nameReceive);
+
+         //  $overlay.appendTo("body");
+           // $('#overlay').show();
+            setTimeout(function (){
+                $.ajax({
+                    method :"POST",
+                    url: '{{route('cart.order',Auth::user()->id)}}',
+                    cache:false,
+                    data:{
+                        "_token": '{{csrf_token()}}',
+                        'name':nameReceive,
+                        'phoneNumber':phoneNumber,
+                        'national':national,
+                        'city':city,
+                        'district':district,
+                        'address' :address,
+                        'payment':payment,
+                        'message':message,
+                        'book':arrBook,
+                        'quantity':quantity,
+                        'totalPriceOrder':totalPriceOrder,
+                        'totalPrice':totalPrice
+                    },
+
+                    success: function(data) {
+                        console.log(data.result);
+                     //   $('#overlay').hide();
+
+                     //   window.location.reload();
+                    },
+                    error:function (error){
+                        console.log(error);
+                            $.fn.handlerError(error);
+                    }
+                });
+            },500);
+            return false;
+        });
 
     </script>
 @endsection
