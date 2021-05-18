@@ -250,6 +250,4 @@
             });
         });
     </script>
-
-
 @endsection

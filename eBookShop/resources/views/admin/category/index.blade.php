@@ -1,8 +1,19 @@
 @extends('layouts.main')
+@section('style')
+    <link rel="stylesheet" href="{{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css")}}">
+@endsection
+@section('name')
+    <h1>Thông tin sản phẩm</h1>
+@endsection
+@section('root')
+    <a href="{{route('admin.index')}}">
+        App
+    </a>
 
+@endsection
 @section('content')
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
                     <h2>Thông tin</h2>
@@ -19,7 +30,6 @@
                                     </button>
                                     @include('admin.category.iconsvg.plus',['parameter'=>'#exampleModal'])
                                 </div>
-
 
                                 <div id="collapse1" class="collapse show" aria-labelledby="heading1"
                                      data-parent="#accordion3">
@@ -73,106 +83,21 @@
             </div>
         </div>
 
-
-        <div class="col-xl-7 float-right">
-            <div class="card card-default mb-4 mb-lg-5" data-scroll-height="389">
+        <div class="col-lg-8">
+            <div class="card card-default table-responsive">
                 <div class="card-header card-header-border-bottom">
-                    <h2>Team Activity</h2>
+                    <h2>Sách</h2>
                 </div>
+                <div class="card-body">
+                    <table id="expendable-data-table" class="display" cellspacing="0" width="100%">
+                        <thead>
 
-                <div class="card-body slim-scroll p-0">
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
-                            <i class="mdi mdi-cart-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Emma Smith</a>
-                            <p>Lorem ipsum dolor sit amet</p>
-                        </div>
+                        </thead>
+                        <tbody>
 
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 1 min ago</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
-                            <i class="mdi mdi-email-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Sophia Amanda</a>
-                            <p>Donec sit amet justo dignissim</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 5 min ago</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
-                            <i class="mdi mdi-stack-exchange font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Emily Disuja</a>
-                            <p>At efficitur turpis hendrerit id</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 1 day ago</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
-                            <i class="mdi mdi-cart-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">William Camble</a>
-                            <p>Lorem ipsum dolor sit amet</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 10 AM</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-info text-white">
-                            <i class="mdi mdi-calendar-blank font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="">Comapny Meetup</a>
-                            <p>Donec sit amet justo dignissim</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 10 AM</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between border-bottom px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
-                            <i class="mdi mdi-stack-exchange font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Support Ticket</a>
-                            <p>At efficitur turpis hendrerit id</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i
-                                class="mdi mdi-clock-outline"></i> 10 AM</span>
-                    </div>
-
-                    <div class="media py-3 align-items-center justify-content-between px-5">
-                        <div
-                            class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
-                            <i class="mdi mdi-email-outline font-size-20"></i>
-                        </div>
-                        <div class="media-body pr-3">
-                            <a class="mt-0 mb-1 font-size-15 text-dark" href="#">New Enquiry</a>
-                            <p>Phileine has placed an new order</p>
-                        </div>
-                        <span class=" font-size-12 d-inline-block"><i class="mdi mdi-clock-outline"></i> 9 AM</span>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="mt-3"></div>
             </div>
         </div>
     </div>
@@ -186,7 +111,7 @@
 @endsection
 @section('script')
 
-
+    <script src={{asset("https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js")}}></script>
 
     <link rel="stylesheet" type="text/css"
           href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css"/>
@@ -196,6 +121,32 @@
     <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
+
+        function responsiveTable () {
+
+                $(document).ready(function () {
+
+                    var table = $('#expendable-data-table').DataTable({
+                        destroy: true,
+                        responsive: true,
+                    });
+                    // Handle click on "Expand All" button
+                    $('#btn-show-all-children').on('click', function () {
+                        // Expand row details
+                        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
+                    });
+                    // Handle click on "Collapse All" button
+                    $('#btn-hide-all-children').on('click', function () {
+                        // Collapse row details
+                        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+                    });
+
+                });
+
+
+        }
+
+
         $(document).ready(function () {
             $.fn.fill_parent_category();
             loadauthor();
@@ -310,6 +261,7 @@
                 }
             })
         })
+
         function formatText() {
             var text = $('#parent_id option:selected').text();
             console.log(text);
@@ -317,7 +269,6 @@
             var index = (splitstr.length) - 1;
         }
         function getCategory(text) {
-            //document.getElementById('parent_id').value = text;
             $('#parent_id').val(text);
         }
         function myText(edit) {
@@ -336,6 +287,7 @@
             id = item.getAttribute('data-value');
         }
         // Author
+
         function loadauthor() {
             $.ajax({
                 type: 'GET',
@@ -344,13 +296,16 @@
                 success: function (data) {
                     $(".listAuthor").empty();
                     for (i in data) {
-                        var result = Object.keys(data[i]).map( (key)=> {
+                        var result = Object.keys(data[i]).map((key) => {
                             return [key, data[i][key]];
                         });
-                        var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['full_name'] + '</a>' +
+
+
+                        var html = '<li class="col-12 divAuthor"> <a href="javascript:loadBook(' + data[i]['id'] + ')" >' + data[i]['full_name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
-                            + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\''+result+'\')">'
-                            +'<i class="mdi mdi-account-edit"></i></button></li>';
+                            + 'data-target="#edit-author" id="btn-author-edit" onclick="bind_Author(\'' + result + '\')">'
+                            + '<i class="mdi mdi-account-edit"></i></button></li></form>';
+
                         $(".listAuthor").append(html)
                     }
                 },
@@ -359,6 +314,99 @@
                 }
             })
         }
+
+
+        function loadBook(id) {
+            console.log(id);
+
+            $.ajax({
+                url: '/author/'+id,
+                method: 'GET',
+                data: {id:id},
+                dataType: 'json',
+               contentType: 'application/json',
+                success: function (data) {
+                    console.log(data)
+                    responsiveTable();
+                    $("#expendable-data-table tbody").html("");
+                    $("#expendable-data-table thead").html("");
+                    var htmlTitle ='<tr>'
+                        +'<th>Title</th>'
+                        + '<th>Author</th>'
+                        + '<th>Publisher</th>'
+                        + '<th>Publication_Date</th>'
+                        + '<th>Category</th>'
+                        + '<th>Price</th>'
+                        + '<th></th>'
+                        + '<th class="none">id</th>'
+                        + '<th class="none">image</th>'
+                        + '<th class="none">weight</th>'
+                        + '<th class="none">size</th>'
+                        + '<th class="none">number of pages</th>'
+                        + ' <th class="none">formality</th>'
+                        + '<th class="none">Type</th>'
+                        + '<th class="none">discount</th>'
+                        + '<th class="none">create_at</th>'
+                        + '<th class="none">updated_at</th>'
+                        + '<th class="none"></th>'
+                        + '</tr>';
+
+                    $("#expendable-data-table thead").append(htmlTitle);
+
+                    $.each(data.books, function(key,val) {
+
+                        var html =
+                            '<tr>'
+                            + '<td>' + val.title+ '</td>'
+                            + '<td>'+data.nameAuthor+'</td>'
+                            + '<td>'+val.publisher_id+'</td>'
+                            + '<td>2020-1-4</td>'
+                            + '<td>van hoc</td>'
+                            + '<td>'+val.original_Price+'</td>'
+                            + '<td class="text-right">'
+                            + '<div class="dropdown show d-inline-block widget-dropdown">'
+                            + '<a class="dropdown-toggle icon-burger-mini" href="#" role="button"'
+                            + 'id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"'
+                            + 'aria-expanded="false" data-display="static"></a>'
+                            + '<ul class="dropdown-menu dropdown-menu-right"'
+                            + 'aria-labelledby="dropdown-recent-order5">'
+                            + '<li class="dropdown-item">'
+                            + '<a href="#">View</a>'
+                            + '</li>'
+                            + '<li class="dropdown-item">'
+                            + '<a href="#">edit</a>'
+                            + '</li>'
+                            + '<li class="dropdown-item">'
+                            + '<a type="button" id="btn-delete-book" data-value="2" >Delete</a>'
+                            + '</li>x'
+                            + '</ul>'
+                            + '</div>'
+                            + '</td>'
+                            + '<td>'+val.id+'</td>'
+                            + '<td>'
+                            + 'no image'
+                            + '</td>'
+                            + '<td>'+val.weight+'</td>'
+                            + '<td>'+val.size+'</td>'
+                            + '<td>'+val.number_of_pages+'</td>'
+                            + '<td>'+val.formality+'</td>'
+                            + '<td>'+val.foreign_book+'</td>'
+                            + '<td>No</td>'
+                            + '<td>'+val.created_at+'</td>'
+                            + '<td>'+val.updated_at+'</td>'
+                            + '<td>'
+                            + '<button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"'
+                            + 'data-target="#exampleModalSmall">'
+                            + 'Discount'
+                            + '</button>'
+                            + '</td>'
+                            + '</tr>';
+                         $("#expendable-data-table tbody").append(html);
+                    });
+                }
+            });
+        }
+
         $('#btn-add-author').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -381,6 +429,7 @@
                 }
             })
         })
+
         function bind_Author(result) {
             var data = result.split(',');
             var  Author ={};
@@ -391,13 +440,14 @@
             $('#firstname_edit_author').val(Author.firstName);
             $('#idAuthor').val(Author.id);
         }
-        $("#btn-edit-author").click(function (e){
+
+        $("#btn-edit-author").click(function (e) {
             e.preventDefault();
             $.ajax({
-                type:'PATCH',
-                url:'author/update',
-                data:$("#edit_author").serialize(),
-                success:function (data){
+                type: 'PATCH',
+                url: 'author/update',
+                data: $("#edit_author").serialize(),
+                success: function (data) {
                     loadauthor();
                     $('#edit-author').modal('hide');
                     $(".alert-highlighted").removeClass('alert-danger');
@@ -453,8 +503,10 @@
                 }
             })
         });
+
         //publisher
         loadPublisher();
+
         function loadPublisher() {
             $.ajax({
                 type: 'GET',
@@ -468,8 +520,8 @@
                         });
                         var html = '<li class="col-12 divAuthor"><a href="" class="col-10">' + data[i]['name'] + '</a>' +
                             '<button class="col-2" data-toggle="modal"'
-                            + 'data-target="#edit_publisher" id="btn-publisher-edit" onclick="bind_Publisher(\''+result+'\')">'
-                            +'<i class="mdi mdi-account-edit"></i></button></li>';
+                            + 'data-target="#edit_publisher" id="btn-publisher-edit" onclick="bind_Publisher(\'' + result + '\')">'
+                            + '<i class="mdi mdi-account-edit"></i></button></li>';
                         $(".listPublisher").append(html)
                     }
                 },
@@ -488,7 +540,7 @@
                 success: function (data) {
                     loadPublisher();
                     $result = data.result;
-                    if ($result === 'success'){
+                    if ($result === 'success') {
                         loadPublisher();
                         $('#add_publisher').modal('hide');
                         $(".alert-highlighted").removeClass('alert-danger');
@@ -496,7 +548,7 @@
                         $('.alert-highlighted').text('Thêm thành công');
                         $('.alert-highlighted').show();
                         $('.alert-highlighted').fadeOut(5000);
-                    }else {
+                    } else {
                         $("#add_publisher").hide();
                         setTimeout(function () {
                             $('#add_publisher').show()
@@ -514,6 +566,7 @@
                 }
             })
         })
+
         function bind_Publisher(result) {
             console.log(result);
             var data = result.split(',');
@@ -524,10 +577,11 @@
             $('#idPublisher').val(Publisher.id);
         }
         $('#btn_edit_publisher').click(function (e){
+
             e.preventDefault();
             $.ajax({
-                type:'PATCH',
-                url:'publisher/update',
+                type: 'PATCH',
+                url: 'publisher/update',
                 cache: false,
                 data: $("#form_update_publisher").serialize(),
                 success:function (data){
@@ -599,6 +653,7 @@
                 }
             })
         });
+
     </script>
 
     <script type="text/javascript">
