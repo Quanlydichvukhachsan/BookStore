@@ -178,7 +178,7 @@
         </div>
 
             <div class="btn-order_history">
-                <button type="submit" class="btn btn-dathang" >Đặt hàng</button>
+                <button style="display: none;" type="submit" class="btn btn-dathang" >Đặt hàng</button>
 
             </div>
 
@@ -190,8 +190,13 @@
 @endsection
 
 @section('script')
+
     <script src={{asset("error-handler/exception.js")}}></script>
     <script>
+        if (localStorage.getItem("items") !== null) {
+            $('.btn-dathang').show();
+        }
+
         $overlay = $('<div id="overlay"/>').css({
             position: 'fixed',
             display: 'none',

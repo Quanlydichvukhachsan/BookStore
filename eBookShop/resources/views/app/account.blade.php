@@ -11,6 +11,7 @@
                         <form action="#">
                             <input type="text" placeholder="Email" value="{{Auth()->user()->email}}" />
                             <input type="text" placeholder="User name" value="{{Auth()->user()->userName}}" />
+                            <a href="http://127.0.0.1:8000/sales/order/{{Auth()->user()->id}}/history" class="btn btn-default">Đơn hàng của tôi</a>
                         </form>
                     </div><!--/login form-->
                 </div>
