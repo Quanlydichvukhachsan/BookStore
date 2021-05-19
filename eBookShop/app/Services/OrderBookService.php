@@ -1,4 +1,5 @@
 <?php namespace App\Services;
+use App\Events\OrderNotification;
 use App\Models\Order;
 use App\Contracts\OrderContract;
 use App\Models\User;
@@ -35,6 +36,8 @@ class OrderBookService implements OrderContract{
            foreach ($input['book']as $item){
                $order->books()->attach($item['id'],array('amount'=>$item['no']));
            }
+
+           event(new OrderNotification($user,$order));
 
            return "Đặt hàng thành công!";
 
