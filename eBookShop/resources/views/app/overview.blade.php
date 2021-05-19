@@ -4,6 +4,7 @@
      @include('app.sidebarOverview')
 @endsection
 @section('content')
+
     <div class="features_items"><!--features_items-->
         <h2 class="title text-center">Mục Sản Phẩm</h2>
         @foreach($products->getListBook() as $item)
@@ -35,13 +36,18 @@
             </div>
         @endforeach
 
-        <ul class="pagination">
-            <li class="active"><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">&raquo;</a></li>
-        </ul>
+<ul class="pagination">
+    <!-- Array Of Links -->
+    <li class="page-item"><a class="page-link" href="http://127.0.0.1:8000/home?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="http://127.0.0.1:8000/home?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="http://127.0.0.1:8000/home?page=3">3</a></li>
+    <!-- Next Page Link -->
+    <li class="page-item"><a class="page-link" href="http://127.0.0.1:8000/home?page=2" rel="next">&raquo;</a></li>
+</ul>
+
+
     </div><!--features_items-->
+
 @endsection
 @section('script')
     <script>

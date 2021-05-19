@@ -6,12 +6,16 @@ namespace App\viewModels;
 
 
 
+use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
+
 class productViewModels
 {
     private $listBook =array();
     private $listCategory =array();
     private $pathName;
     private $pathId;
+    private  $books ;
 
     public function setpathName($name) {
        $this->pathName =$name;
@@ -20,6 +24,14 @@ class productViewModels
 
     public function getpathName()  {
         return $this->pathName;
+    }
+    public function setBooks( $books) {
+        $this->books =$books;
+    }
+
+
+    public function getBooks()  {
+        return $this->books;
     }
 
     public function setpathId($id) {

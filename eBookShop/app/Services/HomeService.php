@@ -98,10 +98,10 @@ class HomeService implements HomeContract
      }
     public function getAll()
     {
-         $books =  Book::all()->take(10);
+         $books =  Book::paginate(2);
          $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
-
+         $productViewModels->setBooks($books);
          foreach ($books as $book){
 
                $bookViewModels =new bookViewModels();
