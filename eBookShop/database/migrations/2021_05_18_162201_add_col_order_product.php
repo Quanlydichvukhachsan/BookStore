@@ -16,8 +16,8 @@ class AddColOrderProduct extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->string('district');
             $table->string('note')->nullable();
-            $table->decimal('totalPrice',8,3);
-            $table->decimal('totalPriceFee',8,3);
+            $table->float('totalPrice');
+            $table->float('totalPriceFee');
             $table->integer('quantity');
         });
     }

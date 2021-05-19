@@ -59,10 +59,11 @@
                     <div class="total_area">
 
                         <ul class="total_price">
-                            <li>Tổng Số Giỏ Hàng <span>1</span></li>
-                            <li>Tổng Tiền <span>300.000 đ</span></li>
+                            <li>Tổng Số Giỏ Hàng <span></span></li>
+                            <li>Tổng Tiền <span></span></li>
                         </ul>
-                        <a class="btn btn-default update" href="{{route('cart.checkout')}}">Đặt Hàng</a>
+
+                        <a class="btn btn-default update"  style="display: none;" href="{{route('cart.checkout')}}">Đặt Hàng</a>
 
                     </div>
                 </div>
@@ -77,7 +78,9 @@
 @section('script')
     <script>
         window.onload = function() {
-
+            if (localStorage.getItem("items") !== null) {
+                   $('.btn-default').show();
+            }
             // adding data to shopping cart
             const iconShoppingP = document.querySelector('.notification span');
             let no = 0;

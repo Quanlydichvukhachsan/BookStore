@@ -8,4 +8,5 @@ interface OrderContract{
     public function create($request,$id);
    public function orderShow($id,$customer);
    public function destroy($id);
+    public function updateSalesOrderDetail( $request , $id,  $customer);
 }

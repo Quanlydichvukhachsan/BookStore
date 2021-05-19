@@ -32,6 +32,12 @@ Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name
 Route::group(['middleware' => ['auth']],function (){
     Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/checkout/{id}/order', [App\Http\Controllers\CartController::class, 'order'])->name('cart.order');
+    Route::get('/sales/order/{id}/history', [App\Http\Controllers\CartController::class, 'salesOrder'])->name('cart.salesOrder');
+    Route::get('/sales/order/{id}/customer/{idCustomer}', [App\Http\Controllers\CartController::class, 'salesOrderDetail'])->name('cart.salesOrderDetail');
+    Route::post('/sales/order/{id}/customer/{idCustomer}', [App\Http\Controllers\CartController::class, 'updateSalesOrderDetail'])->name('cart.updateSalesOrderDetail');
+    Route::get('/customer/{id}/account/', [App\Http\Controllers\AccountController::class, 'index'])->name('account');
+    Route::post('/customer/{id}/account/update', [App\Http\Controllers\AccountController::class, 'update'])->name('account.update');
+
 });
 
 //Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');

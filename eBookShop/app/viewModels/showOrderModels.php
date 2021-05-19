@@ -15,7 +15,9 @@ class showOrderModels
     private $phoneNumber;
     private $address;
     private $country;
+    private $district;
     private $totalPrice;
+    private $totalPriceFee;
     private $status;
     private $create_at;
     private $listBookViewModel =array();
@@ -34,6 +36,13 @@ class showOrderModels
 
     public function getId() {
         return $this->id;
+    }
+    public function setDistrict($district) {
+        $this->district = $district;
+    }
+
+    public function getDistrict() {
+        return $this->district;
     }
     public function setUserId($userId) {
         $this->userId = $userId;
@@ -114,6 +123,14 @@ class showOrderModels
 
     public function getTotalPrice() {
         return $this->totalPrice;
+    }
+
+    public function setTotalPriceFee($totalPriceFee) {
+        $this->totalPriceFee = $totalPriceFee;
+    }
+
+    public function getTotalPriceFee() {
+        return $this->totalPriceFee;
     }
 
     public function setListBookViewModel(bookViewModels $bookViewModel) {

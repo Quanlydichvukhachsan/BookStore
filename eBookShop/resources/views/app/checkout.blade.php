@@ -38,7 +38,7 @@
                         <div class="form-two">
                             <form>
 
-                                <select id="national">
+                                <select id="national" name="national">
                                     <option>-- Quốc gia --</option>
                                     <option>Việt Nam</option>
                                     <option>Mỹ</option>
@@ -49,7 +49,8 @@
                                     <option>Hàn Quốc</option>
                                     <option>Nhật Bản</option>
                                 </select>
-                                <select id="city">
+                                <div class="invalid-feedback national"></div>
+                                <select id="city" name="city">
                                     <option>-- Tỉnh/Thành phố --</option>
                                     <option>Cần Thơ</option>
                                     <option>Đà Nẵng</option>
@@ -117,24 +118,27 @@
 
 
                                 </select>
-                                <select id="district">
+                                <div class="invalid-feedback city"></div>
+                                <select id="district" name="district">
                                     <option>-- Quận/Huyện --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
+                                    <option>Huyện Hóc Môn</option>
+                                    <option>Quận Gò Vấp</option>
+                                    <option>Quận Tân Phú</option>
+                                    <option>Huyện Bình Chánh</option>
+                                    <option>Quận Bình Tân</option>
+                                    <option>Quận Bình Thạnh</option>
+                                    <option>Huyện Cần Giờ</option>
+                                    <option>Huyện Nhà Bè</option>
                                 </select>
+                                <div class="invalid-feedback district"></div>
                                 <input type="text" id="address" name="address" placeholder="Địa chỉ nhận hàng">
                                 <div class="invalid-feedback address"></div>
-                                <select id="payment">
+                                <select id="payment" name="payment">
                                     <option>-- Phương thức thanh toán --</option>
                                     <option>Thanh toán khi nhận hàng</option>
 
                                 </select>
+                                <div class="invalid-feedback payment"></div>
 
                             </form>
                         </div>
@@ -170,9 +174,14 @@
 
                 </tbody>
             </table>
+
         </div>
 
-        <button type="submit" class="btn btn-dathang" >Đặt hàng</button>
+            <div class="btn-order_history">
+                <button type="submit" class="btn btn-dathang" >Đặt hàng</button>
+
+            </div>
+
         </form>
     </div>
 
@@ -183,7 +192,17 @@
 @section('script')
     <script src={{asset("error-handler/exception.js")}}></script>
     <script>
-
+        $overlay = $('<div id="overlay"/>').css({
+            position: 'fixed',
+            display: 'none',
+            top: 0,
+            left: 0,
+            color: '#adbcbf',
+            width: '100%',
+            height: $(window).height() + 'px',
+            opacity: 0.4,
+            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
+        });
         window.onload = function() {
 
             // adding data to shopping cart
@@ -366,22 +385,48 @@
                    book.no =data.no;
                 arrBook.push(book);
             });
-
+            let city;
+            let national;
+            let district;
+            let payment;
             var nameReceive = $('#nameReceive').val();
             var phoneNumber = $('#phoneNumber').val();
-            var national =$('#national').val();
-            var city = $('#city').val();
-            var district =$('#district').val();
             var address = $('#address').val();
-            var payment = $('#payment').val();
             var message = $('#message').val();
             var quantity =parseInt($('.totalQuantity').text());
-            var totalPriceOrder = $('.totalPrice').text().split("đ")[0];
-            var totalPrice = $('.totalSum').text().split("đ")[0];
-            console.log(nameReceive);
+            var totalPriceOrder = $('.totalPrice').text().split("đ")[0].replace(/\,/g,'').split('.').join('');
+            var totalPrice = $('.totalSum').text().split("đ")[0].replace(/\,/g,'').split('.').join('');
 
-         //  $overlay.appendTo("body");
-           // $('#overlay').show();
+             if(!$('#city').val().localeCompare("-- Tỉnh/Thành phố --")){
+                  city =null;
+             }else {
+                  city =$('#city').val();
+             }
+             if(!$('#national').val().localeCompare("-- Quốc gia --")){
+                  national = null;
+             }else{
+                  national = $('#national').val();
+             }
+             if(!$('#district').val().localeCompare("-- Quận/Huyện --")){
+                  district =null;
+             }else{
+                  district =$('#district').val();
+             }
+             if(!$('#payment').val().localeCompare("-- Phương thức thanh toán --")){
+                 payment =null;
+             }else{
+                  payment = $('#payment').val();
+             }
+
+            // var formatSum = (30000).toLocaleString(
+            //      undefined,
+            //      { minimumFractionDigits: 0 }
+            //  );
+
+        //console.log(formatSum);
+
+           $overlay.appendTo("body");
+            $('#overlay').show();
             setTimeout(function (){
                 $.ajax({
                     method :"POST",
@@ -404,10 +449,19 @@
                     },
 
                     success: function(data) {
+                        var id ={{Auth::user()->id}};
+                        $html ='<a href="http://127.0.0.1:8000/sales/order/'+id+'/history" class="btn btn-dathang" >Đơn hàng của tôi</a>';
+                        $(".btn-order_history").html("");
+                        $('#table-cart > tbody >tr').html("");
+                        const iconShoppingP = document.querySelector('.notification span');
+                        iconShoppingP.innerHTML =0;
+                        $(".btn-order_history").append($html);
+                        $('#overlay').hide();
+                        localStorage.removeItem("items");
                         console.log(data.result);
-                     //   $('#overlay').hide();
-
-                     //   window.location.reload();
+                        $(".alert-highlighted span").text(data.result);
+                        $('.alert-highlighted').show();
+                        $('.alert-highlighted').fadeOut(10000);
                     },
                     error:function (error){
                         console.log(error);

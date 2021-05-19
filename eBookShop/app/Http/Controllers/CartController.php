@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\OrderContract;
 use App\Http\Requests\CreateOrderRequest;
+use App\Http\Requests\UpdateSalesOrderRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -34,11 +36,41 @@ class CartController extends Controller
      */
     public function order(CreateOrderRequest $request,$id){
 
-        $result = $this->orderBook->create($request,$id);
-       //  $input = $request->all();
-       // $result  =$input['book'][0]['no'];
+       $result = $this->orderBook->create($request,$id);
           return response()->json(["result"=>$result]);
     }
+    /**
+     * Display the specified resource.
+     * @param  int  $customer
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function salesOrder($id){
+          $user = User::findOrFail($id);
+       $items = $user->orders;
+        return view('app.salesOrderHistory',compact('items'));
+    }
+    /**
+     * Display the specified resource.
+     * @param  int  $customer
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function salesOrderDetail($id, int $customer){
+        $item =   $this->orderBook->orderShow($id,$customer);
+      return view('app.salesOrderDetail',compact('item'));
+    }
+    /**
+     * Display the specified resource.
+     * @param \Illuminate\Http\Request $request
+     * @param  int  $customer
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
+    public function updateSalesOrderDetail(UpdateSalesOrderRequest $request , $id, int $customer){
+            $result =  $this->orderBook->updateSalesOrderDetail($request,$id,$customer);
+        return response()->json(["result"=>$result]);
+    }
 
 }

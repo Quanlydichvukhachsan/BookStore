@@ -12,4 +12,5 @@
     <link href={{asset("assets/webApp/css/main.css")}} rel="stylesheet">
     <link href={{asset("assets/webApp/css/responsive.css")}} rel="stylesheet">
     <link href={{asset("assets/webApp/css/style.css")}} rel="stylesheet">
+    @yield('style')
 </head><!--/head-->

@@ -434,7 +434,7 @@
                         <div class="display-5">Total</div>
                         <div class="ml-auto d-flex">
                             <div class="text-primary text-uppercase px-3">vnd</div>
-                            <div class="font-weight-bold">{{$item->getTotalPrice()}}</div>
+                            <div class="font-weight-bold">{{number_format($item->getTotalPriceFee(), 0)}}</div>
                         </div>
                     </div>
                 </div>
