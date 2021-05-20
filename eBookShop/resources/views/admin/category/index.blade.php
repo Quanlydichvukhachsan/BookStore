@@ -88,10 +88,29 @@
                 <div class="card-header card-header-border-bottom">
                     <h2>Sách</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="table-main">
                     <table id="expendable-data-table" class="display" cellspacing="0" width="100%">
                         <thead>
-
+                        <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Publication_Date</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th></th>
+                        <th class="none">id</th>
+                        <th class="none">image</th>
+                        <th class="none">weight</th>
+                        <th class="none">size</th>
+                        <th class="none">number of pages</th>
+                        <th class="none">formality</th>
+                        <th class="none">Type</th>
+                        <th class="none">discount</th>
+                        <th class="none">create_at</th>
+                        <th class="none">updated_at</th>
+                        <th class="none"></th>
+                        </tr>
                         </thead>
                         <tbody>
 
@@ -121,31 +140,23 @@
     <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
+         $(document).ready(function (){
+            var table = $('#expendable-data-table').DataTable({
+                 'responsive': true
+             });
 
-        function responsiveTable () {
+             // Handle click on "Expand All" button
+             $('#btn-show-all-children').on('click', function(){
+                // Expand row details
+                table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
+            });
 
-                $(document).ready(function () {
-
-                    var table = $('#expendable-data-table').DataTable({
-                        destroy: true,
-                        responsive: true,
-                    });
-                    // Handle click on "Expand All" button
-                    $('#btn-show-all-children').on('click', function () {
-                        // Expand row details
-                        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
-                    });
-                    // Handle click on "Collapse All" button
-                    $('#btn-hide-all-children').on('click', function () {
-                        // Collapse row details
-                        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
-                    });
-
-                });
-
-
-        }
-
+             // Handle click on "Collapse All" button
+            $('#btn-hide-all-children').on('click', function(){
+                 //Collapse row details
+                 table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+            });
+        });
 
         $(document).ready(function () {
             $.fn.fill_parent_category();
@@ -317,92 +328,17 @@
 
 
         function loadBook(id) {
-            console.log(id);
+            const tableMain = document.querySelector('#table-main');
+            const cardBoxTable = tableMain.querySelector('tbody');
 
             $.ajax({
                 url: '/author/'+id,
                 method: 'GET',
                 data: {id:id},
-                dataType: 'json',
-               contentType: 'application/json',
                 success: function (data) {
-                    console.log(data)
-                    responsiveTable();
-                    $("#expendable-data-table tbody").html("");
-                    $("#expendable-data-table thead").html("");
-                    var htmlTitle ='<tr>'
-                        +'<th>Title</th>'
-                        + '<th>Author</th>'
-                        + '<th>Publisher</th>'
-                        + '<th>Publication_Date</th>'
-                        + '<th>Category</th>'
-                        + '<th>Price</th>'
-                        + '<th></th>'
-                        + '<th class="none">id</th>'
-                        + '<th class="none">image</th>'
-                        + '<th class="none">weight</th>'
-                        + '<th class="none">size</th>'
-                        + '<th class="none">number of pages</th>'
-                        + ' <th class="none">formality</th>'
-                        + '<th class="none">Type</th>'
-                        + '<th class="none">discount</th>'
-                        + '<th class="none">create_at</th>'
-                        + '<th class="none">updated_at</th>'
-                        + '<th class="none"></th>'
-                        + '</tr>';
-
-                    $("#expendable-data-table thead").append(htmlTitle);
-
-                    $.each(data.books, function(key,val) {
-
-                        var html =
-                            '<tr>'
-                            + '<td>' + val.title+ '</td>'
-                            + '<td>'+data.nameAuthor+'</td>'
-                            + '<td>'+val.publisher_id+'</td>'
-                            + '<td>2020-1-4</td>'
-                            + '<td>van hoc</td>'
-                            + '<td>'+val.original_Price+'</td>'
-                            + '<td class="text-right">'
-                            + '<div class="dropdown show d-inline-block widget-dropdown">'
-                            + '<a class="dropdown-toggle icon-burger-mini" href="#" role="button"'
-                            + 'id="dropdown-recent-order5" data-toggle="dropdown" aria-haspopup="true"'
-                            + 'aria-expanded="false" data-display="static"></a>'
-                            + '<ul class="dropdown-menu dropdown-menu-right"'
-                            + 'aria-labelledby="dropdown-recent-order5">'
-                            + '<li class="dropdown-item">'
-                            + '<a href="#">View</a>'
-                            + '</li>'
-                            + '<li class="dropdown-item">'
-                            + '<a href="#">edit</a>'
-                            + '</li>'
-                            + '<li class="dropdown-item">'
-                            + '<a type="button" id="btn-delete-book" data-value="2" >Delete</a>'
-                            + '</li>x'
-                            + '</ul>'
-                            + '</div>'
-                            + '</td>'
-                            + '<td>'+val.id+'</td>'
-                            + '<td>'
-                            + 'no image'
-                            + '</td>'
-                            + '<td>'+val.weight+'</td>'
-                            + '<td>'+val.size+'</td>'
-                            + '<td>'+val.number_of_pages+'</td>'
-                            + '<td>'+val.formality+'</td>'
-                            + '<td>'+val.foreign_book+'</td>'
-                            + '<td>No</td>'
-                            + '<td>'+val.created_at+'</td>'
-                            + '<td>'+val.updated_at+'</td>'
-                            + '<td>'
-                            + '<button data-value="6" class="btn-sm btn-success" type="button" data-toggle="modal" href="#"'
-                            + 'data-target="#exampleModalSmall">'
-                            + 'Discount'
-                            + '</button>'
-                            + '</td>'
-                            + '</tr>';
-                         $("#expendable-data-table tbody").append(html);
-                    });
+                    if(Object.keys(data).length !== 0) {
+                        cardBoxTable.innerHTML = data;
+                    }
                 }
             });
         }

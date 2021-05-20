@@ -60,9 +60,9 @@ class AuthorController extends Controller
     public function show(Request $request)
     {
         $result = $this->authorContracts->showBook($request['id']);
-        if ($request->ajax()) {
-            return $result;
-        }
+
+            return response()->json($result);
+
     }
 
     /**
