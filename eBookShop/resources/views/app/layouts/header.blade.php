@@ -16,11 +16,28 @@
                  @endif
                 <li class="nav-item"><i class="fa fa-crosshairs"></i> <a href="{{route('register')}}" class="nav-link"> Register </a> </li>
                 <li class="nav-item"><i class="fa fa-shopping-cart"></i> <a href="{{route('cart')}}" class="nav-link notification"><span class="badge shopping-cart">0</span> <span>Cart</span> </a>  </li>
-                <li class="nav-item dropdown">
-                    <i class="fa fa-lock"></i>
-                    <a href="{{route('login')}}" class="nav-link"> Login </a>
 
-                </li>
+                @if(Auth::check())
+                    <li class="nav-item dropdown">
+                        <i class="fa fa-lock"></i>
+                        <a href="{{route('logout')}}" class="nav-link"
+                           onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
+                            <i class="mdi mdi-logout"></i>
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                    @else
+                    <li class="nav-item dropdown">
+                        <i class="fa fa-lock"></i>
+                        <a href="{{route('login')}}" class="nav-link"> Login </a>
+
+                    </li>
+                    @endif
             </ul>
 
         </div>
