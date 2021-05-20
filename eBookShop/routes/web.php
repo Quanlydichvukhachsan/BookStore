@@ -27,7 +27,7 @@ use App\Http\Controllers\AuthorController;
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::class, 'getByCategory'])->name('home.product');
-
+Route::get('/home/{title}/{id}', [App\Http\Controllers\HomeController::class, 'getProduct'])->name('home.productDetail');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::group(['middleware' => ['auth']],function (){
     Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');

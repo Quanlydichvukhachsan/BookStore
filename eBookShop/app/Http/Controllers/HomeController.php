@@ -46,45 +46,55 @@ class HomeController extends Controller
             if ($request->has('sort')) {
                 $key = $request->input('sort');
                 $products = $this->homeContract->sortPriceById($name, $id, $key);
-            }elseif($request->has('sortname')){
+            } elseif ($request->has('sortname')) {
 
                 $key = $request->input('sortname');
                 $products = $this->homeContract->sortNameById($name, $id, $key);
-            }elseif($request->has('sortFormality')){
+            } elseif ($request->has('sortFormality')) {
 
                 $key = $request->input('sortFormality');
                 $products = $this->homeContract->sortFormalityById($name, $id, $key);
 
-            }
-            else {
+            } else {
 
                 $products = $this->homeContract->getByProductByCategory($name, $id);
 
             }
 
             return response()->json($products);
-        }
-
-        else {
+        } else {
 
             if ($request->has('sort')) {
                 $key = $request->input('sort');
 
                 $products = $this->homeContract->getByCategory($name, $id, $key);
-            }elseif ($request->has('sortname')){
+            } elseif ($request->has('sortname')) {
                 $key = $request->input('sortname');
                 $products = $this->homeContract->getByCategory($name, $id, $key);
-            }elseif ('sortFormality'){
+            } elseif ('sortFormality') {
                 $key = $request->input('sortFormality');
 
                 $products = $this->homeContract->getByCategory($name, $id, $key);
-            }
-            else{
+            } else {
                 $products = $this->homeContract->getByCategory($name, $id, "");
             }
 
         }
         return view('app.product', compact('products'));
+    }
+        /**
+         * Update the specified resource in storage.
+         *
+         * @param \Illuminate\Http\Request $request
+         * @param int $id
+         * @param string $name
+         * @return \Illuminate\Http\Response
+         */
+        public function getProduct(string $name,$id)
+       {
+           $products =  $this->homeContract->getAll();
+           return view('app.productDetail',compact('products'));
+       }
 
-}
+
 }
