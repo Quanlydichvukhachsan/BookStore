@@ -140,47 +140,23 @@
     <script src="{{asset('error-handler/exception.js')}}"></script>
 
     <script>
-        $(document).ready(function (){
+         $(document).ready(function (){
             var table = $('#expendable-data-table').DataTable({
-                'responsive': true
-            });
+                 'responsive': true
+             });
 
-            // Handle click on "Expand All" button
-            $('#btn-show-all-children').on('click', function(){
+             // Handle click on "Expand All" button
+             $('#btn-show-all-children').on('click', function(){
                 // Expand row details
                 table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
             });
 
-            // Handle click on "Collapse All" button
+             // Handle click on "Collapse All" button
             $('#btn-hide-all-children').on('click', function(){
-                // Collapse row details
-                table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+                 //Collapse row details
+                 table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
             });
         });
-        // function responsiveTable () {
-        //
-        //         $(document).ready(function () {
-        //
-        //             var table = $('#expendable-data-table').DataTable({
-        //                 destroy: true,
-        //                 responsive: true,
-        //             });
-        //             // Handle click on "Expand All" button
-        //             $('#btn-show-all-children').on('click', function () {
-        //                 // Expand row details
-        //                 table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
-        //             });
-        //             // Handle click on "Collapse All" button
-        //             $('#btn-hide-all-children').on('click', function () {
-        //                 // Collapse row details
-        //                 table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
-        //             });
-        //
-        //         });
-        //
-        //
-        // }
-
 
         $(document).ready(function () {
             $.fn.fill_parent_category();
@@ -354,12 +330,15 @@
         function loadBook(id) {
             const tableMain = document.querySelector('#table-main');
             const cardBoxTable = tableMain.querySelector('tbody');
+
             $.ajax({
                 url: '/author/'+id,
                 method: 'GET',
                 data: {id:id},
                 success: function (data) {
-                    cardBoxTable.innerHTML =data ;
+                    if(Object.keys(data).length !== 0) {
+                        cardBoxTable.innerHTML = data;
+                    }
                 }
             });
         }
