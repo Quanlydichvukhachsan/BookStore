@@ -29,6 +29,23 @@
 
     <div class="page-wrapper">
 
+        <div class="d-flex justify-content-center container mt-5" style="position: fixed; z-index: 999;">
+            <div class="row " id="notification-user-order"  style=" display: none ; position: absolute; top: 0; right: 0; margin-right: 30px;" data-delay="5000">
+                <div class="col-md-12">
+                    <div class="d-flex flex-row justify-content-between align-items-center card cookie p-3">
+                        <div class="d-flex flex-row align-items-center new-order">
+                            <span class="badge badge-success">new</span>
+                            <div class="ml-2 mr-2">
+                                <span>Bạn có một đơn hàng mới.</span><br>
+                                <div class="info-user"> </div><br>
+                                <span class="see-order"></span>
+                            </div>
+                        </div>
+                        <div><button class="btn btn-dark" onclick="removeNotification()" type="button">Okay</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div aria-live="polite" aria-atomic="true" style="position: relative;">
             <div class="alert alert-success alert-highlighted"
                  style="position: absolute; top: 0; right: 0; display: none;" data-delay="5000">

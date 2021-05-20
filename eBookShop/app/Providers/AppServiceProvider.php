@@ -6,6 +6,7 @@ namespace App\Providers;
 use App\Contracts\AdminContract;
 use App\Contracts\BookContract;
 
+use App\Contracts\HomeContract;
 use App\Contracts\PermissionContract;
 use App\Contracts\PublisherContract;
 use App\Contracts\RoleContract;
@@ -15,6 +16,7 @@ use App\Models\Category;
 use App\Services\AdminService;
 use App\Services\BookService;
 
+use App\Services\HomeService;
 use App\Services\PermissionService;
 use App\Services\PublisherService;
 use App\Services\RoleService;
@@ -48,6 +50,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BookContract::class,BookService::class);
         $this->app->bind(PublisherContract::class,PublisherService::class);
         $this->app->bind(AdminContract::class,AdminService::class);
+        $this->app->bind(HomeContract::class,HomeService::class);
+
     }
 
     /**

@@ -14,8 +14,9 @@ class AddColUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phoneNumber')->unique();
-            $table->string('address');
+            $table->string('phoneNumber')->unique()->nullable();
+            $table->string('address')->nullable();
+
         });
     }
 

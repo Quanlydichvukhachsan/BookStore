@@ -15,10 +15,26 @@ header{
     z-index: 999;
 }
 
+#span-collapse{
+    cursor: pointer;
+}
 
+
+.notification .badge {
+    position: absolute;
+    top: 29px;
+    right: 190px;
+    padding: 3px 3px;
+    border-radius: 30%;
+    background-color: red;
+    color: white;
+}
 i {
     color:black;
 
+}
+.invalid-feedback{
+    color: red;
 }
 .nav-item::after {
     content: '';

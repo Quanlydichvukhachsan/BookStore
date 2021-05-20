@@ -287,6 +287,7 @@
             var discount  =  item.value;
             way.set("someScope", { with: { something: discount }})
         }
+        $("tbody")
     </script>
 
 @endsection

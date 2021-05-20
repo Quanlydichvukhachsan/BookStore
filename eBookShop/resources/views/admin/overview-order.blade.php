@@ -116,7 +116,35 @@
 </div>
 @endsection
 @section('script')
+    <script src="{{asset("https://js.pusher.com/7.0/pusher.min.js")}}"></script>
+
     <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('a1554335c7a7b1d59640', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('order-detail', function(result) {
+            console.log(result);
+         var user = result.user;
+         var order =result.order;
+         $htmlOrder =' <a class="learn-more" href="'+'/order/'+order.id +'/customer/'+user.id+'/show'+'">xem đơn hàng<i class="fa fa-angle-right ml-2"></i></a>';
+          $htmlUser = '<a class="nameOrder" href="' +'/user/'+user.id+'"> <span>'+ user.lastName +" "+ user.firstName+'</span></a>';
+            $('#notification-user-order .info-user').html("");
+            $('#notification-user-order .info-user').append($htmlUser);
+            $('#notification-user-order .see-order').html("");
+            $('#notification-user-order .see-order').append($htmlOrder);
+            $('#notification-user-order').show();
+
+        });
+       function removeNotification(){
+           $('#notification-user-order').hide();
+
+               }
         function removeOrder(item){
              $id = item.getAttribute("data-value");
             $("tr#sid"+$id).remove();

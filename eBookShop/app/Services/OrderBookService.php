@@ -1,4 +1,5 @@
 <?php namespace App\Services;
+use App\Events\OrderNotification;
 use App\Models\Order;
 use App\Contracts\OrderContract;
 use App\Models\User;
@@ -16,12 +17,30 @@ class OrderBookService implements OrderContract{
 
     public function show($id){
 
-            return $this->order::findOrFail($id);
+
     }
 
 
-    public function create(OrderBookRequestModels $order){
-                return $this->order::create($order);
+    public function create($request,$id){
+          $input = $request->all();
+         $user = User::findOrFail($id);
+           if(!count($user->getRoleNames())){
+                    $user->address = $input['address'];
+               $user->phoneNumber = $input['phoneNumber'];
+               $user->save();
+           }
+            $order = Order::create(['user_id'=>$id,'city'=>$input['city'],'country'=>$input['national'],'district'=>$input['district'],
+                 'note'=>$input['message'],'totalPrice'=>$input['totalPrice'],
+                'totalPriceFee'=>$input['totalPriceOrder'],
+                 'nameReceive'=>$input['name'],'quantity'=>$input['quantity']]);
+           foreach ($input['book']as $item){
+               $order->books()->attach($item['id'],array('amount'=>$item['no']));
+           }
+
+           event(new OrderNotification($user,$order));
+
+           return "Đặt hàng thành công!";
+
     }
 
      public function orderShow($id, $customer)
@@ -53,6 +72,8 @@ class OrderBookService implements OrderContract{
           $orderView->setCity($order->city);
           $orderView->setCountry($order->country);
           $orderView->setStatus($order->status);
+         $orderView->setDistrict($order->district);
+         $orderView->setTotalPriceFee($order->totalPriceFee);
          return $orderView;
      }
 
@@ -84,6 +105,25 @@ class OrderBookService implements OrderContract{
            return $message;
        }
        return $message;
+
+    }
+
+    public function updateSalesOrderDetail($request, $id, $customer)
+    {
+        $input = $request->all();
+        $user =  User::findOrFail($customer);
+        if(!count($user->getRoleNames())){
+            $user->address = $input['address'];
+            $user->phoneNumber = $input['phoneNumber'];
+            $user->save();
+        }
+        $order =  Order::findOrFail($id);
+        $order->city =$input['city'];
+        $order->nameReceive =$input['nameReceive'];
+        $order->district =$input['district'];
+        $order->country =$input['country'];
+        $order->save();
+        return "Cập nhật đơn hàng thành công!";
 
     }
 }
