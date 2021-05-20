@@ -19,7 +19,7 @@
                         <div class="product-overlay">
                             <div class="overlay-content">
                                 <h2>{{$item->getPrice()}} đ</h2>
-                                <p>{{$item->getTitle()}}</p>
+                                <p><a href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a></p>
                                 <a data-img="{{$item->getImages()}}" data-author="{{$item->getAuthor()}}" data-value="{{$item->getId()}}" class="btn btn-default add-to-cart attToCart"></i>Thêm vào giỏ</a>
                             </div>
                         </div>

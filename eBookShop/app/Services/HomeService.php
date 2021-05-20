@@ -7,10 +7,13 @@ namespace App\Services;
 use App\Contracts\HomeContract;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Publisher;
 use App\viewModels\bookViewModels;
 use App\viewModels\productViewModels;
 use App\viewModels\showCategoryModel;
+use  App\viewModels\bookDetailViewModels;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
 
 class HomeService implements HomeContract
 {
@@ -313,5 +316,33 @@ class HomeService implements HomeContract
         $html = $this->setHtml($productViewModels)[0];
 
         return $html;
+    }
+    public function getProductDetail(string $title, $id)
+    {
+        global $bookDetailViewModels;
+        $bookRaLationShip = Book::where('id','<>',$id)->get();
+        $bookDetailViewModels = new bookDetailViewModels();
+        $book = Book::findOrFail($id);
+            $bookDetailViewModels->setPrice($book->price);
+            $bookDetailViewModels->setTitle($book->title);
+            $bookDetailViewModels->setAuthor($book->author->fullname);
+            $bookDetailViewModels->setAmount(1);
+            $bookDetailViewModels->setPublisher($book->publisher->name);
+
+            foreach ($book->imagebooks as $item) {
+                $bookDetailViewModels->setlistImages($item->file);
+            }
+            $bookDetailViewModels->setDescribe($book->describe);
+            foreach ($bookRaLationShip as $book) {
+                $bookViewModels =new bookViewModels();
+                $bookViewModels->setId($book->id);
+                $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
+                $bookViewModels->setPrice($book->price);
+                $bookViewModels->setImages($book->imagebooks[0]->file);
+                $bookViewModels->setTitle($book->title);
+                $bookDetailViewModels->setListBookAll($bookViewModels);
+            }
+
+        return $bookDetailViewModels;
     }
 }
