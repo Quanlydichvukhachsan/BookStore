@@ -29,7 +29,6 @@
 <script src="{{asset("https://js.pusher.com/7.0/pusher.min.js")}}"></script>
 
 <script>
-
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
