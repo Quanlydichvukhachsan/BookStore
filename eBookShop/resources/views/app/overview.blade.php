@@ -20,7 +20,7 @@
                         <div class="product-overlay">
                             <div class="overlay-content item-info">
                                 <h2>{{$item->getPrice()}}đ</h2>
-                                <p> <a href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a></p>
+                                <p> <a class="nav-product" href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a></p>
                                 <input type="hidden" value="{{$item->getId()}}">
                                 <a data-img="{{$item->getImages()}}" data-author="{{$item->getAuthor()}}" data-value="{{$item->getId()}}" class="btn btn-default add-to-cart attToCart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
                             </div>

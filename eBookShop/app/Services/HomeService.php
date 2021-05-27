@@ -328,7 +328,10 @@ class HomeService implements HomeContract
             $bookDetailViewModels->setAuthor($book->author->fullname);
             $bookDetailViewModels->setAmount(1);
             $bookDetailViewModels->setPublisher($book->publisher->name);
-
+            $bookDetailViewModels->setWeight($book->weight);
+            $bookDetailViewModels->setNumber_of_pages($book->number_of_pages);
+            $bookDetailViewModels->setFormality($book->formality);
+            $bookDetailViewModels->setId($book->id);
             foreach ($book->imagebooks as $item) {
                 $bookDetailViewModels->setlistImages($item->file);
             }
