@@ -14,6 +14,7 @@ class bookViewModels
     private $id;
     private $titleSlug;
 
+
     public function setAuthor($author)
     {
         $this->author = $author;
@@ -70,6 +71,5 @@ class bookViewModels
     public function getTitle() {
         return $this->title;
     }
-
 
 }

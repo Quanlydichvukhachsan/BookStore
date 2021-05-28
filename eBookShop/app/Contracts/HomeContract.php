@@ -11,4 +11,5 @@ interface HomeContract
     public function sortPriceById($name,$id,$key);
     public function sortNameById($name,$id,$key);
    public function sortFormalityById($name,$id,$key);
+   public function getProductDetail(string $title, $id);
 }

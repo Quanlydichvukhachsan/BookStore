@@ -19,7 +19,7 @@
                         <div class="product-overlay">
                             <div class="overlay-content">
                                 <h2>{{$item->getPrice()}} đ</h2>
-                                <p>{{$item->getTitle()}}</p>
+                                <p><a class="nav-product" href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a></p>
                                 <a data-img="{{$item->getImages()}}" data-author="{{$item->getAuthor()}}" data-value="{{$item->getId()}}" class="btn btn-default add-to-cart attToCart"></i>Thêm vào giỏ</a>
                             </div>
                         </div>
@@ -49,8 +49,9 @@
         window.onload = function() {
             // adding data to localstorage
             const attToCartBtn = document.getElementsByClassName('attToCart');
+            console.log(attToCartBtn);
             let items = [];
-            for(let i=0; i<attToCartBtn.length; i++){
+         /* for(let i=0; i<attToCartBtn.length; i++){
                 attToCartBtn[i].addEventListener("click",function(e){
                     e.preventDefault();
 
@@ -86,14 +87,14 @@
                     }
 
                 });
-            }
+            }*/
             // adding data to shopping cart
-            const iconShoppingP = document.querySelector('.notification span');
-            let no = 0;
-            JSON.parse(localStorage.getItem('items')).map(data=>{
-                no = no+data.no
-                ;	});
-            iconShoppingP.innerHTML = no;
+          //  const iconShoppingP = document.querySelector('.notification span');
+        //    let no = 0;
+        //    JSON.parse(localStorage.getItem('items')).map(data=>{
+         //       no = no+data.no
+         //       ;	});
+         //   iconShoppingP.innerHTML = no;
 
         }
 
