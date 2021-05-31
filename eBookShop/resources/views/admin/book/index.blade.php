@@ -120,7 +120,7 @@
                                 <td>{{$item->created_at}}</td>
                             <td>{{$item->updated_at}}</td>
                              <td>
-                                 @if(auth()->user()->hasDirectPermission('Update'))
+                                 @if(auth()->user()->hasDirectPermission('Update')||auth()->user()->hasRole('Administrator'))
                                  <button data-value="{{$item->id}}" class="btn-sm btn-success" onclick="getPriceDiscount(this)" type="button" data-toggle="modal" href="#"
                                          data-target="#exampleModalSmall">
                                      Discount
@@ -128,6 +128,7 @@
                                      @endif
                              </td>
                         </tr>
+
                         @endforeach
                         </tbody>
                     </table>

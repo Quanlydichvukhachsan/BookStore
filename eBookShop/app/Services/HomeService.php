@@ -98,7 +98,7 @@ class HomeService implements HomeContract
      }
     public function getAll()
     {
-         $books =  Book::paginate(2);
+         $books =  Book::paginate(3);
          $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
          $productViewModels->setBooks($books);
@@ -113,6 +113,7 @@ class HomeService implements HomeContract
              $productViewModels->setListBook($bookViewModels);
 
          }
+
 
 
         foreach ($categorys as $item){
