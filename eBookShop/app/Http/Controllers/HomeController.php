@@ -93,7 +93,8 @@ class HomeController extends Controller
         public function getProduct(string $name,$id)
        {
            $products =  $this->homeContract->getAll();
-           return view('app.productDetail',compact('products'));
+           $productDetail = $this->homeContract->getProductDetail($name,$id);
+           return view('app.productDetail',compact('products','productDetail'));
        }
 
 
