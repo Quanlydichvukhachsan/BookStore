@@ -90,10 +90,26 @@ class HomeController extends Controller
          * @param string $name
          * @return \Illuminate\Http\Response
          */
-        public function getProduct(string $name,$id)
+        public function getProduct(Request $request ,string $name,$id)
        {
            $products =  $this->homeContract->getAll();
            $productDetail = $this->homeContract->getProductDetail($name,$id);
+           $arrAjaxInfoBook =array();
+
+           array_push($arrAjaxInfoBook,$productDetail->getDescribe());
+           array_push($arrAjaxInfoBook,$productDetail->getPrice());
+           array_push($arrAjaxInfoBook,$productDetail->getTitle());
+           array_push($arrAjaxInfoBook,$productDetail->getPublisher());
+           array_push($arrAjaxInfoBook,$productDetail->getOriginalPrice());
+           array_push($arrAjaxInfoBook,$productDetail->getPercentDiscount());
+           array_push($arrAjaxInfoBook,$productDetail->getFormality());
+           array_push($arrAjaxInfoBook,$productDetail->getAuthor());
+           array_push($arrAjaxInfoBook,$productDetail->getPublisher());
+           array_push($arrAjaxInfoBook,$productDetail->getlistImages());
+           if ($request->ajax()) {
+               return response()->json($arrAjaxInfoBook);
+           }
+
            return view('app.productDetail',compact('products','productDetail'));
        }
 

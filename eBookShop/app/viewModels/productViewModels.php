@@ -14,8 +14,11 @@ class productViewModels
     private $listBook =array();
     private $listCategory =array();
     private $pathName;
+
     private $pathId;
     private  $books ;
+
+
 
     public function setpathName($name) {
        $this->pathName =$name;

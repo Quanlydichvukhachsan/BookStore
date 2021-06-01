@@ -6,6 +6,8 @@ namespace App\viewModels;
 
 class bookDetailViewModels
 {
+    private $originalPrice;
+    private $percentDiscount;
     private $author;
     private $title;
     private $amount;
@@ -20,6 +22,24 @@ class bookDetailViewModels
     private $original_Price;
     private $describe;
     private $listBooKAll = array();
+
+    public function setPercentDiscount($percentDiscount)
+    {
+        $this->percentDiscount = $percentDiscount;
+    }
+    public function getPercentDiscount()
+    {
+        return $this->percentDiscount;
+    }
+
+    public function setOriginalPrice($originalPrice)
+    {
+        $this->originalPrice = $originalPrice;
+    }
+    public function getOriginalPrice()
+    {
+        return $this->originalPrice;
+    }
 
 
     public function setListBookAll($book) {

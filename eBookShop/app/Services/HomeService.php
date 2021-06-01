@@ -101,7 +101,7 @@ class HomeService implements HomeContract
      }
     public function getAll()
     {
-         $books =  Book::paginate(3);
+         $books =  Book::all();
          $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
          $productViewModels->setBooks($books);
@@ -113,6 +113,9 @@ class HomeService implements HomeContract
                $bookViewModels->setImages($book->imagebooks[0]->file);
                $bookViewModels->setTitle($book->title);
                $bookViewModels->setAuthor($book->author->full_name);
+               $bookViewModels->setCategory($book->categories->name);
+             $bookViewModels->setIdCategory($book->categories->id);
+             $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
              $productViewModels->setListBook($bookViewModels);
 
          }
@@ -324,6 +327,8 @@ class HomeService implements HomeContract
         $bookRaLationShip = Book::where('id','<>',$id)->get();
         $bookDetailViewModels = new bookDetailViewModels();
         $book = Book::findOrFail($id);
+            $bookDetailViewModels->setOriginalPrice($book->original_Price);
+            $bookDetailViewModels->setPercentDiscount($book->percent_discount);
             $bookDetailViewModels->setPrice($book->price);
             $bookDetailViewModels->setTitle($book->title);
             $bookDetailViewModels->setAuthor($book->author->fullname);

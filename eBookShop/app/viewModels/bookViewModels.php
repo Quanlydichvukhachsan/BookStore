@@ -6,6 +6,9 @@ namespace App\viewModels;
 
 class bookViewModels
 {
+    private $categorySlug;
+    private $category;
+    private $idcategory;
     private $author;
     private $title;
     private $amount;
@@ -14,6 +17,32 @@ class bookViewModels
     private $id;
     private $titleSlug;
 
+    public function setCategorySlug($category) {
+        $this->categorySlug =$category;
+    }
+
+
+    public function getCategorySlug()  {
+        return $this->categorySlug;
+    }
+
+    public function setIdCategory($idcategory) {
+        $this->idcategory =$idcategory;
+    }
+
+
+    public function getIdCategory()  {
+        return $this->idcategory;
+    }
+
+    public function setCategory($category) {
+        $this->category =$category;
+    }
+
+
+    public function getCategory()  {
+        return $this->category;
+    }
 
     public function setAuthor($author)
     {

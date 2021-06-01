@@ -273,7 +273,7 @@
       })
   }
    function priceCal(price,discountPercent){
-               return (price * discountPercent)/100;
+               return (price * (100- discountPercent))/100;
    }
    function priceChange(price){
        $("#discount").bind('keyup mouseup', function () {
