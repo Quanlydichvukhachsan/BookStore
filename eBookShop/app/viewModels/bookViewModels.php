@@ -6,6 +6,8 @@ namespace App\viewModels;
 
 class bookViewModels
 {
+    private $originalPrice;
+    private $percentDiscount;
     private $categorySlug;
     private $category;
     private $idcategory;
@@ -16,6 +18,24 @@ class bookViewModels
     private $images;
     private $id;
     private $titleSlug;
+
+    public function setPercentDiscount($percentDiscount)
+    {
+        $this->percentDiscount = $percentDiscount;
+    }
+    public function getPercentDiscount()
+    {
+        return $this->percentDiscount;
+    }
+
+    public function setOriginalPrice($originalPrice)
+    {
+        $this->originalPrice = $originalPrice;
+    }
+    public function getOriginalPrice()
+    {
+        return $this->originalPrice;
+    }
 
     public function setCategorySlug($category) {
         $this->categorySlug =$category;

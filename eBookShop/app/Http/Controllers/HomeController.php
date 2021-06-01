@@ -106,6 +106,7 @@ class HomeController extends Controller
            array_push($arrAjaxInfoBook,$productDetail->getAuthor());
            array_push($arrAjaxInfoBook,$productDetail->getPublisher());
            array_push($arrAjaxInfoBook,$productDetail->getlistImages());
+
            if ($request->ajax()) {
                return response()->json($arrAjaxInfoBook);
            }

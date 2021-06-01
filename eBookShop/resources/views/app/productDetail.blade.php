@@ -180,8 +180,6 @@
             const attToCartBtn = document.getElementsByClassName('attToCart');
             const  title = $('.title-book').text();
              const  price =$('.price-book').text();
-
-
             let items = [];
             for(let i=0; i<attToCartBtn.length; i++){
                 attToCartBtn[i].addEventListener("click",function(e){

@@ -109,6 +109,8 @@ class HomeService implements HomeContract
 
                $bookViewModels =new bookViewModels();
                $bookViewModels->setId($book->id);
+               $bookViewModels->setOriginalPrice($book->original_Price);
+               $bookViewModels->setPercentDiscount($book->percent_discount);
                $bookViewModels->setPrice($book->price);
                $bookViewModels->setImages($book->imagebooks[0]->file);
                $bookViewModels->setTitle($book->title);

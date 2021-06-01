@@ -6,7 +6,7 @@
         <h3 class="sec-maker-h3">BOOKS</h3>
         <ul class="nav tab-nav-style-1-a justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#men-latest-products">Latest Products</a>
+                <a class="nav-link active" data-toggle="tab" href="#book-latest-products">Latest Products</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#men-best-selling-products">Best Selling</a>
@@ -22,7 +22,7 @@
         <div class="wrapper-content">
             <div class="outer-area-tab">
                 <div class="tab-content">
-                    <div class="tab-pane active show fade" id="men-latest-products">
+                    <div class="tab-pane active show fade" id="book-latest-products">
                         <div class="slider-fouc">
                             <div class="products-slider owl-carousel" data-item="4">
                                       @foreach($products->getListBook() as $item)
@@ -36,7 +36,7 @@
                                                 </a>
                                                 <a class="item-mail" href="javascript:void(0)">Mail</a>
                                                 <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                                <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
+                                                <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
                                             </div>
                                         </div>
                                         <div class="item-content">
@@ -63,11 +63,25 @@
                                                 <div class="item-new-price">
                                                     {{$item->getPrice()}} đ
                                                 </div>
+                                                @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
+                                                    <div class="item-old-price">
+                                                        {{$item->getOriginalPrice()}} đ
+                                                    </div>
+                                                @endif
+
                                             </div>
                                         </div>
-                                        <div class="tag new">
-                                            <span>NEW</span>
+                                        @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
+                                        <div class="tag sale">
+                                            <span>Sale</span>
                                         </div>
+
+                                        @else
+                                            <div class="tag new">
+                                                <span>New</span>
+                                            </div>
+                                      @endif
+
                                     </div>
                               @endforeach
                             </div>
@@ -90,56 +104,65 @@
 @endsection
 @section('script')
     <script>
+        function setLocalStorage(id,name,price,img,quantity,items){
+            if(typeof(Storage) !== 'undefined'){
+                let item = {
+                    id:parseInt(id),
+                    name: name,
+                    price:parseInt(price),
+                    img :img,
+                    no:1
+                };
+                if(JSON.parse(localStorage.getItem('items')) === null){
+                    items.push(item);
+                    localStorage.setItem("items",JSON.stringify(items));
+                    window.location.reload();
+                }else{
+                    const localItems = JSON.parse(localStorage.getItem("items"));
+                    localItems.map(data=>{
+                        if(item.id === parseInt(data.id)){
+                            item.no = data.no + 1;
+                        }else{
+                            items.push(data);
+                        }
+                    });
+                    items.push(item);
+                    localStorage.setItem('items',JSON.stringify(items));
+                    window.location.reload();
+                }
+
+            }else{
+                alert('local storage is not working on your browser');
+            }
+
+        }
         window.onload = function() {
             // adding data to localstorage
-            const attToCartBtn = document.getElementsByClassName('attToCart');
+            const attToCartBtn = document.getElementsByClassName('item-addCart');
+
             let items = [];
             for(let i=0; i<attToCartBtn.length; i++){
                 attToCartBtn[i].addEventListener("click",function(e){
                     e.preventDefault();
-
-                    if(typeof(Storage) !== 'undefined'){
-                        let item = {
-                            id:this.getAttribute('data-value'),
-                            name:e.target.parentElement.children[1].textContent,
-                            price:e.target.parentElement.children[0].textContent.replace('đ',''),
-                            author:this.getAttribute('data-author'),
-                            img :this.getAttribute('data-img'),
-                            no:1
-                        };
-                        if(JSON.parse(localStorage.getItem('items')) === null){
-                            items.push(item);
-                            localStorage.setItem("items",JSON.stringify(items));
-                            window.location.reload();
-                        }else{
-                            const localItems = JSON.parse(localStorage.getItem("items"));
-                            localItems.map(data=>{
-                                if(item.id == data.id){
-                                    item.no = data.no + 1;
-                                }else{
-                                    items.push(data);
-                                }
-                            });
-                            items.push(item);
-                            localStorage.setItem('items',JSON.stringify(items));
-                           window.location.reload();
-                        }
-
-                    }else{
-                        alert('local storage is not working on your browser');
-                    }
-
+                         var id =this.getAttribute('data-value').split(',')[0];
+                         var name =this.getAttribute('data-value').split(',')[1];
+                         var price =this.getAttribute('data-value').split(',')[2];
+                         var img =e.target.parentElement.parentElement.children[0].getElementsByTagName("img")[0].getAttribute("src");
+                         setLocalStorage(id,name,price,img,1,items);
                 });
             }
-            // adding data to shopping cart
-            const iconShoppingP = document.querySelector('.notification span');
-            let no = 0;
-            JSON.parse(localStorage.getItem('items')).map(data=>{
-                no = no+data.no
-                ;	});
-            iconShoppingP.innerHTML = no;
-
         }
+
+       // function addToCart(item){
+       //     let items = [];
+       //     var id =item.getAttribute('data-value');
+       //     var price = $('.price h4').text();
+       //     var title = $('.title-book').text();
+       //     var quantity = $('.quantity-text-field').val();
+       //     var img = $('.img-default').find(".image-book").attr("src");
+       //     setLocalStorage(id,title,price,img,quantity,items);
+       // }
+
         function setValueQuickView(item){
             $id= item.getAttribute('data-id');
             $title = item.getAttribute('data-value');
@@ -152,6 +175,7 @@
                 dataType: "json",
                 success: function(data) {
                     clearDataBookDetail();
+                    $('.btn-addToCart').attr("data-value", $id);
                    $('.description-book').append(data[0]);
                     $('.price h4').append(data[1] + "đ");
                     if(data[6].localeCompare("Hard Cover")){
@@ -159,6 +183,7 @@
                     }else {
                         $('.formality').append("Bìa mềm");
                     }
+                    $('.title-book').append(data[2]);
                     $('.book-author').append(data[7]);
                     $('.book-publisher').append(data[8]);
                     var href = $('.ids'+categoryId).attr('href');
@@ -172,8 +197,8 @@
                         var $html;
                         if(i===0){
 
-                            $html =  '<a id="img-book" onclick="active(this)" class="active" data-image="'+data[9][0]+'" data-zoom-image="'+data[9][0]+'">'+
-                                '<img src="'+data[9][0]+'" alt="Product">'+
+                            $html =  '<a id="img-book" onclick="active(this)" class="active img-default" data-image="'+data[9][0]+'" data-zoom-image="'+data[9][0]+'">'+
+                                '<img class="image-book"  src="'+data[9][0]+'" alt="Product">'+
                                 '</a>';
                             $img +=$html;
                         }else{
@@ -186,7 +211,7 @@
                      $img += '</div>';
                        $('.zoom-area').append($img);
 
-                    if(Math.round(parseInt(data[5])) !== 0){
+                    if(Math.round(parseInt(data[5])) !== 0 && data[5] !== null){
                         $('.original-price').append('<span> Giá gốc : </span>' );
                         $('.original-price').append( '<span>'+ data[4] + '</span>');
                         $('.discount-price').append('<span> Giảm giá : </span>' );
@@ -208,6 +233,7 @@
             $('.book-publisher').text("");
             $('.zoom-area').text("");
             $('.category-root').text("");
+            $('.title-book').text("");
         }
         function active(item){
              $('.zoom-area').find('.active').removeClass("active");

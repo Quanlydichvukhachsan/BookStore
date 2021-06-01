@@ -102,7 +102,7 @@
                                 <div class="section-1-title-breadcrumb-rating">
                                     <div class="product-title">
                                         <h1>
-                                            <a href="single-product.html">Casual Hoodie Full Cotton</a>
+                                            <a class="title-book" href="single-product.html"></a>
                                         </h1>
                                     </div>
                                     <ul class="bread-crumb">
@@ -168,7 +168,7 @@
                                 </div>
                                 <div class="section-6-social-media-quantity-actions u-s-p-y-14">
                                     <form action="#" class="post-form">
-                                        </div>
+
                                         <div class="quantity-wrapper u-s-m-b-22">
                                             <span>Quantity:</span>
                                             <div class="quantity">
@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <button class="button button-outline-secondary" type="submit">Add to cart</button>
+                                            <button data-value="" onclick="addToCart(this)" class="button btn-addToCart button-outline-secondary" type="button">Add to cart</button>
                                             <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
                                             <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
                                         </div>
