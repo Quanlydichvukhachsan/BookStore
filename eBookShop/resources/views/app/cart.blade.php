@@ -1,75 +1,112 @@
 @extends('app.home')
-
-@section('content')
-    <div class="container">
-        <div class="breadcrumbs">
-            <ol class="breadcrumb">
-                <li><a href="{{route('home')}}">Home</a></li>
-                <li class="active">Shopping Cart</li>
-            </ol>
-        </div>
-        <div class="table-responsive cart_info cartBox">
-            <table class="table table-condensed" id="table-cart">
-                <thead>
-                <tr class="cart_menu">
-                    <td class="image">Mục Sản Phẩm</td>
-                    <td class="description"></td>
-                    <td class="price">Giá</td>
-                    <td class="quantity">Số Lượng</td>
-                    <td class="total">Tổng Tiền</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
+@section('pageWrapper')
+    <!-- Page Introduction Wrapper -->
+    <div class="page-style-a">
+        <div class="container">
+            <div class="page-intro">
+                <h2>Cart</h2>
+                <ul class="bread-crumb">
+                    <li class="has-separator">
+                        <i class="ion ion-md-home"></i>
+                        <a href="{{route('home')}}">Home</a>
+                    </li>
+                    <li class="is-marked">
+                        <a href="single-product.html">Cart</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-    <section id="do_action">
+    <!-- Page Introduction Wrapper /- -->
+@endsection
+@section('content')
+    <!-- Cart-Page -->
+    <div class="page-cart u-s-p-t-80">
         <div class="container">
-            <div class="heading">
-                <p>Bạn phải đăng ký mới được thanh toán. </p>
-            </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-lg-12">
+                    <form>
+                        <!-- Products-List-Wrapper -->
+                        <div class="table-wrapper u-s-m-b-60">
+                            <table class="table-cart">
+                                <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                        <div class="col-md-6">
-                            @if(!Auth::check())
-                            <div class="login-form"><!--login form-->
-                                <h2>Đăng nhập tài khoản</h2>
-                                <form action="#">
-                                    <input type="text" placeholder="Email" />
-                                    <input type="email" placeholder="Mật khẩu" />
-                                    <span>
-								<input type="checkbox" class="checkbox">
-								Lưu mật khẩu
-							</span>
-                                    <button type="submit" class="btn btn-default">Đăng nhập</button>
-                                </form>
-                            </div><!--/login form-->
-                                @endif
+                                </tbody>
+                            </table>
                         </div>
+                        <!-- Products-List-Wrapper /- -->
+                        <!-- Coupon -->
+                        <div class="coupon-continue-checkout u-s-m-b-60">
+                            <div style="display:none;" class="coupon-area">
+                                <h6>Đăng nhập để thanh toán</h6>
+                                <input class="button button-primary d-block w-40" type="button" onclick="location.href='http://127.0.0.1:8000/login';" value="Đăng nhập" />
 
 
 
-                </div>
-                <div class="col-sm-6">
+                            </div>
+                            <div class="button-area">
+                                <a href="{{route('home')}}" class="continue">Tiếp tục mua hàng</a>
+                                <a href="checkout.html" style="display: none" class="checkout">Tiến hành thanh toán</a>
+                            </div>
+                        </div>
+                        <!-- Coupon /- -->
+                    </form>
+                    <!-- Billing -->
+                    <div class="calculation u-s-m-b-60">
+                        <div class="table-wrapper-2">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th colspan="2">Tổng giỏ hàng</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <h3 class="calc-h3 u-s-m-b-0">Tổng tiền</h3>
+                                    </td>
+                                    <td>
+                                        <span class="calc-text calc-text-total"></span>
+                                    </td>
+                                </tr>
 
-                    <div class="total_area">
-
-                        <ul class="total_price">
-                            <li>Tổng Số Giỏ Hàng <span></span></li>
-                            <li>Tổng Tiền <span></span></li>
-                        </ul>
-
-                        <a class="btn btn-default update"  style="display: none;" href="{{route('cart.checkout')}}">Đặt Hàng</a>
-
+                                <tr>
+                                    <td>
+                                        <h3 class="calc-h3 u-s-m-b-0" id="tax-heading">Phí giao hàng</h3>
+                                        <span>(Mặc định)</span>
+                                    </td>
+                                    <td>
+                                        <span class="calc-text">30.000 VND</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h3 class="calc-h3 u-s-m-b-0">Tổng đơn hàng</h3>
+                                    </td>
+                                    <td>
+                                        <span class="calc-text calc-text-order"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    <!-- Billing /- -->
                 </div>
             </div>
         </div>
-    </section><!--/#do_action-->
+    </div>
+    <!-- Cart-Page /- -->
+
 @endsection
 
 
@@ -77,82 +114,132 @@
 
 @section('script')
     <script>
+        let newItems =[];
+        let no =0;
+        function clearDataCart(item){
+            const localItems =  JSON.parse(localStorage.getItem('items'));
+              $id =  item.getAttribute('data-value');
+              newItems.forEach((val,index)=>{
+                  console.log(val);
+                     if(parseInt($id) === val.id){
+                         no = val.no;
+                     }
+              })
+            localItems.map(data=>{
+                if(data.id === parseInt($id)){
+                    data.no = no;
+                }
+            });
+           localStorage.setItem('items',JSON.stringify(localItems));
+            window.location.reload();
+        }
         window.onload = function() {
-            if (localStorage.getItem("items") !== null) {
-                   $('.btn-default').show();
+            if (localStorage.getItem("items") !== null &&  JSON.parse(localStorage.getItem('items')).length >0 ) {
+                $('.coupon-area').show();
+                   $('.checkout').show();
             }
             // adding data to shopping cart
-            const iconShoppingP = document.querySelector('.notification span');
+            const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+            const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
             let no = 0;
-            let total =0;
-            //update amount and quantity total
+            let priceTotal =0;
             JSON.parse(localStorage.getItem('items')).map(data=>{
-                no = no+data.no;
-                total = total + (parseFloat(data.price) * data.no);
-                	});
-            iconShoppingP.innerHTML = no;
-            var formatSum = (total).toLocaleString(
+                newItems.push(data);
+                no = no+ parseInt(data.no);
+                priceTotal = priceTotal +(parseInt(data.no) * data.price);
+                var formatPrice =(data.price).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+                $html =  '<li class="clearfix">'+
+                    '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
+                    '<img src="'+data.img+'" alt="Product">'+
+                    '<span class="mini-item-name">'+data.name+'</span>'+
+                    '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
+                    '<span class="mini-item-quantity"> x '+data.no +'</span>'+
+                    '</a>'+
+                    '</li>';
+                $('.mini-cart-list').append($html);
+            });
+
+            let formatPrice =(priceTotal).toLocaleString(
                 undefined,
                 { minimumFractionDigits: 3 }
             );
-            var  totalQuantity =$('.total_price li:first-child span').text("");
-            totalQuantity.text(no);
-         var totalPrice =   $('.total_price li:last-child span').text("");
-           totalPrice.text(formatSum+' đ');
 
+            if(formatPrice !== "0.000"){
+                var formatPriceTotal =(parseFloat(priceTotal+30.000)).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+                iconShoppingP.innerHTML = no;
+                totalPrice.innerHTML =formatPrice + "VND";
+                $('.calc-text-total').text(formatPrice + ' VND');
+                $('.calc-text-order').text(formatPriceTotal + ' VND');
+            }
                 //adding cartbox data in table
-            const cartBox = document.querySelector('.cartBox');
+            const cartBox = document.querySelector('.table-wrapper');
             const cardBoxTable = cartBox.querySelector('tbody');
             let tableData = '';
             if(JSON.parse(localStorage.getItem('items'))[0] === null){
                 tableData += '<tr><td colspan="5">No items found</td></tr>'
             }else{
                 JSON.parse(localStorage.getItem('items')).map(data=>{
-
-                    tableData +=  '<tr>'+
-                        '<td class="cart_product">'+
-                            '<a href=""><img src="'+data.img+'" width ="100"  height="100" alt=""></a>'+
+                    tableData += '<tr>'+
+                        '<td>'+
+                            '<div class="cart-anchor-image">'+
+                                '<a href="single-product.html">'+
+                                    '<img src="'+data.img+'" alt="Product">'+
+                                        '<h6>'+data.name+'</h6>'+
+                                '</a>'+
+                            '</div>'+
                         '</td>'+
-                        '<td class="cart_description">'+
-                            '<h4><a href="">'+data.name+'</a></h4>'+
-                            '<p>'+ 'Tác giả:' + data.author +'</p>'+
+                        '<td>'+
+                            '<div class="cart-price cart-price-single">'+
+                                  data.price.toFixed(3)
+                            +' đ</div>'+
                         '</td>'+
-                        '<td class="cart_price">'+
-                            '<p class="price_product">'+data.price+'</p>'+
+                        '<td>'+
+                            '<div class="cart-quantity">'+
+                                '<div class="quantity">'+
+                                    '<input data-value="'+data.id+'" onkeypress="javascript:return isNumber(event)" type="text" class="quantity-text-field" value="'+data.no+'">'+
+                                        '<a class="plus-a" data-max="1000">&#43;</a>'+
+                                        '<a class="minus-a" data-min="1">&#45;</a>'+
+                                '</div>'+
+                            '</div>'+
                         '</td>'+
-                        '<td class="cart_quantity">'+
-                            '<div class="cart_quantity_button">'+
-                                '<a class="cart_quantity_up" href="">' +'+'+ '</a>'+
-                                '<input class="cart_quantity_input" type="text" data-value="'+data.id+'" name="quantity" value="'+data.no+'" autocomplete="off" size="2">'+
-                                    '<a class="cart_quantity_down" href="">'+ '-'+ '</a>'
-                            +'</div>'+
+                        '<td>'+
+                            '<div class="cart-price cart-price-total">'+
+                        (data.price * data.no).toFixed(3)
+                            +' đ</div>'+
                         '</td>'+
-                        '<td class="cart_total">'+
-                            '<p class="cart_total_price">' + (data.price * data.no).toFixed(3) +'</p>'
-                        +'</td>'+
-                        '<td class="cart_delete">'+
-                            '<a class="cart_quantity_delete" data-value="'+data.id+'" onclick="deleteCart(this)" href=""><i class="fa fa-times"></i></a>'+
+                        '<td>'+
+                            '<div class="action-wrapper">'+
+                                '<button type="button" onclick="clearDataCart(this)" data-value="'+data.id+'" class="button button-outline-secondary fas fa-sync"></button>'+
+                                '<button onclick="deleteCart(this)" data-value="'+data.id+'" class="button button-outline-secondary fas fa-trash"></button>'+
+                            '</div>'+
                         '</td>'+
-                    '</tr>';
+                    '</tr>'  ;
                 });
             }
             cardBoxTable.innerHTML = tableData;
 
             $(document).ready(function (){
-                $('.cart_quantity_input').on('keyup keypress',function (e){
+                $('.quantity-text-field').on('keyup keypress',function (e){
                     update_amounts();
                 })
               //increment quantity
-                $(".cart_quantity_up").click(function (e){
+                $(".plus-a").click(function (e){
                     e.preventDefault();
-                    var $n = $(this).parent(".cart_quantity_button").find(".cart_quantity_input");
+
+                    var $n =$(this).parent(".quantity").find(".quantity-text-field");
                     $n.val(Number($n.val())+1);
                     update_amounts();
                 })
                 //decrement quantity
-                $(".cart_quantity_down").click(function (e){
+                $(".minus-a").click(function (e){
                     e.preventDefault();
-                    var $n = $(this).parent(".cart_quantity_button").find(".cart_quantity_input");
+                    var $n =$(this).parent(".quantity").find(".quantity-text-field");
                     $n.val(Number($n.val())-1);
                     update_amounts();
                 })
@@ -170,44 +257,69 @@
               });
               localStorage.setItem('items',JSON.stringify(items));
               window.location.reload();
+
         }
+
 
         function update_amounts(){
             var sum =0;
          var countQuantity =0;
-            $('#table-cart > tbody >tr').each(function (){
-                var quantity =$(this).find('.cart_quantity_input').val();
+            $('.table-cart > tbody >tr').each(function (){
+                var quantity =$(this).find('.quantity-text-field').val();
+                var id = $(this).find('.quantity-text-field').attr('data-value');
+                countQuantity = countQuantity +parseInt(quantity);
+                var price = $(this).find('.cart-price-single').text().split('đ').join(' ');
+                     var amount = (Number(price)*parseInt(quantity));
 
-                var price = $(this).find('.price_product').text();
-                var amount =(quantity * price);
                 var value = (amount).toLocaleString(
                     undefined,
-                    { minimumFractionDigits: 3 }
+                    { minimumFractionDigits: 3}
                 );
-                sum +=amount;
-                var formatSum = (sum).toLocaleString(
+                $(this).find('.cart-price-total').text(value + ' đ');
+                var regex = /[.,\s]/g;
+                sum+= Number(value.replace(regex, ''));
+
+                var formatDigit = ( parseFloat(sum).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 0 }
+                ));
+                var formatDigitTotal = ( parseFloat(sum+ 30000).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 0 }
+                ));
+                $('.calc-text-order').text(formatDigitTotal + ' VND');
+                $('.calc-text-total').text(formatDigit + ' VND');
+
+                 const localItems =  JSON.parse(localStorage.getItem('items'));
+                 console.log(id);
+                 localItems.map(data=>{
+                     if(data.id === parseInt(id)){
+                        data.no = parseInt(quantity);
+                     }
+
+                 });
+              localStorage.setItem('items', JSON.stringify(localItems));
+                const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+                const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+                iconShoppingP.innerHTML =countQuantity;
+                totalPrice.innerHTML =formatDigit + ' VND';
+            });
+            $('.mini-cart-list').text("");
+            JSON.parse(localStorage.getItem('items')).map(data=>{
+                var formatPrice =(data.price).toLocaleString(
                     undefined,
                     { minimumFractionDigits: 3 }
                 );
-
-                $(this).find('.cart_total_price').text(''+value);
-                 var  totalQuantity =$('.total_price li:first-child span').text("");
-                countQuantity += parseInt(quantity);
-                totalQuantity.text(countQuantity);
-               var total =   $('.total_price li:last-child span').text("");
-                    total.text(formatSum+' đ');
-                var id = $(this).find('.cart_quantity_input').attr('data-value');
-
-                const localItems =  JSON.parse(localStorage.getItem('items'));
-                localItems.map(data=>{
-                    if(data.id === id){
-                        data.no = parseInt(quantity);
-                    }
-                });
-                localStorage.setItem('items', JSON.stringify(localItems));
-                const iconShoppingP = document.querySelector('.notification span');
-                iconShoppingP.innerHTML =countQuantity;
-            })
+                $html =  '<li class="clearfix">'+
+                    '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
+                    '<img src="'+data.img+'" alt="Product">'+
+                    '<span class="mini-item-name">'+data.name+'</span>'+
+                    '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
+                    '<span class="mini-item-quantity"> x '+data.no +'</span>'+
+                    '</a>'+
+                    '</li>';
+                $('.mini-cart-list').append($html);
+            });
         }
 
 

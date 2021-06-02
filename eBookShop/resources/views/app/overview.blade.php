@@ -155,6 +155,10 @@
 
         }
         window.onload = function() {
+            if (localStorage.getItem("items") !== null &&  JSON.parse(localStorage.getItem('items')).length >0 ) {
+                $('.cart-anchor').show();
+                $('.checkout-anchor').show();
+            }
             // adding data to localstorage
             const attToCartBtn = document.getElementsByClassName('item-addCart');
 
@@ -182,25 +186,29 @@
                     undefined,
                     { minimumFractionDigits: 3 }
                 );
-
-                $html =  '<li class="clearfix">'+
-                    '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
-                    '<img src="'+data.img+'" alt="Product">'+
-                    '<span class="mini-item-name">'+data.name+'</span>'+
-                    '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
-                    '<span class="mini-item-quantity"> x '+data.no +'</span>'+
-                    '</a>'+
-                    '</li>';
-                  $('.mini-cart-list').append($html);
+                    $html = '<li class="clearfix">' +
+                        '<a href="http://127.0.0.1:8000/home/' + data.name + '/' + data.id + '">' +
+                        '<img src="' + data.img + '" alt="Product">' +
+                        '<span class="mini-item-name">' + data.name + '</span>' +
+                        '<span class="mini-item-price">' + formatPrice + ' VND</span>' +
+                        '<span class="mini-item-quantity"> x ' + data.no + '</span>' +
+                        '</a>' +
+                        '</li>';
+                    $('.mini-cart-list').append($html);
                 	});
 
-            iconShoppingP.innerHTML = no;
-            var formatPrice =(price).toLocaleString(
-                undefined,
-                { minimumFractionDigits: 3 }
-            );
-           totalPrice.innerHTML = formatPrice +" VND";
-            $('.mini-total-price').append(formatPrice +" VND");
+            if(price !== 0){
+                var formatPriceTotal =(price).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+                totalPrice.innerHTML = formatPriceTotal +" VND";
+                iconShoppingP.innerHTML = no;
+                $('.mini-total-price').append(formatPriceTotal +" VND");
+            }
+
+
+
         }
 
         function addToCart(item){

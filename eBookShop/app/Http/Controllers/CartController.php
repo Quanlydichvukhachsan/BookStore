@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\HomeContract;
 use App\Contracts\OrderContract;
 use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\UpdateSalesOrderRequest;
@@ -11,9 +12,11 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     private  $orderBook;
-    public function __construct(OrderContract $orderBook)
+    private  $homeContract;
+    public function __construct(OrderContract $orderBook ,HomeContract $homeContract)
     {
         $this->orderBook =$orderBook;
+        $this->homeContract =$homeContract;
     }
     /**
      * Show the application dashboard.
@@ -22,7 +25,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('app.cart');
+        $products =  $this->homeContract->getAll();
+        return view('app.cart',compact('products'));
     }
 
     public function checkout(){

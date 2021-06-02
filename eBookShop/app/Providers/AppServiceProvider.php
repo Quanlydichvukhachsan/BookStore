@@ -51,7 +51,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PublisherContract::class,PublisherService::class);
         $this->app->bind(AdminContract::class,AdminService::class);
         $this->app->bind(HomeContract::class,HomeService::class);
-
     }
 
     /**
