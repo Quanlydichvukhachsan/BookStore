@@ -1,5 +1,21 @@
 @extends('app.home')
 
+@section('slider')
+    @include('app.layouts.main-slider')
+@endsection
+
+@section('banner')
+    <div class="banner-layer">
+        <div class="container">
+            <div class="image-banner">
+                <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
+                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1516979187457-637abb4f9353.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
+                </a>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('content')
     <div class="container">
     <div class="sec-maker-header text-center">
@@ -106,12 +122,13 @@
     <script>
         function setLocalStorage(id,name,price,img,quantity,items){
             if(typeof(Storage) !== 'undefined'){
+
                 let item = {
                     id:parseInt(id),
                     name: name,
-                    price:parseInt(price),
+                    price:parseFloat(price),
                     img :img,
-                    no:1
+                    no: parseInt(quantity)
                 };
                 if(JSON.parse(localStorage.getItem('items')) === null){
                     items.push(item);
@@ -121,7 +138,8 @@
                     const localItems = JSON.parse(localStorage.getItem("items"));
                     localItems.map(data=>{
                         if(item.id === parseInt(data.id)){
-                            item.no = data.no + 1;
+                            item.no = parseInt(data.no) + Number(quantity);
+
                         }else{
                             items.push(data);
                         }
@@ -151,17 +169,65 @@
                          setLocalStorage(id,name,price,img,1,items);
                 });
             }
+            // adding data to shopping cart
+            const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+           const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+            let no = 0;
+            let price = 0;
+            $('.mini-cart-list').text("");
+            JSON.parse(localStorage.getItem('items')).map(data=>{
+                     no = no+ data.no;
+                    price = price + (data.no * data.price);
+                var formatPrice =(data.price).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+
+                $html =  '<li class="clearfix">'+
+                    '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
+                    '<img src="'+data.img+'" alt="Product">'+
+                    '<span class="mini-item-name">'+data.name+'</span>'+
+                    '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
+                    '<span class="mini-item-quantity"> x '+data.no +'</span>'+
+                    '</a>'+
+                    '</li>';
+                  $('.mini-cart-list').append($html);
+                	});
+
+            iconShoppingP.innerHTML = no;
+            var formatPrice =(price).toLocaleString(
+                undefined,
+                { minimumFractionDigits: 3 }
+            );
+           totalPrice.innerHTML = formatPrice +" VND";
+            $('.mini-total-price').append(formatPrice +" VND");
         }
 
-       // function addToCart(item){
-       //     let items = [];
-       //     var id =item.getAttribute('data-value');
-       //     var price = $('.price h4').text();
-       //     var title = $('.title-book').text();
-       //     var quantity = $('.quantity-text-field').val();
-       //     var img = $('.img-default').find(".image-book").attr("src");
-       //     setLocalStorage(id,title,price,img,quantity,items);
-       // }
+        function addToCart(item){
+           let items = [];
+            var id =item.getAttribute('data-value');
+            var price = $('.price h4').text();
+            var title = $('.title-book').text();
+            var quantity = $('.quantity-text-field').val();
+            var img = $('.img-default').find(".image-book").attr("src");
+          setLocalStorage(id,title,price,img,quantity,items);
+            // adding data to shopping cart
+            const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+            const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+            console.log(totalPrice);
+            let no = 0;
+            let priceTotal =0;
+            JSON.parse(localStorage.getItem('items')).map(data=>{
+                no = no+ parseInt(data.no);
+                priceTotal = priceTotal +(parseInt(data.no) * data.price);
+            });
+            var formatPrice =(priceTotal).toLocaleString(
+                undefined,
+                { minimumFractionDigits: 3 }
+            );
+            iconShoppingP.innerHTML = no;
+            totalPrice.innerHTML =formatPrice + "VND";
+        }
 
         function setValueQuickView(item){
             $id= item.getAttribute('data-id');
@@ -175,7 +241,7 @@
                 dataType: "json",
                 success: function(data) {
                     clearDataBookDetail();
-                    $('.btn-addToCart').attr("data-value", $id);
+                    $('.btn-addToCart-Modal').attr("data-value", $id);
                    $('.description-book').append(data[0]);
                     $('.price h4').append(data[1] + "đ");
                     if(data[6].localeCompare("Hard Cover")){
@@ -183,14 +249,17 @@
                     }else {
                         $('.formality').append("Bìa mềm");
                     }
-                    $('.title-book').append(data[2]);
+                    $patchTitle ='<h1>'+
+                        '<a class="title-book" href="http://127.0.0.1:8000/home/'+data[2]+'/'+$id+'">'+data[2]+'</a>'+
+                '</h1>';
+                    $('.product-title').append($patchTitle);
                     $('.book-author').append(data[7]);
                     $('.book-publisher').append(data[8]);
                     var href = $('.ids'+categoryId).attr('href');
                     $('.category-root').attr('href',href);
                     $('.category-root').append(nameCategory);
                     var $img;
-                   $img = '<img id="zoom-pro-quick-view" class="img-fluid" src="'+data[9][0]+'" data-zoom-image="images/product/product@4x.jpg" alt="Zoom Image">';
+                   $img = '<img id="zoom-pro-quick-view" class="img-fluid" src="'+data[9][0]+'" data-zoom-image="'+data[9][0]+'" alt="Zoom Image">';
                    $imgZoom =  '<div id="gallery-quick-view" class="u-s-m-t-10">';
                     $img +=$imgZoom;
                     for (var i = 0; i < data[9].length; i++) {
@@ -217,8 +286,6 @@
                         $('.discount-price').append('<span> Giảm giá : </span>' );
                         $('.discount-price').append( Math.round(parseInt(data[5])) + '%');
                     }
-
-                    console.log(data);
                 }
             });
         }
@@ -233,7 +300,7 @@
             $('.book-publisher').text("");
             $('.zoom-area').text("");
             $('.category-root').text("");
-            $('.title-book').text("");
+            $('.product-title').text("");
         }
         function active(item){
              $('.zoom-area').find('.active').removeClass("active");

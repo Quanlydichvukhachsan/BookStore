@@ -6,6 +6,10 @@ namespace App\viewModels;
 
 class bookDetailViewModels
 {
+    private $size;
+    private $categorySlug;
+    private $category;
+    private $idcategory;
     private $originalPrice;
     private $percentDiscount;
     private $author;
@@ -22,6 +26,42 @@ class bookDetailViewModels
     private $original_Price;
     private $describe;
     private $listBooKAll = array();
+    private $listBooKRecent = array();
+    public function setSize($size) {
+        $this->size =$size;
+    }
+
+
+    public function getSize()  {
+        return $this->size;
+    }
+
+    public function setCategorySlug($category) {
+        $this->categorySlug =$category;
+    }
+
+
+    public function getCategorySlug()  {
+        return $this->categorySlug;
+    }
+
+    public function setIdCategory($idcategory) {
+        $this->idcategory =$idcategory;
+    }
+
+
+    public function getIdCategory()  {
+        return $this->idcategory;
+    }
+
+    public function setCategory($category) {
+        $this->category =$category;
+    }
+
+
+    public function getCategory()  {
+        return $this->category;
+    }
 
     public function setPercentDiscount($percentDiscount)
     {
@@ -48,6 +88,14 @@ class bookDetailViewModels
     public function getListBookAll():array {
         return $this->listBooKAll;
     }
+
+    public function setListBookRecent($book) {
+        array_push($this->listBooKRecent,$book);
+    }
+    public function getListBookRecent():array {
+        return $this->listBooKRecent;
+    }
+
 
     public function setDescribe($describe)
     {

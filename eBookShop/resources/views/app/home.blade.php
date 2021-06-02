@@ -7,18 +7,13 @@
 <!-- app -->
 <div id="app">
 @include('app.layouts.header')
-@include('app.layouts.main-slider')
+@yield('slider')
 <!-- Banner-Layer -->
-<div class="banner-layer">
-    <div class="container">
-        <div class="image-banner">
-            <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                <img class="img-fluid" src="{{asset('images/banners/bannerlayer-1.jpg')}}" alt="Winter Season Banner">
-            </a>
-        </div>
-    </div>
-</div>
+@yield('banner')
 <!-- Banner-Layer /- -->
+    <!-- Page-Wrapper -->
+@yield('pageWrapper')
+<!-- Page-Wrapper /- -->
 <section class="section-maker">
      @yield('content')
 </section>
@@ -55,7 +50,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 u-s-p-x-0">
                             <div class="newsletter-image">
                                 <a href="shop-v1-root-category.html" class="banner-hover effect-dark-opacity">
-                                    <img class="img-fluid" src="images/banners/newsletter-1.jpg" alt="Newsletter Image">
+                                    <img class="img-fluid" src="{{asset('assets/webApp/images/banners/photo-1603656951468-c1b89670e4c3.jpg')}}" alt="Newsletter Image">
                                 </a>
                             </div>
                         </div>
@@ -91,7 +86,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <!-- Product-zoom-area -->
-                            <div class="zoom-area">
+                            <div class="zoom-area zoom-area-modal">
 
                             </div>
                             <!-- Product-zoom-area /- -->
@@ -100,10 +95,8 @@
                             <!-- Product-details -->
                             <div class="all-information-wrapper">
                                 <div class="section-1-title-breadcrumb-rating">
-                                    <div class="product-title">
-                                        <h1>
-                                            <a class="title-book" href="single-product.html"></a>
-                                        </h1>
+                                    <div class="product-title product-title-modal">
+
                                     </div>
                                     <ul class="bread-crumb">
                                         <li class="has-separator">
@@ -113,7 +106,7 @@
                                             <a href="shop-v1-root-category.html">Product</a>
                                         </li>
                                         <li class="is-marked">
-                                            <a class="category-root" href=""></a>
+                                            <a class="category-root category-root-modal" href=""></a>
                                         </li>
 
                                     </ul>
@@ -126,18 +119,18 @@
                                 </div>
                                 <div class="section-2-short-description u-s-p-y-14">
                                     <h6 class="information-heading u-s-m-b-8">Mô tả:</h6>
-                                    <p class="description-book">
+                                    <p class="description-book description-book-modal ">
                                     </p>
                                 </div>
                                 <div class="section-3-price-original-discount u-s-p-y-14">
-                                    <div class="price">
+                                    <div class="price price-modal">
                                         <h4></h4>
                                     </div>
-                                    <div class="original-price">
+                                    <div class="original-price original-price-modal">
                                         <span>Giá gốc:</span>
                                         <span></span>
                                     </div>
-                                    <div class="discount-price">
+                                    <div class="discount-price discount-price-modal">
                                         <span>Giảm giá:</span>
                                         <span></span>
                                     </div>
@@ -146,22 +139,22 @@
                                     <h6 class="information-heading u-s-m-b-8">Thông tin:</h6>
                                     <div class="availability">
                                         <span>Tình trạng:</span>
-                                        <span>In Stock</span>
+                                        <span>Còn hàng</span>
                                     </div>
                                 </div>
                                 <div class="section-5-product-variants u-s-p-y-14">
                                     <h6 class="information-heading u-s-m-b-8">Sản phẩm:</h6>
                                     <div class="color u-s-m-b-11">
                                         <span>Hình thức:</span>
-                                        <span class="formality"></span>
+                                        <span class="formality formality-modal"></span>
                                         </div>
                                     <div class="color u-s-m-b-11">
                                         <span>Tác giả:</span>
-                                        <span class="book-author"></span>
+                                        <span class="book-author book-author-modal"></span>
                                     </div>
                                     <div class="color u-s-m-b-11">
                                         <span>Nhà xuất bản:</span>
-                                        <span class="book-publisher"></span>
+                                        <span class="book-publisher book-publisher-modal"></span>
                                     </div>
                                     </div>
 
@@ -172,13 +165,13 @@
                                         <div class="quantity-wrapper u-s-m-b-22">
                                             <span>Quantity:</span>
                                             <div class="quantity">
-                                                <input type="text" class="quantity-text-field" value="1">
+                                                <input type="text" class="quantity-text-field quantity-text-field-modal" value="1" onkeypress="javascript:return isNumber(event)">
                                                 <a class="plus-a" data-max="1000">&#43;</a>
                                                 <a class="minus-a" data-min="1">&#45;</a>
                                             </div>
                                         </div>
                                         <div>
-                                            <button data-value="" onclick="addToCart(this)" class="button btn-addToCart button-outline-secondary" type="button">Add to cart</button>
+                                            <button data-value="" onclick="addToCart(this)" class="button btn-addToCart-Modal button-outline-secondary" type="button">Add to cart</button>
                                             <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
                                             <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
                                         </div>

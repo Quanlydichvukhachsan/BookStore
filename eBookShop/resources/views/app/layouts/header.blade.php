@@ -88,7 +88,7 @@
                     <nav>
                         <ul class="mid-nav g-nav">
                             <li class="u-d-none-lg">
-                                <a href="home.html">
+                                <a href="{{route('home')}}">
                                     <i class="ion ion-md-home u-c-brand"></i>
                                 </a>
                             </li>
@@ -101,7 +101,7 @@
                                 <a id="mini-cart-trigger">
                                     <i class="ion ion-md-basket"></i>
                                     <span class="item-counter">0</span>
-                                    <span class="item-price">$220.00</span>
+                                    <span class="item-price"></span>
                                 </a>
                             </li>
                         </ul>
@@ -128,49 +128,18 @@
     <div class="mini-cart-wrapper">
         <div class="mini-cart">
             <div class="mini-cart-header">
-                YOUR CART
+                Giỏ hàng của bạn
                 <button type="button" class="button ion ion-md-close" id="mini-cart-close"></button>
             </div>
             <ul class="mini-cart-list">
-                <li class="clearfix">
-                    <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
-                        <span class="mini-item-name">Casual Hoodie Full Cotton</span>
-                        <span class="mini-item-price">$55.00</span>
-                        <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
-                        <span class="mini-item-name">Black Rock Dress with High Jewelery Necklace</span>
-                        <span class="mini-item-price">$55.00</span>
-                        <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
-                        <span class="mini-item-name">Xiaomi Note 2 Black Color</span>
-                        <span class="mini-item-price">$55.00</span>
-                        <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
-                        <span class="mini-item-name">Dell Inspiron 15</span>
-                        <span class="mini-item-price">$55.00</span>
-                        <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
+
             </ul>
             <div class="mini-shop-total clearfix">
                 <span class="mini-total-heading float-left">Total:</span>
-                <span class="mini-total-price float-right">$220.00</span>
+                <span class="mini-total-price float-right"></span>
             </div>
             <div class="mini-action-anchors">
-                <a href="cart.html" class="cart-anchor">View Cart</a>
+                <a href="{{route('cart')}}" class="cart-anchor">Xem giỏ hàng</a>
                 <a href="checkout.html" class="checkout-anchor">Checkout</a>
             </div>
         </div>
@@ -184,7 +153,7 @@
                     <div class="v-menu">
                             <span class="v-title">
                                 <i class="ion ion-md-menu"></i>
-                                All Categories
+                                 Tất cả danh mục
                                 <i class="fas fa-angle-down"></i>
                             </span>
                         <nav>

@@ -101,7 +101,7 @@ class HomeService implements HomeContract
      }
     public function getAll()
     {
-         $books =  Book::all();
+         $books =  Book::orderBy('created_at', 'desc')->paginate(5);
          $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
          $productViewModels->setBooks($books);
@@ -326,9 +326,15 @@ class HomeService implements HomeContract
     public function getProductDetail(string $title, $id)
     {
         global $bookDetailViewModels;
-        $bookRaLationShip = Book::where('id','<>',$id)->get();
-        $bookDetailViewModels = new bookDetailViewModels();
         $book = Book::findOrFail($id);
+        $categoryBook =$book->categories->id;
+        $bookRaLationShip = Book::where('id','<>',$id)->get();
+        $bookRecent =Book::where('id','<>',$id)->orderBy('created_at', 'desc')->paginate(5);
+        $bookDetailViewModels = new bookDetailViewModels();
+
+        $bookDetailViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+        $bookDetailViewModels->setCategory($book->categories->name);
+        $bookDetailViewModels->setIdCategory($book->categories->id);
             $bookDetailViewModels->setOriginalPrice($book->original_Price);
             $bookDetailViewModels->setPercentDiscount($book->percent_discount);
             $bookDetailViewModels->setPrice($book->price);
@@ -340,19 +346,42 @@ class HomeService implements HomeContract
             $bookDetailViewModels->setNumber_of_pages($book->number_of_pages);
             $bookDetailViewModels->setFormality($book->formality);
             $bookDetailViewModels->setId($book->id);
+            $bookDetailViewModels->setSize($book->size);
             foreach ($book->imagebooks as $item) {
                 $bookDetailViewModels->setlistImages($item->file);
             }
             $bookDetailViewModels->setDescribe($book->describe);
             foreach ($bookRaLationShip as $book) {
-                $bookViewModels =new bookViewModels();
+                 if($book->categories->id === $categoryBook ) {
+                     $bookViewModels = new bookViewModels();
+                     $bookViewModels->setId($book->id);
+                     $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
+                     $bookViewModels->setPrice($book->price);
+                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     $bookViewModels->setTitle($book->title);
+                     $bookViewModels->setPercentDiscount($book->percent_discount);
+                     $bookViewModels->setOriginalPrice($book->original_Price);
+                     $bookViewModels->setCategory($book->categories->name);
+                     $bookViewModels->setIdCategory($book->categories->id);
+                     $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                     $bookDetailViewModels->setListBookAll($bookViewModels);
+                 }
+            }
+            foreach ($bookRecent as $book) {
+                $bookViewModels = new bookViewModels();
                 $bookViewModels->setId($book->id);
                 $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
                 $bookViewModels->setPrice($book->price);
                 $bookViewModels->setImages($book->imagebooks[0]->file);
                 $bookViewModels->setTitle($book->title);
-                $bookDetailViewModels->setListBookAll($bookViewModels);
-            }
+                $bookViewModels->setPercentDiscount($book->percent_discount);
+                $bookViewModels->setOriginalPrice($book->original_Price);
+                $bookViewModels->setCategory($book->categories->name);
+                $bookViewModels->setIdCategory($book->categories->id);
+                $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                $bookDetailViewModels->setListBookRecent($bookViewModels);
+
+        }
 
         return $bookDetailViewModels;
     }
