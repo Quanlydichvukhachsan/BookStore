@@ -139,8 +139,12 @@
                 <span class="mini-total-price float-right"></span>
             </div>
             <div class="mini-action-anchors">
+
                 <a style="display:none;" href="{{route('cart')}}" class="cart-anchor">Xem giỏ hàng</a>
-                <a  style="display:none;" href="checkout.html" class="checkout-anchor">Checkout</a>
+
+
+                <a  style="display:none;" href="{{route('cart.checkout')}}" class="checkout-anchor">Thanh toán</a>
+
             </div>
         </div>
     </div>

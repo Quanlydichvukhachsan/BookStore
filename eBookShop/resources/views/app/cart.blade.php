@@ -8,10 +8,10 @@
                 <ul class="bread-crumb">
                     <li class="has-separator">
                         <i class="ion ion-md-home"></i>
-                        <a href="{{route('home')}}">Home</a>
+                        <a href="{{route('home')}}">Trang chủ</a>
                     </li>
                     <li class="is-marked">
-                        <a href="single-product.html">Cart</a>
+                        <a href="{{route('cart')}}">Giỏ hàng</a>
                     </li>
                 </ul>
             </div>
@@ -46,16 +46,16 @@
                         <!-- Products-List-Wrapper /- -->
                         <!-- Coupon -->
                         <div class="coupon-continue-checkout u-s-m-b-60">
+                            @if(!Auth::check())
                             <div style="display:none;" class="coupon-area">
                                 <h6>Đăng nhập để thanh toán</h6>
                                 <input class="button button-primary d-block w-40" type="button" onclick="location.href='http://127.0.0.1:8000/login';" value="Đăng nhập" />
 
-
-
                             </div>
+                            @endif
                             <div class="button-area">
                                 <a href="{{route('home')}}" class="continue">Tiếp tục mua hàng</a>
-                                <a href="checkout.html" style="display: none" class="checkout">Tiến hành thanh toán</a>
+                                <a href="{{route('cart.checkout')}}" style="display: none" class="checkout">Tiến hành thanh toán</a>
                             </div>
                         </div>
                         <!-- Coupon /- -->
@@ -114,6 +114,8 @@
 
 @section('script')
     <script>
+            $('.checkout-anchor').show();
+
         let newItems =[];
         let no =0;
         function clearDataCart(item){
@@ -138,6 +140,7 @@
                 $('.coupon-area').show();
                    $('.checkout').show();
             }
+
             // adding data to shopping cart
             const iconShoppingP = document.querySelector('#mini-cart-trigger span');
             const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
@@ -176,6 +179,7 @@
                 totalPrice.innerHTML =formatPrice + "VND";
                 $('.calc-text-total').text(formatPrice + ' VND');
                 $('.calc-text-order').text(formatPriceTotal + ' VND');
+                $('.mini-total-price').text(formatPrice + ' VND');
             }
                 //adding cartbox data in table
             const cartBox = document.querySelector('.table-wrapper');

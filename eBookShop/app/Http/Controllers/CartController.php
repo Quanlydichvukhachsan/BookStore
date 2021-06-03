@@ -30,7 +30,8 @@ class CartController extends Controller
     }
 
     public function checkout(){
-        return view('app.checkout');
+        $products =  $this->homeContract->getAll();
+        return view('app.checkout',compact('products'));
     }
     /**
      * Store a newly created resource in storage.
