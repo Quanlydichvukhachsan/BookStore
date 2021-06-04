@@ -40,47 +40,49 @@ class HomeController extends Controller
      */
     public function getByCategory(Request $request,$name,$id)
     {
-        global $products;
+        $products =  $this->homeContract->getAll();
+        global $product;
         if ($request->ajax()) {
-            global $products;
+            global $product;
             if ($request->has('sort')) {
                 $key = $request->input('sort');
-                $products = $this->homeContract->sortPriceById($name, $id, $key);
+                $product = $this->homeContract->sortPriceById($name, $id, $key);
             } elseif ($request->has('sortname')) {
 
                 $key = $request->input('sortname');
-                $products = $this->homeContract->sortNameById($name, $id, $key);
+                $product = $this->homeContract->sortNameById($name, $id, $key);
             } elseif ($request->has('sortFormality')) {
 
                 $key = $request->input('sortFormality');
-                $products = $this->homeContract->sortFormalityById($name, $id, $key);
+                $product = $this->homeContract->sortFormalityById($name, $id, $key);
 
             } else {
 
-                $products = $this->homeContract->getByProductByCategory($name, $id);
+                $product = $this->homeContract->getByProductByCategory($name, $id);
 
             }
 
-            return response()->json($products);
+            return response()->json($product);
         } else {
 
             if ($request->has('sort')) {
                 $key = $request->input('sort');
 
-                $products = $this->homeContract->getByCategory($name, $id, $key);
+                $product = $this->homeContract->getByCategory($name, $id, $key);
             } elseif ($request->has('sortname')) {
                 $key = $request->input('sortname');
-                $products = $this->homeContract->getByCategory($name, $id, $key);
+                $product = $this->homeContract->getByCategory($name, $id, $key);
             } elseif ('sortFormality') {
                 $key = $request->input('sortFormality');
 
-                $products = $this->homeContract->getByCategory($name, $id, $key);
+                $product = $this->homeContract->getByCategory($name, $id, $key);
             } else {
-                $products = $this->homeContract->getByCategory($name, $id, "");
+                $product = $this->homeContract->getByCategory($name, $id, "");
             }
 
         }
-        return view('app.product', compact('products'));
+
+        return view('app.product', compact('product','products'));
     }
         /**
          * Update the specified resource in storage.

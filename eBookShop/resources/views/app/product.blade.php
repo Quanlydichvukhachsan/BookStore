@@ -1,101 +1,418 @@
 @extends('app.home')
 
-@section('sidebar')
-    @include('app.sidebarProduct')
+@section('pageWrapper')
+    <!-- Page Introduction Wrapper -->
+    <div class="page-style-a">
+        <div class="container">
+            <div class="page-intro">
+                <h2>Detail</h2>
+                <ul class="bread-crumb">
+                    <li class="has-separator">
+                        <i class="ion ion-md-home"></i>
+                        <a href="{{route('home')}}">Trang chủ</a>
+                    </li>
+                    <li class="is-marked">
+                        <a href="http://127.0.0.1:8000/product/{{$product->getpathName()}}/{{$product->getpathId()}}">Sản phẩm</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Page Introduction Wrapper /- -->
 @endsection
 @section('content')
-    <div class="features_items"><!--features_items-->
-        <h2 class="title text-center">Mục Sản Phẩm</h2>
-        @if(count($products->getListBook()))
-        @foreach($products->getListBook() as $item)
-            <div class="col-sm-4">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                        <div class="productinfo text-center">
-                            <img src="{{$item->getImages()}}" alt="img-{{$item->getTitle()}}" />
-                            <h2>{{$item->getPrice()}} đ</h2>
-                            <p>{{$item->getTitle()}}</p>
+    <!-- Shop-Page -->
+    <div class="page-shop u-s-p-t-80">
+        <div class="container">
+            <!-- Shop-Intro -->
+            <div class="shop-intro">
+                <ul class="bread-crumb">
+                    <li class="has-separator">
+                        <a href="{{route('home')}}">Trang chủ</a>
+                    </li>
+                    <li class="has-separator">
+                        <a href="#">Sản phẩm</a>
+                    </li>
+                    <li class="is-marked">
+                        <a href="http://127.0.0.1:8000/product/{{$product->getpathName()}}/{{$product->getpathId()}}">{{$product->getNameCategory()}}</a>
+
+                    </li>
+                </ul>
+            </div>
+            <!-- Shop-Intro /- -->
+            <div class="row">
+                <!-- Shop-Left-Side-Bar-Wrapper -->
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <!-- Fetch-Categories-from-Root-Category  -->
+                    <div class="fetch-categories">
+                        <h3 class="title-name">Danh mục</h3>
+                        <h3 class="fetch-mark-category">
+                            <a  id="category" data-name="{{$product->getListCategory()[0]->getTitleSlug()}}" data-value="{{$product->getListCategory()[0]->getId()}}"
+                                href='http://127.0.0.1:8000/product/{{$product->getListCategory()[0]->getTitleSlug()}}/{{$product->getListCategory()[0]->getId()}}'>{{$product->getListCategory()[0]->getName()}}
+                                <span class="total-fetch-items"></span>
+                            </a>
+                        </h3>
+                        <!-- Level 3 -->
+                        <ul>
+                            @for($i =0 ; $i < count($product->getListCategory()[0]->getChilds()); $i++ )
+                            <li>
+                                <a  id="category" data-name="{{$product->getListCategory()[0]->getChilds()[$i]->getTitleSlug()}}" data-value="{{$product->getListCategory()[0]->getChilds()[$i]->getId()}}"
+                                    href='http://127.0.0.1:8000/product/{{$product->getListCategory()[0]->getTitleSlug()}}/{{$product->getListCategory()[0]->getId()}}/{{$product->getListCategory()[0]->getChilds()[$i]->getTitleSlug()}}/{{$product->getListCategory()[0]->getChilds()[$i]->getId()}}'>{{$product->getListCategory()[0]->getChilds()[$i]->getName()}}
+                                    <span class="total-fetch-items"></span>
+                                </a>
+                            </li>
+                            @endfor
+                        </ul>
+                        <!-- //end Level 3 -->
+                    </div>
+                    <!-- Fetch-Categories-from-Root-Category  /- -->
+                    <!-- Filters -->
+                    <!-- Filters /- -->
+                </div>
+                <!-- Shop-Left-Side-Bar-Wrapper /- -->
+                <!-- Shop-Right-Wrapper -->
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <!-- Page-Bar -->
+                    <div class="page-bar clearfix">
+                        <div class="shop-settings">
+                            <a id="grid-anchor">
+                                <i class="fas fa-th"></i>
+                            </a>
                         </div>
-                        <div class="product-overlay">
-                            <div class="overlay-content">
-                                <h2>{{$item->getPrice()}} đ</h2>
-                                <p><a class="nav-product" href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a></p>
-                                <a data-img="{{$item->getImages()}}" data-author="{{$item->getAuthor()}}" data-value="{{$item->getId()}}" class="btn btn-default add-to-cart attToCart"></i>Thêm vào giỏ</a>
+                        <!-- Toolbar Sorter 1  -->
+                        <div class="toolbar-sorter">
+                            <div class="select-box-wrapper">
+                                <label class="sr-only" for="sort-by">Sort By</label>
+                                <select class="select-box" id="sort-by">
+                                    <option selected="selected" value="">Sort By: Best Selling</option>
+                                    <option value="">Sort By: Latest</option>
+                                    <option value="">Sort By: Lowest Price</option>
+                                    <option value="">Sort By: Highest Price</option>
+                                    <option value="">Sort By: Best Rating</option>
+                                </select>
                             </div>
                         </div>
+                        <!-- //end Toolbar Sorter 1  -->
+                        <!-- Toolbar Sorter 2  -->
+                        <div class="toolbar-sorter-2">
+                            <div class="select-box-wrapper">
+                                <label class="sr-only" for="show-records">Show Records Per Page</label>
+                                <select class="select-box" id="show-records">
+                                    <option selected="selected" value="">Show: 8</option>
+                                    <option value="">Show: 16</option>
+                                    <option value="">Show: 28</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- //end Toolbar Sorter 2  -->
                     </div>
-                    <div class="choose">
-                        <ul class="nav nav-pills nav-justified">
-                            <li><a href=""><i class="fa fa-plus-square"></i>Thêm Vào Danh Sách Yêu Thích</a></li>
+                    <!-- Page-Bar /- -->
+                    <!-- Row-of-Product-Container -->
+                    <div class="row product-container grid-style">
+                        @if(count($product->getListBook()))
+                            @foreach($product->getListBook() as $item)
+                        <div class="product-item col-lg-4 col-md-6 col-sm-6">
+                            <div class="item">
+                                <div class="image-container">
+                                    <a class="item-img-wrapper-link" href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">
+                                        <img class="img-fluid" src="{{$item->getImages()}}" alt="Product">
+                                    </a>
+                                    <div class="item-action-behaviors">
+                                        <a class="item-quick-look" data-TitleSlug="{{$item->getCategorySlug()}}" data-ParentTitleSlug="{{$product->getListCategory()[0]->getTitleSlug()}}" data-parentCate="{{$product->getListCategory()[0]->getName()}}" data-IdParentCate="{{$product->getListCategory()[0]->getId()}}"   data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look</a>
+                                        <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
+                                        <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="item-content">
+                                    <div class="what-product-is">
+                                        <ul class="bread-crumb">
+                                            <li class="has-separator">
+                                                <a href="javascript:void(0)">Sản phẩm</a>
+                                            </li>
+                                             @if($product->getpathId() === $product->getListCategory()[0]->getId())
+                                            <li class="is-marked">
+                                                <a href="http://127.0.0.1:8000/product/{{$product->getpathName()}}/{{$product->getpathId()}}">
+                                                    {{$product->getNameCategory()}}</a>
+                                            </li>
+                                            @else
+                                                <li class="has-separator">
+                                                    <a href="http://127.0.0.1:8000/product/{{$product->getListCategory()[0]->getTitleSlug()}}/{{$product->getListCategory()[0]->getId()}}">
+                                                        {{$product->getListCategory()[0]->getName()}}</a>
+                                                </li>
+                                                <li class="is-marked">
+                                                    <a  href="http://127.0.0.1:8000/product/{{$product->getListCategory()[0]->getTitleSlug()}}/{{$product->getListCategory()[0]->getId()}}/{{$product->getpathName()}}/{{$product->getpathId()}}">
+                                                        {{$product->getNameCategory()}}</a>
+                                                </li>
+                                                 @endif
+                                        </ul>
+                                        <h6 class="item-title">
+                                            <a href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">
+                                                {{$item->getTitle()}}
+                                            </a>
+                                        </h6>
+                                        <div class="item-stars">
+                                            <div class='star' title="4.5 out of 5 - based on 23 Reviews">
+                                                <span style='width:67px'></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="price-template">
+                                        <div class="item-new-price">
+                                            {{$item->getPrice()}} đ
+                                        </div>
+                                        @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
+                                            <div class="item-old-price">
+                                                {{$item->getOriginalPrice()}} đ
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
+                                    <div class="tag sale">
+                                        <span>Sale</span>
+                                    </div>
 
-                        </ul>
+                                @else
+                                    <div class="tag new">
+                                        <span>New</span>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                            @endforeach
+
+                        @else
+                            <div class="content-404">
+                                <p>Sản phẩm không có</p>
+                            </div>
+                        @endif
                     </div>
+                    <!-- Row-of-Product-Container /- -->
                 </div>
+                <!-- Shop-Right-Wrapper /- -->
             </div>
+        </div>
+    </div>
 
-        @endforeach
-
-        @else
-             <div class="content-404">
-                 <p>Sản phẩm không có</p>
-             </div>
-
-          @endif
-
-    </div><!--features_items-->
 @endsection
 @section('script')
     <script>
+        function setLocalStorage(id,name,price,img,quantity,items){
+            if(typeof(Storage) !== 'undefined'){
+
+                let item = {
+                    id:parseInt(id),
+                    name: name,
+                    price:parseFloat(price),
+                    img :img,
+                    no: parseInt(quantity)
+                };
+                if(JSON.parse(localStorage.getItem('items')) === null){
+                    items.push(item);
+                    localStorage.setItem("items",JSON.stringify(items));
+                    window.location.reload();
+                }else{
+                    const localItems = JSON.parse(localStorage.getItem("items"));
+                    localItems.map(data=>{
+                        if(item.id === parseInt(data.id)){
+                            item.no = parseInt(data.no) + Number(quantity);
+
+                        }else{
+                            items.push(data);
+                        }
+                    });
+                    items.push(item);
+                    localStorage.setItem('items',JSON.stringify(items));
+                    window.location.reload();
+                }
+
+            }else{
+                alert('local storage is not working on your browser');
+            }
+
+        }
         window.onload = function() {
+            if (localStorage.getItem("items") !== null &&  JSON.parse(localStorage.getItem('items')).length >0 ) {
+                $('.cart-anchor').show();
+                $('.checkout-anchor').show();
+            }
             // adding data to localstorage
-            const attToCartBtn = document.getElementsByClassName('attToCart');
-            console.log(attToCartBtn);
+            const attToCartBtn = document.getElementsByClassName('item-addCart');
+
             let items = [];
-         /* for(let i=0; i<attToCartBtn.length; i++){
+            for(let i=0; i<attToCartBtn.length; i++){
                 attToCartBtn[i].addEventListener("click",function(e){
                     e.preventDefault();
-
-                    if(typeof(Storage) !== 'undefined'){
-                        let item = {
-                            id:this.getAttribute('data-value'),
-                            name:e.target.parentElement.children[1].textContent,
-                            price:e.target.parentElement.children[0].textContent.replace('đ',''),
-                            author:this.getAttribute('data-author'),
-                            img :this.getAttribute('data-img'),
-                            no:1
-                        };
-                        if(JSON.parse(localStorage.getItem('items')) === null){
-                            items.push(item);
-                            localStorage.setItem("items",JSON.stringify(items));
-                            window.location.reload();
-                        }else{
-                            const localItems = JSON.parse(localStorage.getItem("items"));
-                            localItems.map(data=>{
-                                if(item.id == data.id){
-                                    item.no = data.no + 1;
-                                }else{
-                                    items.push(data);
-                                }
-                            });
-                            items.push(item);
-                            localStorage.setItem('items',JSON.stringify(items));
-                            window.location.reload();
-                        }
-
-                    }else{
-                        alert('local storage is not working on your browser');
-                    }
-
+                    var id =this.getAttribute('data-value').split(',')[0];
+                    var name =this.getAttribute('data-value').split(',')[1];
+                    var price =this.getAttribute('data-value').split(',')[2];
+                    var img =e.target.parentElement.parentElement.children[0].getElementsByTagName("img")[0].getAttribute("src");
+                    setLocalStorage(id,name,price,img,1,items);
                 });
-            }*/
+            }
             // adding data to shopping cart
-          //  const iconShoppingP = document.querySelector('.notification span');
-        //    let no = 0;
-        //    JSON.parse(localStorage.getItem('items')).map(data=>{
-         //       no = no+data.no
-         //       ;	});
-         //   iconShoppingP.innerHTML = no;
+            const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+            const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+            let no = 0;
+            let price = 0;
+            $('.mini-cart-list').text("");
+            JSON.parse(localStorage.getItem('items')).map(data=>{
+                no = no+ data.no;
+                price = price + (data.no * data.price);
+                var formatPrice =(data.price).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+                $html = '<li class="clearfix">' +
+                    '<a href="http://127.0.0.1:8000/home/' + data.name + '/' + data.id + '">' +
+                    '<img src="' + data.img + '" alt="Product">' +
+                    '<span class="mini-item-name">' + data.name + '</span>' +
+                    '<span class="mini-item-price">' + formatPrice + ' VND</span>' +
+                    '<span class="mini-item-quantity"> x ' + data.no + '</span>' +
+                    '</a>' +
+                    '</li>';
+                $('.mini-cart-list').append($html);
+            });
 
+            if(price !== 0){
+                var formatPriceTotal =(price).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+                totalPrice.innerHTML = formatPriceTotal +" VND";
+                iconShoppingP.innerHTML = no;
+                $('.mini-total-price').append(formatPriceTotal +" VND");
+            }
+
+
+
+        }
+
+        function addToCart(item){
+            let items = [];
+            var id =item.getAttribute('data-value');
+            var price = $('.price h4').text();
+            var title = $('.title-book').text();
+            var quantity = $('.quantity-text-field').val();
+            var img = $('.img-default').find(".image-book").attr("src");
+            setLocalStorage(id,title,price,img,quantity,items);
+            // adding data to shopping cart
+            const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+            const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+            console.log(totalPrice);
+            let no = 0;
+            let priceTotal =0;
+            JSON.parse(localStorage.getItem('items')).map(data=>{
+                no = no+ parseInt(data.no);
+                priceTotal = priceTotal +(parseInt(data.no) * data.price);
+            });
+            var formatPrice =(priceTotal).toLocaleString(
+                undefined,
+                { minimumFractionDigits: 3 }
+            );
+            iconShoppingP.innerHTML = no;
+            totalPrice.innerHTML =formatPrice + "VND";
+        }
+        function setValueQuickView(item){
+            $id= item.getAttribute('data-id');
+            $title = item.getAttribute('data-value');
+            var categoryId = item.getAttribute('data-categoryId');
+            var nameCategory = item.getAttribute('data-nameCategory');
+            var parentCategoryId = item.getAttribute('data-IdParentCate');
+            var parentCategory = item.getAttribute('data-parentCate');
+            var titleParentSlug = item.getAttribute('data-ParentTitleSlug');
+            var titleSlug = item.getAttribute('data-titleSlug');
+            $.ajax({
+                method :"GET",
+                url: '/home/'+$title + '/'+$id,
+                contentType: "application/json",
+                dataType: "json",
+                success: function(data) {
+                    clearDataBookDetail();
+                    $('.btn-addToCart-Modal').attr("data-value", $id);
+                    $('.description-book').append(data[0]);
+                    $('.price h4').append(data[1] + "đ");
+                    if(data[6].localeCompare("Hard Cover")){
+                        $('.formality').append("Bìa cứng");
+                    }else {
+                        $('.formality').append("Bìa mềm");
+                    }
+                    $patchTitle ='<h1>'+
+                        '<a class="title-book" href="http://127.0.0.1:8000/home/'+data[2]+'/'+$id+'">'+data[2]+'</a>'+
+                        '</h1>';
+                    $('.product-title').append($patchTitle);
+                    $('.book-author').append(data[7]);
+                    $('.book-publisher').append(data[8]);
+                      var htmlRoot ;
+                    if(parseInt(categoryId) === parseInt(parentCategoryId)){
+                          htmlRoot ='<li class="has-separator">'+
+                            '<a href="http://127.0.0.1:8000/home">Trang chủ</a>'+
+                    '</li>'+
+                    '<li class="is-marked">'+
+                    '<a href="http://127.0.0.1:8000/product/'+titleParentSlug+'/'+parentCategoryId+'">'+nameCategory+'</a>'+
+                    '</li>';
+                    }else{
+                        htmlRoot ='<li class="has-separator">'+
+                            '<a href="http://127.0.0.1:8000/home">Trang chủ</a>'+
+                            '</li>'+
+                            '<li class="has-separator">'+
+                            '<a href="http://127.0.0.1:8000/product/'+titleParentSlug+'/'+parentCategoryId+'">'+parentCategory+'</a>'+
+                            '</li>'+
+                        '<li class="is-marked">'+
+                        '<a class="category-root category-root-modal" href="http://127.0.0.1:8000/product/'+titleParentSlug+'/'+parentCategoryId+'/'+titleSlug+'/'+categoryId+'">'+nameCategory+'</a>'+
+                        '</li>';
+                    }
+                    $('.bread-crumb-modal').append(htmlRoot);
+                    var $img;
+                    $img = '<img id="zoom-pro-quick-view" class="img-fluid" src="'+data[9][0]+'" data-zoom-image="'+data[9][0]+'" alt="Zoom Image">';
+                    $imgZoom =  '<div id="gallery-quick-view" class="u-s-m-t-10">';
+                    $img +=$imgZoom;
+                    for (var i = 0; i < data[9].length; i++) {
+                        var $html;
+                        if(i===0){
+
+                            $html =  '<a id="img-book" onclick="active(this)" class="active img-default" data-image="'+data[9][0]+'" data-zoom-image="'+data[9][0]+'">'+
+                                '<img class="image-book"  src="'+data[9][0]+'" alt="Product">'+
+                                '</a>';
+                            $img +=$html;
+                        }else{
+                            $html =   '<a id="img-book" onclick="active(this)"  data-image="'+data[9][i]+'" data-zoom-image="'+data[9][i]+'">'+
+                                '<img  src="'+data[9][i]+'" alt="Product">'+
+                                '</a>';
+                            $img +=$html;
+                        }
+                    }
+                    $img += '</div>';
+                    $('.zoom-area').append($img);
+
+                    if(Math.round(parseInt(data[5])) !== 0 && data[5] !== null){
+                        $('.original-price').append('<span> Giá gốc : </span>' );
+                        $('.original-price').append( '<span>'+ data[4] + '</span>');
+                        $('.discount-price').append('<span> Giảm giá : </span>' );
+                        $('.discount-price').append( Math.round(parseInt(data[5])) + '%');
+                    }
+                }
+            });
+        }
+        function clearDataBookDetail(){
+            $('.description-book').text("");
+            $('.price h4').text("");
+            $('.original-price').text("");
+            $('.discount-price').text("");
+            $('.formality').text("");
+            $('.book-author').text("");
+            $('.book-publisher').text("");
+            $('.book-publisher').text("");
+            $('.zoom-area').text("");
+            $('.category-root').text("");
+            $('.product-title').text("");
+            $('.bread-crumb-modal').text("");
+        }
+        function active(item){
+            $('.zoom-area').find('.active').removeClass("active");
+            $src = item.childNodes[0].getAttribute('src');
+            $(item).addClass('active');
+            $('#zoom-pro-quick-view').attr('src',$src);
         }
 
 

@@ -48,9 +48,10 @@
                                                 <img src="{{$item->getImages()}}" alt="img-{{$item->getTitle()}}">
                                             </a>
                                             <div class="item-action-behaviors">
-                                                <a class="item-quick-look" data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
+                                                <a class="item-quick-look" data-parentCate="{{$products->getListCategory()[0]->getName()}}" data-IdParentCate="{{$products->getListCategory()[0]->getId()}}"
+                                                   data-TitleSlug="{{$item->getCategorySlug()}}" data-ParentTitleSlug="{{$products->getListCategory()[0]->getTitleSlug()}}"
+                                                   data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
                                                 </a>
-                                                <a class="item-mail" href="javascript:void(0)">Mail</a>
                                                 <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
                                                 <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
                                             </div>
@@ -242,6 +243,10 @@
             $title = item.getAttribute('data-value');
             var categoryId = item.getAttribute('data-categoryId');
             var nameCategory = item.getAttribute('data-nameCategory');
+            var parentCategoryId = item.getAttribute('data-IdParentCate');
+            var parentCategory = item.getAttribute('data-parentCate');
+            var titleParentSlug = item.getAttribute('data-ParentTitleSlug');
+            var titleSlug = item.getAttribute('data-titleSlug');
             $.ajax({
                 method :"GET",
                 url: '/home/'+$title + '/'+$id,
@@ -263,9 +268,26 @@
                     $('.product-title').append($patchTitle);
                     $('.book-author').append(data[7]);
                     $('.book-publisher').append(data[8]);
-                    var href = $('.ids'+categoryId).attr('href');
-                    $('.category-root').attr('href',href);
-                    $('.category-root').append(nameCategory);
+                    var htmlRoot ;
+                    if(parseInt(categoryId) === parseInt(parentCategoryId)){
+                        htmlRoot ='<li class="has-separator">'+
+                            '<a href="http://127.0.0.1:8000/home">Trang chủ</a>'+
+                            '</li>'+
+                            '<li class="is-marked">'+
+                            '<a href="http://127.0.0.1:8000/product/'+titleParentSlug+'/'+parentCategoryId+'">'+nameCategory+'</a>'+
+                            '</li>';
+                    }else{
+                        htmlRoot ='<li class="has-separator">'+
+                            '<a href="http://127.0.0.1:8000/home">Trang chủ</a>'+
+                            '</li>'+
+                            '<li class="has-separator">'+
+                            '<a href="http://127.0.0.1:8000/product/'+titleParentSlug+'/'+parentCategoryId+'">'+parentCategory+'</a>'+
+                            '</li>'+
+                            '<li class="is-marked">'+
+                            '<a class="category-root category-root-modal" href="http://127.0.0.1:8000/product/'+titleParentSlug+'/'+parentCategoryId+'/'+titleSlug+'/'+categoryId+'">'+nameCategory+'</a>'+
+                            '</li>';
+                    }
+                    $('.bread-crumb-modal').append(htmlRoot);
                     var $img;
                    $img = '<img id="zoom-pro-quick-view" class="img-fluid" src="'+data[9][0]+'" data-zoom-image="'+data[9][0]+'" alt="Zoom Image">';
                    $imgZoom =  '<div id="gallery-quick-view" class="u-s-m-t-10">';
@@ -309,6 +331,7 @@
             $('.zoom-area').text("");
             $('.category-root').text("");
             $('.product-title').text("");
+            $('.bread-crumb-modal').text("");
         }
         function active(item){
              $('.zoom-area').find('.active').removeClass("active");

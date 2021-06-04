@@ -50,11 +50,11 @@ class HomeService implements HomeContract
          $titleSlug =  join("-",$arrFormat);
          return $titleSlug;
      }
-     public function setProductByCategory($category,$name ,$booksByCategory){
+         public function setProductByCategory($category,$name ,$booksByCategory){
          global  $parentCategory  ;
          $productViewModels =new productViewModels();
          $productViewModels->setpathName($name);
-
+         $productViewModels->setNameCategory($category->name);
          $productViewModels->setpathId($category->id);
 
          if($category->slug_name === $name){
@@ -65,6 +65,11 @@ class HomeService implements HomeContract
                  foreach ($booksByCategory as $book){
                      $bookViewModels =new bookViewModels();
                      $bookViewModels->setId($book->id);
+                     $bookViewModels->setCategory($book->categories->name);
+                     $bookViewModels->setIdCategory($book->categories->id);
+                     $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                     $bookViewModels->setOriginalPrice($book->original_Price);
+                     $bookViewModels->setPercentDiscount($book->percent_discount);
                      $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
                      $bookViewModels->setPrice($book->price);
                      $bookViewModels->setImages($book->imagebooks[0]->file);

@@ -98,16 +98,7 @@
                                     <div class="product-title product-title-modal">
 
                                     </div>
-                                    <ul class="bread-crumb">
-                                        <li class="has-separator">
-                                            <a href="home.html">Home</a>
-                                        </li>
-                                        <li class="has-separator">
-                                            <a href="shop-v1-root-category.html">Product</a>
-                                        </li>
-                                        <li class="is-marked">
-                                            <a class="category-root category-root-modal" href=""></a>
-                                        </li>
+                                    <ul class="bread-crumb bread-crumb-modal ">
 
                                     </ul>
                                     <div class="product-rating">
