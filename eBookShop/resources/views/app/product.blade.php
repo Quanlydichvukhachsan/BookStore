@@ -31,7 +31,7 @@
                         <a href="{{route('home')}}">Trang chủ</a>
                     </li>
                     <li class="has-separator">
-                        <a href="#">Sản phẩm</a>
+                        <a href="javascript:void(0)">Sản phẩm</a>
                     </li>
                     <li class="is-marked">
                         <a href="http://127.0.0.1:8000/product/{{$product->getpathName()}}/{{$product->getpathId()}}">{{$product->getNameCategory()}}</a>
@@ -82,13 +82,15 @@
                         <!-- Toolbar Sorter 1  -->
                         <div class="toolbar-sorter">
                             <div class="select-box-wrapper">
-                                <label class="sr-only" for="sort-by">Sort By</label>
+                                <label class="sr-only" for="sort-by">Sắp xếp</label>
                                 <select class="select-box" id="sort-by">
-                                    <option selected="selected" value="">Sort By: Best Selling</option>
-                                    <option value="">Sort By: Latest</option>
-                                    <option value="">Sort By: Lowest Price</option>
-                                    <option value="">Sort By: Highest Price</option>
-                                    <option value="">Sort By: Best Rating</option>
+                                    <option value="" selected="selected">Sắp xếp:</option>
+                                    <option value="{{route('home.product',['category'=>$product->getpathName(),'id'=>$product->getpathId(),'sortname'=>'ten-tang'])}}">Sắp xếp: tăng theo tên</option>
+                                    <option value="{{route('home.product',['category'=>$product->getpathName(),'id'=>$product->getpathId(),'sortname'=>'ten-giam'])}}">Sắp xếp: giảm theo tên</option>
+                                    <option value="{{route('home.product',['category'=>$product->getpathName(),'id'=>$product->getpathId(),'sort'=>'gia-cao'])}}">Sắp xếp: giá cao</option>
+                                    <option value="{{route('home.product',['category'=>$product->getpathName(),'id'=>$product->getpathId(),'sort'=>'gia-thap'])}}">Sắp xếp: giá thấp</option>
+                                    <option value="{{route('home.product',['category'=>$product->getpathName(),'id'=>$product->getpathId(),'sortFormality'=>'biaMem'])}}">Sắp xếp: bìa mềm</option>
+                                    <option value="{{route('home.product',['category'=>$product->getpathName(),'id'=>$product->getpathId(),'sortFormality'=>'biaCung'])}}">Sắp xếp: bìa cứng</option>
                                 </select>
                             </div>
                         </div>
@@ -98,9 +100,10 @@
                             <div class="select-box-wrapper">
                                 <label class="sr-only" for="show-records">Show Records Per Page</label>
                                 <select class="select-box" id="show-records">
-                                    <option selected="selected" value="">Show: 8</option>
-                                    <option value="">Show: 16</option>
-                                    <option value="">Show: 28</option>
+                                    <option value="" selected="selected">Hiển thị:</option>
+                                    <option value="show=2">Hiển thị: 2</option>
+                                    <option value="show=5">Hiển thị: 5</option>
+                                    <option value="show=25">Hiển thị: 25</option>
                                 </select>
                             </div>
                         </div>
@@ -197,6 +200,39 @@
 @endsection
 @section('script')
     <script>
+        $('#sort-by').change(function (){
+            var currentUrl =window.location.href;
+              let queryRecord;
+            if(currentUrl.includes('&') && currentUrl.includes('?')){
+                queryRecord  =  currentUrl.split('&')[1];
+                document.location.href = $(this).val()+'&' +queryRecord;
+            }else if ( currentUrl.includes('?') && currentUrl.includes('show')){
+                 queryRecord = currentUrl.split('?')[1];
+                document.location.href = $(this).val()+'&' +queryRecord;
+            }
+            else{
+                  document.location.href = $(this).val();
+            }
+        })
+        $('#show-records').change(function (){
+            var currentUrl =window.location.href;
+            let query;
+            var record =$(this).val();
+            var urlOrigin =  currentUrl.split('?')[0];
+            var urlOriginWithSort =  currentUrl.split('&')[0];
+            if(currentUrl.includes('show') && currentUrl.includes('?')){
+                    query =urlOrigin +'?'+record;
+            }else if(currentUrl.includes('?')){
+                query =currentUrl+'&'+record;
+            }else if(currentUrl.includes('&') && currentUrl.includes('?')){
+                  query =urlOriginWithSort+'&'+record;
+            }else{
+                query = currentUrl +'?' +record;
+
+            }
+             document.location.href =query;
+
+        })
         function setLocalStorage(id,name,price,img,quantity,items){
             if(typeof(Storage) !== 'undefined'){
 

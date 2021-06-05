@@ -40,6 +40,7 @@ class HomeController extends Controller
      */
     public function getByCategory(Request $request,$name,$id)
     {
+
         $products =  $this->homeContract->getAll();
         global $product;
         if ($request->ajax()) {
@@ -64,7 +65,24 @@ class HomeController extends Controller
 
             return response()->json($product);
         } else {
+            $query = $request->query->all();
+            if(array_key_exists('show',$query) && count($query) ===1){
 
+                $product = $this->homeContract->getByCategory($name, $id, $query['show']);
+                return view('app.product', compact('product','products'));
+            }else if (array_key_exists('show',$query) && count($query)){
+                 global $keys;
+                if(array_key_exists('sort',$query)){
+                             $keys = $query['sort'];
+                    }
+                    else if(array_key_exists('sortname',$query)){
+                    $keys = $query['sortname'];
+                }else{
+                    $keys = $query['sortFormality'];
+                }
+                    $product = $this->homeContract->showRecordWithSort($name, $id, $query['show'],$keys);
+                return view('app.product', compact('product','products'));
+                }
             if ($request->has('sort')) {
                 $key = $request->input('sort');
 

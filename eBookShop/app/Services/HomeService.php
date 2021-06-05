@@ -171,9 +171,12 @@ class HomeService implements HomeContract
             }elseif ($key === 'biaMem') {
                 $arrSort = $category->books->where('formality','=','Soft Cover');
 
-            }
-            else{
+            }elseif($key === 'biaCung'){
                 $arrSort = $category->books->where('formality','=','Hard Cover');
+
+            }else{
+
+                $arrSort = Book::where('categories_id','=',$id)->take($key)->get();
 
             }
             $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
@@ -389,5 +392,38 @@ class HomeService implements HomeContract
         }
 
         return $bookDetailViewModels;
+    }
+
+    public function  showRecordWithSort($name,$id,$record ,$key)
+    {
+        global $productViewModels;
+        $category =  Category::findOrFail($id);
+        if($key === 'gia-thap'){
+
+            $arrSort =Book::where('categories_id','=',$id)->orderBy("price","ASC")->take($record)->get();
+
+
+        } elseif($key === 'gia-cao'){
+            $arrSort =Book::where('categories_id','=',$id)->orderBy("price","DESC")->take($record)->get();
+
+        }
+        elseif ($key === 'ten-giam') {
+
+            $arrSort =Book::where('categories_id','=',$id)->orderBy("title","DESC")->take($record)->get();
+
+        }elseif ($key === 'ten-tang'){
+            $arrSort =Book::where('categories_id','=',$id)->orderBy("title","ASC")->take($record)->get();
+
+        }elseif ($key === 'biaMem') {
+            $arrSort =Book::where('categories_id','=',$id)->where('formality','=','Soft Cover')->take($record)->get();
+
+        }else{
+            $arrSort =Book::where('categories_id','=',$id)->where('formality','=','Hard Cover')->take($record)->get();
+
+
+        }
+        $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
+        return $productViewModels;
+
     }
 }

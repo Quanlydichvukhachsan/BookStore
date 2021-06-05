@@ -60,7 +60,7 @@
                                             <div class="what-product-is">
                                                 <ul class="bread-crumb">
                                                     <li class="has-separator">
-                                                        <a href="shop-v1-root-category.html">Sản phẩm</a>
+                                                        <a href="avascript:void(0)">Sản phẩm</a>
                                                     </li>
                                                     <li class="is-marked">
                                                         <a class="ids{{$item->getIdCategory()}}" href='http://127.0.0.1:8000/product/{{$item->getCategorySlug()}}/{{$item->getIdCategory()}}'>{{$item->getCategory()}}</a>
