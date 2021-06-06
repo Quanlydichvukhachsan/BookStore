@@ -163,8 +163,7 @@
                                         </div>
                                         <div>
                                             <button data-value="" onclick="addToCart(this)" class="button btn-addToCart-Modal button-outline-secondary" type="button">Add to cart</button>
-                                            <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
-                                            <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
+                                            <button  data-value="" onclick="addToWishList(this)" class="button btn-addToWishList-Modal button-outline-secondary far fa-heart u-s-m-l-6" type="button"></button>
                                         </div>
                                     </form>
                                 </div>

@@ -136,9 +136,9 @@
                                 </div>
                             </div>
                             <div>
-                                <button data-value="{{ $productDetail->getId()}},{{$productDetail->getlistImages()[0]}}" onclick="addToCartModal(this)" class="button btn-addToCart button-outline-secondary" type="button">Add to cart</button>
-                                <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
-                                <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
+                                <button data-value="{{ $productDetail->getId()}},{{$productDetail->getlistImages()[0]}}" onclick="addToCartModal(this)" class="button btn-addToCart button-outline-secondary" type="button">Thêm vào giỏ hàng</button>
+                                <button data-value="{{ $productDetail->getId()}},{{$productDetail->getlistImages()[0]}}" onclick="addToWishListModal(this)" class="button btn-addToWishList button-outline-secondary far fa-heart u-s-m-l-6" type="button"></button>
+
                             </div>
                         </form>
                     </div>
@@ -474,8 +474,7 @@
                                             <div class="item-action-behaviors">
                                                 <a class="item-quick-look" data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
                                                 </a>
-                                                <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                                <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
+                                                <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}"  class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
                                                 <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
                                             </div>
                                         </div>
@@ -547,8 +546,7 @@
                                             <div class="item-action-behaviors">
                                                 <a class="item-quick-look" data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
                                                 </a>
-                                                <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                                <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
+                                                <a  data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
                                                 <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
                                             </div>
                                         </div>
@@ -611,6 +609,39 @@
 
 @section('script')
     <script>
+        $('.checkout-anchor').show();
+        $('.cart-anchor').show();
+        function setLocalStorageWishlist(id,name,price,img,wishlist){
+            if(typeof(Storage) !== 'undefined'){
+
+                let item = {
+                    id:parseInt(id),
+                    name: name,
+                    price:parseFloat(price),
+                    img :img,
+                };
+                if(JSON.parse(localStorage.getItem('wishlist')) === null){
+                    wishlist.push(item);
+                    localStorage.setItem("wishlist",JSON.stringify(wishlist));
+                    window.location.reload();
+                }else{
+                    const localItems = JSON.parse(localStorage.getItem("wishlist"));
+                    localItems.map(data=>{
+                        if(item.id !== parseInt(data.id)) {
+                            wishlist.push(data);
+
+                        }
+                    });
+                    wishlist.push(item);
+                    localStorage.setItem('wishlist',JSON.stringify(wishlist));
+                    window.location.reload();
+                }
+
+            }else{
+                alert('local storage is not working on your browser');
+            }
+
+        }
         function setLocalStorage(id,name,price,img,quantity,items){
             if(typeof(Storage) !== 'undefined'){
 
@@ -646,6 +677,18 @@
 
         }
         window.onload = function() {
+            const attToWishListBtn = document.getElementsByClassName('item-addwishlist');
+            let wishlist = [];
+            for(let i=0; i<attToWishListBtn.length; i++){
+                attToWishListBtn[i].addEventListener("click",function(e){
+                    e.preventDefault();
+                    var id =this.getAttribute('data-value').split(',')[0];
+                    var name =this.getAttribute('data-value').split(',')[1];
+                    var price =this.getAttribute('data-value').split(',')[2];
+                    var img =e.target.parentElement.parentElement.children[0].getElementsByTagName("img")[0].getAttribute("src");
+                    setLocalStorageWishlist(id,name,price,img,wishlist);
+                });
+            }
             // adding data to localstorage
             const attToCartBtn = document.getElementsByClassName('item-addCart');
 
@@ -693,13 +736,19 @@
             totalPrice.innerHTML = formatPrice +" VND";
             $('.mini-total-price').append(formatPrice +" VND");
         }
-
+        function addToWishListModal(item){
+            let items = [];
+            var id =item.getAttribute('data-value').split(',')[0];
+            var price = $('.price h4').text();
+            var title =  $('.title-book').text().replace(/\s+/g, ' ').trim();
+            var img =item.getAttribute('data-value').split(',')[1];
+            setLocalStorageWishlist(id,title,price,img,items);
+        }
         function addToCartModal(item){
             let items = [];
             var id =item.getAttribute('data-value').split(',')[0];
             var price = $('.price h4').text();
             var title = $('.title-book').text().replace(/\s+/g, ' ').trim();
-
             var quantity = $('.quantity-text-field').val();
             var img = item.getAttribute('data-value').split(',')[1];
             console.log(img);
@@ -720,6 +769,15 @@
             iconShoppingP.innerHTML = no;
             totalPrice.innerHTML =formatPrice + "VND";
         }
+        function addToWishList(item){
+            let items = [];
+            var id =item.getAttribute('data-value');
+            var price = $('.price h4').text();
+            var title = $('.title-book').text();
+            var img = $('.img-default').find(".image-book").attr("src");
+            setLocalStorageWishlist(id,title,price,img,items);
+        }
+
         function addToCart(item){
             let items = [];
             var id =item.getAttribute('data-value');
@@ -759,6 +817,7 @@
                 success: function(data) {
                     clearDataBookDetail();
                     $('.btn-addToCart-Modal').attr("data-value", $id);
+                    $('.btn-addToWishList-Modal').attr("data-value", $id);
                     $('.description-book-modal').append(data[0]);
                     $('.price-modal h4').append(data[1] + "đ");
                     if(data[6].localeCompare("Hard Cover")){

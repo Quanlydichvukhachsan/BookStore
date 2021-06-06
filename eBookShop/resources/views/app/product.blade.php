@@ -122,7 +122,7 @@
                                     </a>
                                     <div class="item-action-behaviors">
                                         <a class="item-quick-look" data-TitleSlug="{{$item->getCategorySlug()}}" data-ParentTitleSlug="{{$product->getListCategory()[0]->getTitleSlug()}}" data-parentCate="{{$product->getListCategory()[0]->getName()}}" data-IdParentCate="{{$product->getListCategory()[0]->getId()}}"   data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look</a>
-                                        <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
+                                        <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
                                         <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
                                     </div>
                                 </div>
@@ -267,10 +267,53 @@
             }
 
         }
+        function setLocalStorageWishlist(id,name,price,img,wishlist){
+            if(typeof(Storage) !== 'undefined'){
+
+                let item = {
+                    id:parseInt(id),
+                    name: name,
+                    price:parseFloat(price),
+                    img :img,
+                };
+                if(JSON.parse(localStorage.getItem('wishlist')) === null){
+                    wishlist.push(item);
+                    localStorage.setItem("wishlist",JSON.stringify(wishlist));
+                    window.location.reload();
+                }else{
+                    const localItems = JSON.parse(localStorage.getItem("wishlist"));
+                    localItems.map(data=>{
+                        if(item.id !== parseInt(data.id)) {
+                            wishlist.push(data);
+
+                        }
+                    });
+                    wishlist.push(item);
+                    localStorage.setItem('wishlist',JSON.stringify(wishlist));
+                    window.location.reload();
+                }
+
+            }else{
+                alert('local storage is not working on your browser');
+            }
+
+        }
         window.onload = function() {
             if (localStorage.getItem("items") !== null &&  JSON.parse(localStorage.getItem('items')).length >0 ) {
                 $('.cart-anchor').show();
                 $('.checkout-anchor').show();
+            }
+            const attToWishListBtn = document.getElementsByClassName('item-addwishlist');
+            let wishlist = [];
+            for(let i=0; i<attToWishListBtn.length; i++){
+                attToWishListBtn[i].addEventListener("click",function(e){
+                    e.preventDefault();
+                    var id =this.getAttribute('data-value').split(',')[0];
+                    var name =this.getAttribute('data-value').split(',')[1];
+                    var price =this.getAttribute('data-value').split(',')[2];
+                    var img =e.target.parentElement.parentElement.children[0].getElementsByTagName("img")[0].getAttribute("src");
+                    setLocalStorageWishlist(id,name,price,img,wishlist);
+                });
             }
             // adding data to localstorage
             const attToCartBtn = document.getElementsByClassName('item-addCart');
@@ -323,6 +366,14 @@
 
 
         }
+        function addToWishList(item){
+            let items = [];
+            var id =item.getAttribute('data-value');
+            var price = $('.price h4').text();
+            var title = $('.title-book').text();
+            var img = $('.img-default').find(".image-book").attr("src");
+            setLocalStorageWishlist(id,title,price,img,items);
+        }
 
         function addToCart(item){
             let items = [];
@@ -366,6 +417,7 @@
                 success: function(data) {
                     clearDataBookDetail();
                     $('.btn-addToCart-Modal').attr("data-value", $id);
+                    $('.btn-addToWishList-Modal').attr("data-value", $id);
                     $('.description-book').append(data[0]);
                     $('.price h4').append(data[1] + "đ");
                     if(data[6].localeCompare("Hard Cover")){

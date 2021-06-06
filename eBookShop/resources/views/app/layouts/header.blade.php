@@ -93,7 +93,7 @@
                                 </a>
                             </li>
                             <li class="u-d-none-lg">
-                                <a href="wishlist.html">
+                                <a href="{{route('cart.wishList')}}">
                                     <i class="far fa-heart"></i>
                                 </a>
                             </li>
@@ -117,7 +117,7 @@
             <button type="button" class="button fas fa-search" id="responsive-search"></button>
         </div>
         <div class="fixed-responsive-wrapper">
-            <a href="wishlist.html">
+            <a href="{{route('cart.wishList')}}">
                 <i class="far fa-heart"></i>
                 <span class="fixed-item-counter">4</span>
             </a>

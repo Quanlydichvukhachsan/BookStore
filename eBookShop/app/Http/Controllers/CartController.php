@@ -78,4 +78,15 @@ class CartController extends Controller
         return response()->json(["result"=>$result]);
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+
+    public function wishList(){
+        $products =  $this->homeContract->getAll();
+        return view('app.wishlist',compact('products'));
+    }
+
 }
