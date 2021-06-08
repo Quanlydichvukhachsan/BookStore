@@ -2,6 +2,7 @@
 use App\Events\OrderNotification;
 use App\Models\Order;
 use App\Contracts\OrderContract;
+use App\Models\payments;
 use App\Models\User;
 use App\viewModels\bookViewModels;
 use App\viewModels\OrderBookRequestModels;
@@ -20,26 +21,39 @@ class OrderBookService implements OrderContract{
 
 
     }
+   public function setOrderCreate($user,$input,$id,$payment){
 
+       if(!count($user->getRoleNames())){
+           $user->address = $input['address'];
+           $user->phoneNumber = $input['phoneNumber'];
+           $user->save();
+       }
+       global $order;
+       if($payment !== null) {
+           $order = Order::create(['user_id' => $id, 'city' => $input['city'], 'country' => $input['national'], 'district' => $input['district'],
+               'note' => $input['message'], 'totalPrice' => $input['totalPrice'],
+               'totalPriceFee' => $input['totalPriceOrder'],
+               'nameReceive' => $input['nameReceive'], 'quantity' => $input['quantity'], 'payment_id' => $payment->id]);
+       }else{
+
+           $order = Order::create(['user_id' => $id, 'city' => $input['city'], 'country' => $input['national'], 'district' => $input['district'],
+               'note' => $input['message'], 'totalPrice' => $input['totalPrice'],
+               'totalPriceFee' => $input['totalPriceOrder'],
+               'nameReceive' => $input['nameReceive'], 'quantity' => $input['quantity']]);
+       }
+       foreach ($input['book']as $item){
+           $idBook = explode(',',$item)[0];
+           $no = explode(',',$item)[1];
+           $order->books()->attach($idBook,array('amount'=>$no));
+       }
+
+       event(new OrderNotification($user,$order));
+   }
 
     public function create($request,$id){
           $input = $request->all();
          $user = User::findOrFail($id);
-           if(!count($user->getRoleNames())){
-                    $user->address = $input['address'];
-               $user->phoneNumber = $input['phoneNumber'];
-               $user->save();
-           }
-            $order = Order::create(['user_id'=>$id,'city'=>$input['city'],'country'=>$input['national'],'district'=>$input['district'],
-                 'note'=>$input['message'],'totalPrice'=>$input['totalPrice'],
-                'totalPriceFee'=>$input['totalPriceOrder'],
-                 'nameReceive'=>$input['name'],'quantity'=>$input['quantity']]);
-           foreach ($input['book']as $item){
-               $order->books()->attach($item['id'],array('amount'=>$item['no']));
-           }
-
-           event(new OrderNotification($user,$order));
-
+           $this->setOrderCreate($user,$input,$id,null);
            return "Đặt hàng thành công!";
 
     }
@@ -190,5 +204,18 @@ class OrderBookService implements OrderContract{
         }
        // dd($vnp_Url);
         return redirect($vnp_Url);
+    }
+    public function vnpayReturn($request){
+
+         if($request->session()->has('info_customer') && $request->vnp_ResponseCode == "00"){
+             $id = $request->session()->get('info_customer')['userId'];
+             $user = User::findOrFail($id);
+             $input =$request->session()->get('info_customer');
+              $payment =  payments::create(['thanh_vien'=>$user->full_name,'money'=>$request->vnp_Amount,'note'=>$request->vnp_OrderInfo,
+                    'vnp_response_code'=>$request->vnp_ResponseCode,'code_vnpay'=>$request->vnp_TransactionNo,
+                    'code_bank'=>$request->vnp_BankCode,'time'=>date('Y-m-d H:i',strtotime($request->vnp_PayDate))]);
+             $this->setOrderCreate($user,$input,$id,$payment);
+         }
+        return $payment;
     }
 }

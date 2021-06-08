@@ -49,48 +49,52 @@
 @endsection
 @section('script')
     <script>
-        $('.checkout-anchor').show();
-        $('.cart-anchor').show();
+
         window.onload = function() {
-            // adding data to shopping cart
-            const iconShoppingP = document.querySelector('#mini-cart-trigger span');
-            const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
-            let no = 0;
-            let priceTotal =0;
-            JSON.parse(localStorage.getItem('items')).map(data=>{
-                no = no+ parseInt(data.no);
-                priceTotal = priceTotal +(parseInt(data.no) * data.price);
-                var formatPrice =(data.price).toLocaleString(
+            if (localStorage.getItem("items") !== null &&  JSON.parse(localStorage.getItem('items')).length >0 ) {
+                $('.cart-anchor').show();
+                $('.checkout-anchor').show();
+                // adding data to shopping cart
+                const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+                const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+                let no = 0;
+                let priceTotal =0;
+                JSON.parse(localStorage.getItem('items')).map(data=>{
+                    no = no+ parseInt(data.no);
+                    priceTotal = priceTotal +(parseInt(data.no) * data.price);
+                    var formatPrice =(data.price).toLocaleString(
+                        undefined,
+                        { minimumFractionDigits: 3 }
+                    );
+                    $html =  '<li class="clearfix">'+
+                        '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
+                        '<img src="'+data.img+'" alt="Product">'+
+                        '<span class="mini-item-name">'+data.name+'</span>'+
+                        '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
+                        '<span class="mini-item-quantity"> x '+data.no +'</span>'+
+                        '</a>'+
+                        '</li>';
+                    $('.mini-cart-list').append($html);
+                });
+
+                let formatPrice =(priceTotal).toLocaleString(
                     undefined,
                     { minimumFractionDigits: 3 }
                 );
-                $html =  '<li class="clearfix">'+
-                    '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
-                    '<img src="'+data.img+'" alt="Product">'+
-                    '<span class="mini-item-name">'+data.name+'</span>'+
-                    '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
-                    '<span class="mini-item-quantity"> x '+data.no +'</span>'+
-                    '</a>'+
-                    '</li>';
-                $('.mini-cart-list').append($html);
-            });
 
-            let formatPrice =(priceTotal).toLocaleString(
-                undefined,
-                { minimumFractionDigits: 3 }
-            );
-
-            if(formatPrice !== "0.000"){
-                var formatPriceTotal =(parseFloat(priceTotal+30.000)).toLocaleString(
-                    undefined,
-                    { minimumFractionDigits: 3 }
-                );
-                iconShoppingP.innerHTML = no;
-                totalPrice.innerHTML =formatPrice + "VND";
-                $('.calc-text-total').text(formatPrice + ' VND');
-                $('.calc-text-order').text(formatPriceTotal + ' VND');
-                $('.mini-total-price').text(formatPrice + ' VND');
+                if(formatPrice !== "0.000"){
+                    var formatPriceTotal =(parseFloat(priceTotal+30.000)).toLocaleString(
+                        undefined,
+                        { minimumFractionDigits: 3 }
+                    );
+                    iconShoppingP.innerHTML = no;
+                    totalPrice.innerHTML =formatPrice + "VND";
+                    $('.calc-text-total').text(formatPrice + ' VND');
+                    $('.calc-text-order').text(formatPriceTotal + ' VND');
+                    $('.mini-total-price').text(formatPrice + ' VND');
+                }
             }
+
             //adding cartbox data in table
             const cartBox = document.querySelector('.table-wrapper');
             const cardBoxTable = cartBox.querySelector('tbody');

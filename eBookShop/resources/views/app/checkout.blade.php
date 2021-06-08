@@ -30,23 +30,36 @@
                             <!-- Billing-&-Shipping-Details -->
                             <div class="col-lg-6">
                                 <h4 class="section-h4">Chi tiết thanh toán</h4>
+                                <input name="userId" type="hidden" value="{{Auth::user()->id}}">
                                 <!-- Form-Fields -->
                                 <div class="group-inline u-s-m-b-13">
                                         <label for="nameReceive">Họ và tên người nhận
                                             <span class="astk">*</span>
                                         </label>
+
                                         <input name="nameReceive" type="text" id="nameReceive" class="text-field" value="{{Auth::user()->full_name}}">
-                                    <div class="invalid-feedback nameReceive"></div>
+                                    @if(count($errors) >0)
+                                        @if($errors->has('nameReceive'))
+                                        <span style="color: red;" class="nameReceive">{{$errors->first('nameReceive')}}</span>
+                                                @endif
+                                    @endif
+
                                 </div>
+
                                 <div class="u-s-m-b-13">
                                     <label for="national">Quốc gia
                                         <span class="astk"> *</span>
                                     </label>
                                     <div class="select-box-wrapper">
                                         <select class="select-box"  id="national" name="national">
-                                            <option selected="selected" value="">-- Quốc gia --</option>
+                                            <option selected="selected"  value="0">-- Quốc gia --</option>
                                             <option>Việt Nam</option>
                                         </select>
+                                        @if(count($errors) >0)
+                                            @if($errors->has('national'))
+                                                <span style="color: red;" class="national">{{$errors->first('national')}}</span>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="u-s-m-b-13">
@@ -55,7 +68,7 @@
                                     </label>
                                     <div class="select-box-wrapper">
                                         <select class="select-box" name="city" id="city">
-                                            <option>-- Tỉnh/Thành phố --</option>
+                                            <option  value="0">-- Tỉnh/Thành phố --</option>
                                             <option>Cần Thơ</option>
                                             <option>Đà Nẵng</option>
                                             <option>Hải Phòng</option>
@@ -121,7 +134,11 @@
                                             <option>Phú Yên</option>
                                         </select>
 
-                                        <div class="invalid-feedback city"></div>
+                                        @if(count($errors) >0)
+                                            @if($errors->has('city'))
+                                                <span style="color: red;" class="city">{{$errors->first('city')}}</span>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="u-s-m-b-13">
@@ -130,8 +147,7 @@
                                     </label>
                                     <div class="select-box-wrapper">
                                         <select class="select-box"  id="district" name="district">
-                                            <option>-- Quận/Huyện --</option>
-                                            <option>-- Quận/Huyện --</option>
+                                            <option value="0">Quận/Huyện</option>
                                             <option>Huyện Hóc Môn</option>
                                             <option>Quận Gò Vấp</option>
                                             <option>Quận Tân Phú</option>
@@ -141,7 +157,11 @@
                                             <option>Huyện Cần Giờ</option>
                                             <option>Huyện Nhà Bè</option>
                                         </select>
-                                        <div class="invalid-feedback district"></div>
+                                        @if(count($errors) >0)
+                                            @if($errors->has('district'))
+                                                <span style="color: red;" class="district">{{$errors->first('district')}}</span>
+                                            @endif
+                                        @endif
 
                                     </div>
                                 </div>
@@ -150,7 +170,12 @@
                                         <span class="astk">*</span>
                                     </label>
                                     <input type="text" name="address" id="address" class="text-field" placeholder="Địa chỉ nhận hàng">
-                                    <div class="invalid-feedback address"></div>
+                                    @if(count($errors) >0)
+                                        @if($errors->has('address'))
+                                            <span style="color: red;" class="address">{{$errors->first('address')}}</span>
+                                        @endif
+                                    @endif
+
                                 </div>
 
 
@@ -159,15 +184,23 @@
                                         <label for="email">Email address
                                             <span class="astk">*</span>
                                         </label>
-                                        <input name="email" type="text" id="email" class="text-field" value="{{Auth::user()->email}}">
-                                        <div class="invalid-feedback email"></div>
+                                        <input readonly name="email" type="text" id="email" class="text-field" value="{{Auth::user()->email}}">
+                                        @if(count($errors) >0)
+                                            @if($errors->has('email'))
+                                                <span style="color: red;" class="email">{{$errors->first('email')}}</span>
+                                            @endif
+                                        @endif
                                    </div>
                                     <div class="group-2">
                                         <label for="phoneNumber">Số điện thoại
                                             <span class="astk">*</span>
                                         </label>
                                         <input name="phoneNumber" type="text" id="phoneNumber" class="text-field" placeholder="Nhập số điện thoại">
-                                        <div class="invalid-feedback phoneNumber"></div>
+                                        @if(count($errors) >0)
+                                            @if($errors->has('phoneNumber'))
+                                                <span style="color: red;" class="phoneNumber">{{$errors->first('phoneNumber')}}</span>
+                                            @endif
+                                        @endif
                                     </div>
 
                                 </div>
@@ -233,7 +266,7 @@
                                         </label>
                                         <div class="select-box-wrapper">
                                             <select class="select-box"  id="bank_code" name="bank_code">
-                                                <option value="">Không chọn</option>
+                                                <option value="0">Không chọn</option>
                                                 <option value="NCB"> Ngan hang NCB</option>
                                                 <option value="AGRIBANK"> Ngan hang Agribank</option>
                                                 <option value="SCB"> Ngan hang SCB</option>
@@ -257,13 +290,22 @@
                                                 <option value="IVB"> Ngan hang IVB</option>
                                                 <option value="VISA"> Thanh toan qua VISA/MASTER</option>
                                             </select>
-                                            <div class="invalid-feedback district"></div>
+                                            @if(count($errors) >0)
+                                                @if($errors->has('bank_code'))
+                                                    <span style="color: red;" class="bank_code">{{$errors->first('bank_code')}}</span>
+                                                @endif
+                                            @endif
 
                                         </div>
                                     </div>
                                     <div style="display: none" class="content-pay u-s-m-b-13">
                                         <label for="order_desc">Nội dung thanh toán</label>
                                         <textarea name="order_desc" id="order_desc" class="text-area"  placeholder="Nội dung thanh toán."></textarea>
+                                        @if(count($errors) >0)
+                                            @if($errors->has('order_desc'))
+                                                <span style="color: red;" class="order_desc">{{$errors->first('order_desc')}}</span>
+                                            @endif
+                                        @endif
                                     </div>
 
                                     <button type="submit" class="button button-outline-secondary">Đặt hàng</button>
@@ -281,6 +323,8 @@
 
 
 @endsection
+
+
 
 @section('script')
 

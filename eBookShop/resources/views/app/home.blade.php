@@ -2,7 +2,15 @@
 <html class="no-js" lang="en-US">
 
 @include('app.layouts.head')
+@if(Session::has('success-order'))
+<div class="alert alert-success alert-highlighted"
+     style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+    <i class="mdi mdi-chevron-down-circle"></i>
 
+    <span>Đặt hàng thành công</span>
+    @endif
+
+</div>
 <body>
 <!-- app -->
 <div id="app">
@@ -41,6 +49,7 @@
     </div>
     <!-- Responsive-Search /- -->
     <!-- Newsletter-Modal -->
+    @if(!Auth::check())
     <div id="newsletter-modal" class="modal fade">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -54,28 +63,48 @@
                                 </a>
                             </div>
                         </div>
+
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="newsletter-wrapper">
-                                <h1>New to
-                                    <span>Groover</span> ?
-                                    <br>Subscribe Newsletter</h1>
-                                <h5>Get latest product update...</h5>
-                                <form>
+                                <h1>Nhiều sách
+                                    <span>ưu đãi</span> ?
+                                    <br>Đăng nhập ngay</h1>
+                                <h5>Các sản phẩm mới nhất...</h5>
+                                <form method="POST" action="{{ route('login') }}"  class="box">
+                                    @csrf
                                     <div class="u-s-m-b-35">
-                                        <input type="text" class="newsletter-textfield" placeholder="Enter Your Email">
+                                    <input id="email" type="email" class="newsletter-textfield @error('email') is-invalid @enderror" placeholder="Enter Your Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                                        @enderror
                                     </div>
+                                <div class="u-s-m-b-35">
+                                    <input id="password" type="password" class="newsletter-textfield @error('password') is-invalid @enderror"placeholder="password" name="password" required autocomplete="current-password">
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                                    @enderror
+                                </div>
+                                    <a class="nav-link" href="http://127.0.0.1:8000/register">{{ __('Register') }}</a>
                                     <div class="u-s-m-b-35">
-                                        <button class="button button-primary d-block w-100">Subscribe</button>
+                                        <button class="button button-primary d-block w-100">Đăng nhập</button>
                                     </div>
                                 </form>
-                                <h6>Be the first for getting special deals and offers, Send directly to your inbox.</h6>
+                                <h6>Nhận nhiều ưu đãi khi mua trên 5 sản phẩm!</h6>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+@endif
     <!-- Newsletter-Modal /- -->
     <!-- Quick-view-Modal -->
     <div id="quick-view" class="modal fade">
@@ -235,6 +264,7 @@
 </div>
 
 @include('app.layouts.script')
+
 @yield('script')
 </body>
 </html>

@@ -32,6 +32,7 @@
                             <th>City</th>
                             <th>Country</th>
                             <th>Status</th>
+                            <th>Payment</th>
                             <th>Action</th>
                             <th></th>
                         </tr>
@@ -58,6 +59,23 @@
                                     <span class="badge badge-info">{{$item->status}}</span>
                                 @else
                                     <span class="badge badge-danger">{{$item->status}}</span>
+                                    @endif
+                            </td>
+                            <td>
+                                @if($item->payment === null)
+                                      Thanh toán khi nhận hàng
+                                @else
+                                    <ul>
+                                        <li>Thanh toán:Online</li>
+                                        <li>Số tiền:{{number_format(substr($item->payment->money,0,-2), 0)}} vnd</li>
+                                        <li>Nội dung thanh toán:{{$item->payment->note}}</li>
+                                        @if($item->payment->vnp_response_code == 00)
+                                        <li>Trạng thái:Thành công</li>
+                                        @endif
+                                        <li>Mã GD Tại VNPAY:{{$item->payment->code_vnpay}}</li>
+                                        <li>Mã Ngân hàng:{{$item->payment->code_bank}}</li>
+                                        <li>Thời gian:{{$item->payment->time}}</li>
+                                    </ul>
                                     @endif
                             </td>
                             <td>

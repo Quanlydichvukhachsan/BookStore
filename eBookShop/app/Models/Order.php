@@ -12,6 +12,7 @@ class Order extends Model
     protected $fillable=[
         'book_id',
         'user_id',
+        'payment_id',
         'status',
         'city',
         'country',
@@ -30,5 +31,7 @@ class Order extends Model
       public function user(){
           return $this->belongsTo('App\Models\User');
      }
-
+    public function payment(){
+        return $this->belongsTo('App\Models\payments');
+    }
 }

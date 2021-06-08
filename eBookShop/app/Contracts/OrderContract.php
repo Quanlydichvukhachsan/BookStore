@@ -10,4 +10,5 @@ interface OrderContract{
    public function destroy($id);
     public function updateSalesOrderDetail( $request , $id,  $customer);
     public function createPayment($request);
+    public function vnpayReturn($request);
 }

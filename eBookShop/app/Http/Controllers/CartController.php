@@ -42,12 +42,20 @@ class CartController extends Controller
     public function order(CreateOrderRequest $request,$id){
 
         if($request->payment_online === "2"){
-
+            $this->validate($request, [
+                'order_desc' => 'required',
+                'bank_code' =>'required|not_in:0'
+            ]);
+            session(['info_customer'=>$request->all()]);
           return  $this->orderBook->createPayment($request);
+        }else{
+            $result = $this->orderBook->create($request,$id);
+            $products =  $this->homeContract->getAll();
+            session()->flash('success-order',$result);
+            return redirect()->route('home',compact('result','products'));
         }
-                //   dd($request->all());
-      // $result = $this->orderBook->create($request,$id);
-       //   return response()->json(["result"=>$result]);
+
+
     }
     /**
      * Display the specified resource.
@@ -56,9 +64,10 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function salesOrder($id){
+        $products =  $this->homeContract->getAll();
           $user = User::findOrFail($id);
        $items = $user->orders;
-        return view('app.salesOrderHistory',compact('items'));
+        return view('app.salesOrderHistory',compact('items','products'));
     }
     /**
      * Display the specified resource.
@@ -93,9 +102,15 @@ class CartController extends Controller
         $products =  $this->homeContract->getAll();
         return view('app.wishlist',compact('products'));
     }
-
+    /**
+     * Display the specified resource.
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function vnpayReturn(Request $request){
-            dd($request->toArray());
+        $products =  $this->homeContract->getAll();
+           $result = $this->orderBook->vnpayReturn($request);
+            return view('app.vnPayReturn',compact('result','products'));
     }
 
 }

@@ -25,12 +25,14 @@ class CreateOrderRequest extends FormRequest
     {
       //  $id = $this->route('cart.order');
        // dd($id);
+
         return [
+
             'nameReceive' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'national' =>'required|string|max:255',
+            'district' => 'required|string|max:255|not_in:0',
+            'national' =>'required|string|max:255|not_in:0',
             'phoneNumber' => 'required|string|max:10|unique:users,phoneNumber,' . $this->id . ',id',
-            'city' =>'required|string|max:255',
+            'city' =>'required|string|max:255|not_in:0',
             'address' => 'required|string|max:255',
             'payment_online' =>'required|string|max:255',
             'book' =>'required',

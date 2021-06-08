@@ -21,29 +21,39 @@
             <nav>
                 <ul class="secondary-nav g-nav">
                     <li>
-                        <a>My Account
+                        <a>Tài khoản
                             <i class="fas fa-chevron-down u-s-m-l-9"></i>
                         </a>
                         <ul class="g-dropdown" style="width:200px">
                             <li>
-                                <a href="cart.html">
+                                <a href="{{route('cart')}}">
                                     <i class="fas fa-cog u-s-m-r-9"></i>
-                                    My Cart</a>
+                                    Giỏ hàng</a>
                             </li>
                             <li>
-                                <a href="wishlist.html">
+                                <a href="{{route('cart.wishList')}}">
                                     <i class="far fa-heart u-s-m-r-9"></i>
-                                    My Wishlist</a>
+                                    Danh sách yêu thichs</a>
                             </li>
                             <li>
-                                <a href="checkout.html">
+                                <a href="{{route('cart.salesOrder',Auth::user()->id)}}">
                                     <i class="far fa-check-circle u-s-m-r-9"></i>
-                                    Checkout</a>
+                                    Đơn hàng</a>
                             </li>
                             <li>
-                                <a href="account.html">
+                                @if(Auth::check())
+                                <a href="{{route('logout')}}"  onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                    Login / Signup</a>
+                                    Đăng xuất</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                @else
+                                    <a href="{{route('login')}}">
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        Đăng nhập</a>
+                                    @endif
                             </li>
                         </ul>
                     </li>

@@ -54,6 +54,16 @@
 <script type="text/javascript" src="{{asset('assets/webApp/js/app.js')}}"></script>
 
 <script>
+    @if(Session::has('success-order'))
+
+        localStorage.removeItem("items");
+    @endif
+    $(function () {
+        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+            $(".alert").slideUp(500);
+        });
+
+    });
     function isNumber(evt) {
         var iKeyCode = (evt.which) ? evt.which : evt.keyCode
         if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
