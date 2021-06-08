@@ -4,7 +4,7 @@
     <div class="page-style-a">
         <div class="container">
             <div class="page-intro">
-                <h2>Cart</h2>
+                <h2>Thanh toán</h2>
                 <ul class="bread-crumb">
                     <li class="has-separator">
                         <i class="ion ion-md-home"></i>
@@ -25,7 +25,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <form>
+                    {!! Form::open(['method' => 'POST' ,'route' => ['cart.order',Auth::user()->id]]) !!}
                         <div class="row">
                             <!-- Billing-&-Shipping-Details -->
                             <div class="col-lg-6">
@@ -190,6 +190,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+
                                         <tr>
                                             <td>
                                                 <h3 class="order-h3">Tổng tiền</h3>
@@ -218,20 +219,59 @@
                                         </tbody>
                                     </table>
                                     <div class="u-s-m-b-13">
-                                        <input type="radio" class="radio-box" name="payment-method" id="cash-on-delivery">
+                                        <input type="radio"   value="1" onclick="hidePay()" class="radio-box" name="payment_online" id="cash-on-delivery">
                                         <label class="label-text" for="cash-on-delivery">Thanh toán khi nhận hàng</label>
                                     </div>
 
                                     <div class="u-s-m-b-13">
-                                        <input type="radio" class="radio-box" name="payment-method" id="paypal">
+                                        <input type="radio" value="2" onclick="openPay()" class="radio-box" name="payment_online" id="paypal">
                                         <label class="label-text" for="paypal">Thanh toán qua thẻ</label>
                                     </div>
+                                    <div style="display: none" class="vnpay u-s-m-b-13">
+                                        <label for="bank_code">Chọn ngân hàng
+                                            <span class="astk">*</span>
+                                        </label>
+                                        <div class="select-box-wrapper">
+                                            <select class="select-box"  id="bank_code" name="bank_code">
+                                                <option value="">Không chọn</option>
+                                                <option value="NCB"> Ngan hang NCB</option>
+                                                <option value="AGRIBANK"> Ngan hang Agribank</option>
+                                                <option value="SCB"> Ngan hang SCB</option>
+                                                <option value="SACOMBANK">Ngan hang SacomBank</option>
+                                                <option value="EXIMBANK"> Ngan hang EximBank</option>
+                                                <option value="MSBANK"> Ngan hang MSBANK</option>
+                                                <option value="NAMABANK"> Ngan hang NamABank</option>
+                                                <option value="VNMART"> Vi dien tu VnMart</option>
+                                                <option value="VIETINBANK">Ngan hang Vietinbank</option>
+                                                <option value="VIETCOMBANK"> Ngan hang VCB</option>
+                                                <option value="HDBANK">Ngan hang HDBank</option>
+                                                <option value="DONGABANK"> Ngan hang Dong A</option>
+                                                <option value="TPBANK"> Ngân hàng TPBank</option>
+                                                <option value="OJB"> Ngân hàng OceanBank</option>
+                                                <option value="BIDV"> Ngân hàng BIDV</option>
+                                                <option value="TECHCOMBANK"> Ngân hàng Techcombank</option>
+                                                <option value="VPBANK"> Ngan hang VPBank</option>
+                                                <option value="MBBANK"> Ngan hang MBBank</option>
+                                                <option value="ACB"> Ngan hang ACB</option>
+                                                <option value="OCB"> Ngan hang OCB</option>
+                                                <option value="IVB"> Ngan hang IVB</option>
+                                                <option value="VISA"> Thanh toan qua VISA/MASTER</option>
+                                            </select>
+                                            <div class="invalid-feedback district"></div>
+
+                                        </div>
+                                    </div>
+                                    <div style="display: none" class="content-pay u-s-m-b-13">
+                                        <label for="order_desc">Nội dung thanh toán</label>
+                                        <textarea name="order_desc" id="order_desc" class="text-area"  placeholder="Nội dung thanh toán."></textarea>
+                                    </div>
+
                                     <button type="submit" class="button button-outline-secondary">Đặt hàng</button>
                                 </div>
                             </div>
                             <!-- Checkout /- -->
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -246,6 +286,15 @@
 
     <script src={{asset("error-handler/exception.js")}}></script>
    <script>
+      function openPay(){
+              $('.vnpay').show();
+          $('.content-pay').show();
+
+      }
+      function hidePay(){
+          $('.vnpay').hide();
+          $('.content-pay').hide();
+      }
        $('.cart-anchor').show();
        window.onload = function() {
            if (localStorage.getItem("items") !== null && JSON.parse(localStorage.getItem('items')).length > 0) {
@@ -259,6 +308,7 @@
            let priceTotal = 0;
            JSON.parse(localStorage.getItem('items')).map(data => {
                no = no + parseInt(data.no);
+
                priceTotal = priceTotal + (parseInt(data.no) * data.price);
                var formatPrice = (data.price).toLocaleString(
                    undefined,
@@ -295,7 +345,7 @@
            const cardBoxTable = cartBox.querySelector('tbody');
            let tableData = '';
            JSON.parse(localStorage.getItem('items')).map(data=>{
-               tableData += '<tr>'+
+               tableData +='<input type="hidden" name="book[]" value="'+data.id+','+data.no +'">'+ '<tr>'+
                    '<td>'+
                    '<h6 class="order-h6">'+data.name+'</h6>'+
                '<span class="order-span-quantity"> x ' +data.no+'</span>'+
@@ -305,7 +355,10 @@
            '</td>'+
            '</tr>';
            });
-           tableData+= '<tr>'+
+           tableData+='<input type="hidden" name="totalPrice" value="'+formatPrice.split("đ")[0].replace(/\,/g,'').split('.').join('')+'">'+
+               '<input type="hidden" name="totalPriceOrder" value="'+ formatPriceTotal.split("đ")[0].replace(/\,/g,'').split('.').join('')+'">'+
+               '<input type="hidden" name="quantity" value="'+no+'">'+
+               '<tr>'+
                '<td>'+
                '<h3 class="order-h3">Tổng tiền</h3>'+
                '</td>'+

@@ -36,7 +36,7 @@ use App\Http\Controllers\AuthorController;
     Route::post('/sales/order/{id}/customer/{idCustomer}', [App\Http\Controllers\CartController::class, 'updateSalesOrderDetail'])->name('cart.updateSalesOrderDetail');
     Route::get('/customer/{id}/account/', [App\Http\Controllers\AccountController::class, 'index'])->name('account');
     Route::post('/customer/{id}/account/update', [App\Http\Controllers\AccountController::class, 'update'])->name('account.update');
-
+    Route::get('/vnpay/return', [App\Http\Controllers\CartController::class, 'vnpayReturn'])->name('vnpay.return');
 });
 
 //Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');

@@ -41,8 +41,13 @@ class CartController extends Controller
      */
     public function order(CreateOrderRequest $request,$id){
 
-       $result = $this->orderBook->create($request,$id);
-          return response()->json(["result"=>$result]);
+        if($request->payment_online === "2"){
+
+          return  $this->orderBook->createPayment($request);
+        }
+                //   dd($request->all());
+      // $result = $this->orderBook->create($request,$id);
+       //   return response()->json(["result"=>$result]);
     }
     /**
      * Display the specified resource.
@@ -87,6 +92,10 @@ class CartController extends Controller
     public function wishList(){
         $products =  $this->homeContract->getAll();
         return view('app.wishlist',compact('products'));
+    }
+
+    public function vnpayReturn(Request $request){
+            dd($request->toArray());
     }
 
 }
