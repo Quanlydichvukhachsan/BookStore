@@ -107,7 +107,7 @@ class HomeService implements HomeContract
      }
     public function getAll()
     {
-         $books =  Book::orderBy('created_at', 'desc')->paginate(5);
+         $books =  Book::orderBy('created_at', 'desc')->where('categories_id','!=',16)->where('categories_id','!=',18)->where('categories_id','!=',17)->paginate(5);
          $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
          $productViewModels->setBooks($books);
@@ -461,4 +461,336 @@ class HomeService implements HomeContract
               return false;
           }
     }
+
+    public function getProductSale()
+    {
+        $books =  Book::orderBy('created_at', 'desc')->where('percent_discount','!=',0.000)->get();
+        $categorys =  Category::where('parent_id', '=', 0)->get();
+        $productViewModels =new productViewModels();
+        $productViewModels->setBooks($books);
+        foreach ($books as $book){
+
+            $bookViewModels =new bookViewModels();
+            $bookViewModels->setId($book->id);
+            $bookViewModels->setOriginalPrice($book->original_Price);
+            $bookViewModels->setPercentDiscount($book->percent_discount);
+            $bookViewModels->setPrice($book->price);
+            $bookViewModels->setImages($book->imagebooks[0]->file);
+            $bookViewModels->setTitle($book->title);
+            $bookViewModels->setAuthor($book->author->full_name);
+            $bookViewModels->setCategory($book->categories->name);
+            $bookViewModels->setIdCategory($book->categories->id);
+            $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+            $productViewModels->setListBook($bookViewModels);
+
+        }
+
+
+
+        foreach ($categorys as $item){
+            $showCategoryModel =new showCategoryModel();
+            $showCategoryModel->setId($item->id);
+            $showCategoryModel->setName($item->name);
+            $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+            if($item->childs->count() >0){
+                foreach ($item->childs as $child) {
+                    $childModel =new showCategoryModel();
+                    $childModel->setId($child->id);
+                    $childModel->setName($child->name);
+                    $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                    $showCategoryModel->setChilds($childModel);
+                }
+            }
+            $productViewModels->setListCategory($showCategoryModel);
+        }
+        return $productViewModels ;
+    }
+
+    public function getProductChildren()
+    {
+        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',16)->get();
+        $categorys =  Category::where('parent_id', '=', 0)->get();
+        $productViewModels =new productViewModels();
+        $productViewModels->setBooks($books);
+        foreach ($books as $book){
+
+            $bookViewModels =new bookViewModels();
+            $bookViewModels->setId($book->id);
+            $bookViewModels->setOriginalPrice($book->original_Price);
+            $bookViewModels->setPercentDiscount($book->percent_discount);
+            $bookViewModels->setPrice($book->price);
+            $bookViewModels->setImages($book->imagebooks[0]->file);
+            $bookViewModels->setTitle($book->title);
+            $bookViewModels->setAuthor($book->author->full_name);
+            $bookViewModels->setCategory($book->categories->name);
+            $bookViewModels->setIdCategory($book->categories->id);
+            $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+            $productViewModels->setListBook($bookViewModels);
+
+        }
+
+        foreach ($categorys as $item){
+            $showCategoryModel =new showCategoryModel();
+            $showCategoryModel->setId($item->id);
+            $showCategoryModel->setName($item->name);
+            $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+            if($item->childs->count() >0){
+                foreach ($item->childs as $child) {
+                    $childModel =new showCategoryModel();
+                    $childModel->setId($child->id);
+                    $childModel->setName($child->name);
+                    $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                    $showCategoryModel->setChilds($childModel);
+                }
+            }
+            $productViewModels->setListCategory($showCategoryModel);
+        }
+        return $productViewModels ;
+    }
+    public function getProductManga()
+    {
+        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',17)->get();
+        $categorys =  Category::where('parent_id', '=', 0)->get();
+        $productViewModels =new productViewModels();
+        $productViewModels->setBooks($books);
+        foreach ($books as $book){
+
+            $bookViewModels =new bookViewModels();
+            $bookViewModels->setId($book->id);
+            $bookViewModels->setOriginalPrice($book->original_Price);
+            $bookViewModels->setPercentDiscount($book->percent_discount);
+            $bookViewModels->setPrice($book->price);
+            $bookViewModels->setImages($book->imagebooks[0]->file);
+            $bookViewModels->setTitle($book->title);
+            $bookViewModels->setAuthor($book->author->full_name);
+            $bookViewModels->setCategory($book->categories->name);
+            $bookViewModels->setIdCategory($book->categories->id);
+            $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+            $productViewModels->setListBook($bookViewModels);
+
+        }
+
+        foreach ($categorys as $item){
+            $showCategoryModel =new showCategoryModel();
+            $showCategoryModel->setId($item->id);
+            $showCategoryModel->setName($item->name);
+            $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+            if($item->childs->count() >0){
+                foreach ($item->childs as $child) {
+                    $childModel =new showCategoryModel();
+                    $childModel->setId($child->id);
+                    $childModel->setName($child->name);
+                    $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                    $showCategoryModel->setChilds($childModel);
+                }
+            }
+            $productViewModels->setListCategory($showCategoryModel);
+        }
+        return $productViewModels ;
+    }
+
+    public function getProductSeriesManga()
+    {
+        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',18)->get();
+        $categorys =  Category::where('parent_id', '=', 0)->get();
+        $productViewModels =new productViewModels();
+        $productViewModels->setBooks($books);
+        foreach ($books as $book){
+
+            $bookViewModels =new bookViewModels();
+            $bookViewModels->setId($book->id);
+            $bookViewModels->setOriginalPrice($book->original_Price);
+            $bookViewModels->setPercentDiscount($book->percent_discount);
+            $bookViewModels->setPrice($book->price);
+            $bookViewModels->setImages($book->imagebooks[0]->file);
+            $bookViewModels->setTitle($book->title);
+            $bookViewModels->setAuthor($book->author->full_name);
+            $bookViewModels->setCategory($book->categories->name);
+            $bookViewModels->setIdCategory($book->categories->id);
+            $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+            $productViewModels->setListBook($bookViewModels);
+
+        }
+
+        foreach ($categorys as $item){
+            $showCategoryModel =new showCategoryModel();
+            $showCategoryModel->setId($item->id);
+            $showCategoryModel->setName($item->name);
+            $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+            if($item->childs->count() >0){
+                foreach ($item->childs as $child) {
+                    $childModel =new showCategoryModel();
+                    $childModel->setId($child->id);
+                    $childModel->setName($child->name);
+                    $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                    $showCategoryModel->setChilds($childModel);
+                }
+            }
+            $productViewModels->setListCategory($showCategoryModel);
+        }
+        return $productViewModels ;
+    }
+         public function productBestSell(){
+                  $arrBookId =[];
+                  $order = Order::all();
+                  foreach ($order as $item){
+                      foreach ($item->books as $book){
+
+                          array_push($arrBookId,$book->id);
+                  }
+                  }
+             $count=array_count_values($arrBookId);//Counts the values in the array, returns associatve array
+             arsort($count);//Sort it from highest to lowest
+             $keys=array_keys($count);
+                $arrBook =[];
+             for($i=0;$i< 5 ;$i++){
+               $books = Book::findOrFail($keys[$i]);
+                 array_push($arrBook,$books);
+             }
+
+             $categorys =  Category::where('parent_id', '=', 0)->get();
+             $productViewModels =new productViewModels();
+             $productViewModels->setBooks($arrBook);
+             foreach ($arrBook as $book){
+
+                 $bookViewModels =new bookViewModels();
+                 $bookViewModels->setId($book->id);
+                 $bookViewModels->setOriginalPrice($book->original_Price);
+                 $bookViewModels->setPercentDiscount($book->percent_discount);
+                 $bookViewModels->setPrice($book->price);
+                 $bookViewModels->setImages($book->imagebooks[0]->file);
+                 $bookViewModels->setTitle($book->title);
+                 $bookViewModels->setAuthor($book->author->full_name);
+                 $bookViewModels->setCategory($book->categories->name);
+                 $bookViewModels->setIdCategory($book->categories->id);
+                 $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                 $productViewModels->setListBook($bookViewModels);
+
+             }
+
+             foreach ($categorys as $item){
+                 $showCategoryModel =new showCategoryModel();
+                 $showCategoryModel->setId($item->id);
+                 $showCategoryModel->setName($item->name);
+                 $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+                 if($item->childs->count() >0){
+                     foreach ($item->childs as $child) {
+                         $childModel =new showCategoryModel();
+                         $childModel->setId($child->id);
+                         $childModel->setName($child->name);
+                         $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                         $showCategoryModel->setChilds($childModel);
+                     }
+                 }
+                 $productViewModels->setListCategory($showCategoryModel);
+             }
+             return $productViewModels ;
+         }
+         public function getPoductByType($type){
+        global $books;
+        if($type === "sale"){
+            $books =  Book::orderBy('created_at', 'desc')->where('percent_discount','!=',0.000)->paginate(8);
+        }
+        elseif($type === "new"){
+            $books =  Book::orderBy('created_at', 'desc')->paginate(8);
+        }else{
+            $arrBookId =[];
+            $order = Order::all();
+            foreach ($order as $item){
+                foreach ($item->books as $book){
+
+                    array_push($arrBookId,$book->id);
+                }
+            }
+            $count=array_count_values($arrBookId);//Counts the values in the array, returns associatve array
+            arsort($count);//Sort it from highest to lowest
+            $keys=array_keys($count);
+            $books =[];
+            for($i=0;$i< 5 ;$i++){
+                $item = Book::findOrFail($keys[$i]);
+                array_push($books,$item);
+            }
+        }
+
+             $categorys =  Category::where('parent_id', '=', 0)->get();
+             $productViewModels =new productViewModels();
+             $productViewModels->setBooks($books);
+             foreach ($books as $book){
+
+                 $bookViewModels =new bookViewModels();
+                 $bookViewModels->setId($book->id);
+                 $bookViewModels->setOriginalPrice($book->original_Price);
+                 $bookViewModels->setPercentDiscount($book->percent_discount);
+                 $bookViewModels->setPrice($book->price);
+                 $bookViewModels->setImages($book->imagebooks[0]->file);
+                 $bookViewModels->setTitle($book->title);
+                 $bookViewModels->setAuthor($book->author->full_name);
+                 $bookViewModels->setCategory($book->categories->name);
+                 $bookViewModels->setIdCategory($book->categories->id);
+                 $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                 $productViewModels->setListBook($bookViewModels);
+
+             }
+
+
+
+             foreach ($categorys as $item){
+                 $showCategoryModel =new showCategoryModel();
+                 $showCategoryModel->setId($item->id);
+                 $showCategoryModel->setName($item->name);
+                 $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+                 if($item->childs->count() >0){
+                     foreach ($item->childs as $child) {
+                         $childModel =new showCategoryModel();
+                         $childModel->setId($child->id);
+                         $childModel->setName($child->name);
+                         $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                         $showCategoryModel->setChilds($childModel);
+                     }
+                 }
+                 $productViewModels->setListCategory($showCategoryModel);
+             }
+             return $productViewModels ;
+         }
+      public function productKinhTe()
+       {
+           $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',7)->orWhere('categories_id','=',9)->get();
+           $categorys =  Category::where('parent_id', '=', 0)->get();
+           $productViewModels =new productViewModels();
+           $productViewModels->setBooks($books);
+           foreach ($books as $book){
+
+               $bookViewModels =new bookViewModels();
+               $bookViewModels->setId($book->id);
+               $bookViewModels->setOriginalPrice($book->original_Price);
+               $bookViewModels->setPercentDiscount($book->percent_discount);
+               $bookViewModels->setPrice($book->price);
+               $bookViewModels->setImages($book->imagebooks[0]->file);
+               $bookViewModels->setTitle($book->title);
+               $bookViewModels->setAuthor($book->author->full_name);
+               $bookViewModels->setCategory($book->categories->name);
+               $bookViewModels->setIdCategory($book->categories->id);
+               $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+               $productViewModels->setListBook($bookViewModels);
+
+           }
+
+           foreach ($categorys as $item){
+               $showCategoryModel =new showCategoryModel();
+               $showCategoryModel->setId($item->id);
+               $showCategoryModel->setName($item->name);
+               $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+               if($item->childs->count() >0){
+                   foreach ($item->childs as $child) {
+                       $childModel =new showCategoryModel();
+                       $childModel->setId($child->id);
+                       $childModel->setName($child->name);
+                       $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                       $showCategoryModel->setChilds($childModel);
+                   }
+               }
+               $productViewModels->setListCategory($showCategoryModel);
+           }
+           return $productViewModels ;
+       }
 }

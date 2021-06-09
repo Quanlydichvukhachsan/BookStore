@@ -234,19 +234,16 @@
                 <div class="col-lg-9">
                     <ul class="bottom-nav g-nav u-d-none-lg">
                         <li>
-                            <a href="custom-deal-page.html">New Arrivals
+                            <a href="{{route('home.productNew')}}">Sách mới
                                 <span class="superscript-label-new">NEW</span>
                             </a>
                         </li>
                         <li>
-                            <a href="custom-deal-page.html">Exclusive Deals
+                            <a href="{{route('home.productHot')}}">Sách bán chạy
                                 <span class="superscript-label-hot">HOT</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="custom-deal-page.html">Flash Deals
-                            </a>
-                        </li>
+
                         <li class="mega-position">
                             <a>Pages
                                 <i class="fas fa-chevron-down u-s-m-l-9"></i>
@@ -358,8 +355,8 @@
                             </div>
                         </li>
                         <li>
-                            <a href="custom-deal-page.html">Super Sale
-                                <span class="superscript-label-discount">-15%</span>
+                            <a href="{{route('home.productSale')}}">Giảm giá
+                                <span class="superscript-label-discount">sale</span>
                             </a>
                         </li>
                     </ul>

@@ -26,6 +26,9 @@ use App\Http\Controllers\AuthorController;
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::class, 'getByCategory'])->name('home.product');
+    Route::get('/product/new', [App\Http\Controllers\HomeController::class, 'getProductNew'])->name('home.productNew');
+Route::get('/product/sale', [App\Http\Controllers\HomeController::class, 'getProductSale'])->name('home.productSale');
+Route::get('/product/hot', [App\Http\Controllers\HomeController::class, 'getProductHot'])->name('home.productHot');
     Route::post('/product/search', [App\Http\Controllers\HomeController::class, 'findProduct'])->name('home.findProduct');
     Route::get('/home/{title}/{id}', [App\Http\Controllers\HomeController::class, 'getProduct'])->name('home.productDetail');
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');

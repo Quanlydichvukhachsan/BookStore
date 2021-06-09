@@ -27,8 +27,14 @@ class HomeController extends Controller
     public function index()
     {
         $products =  $this->homeContract->getAll();
-      // dd($products);
-        return view('app.overview',compact('products'));
+        $productsSale  =  $this->homeContract->getProductSale();
+        $productsChildren =  $this->homeContract->getProductChildren();
+          $productsManga =$this->homeContract->getProductManga();
+        $productsSeriesManga =$this->homeContract->getProductSeriesManga();
+        $productsBestSell =$this->homeContract->productBestSell();
+        $productsKinhTe =$this->homeContract->productKinhTe();
+        return view('app.overview',compact('products','productsSale','productsKinhTe',
+            'productsChildren','productsManga','productsSeriesManga','productsBestSell'));
     }
     /**
      * Update the specified resource in storage.
@@ -156,6 +162,28 @@ class HomeController extends Controller
 
            return view('app.productDetail',compact('products','productDetail'));
        }
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+  public function getProductNew(){
+      $products =  $this->homeContract->getAll();
+      $productsBestSell =$this->homeContract->getPoductByType("new");
+      return view('app.productType',compact('productsBestSell','products'));
+  }
 
+    public function getProductSale(){
+        $products =  $this->homeContract->getAll();
+        $productsBestSell =$this->homeContract->getPoductByType("sale");
+        return view('app.productType',compact('productsBestSell','products'));
+    }
+
+
+    public function getProductHot(){
+        $products =  $this->homeContract->getAll();
+        $productsBestSell =$this->homeContract->getPoductByType("hot");
+        return view('app.productType',compact('productsBestSell','products'));
+    }
 
 }
