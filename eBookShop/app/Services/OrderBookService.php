@@ -17,9 +17,15 @@ class OrderBookService implements OrderContract{
         return $orders;
     }
 
-    public function show($id){
-
-
+    public function show($id,$code){
+       $order = Order::where('id','=',$code)->get();
+       global $result;
+      if(count($order)){
+          $result =  $this->orderShow($order[0]->id,$id);
+      }else{
+          $result ="Không có đơn hàng cần tìm";
+      }
+             return $result ;
     }
    public function setOrderCreate($user,$input,$id,$payment){
 
@@ -147,6 +153,13 @@ class OrderBookService implements OrderContract{
         $order->save();
         return "Cập nhật đơn hàng thành công!";
 
+    }
+
+    public function deleteSalesOrderDetail($id){
+         $order =  Order::findOrFail($id);
+         $order->status= "Cancel";
+         $order->save();
+        return "Hủy  đơn hàng thành công!";
     }
        public function quickRandom($length = 16)
         {

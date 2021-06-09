@@ -39,7 +39,9 @@
                             </thead>
                             <tbody>
                             @foreach($items as $order)
+
                             <tr>
+                                {!! Form::open(['method' => 'DELETE' ,'route' => ['cart.deleteSalesOrderDetail',$order->id,Auth::user()->id]]) !!}
                                 <td>
                                     <div class="cart-anchor-image">
                                         <a href="javascript:void(0)">
@@ -68,11 +70,19 @@
                                     <div class="action-wrapper">
 
                                         <input type="button"  onclick="location.href='http://127.0.0.1:8000/sales/order/{{$order->id}}/customer/{{Auth::user()->id}}'" class="button button-outline-secondary" value="Xem chi tiết"></input>
-                                        <button class="button button-outline-secondary fas fa-trash"></button>
+                                        @if($order->status === "Waiting accepted" || $order->status === "Accepted" )
+
+
+                                        <button type="submit" class="button button-outline-secondary fas fa-trash"></button>
+
+                                        @endif
+
                                     </div>
                                 </td>
+                                {!! Form::close() !!}
                             </tr>
                             @endforeach
+
                             </tbody>
                         </table>
                     </div>

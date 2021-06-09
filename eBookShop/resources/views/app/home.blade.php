@@ -26,6 +26,17 @@
          style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
         <span>{{Session::get('account-update-fail')}}</span>
     </div>
+@elseif(Session::has('cancel-order'))
+    <div class="alert alert-danger alert-highlighted"
+         style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+        <span>{{Session::get('cancel-order')}}</span>
+    </div>
+
+@elseif(Session::has('no-resultOrder'))
+    <div class="alert alert-danger alert-highlighted"
+         style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+        <span>{{Session::get('no-resultOrder')}}</span>
+    </div>
     @endif
 
 

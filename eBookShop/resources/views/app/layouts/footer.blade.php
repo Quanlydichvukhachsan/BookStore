@@ -3,19 +3,30 @@
         <!-- Outer-Footer -->
         <div class="outer-footer-wrapper u-s-p-y-80">
             <h6>
-                For special offers and other discount information
+               Tìm kiếm đơn hàng của bạn một cách nhanh chóng!
             </h6>
             <h1>
-                Subscribe to our Newsletter
+               Nhập mã đơn hàng
             </h1>
+            @if(!Auth::check())
             <p>
-                Subscribe to the mailing list to receive updates on promotions, new arrivals, discount and coupons.
+               Đăng nhập tài khoản để tìm đơn hàng
             </p>
-            <form class="newsletter-form">
-                <label class="sr-only" for="newsletter-field">Enter your Email</label>
-                <input type="text" id="newsletter-field" placeholder="Your Email Address">
-                <button type="submit" class="button">SUBMIT</button>
-            </form>
+            @else
+                <p>
+                   Cảm ơn bạn đã mua sản phẩm của tôi!
+                </p>
+            @endif
+            @if(Auth::check())
+            {!! Form::open(['method' => 'POST' ,'class'=>'newsletter-form' ,'route' => ['cart.findOrder',Auth::user()->id]]) !!}
+
+                <label class="sr-only" for="newsletter-field">Mã đơn hàng</label>
+                <input name="idOrder" type="text" id="newsletter-field" placeholder="Nhập mã đơn hàng của bạn">
+
+                <button type="submit" class="button">Tìm</button>
+
+            {!! Form::close() !!}
+            @endif
         </div>
         <!-- Outer-Footer /- -->
         <!-- Mid-Footer -->

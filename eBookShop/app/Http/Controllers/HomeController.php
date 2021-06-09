@@ -34,6 +34,29 @@ class HomeController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function findProduct(Request $request){
+        $products  =  $this->homeContract->getAll();
+        global $product;
+        if( $request->name !== null ){
+            $product = $this->homeContract->findProduct($request);
+            if($product === false){
+
+                return view('app.productNotFound',compact('products'));
+            }else{
+                return view('app.product', compact('product','products'));
+            }
+
+        }else{
+            return view('app.productNotFound',compact('products'));
+        }
+
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
      * @param int $id
      * @param string $name
      * @return \Illuminate\Http\Response
@@ -41,7 +64,7 @@ class HomeController extends Controller
     public function getByCategory(Request $request,$name,$id)
     {
 
-        $products =  $this->homeContract->getAll();
+        $products  =  $this->homeContract->getAll();
         global $product;
         if ($request->ajax()) {
             global $product;

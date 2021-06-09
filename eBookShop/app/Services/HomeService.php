@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Contracts\HomeContract;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Publisher;
 use App\viewModels\bookViewModels;
 use App\viewModels\productViewModels;
@@ -425,5 +426,39 @@ class HomeService implements HomeContract
         $productViewModels = $this->setProductByCategory($category,$name,$arrSort);
         return $productViewModels;
 
+    }
+
+    public function findProduct($request)
+    {
+        global $productViewModels;
+        if($request->category === "0"){
+
+            $productViewModels  = $this->findProductSingle($request->name);
+        }else{
+            $productViewModels = $this->findProductByCategory($request->name,$request->category);
+
+        }
+
+        return $productViewModels;
+    }
+    public function findProductSingle($name){
+         $books = Book::where('title','=',$name)->get();
+         $category =$books[0]->categories;
+        return $this->setProductByCategory($category,$category->slug_name,$books);
+    }
+    public function findProductByCategory($name,$Idcategory){
+
+        $books = Book::where('categories_id','=',$Idcategory)->where('title', '=', $name)->get();
+
+          if(!$books->isEmpty()){
+
+              $category = Category::findOrFail($Idcategory);
+              $categories =$books[0]->categories;
+
+              return $this->setProductByCategory($category,$categories->slug_name,$books);
+          }else{
+
+              return false;
+          }
     }
 }

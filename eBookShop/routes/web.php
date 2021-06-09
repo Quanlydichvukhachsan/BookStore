@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers;
@@ -25,19 +26,23 @@ use App\Http\Controllers\AuthorController;
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::class, 'getByCategory'])->name('home.product');
+    Route::post('/product/search', [App\Http\Controllers\HomeController::class, 'findProduct'])->name('home.findProduct');
     Route::get('/home/{title}/{id}', [App\Http\Controllers\HomeController::class, 'getProduct'])->name('home.productDetail');
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
     Route::get('/wishlist', [App\Http\Controllers\CartController::class, 'wishList'])->name('cart.wishList');
     Route::group(['middleware' => ['auth']],function (){
     Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/checkout/{id}/order', [App\Http\Controllers\CartController::class, 'order'])->name('cart.order');
+    Route::post('/order/find/{id}/customer', [App\Http\Controllers\CartController::class, 'findOrder'])->name('cart.findOrder');
     Route::get('/sales/order/{id}/history', [App\Http\Controllers\CartController::class, 'salesOrder'])->name('cart.salesOrder');
     Route::get('/sales/order/{id}/customer/{idCustomer}', [App\Http\Controllers\CartController::class, 'salesOrderDetail'])->name('cart.salesOrderDetail');
     Route::post('/sales/order/{id}/customer/{idCustomer}', [App\Http\Controllers\CartController::class, 'updateSalesOrderDetail'])->name('cart.updateSalesOrderDetail');
+    Route::delete('/sales/order/{id}/customer/{idCustomer}', [App\Http\Controllers\CartController::class, 'deleteSalesOrderDetail'])->name('cart.deleteSalesOrderDetail');
     Route::get('/customer/{id}/account/', [App\Http\Controllers\AccountController::class, 'index'])->name('account');
     Route::post('/customer/{id}/account/update', [App\Http\Controllers\AccountController::class, 'update'])->name('account.update');
     Route::get('/vnpay/return', [App\Http\Controllers\CartController::class, 'vnpayReturn'])->name('vnpay.return');
-});
+
+    });
 
 //Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');
 Auth::routes();

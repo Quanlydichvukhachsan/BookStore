@@ -13,7 +13,7 @@
                     <li>
                         <a href="mailto:contact@domain.com">
                             <i class="fas fa-envelope u-c-brand u-s-m-r-9"></i>
-                            E-mail: contact@domain.com
+                            E-mail: tuannmctk42@gmail.com
                         </a>
                     </li>
                 </ul>
@@ -83,25 +83,29 @@
                     </div>
                 </div>
                 <div class="col-lg-6 u-d-none-lg">
-                    <form class="form-searchbox">
-                        <label class="sr-only" for="search-landscape">Search</label>
-                        <input id="search-landscape" type="text" class="text-field" placeholder="Search everything">
+                    {!! Form::open(['method' => 'POST' ,'class'=>'form-searchbox' ,'route' => ['home.findProduct']]) !!}
+
+                        <label class="sr-only" for="search-landscape">Tìm kiếm</label>
+                        <input id="search-landscape" name="name" type="text" class="text-field" placeholder="Tìm kiếm sản phẩm">
                         <div class="select-box-position">
                             <div class="select-box-wrapper select-hide">
                                 <label class="sr-only" for="select-category">Choose category for search</label>
-                                <select class="select-box" id="select-category">
-                                    <option selected="selected" value="">
+                                <select name="category" class="select-box" id="select-category">
+                                    <option  selected="selected" value="0">
                                         All
                                     </option>
                                     @foreach($products->getListCategory() as $item)
                                         <option value="{{$item->getId()}}">{{$item->getName()}}</option>
+                                        @foreach($item->getChilds() as $child)
+                                            <option value="{{$child->getId()}}">{{$child->getName()}}</option>
+                                        @endforeach
                                     @endforeach
 
                                 </select>
                             </div>
                         </div>
                         <button id="btn-search" type="submit" class="button button-primary fas fa-search"></button>
-                    </form>
+                    {!! Form::close() !!}
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6">
                     <nav>

@@ -6,6 +6,7 @@ namespace App\Contracts;
 interface HomeContract
 {
     public function getAll();
+    public function findProduct($request);
     public function getByCategory($name,$id,$key);
     public function getByProductByCategory($name,$id);
     public function sortPriceById($name,$id,$key);

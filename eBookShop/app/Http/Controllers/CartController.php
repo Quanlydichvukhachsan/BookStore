@@ -66,7 +66,7 @@ class CartController extends Controller
     public function salesOrder($id){
         $products =  $this->homeContract->getAll();
           $user = User::findOrFail($id);
-       $items = $user->orders;
+       $items = $user->orders->where('status','!=','Cancel');
         return view('app.salesOrderHistory',compact('items','products'));
     }
     /**
@@ -94,6 +94,20 @@ class CartController extends Controller
               session()->flash('update-success',$result);
         return redirect()->route('cart.salesOrderDetail',["id"=>$id,"idCustomer"=>$customer]);
     }
+    /**
+     * Display the specified resource.
+     * @param \Illuminate\Http\Request $request
+     * @param  int  $customer
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function deleteSalesOrderDetail(Request $request , $id, int $customer){
+
+        $result = $this->orderBook->deleteSalesOrderDetail($id);
+        session()->flash('cancel-order',$result);
+        return redirect()->route('cart.salesOrder',["id"=>$customer]);
+    }
 
     /**
      * Show the application dashboard.
@@ -114,6 +128,23 @@ class CartController extends Controller
         $products =  $this->homeContract->getAll();
            $result = $this->orderBook->vnpayReturn($request);
             return view('app.vnPayReturn',compact('result','products'));
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function findOrder(Request $request,$id)
+    {
+
+        $products =  $this->homeContract->getAll();
+        $item = $this->orderBook->show($id,$request->idOrder);
+        if($item === "Không có đơn hàng cần tìm"){
+            session()->flash('no-resultOrder',$item);
+            return redirect()->route('home');
+        }
+        return view('app.salesOrderDetail',compact('item','products'));
     }
 
 }
