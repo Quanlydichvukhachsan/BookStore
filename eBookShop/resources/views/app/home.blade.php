@@ -8,9 +8,27 @@
     <i class="mdi mdi-chevron-down-circle"></i>
 
     <span>Đặt hàng thành công</span>
+</div>
+    @elseif(Session::has('update-success'))
+    <div class="alert alert-success alert-highlighted"
+         style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+            <i class="mdi mdi-chevron-down-circle"></i>
+            <span>Cập nhật thông tin đơn hàng thành công</span>
+    </div>
+@elseif(Session::has('account-update'))
+    <div class="alert alert-success alert-highlighted"
+         style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+        <i class="mdi mdi-chevron-down-circle"></i>
+        <span>{{Session::get('account-update')}}</span>
+    </div>
+@elseif(Session::has('account-update-fail'))
+    <div class="alert alert-danger alert-highlighted"
+         style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+        <span>{{Session::get('account-update-fail')}}</span>
+    </div>
     @endif
 
-</div>
+
 <body>
 <!-- app -->
 <div id="app">

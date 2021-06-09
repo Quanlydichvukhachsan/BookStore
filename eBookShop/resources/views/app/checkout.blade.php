@@ -389,7 +389,8 @@
            const cardBoxTable = cartBox.querySelector('tbody');
            let tableData = '';
            JSON.parse(localStorage.getItem('items')).map(data=>{
-               tableData +='<input type="hidden" name="book[]" value="'+data.id+','+data.no +'">'+ '<tr>'+
+               tableData +='<input type="hidden" name="book[]" value="'+data.id+','+data.no +'">'+
+                   '<tr>'+
                    '<td>'+
                    '<h6 class="order-h6">'+data.name+'</h6>'+
                '<span class="order-span-quantity"> x ' +data.no+'</span>'+

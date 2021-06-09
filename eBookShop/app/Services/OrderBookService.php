@@ -33,13 +33,13 @@ class OrderBookService implements OrderContract{
            $order = Order::create(['user_id' => $id, 'city' => $input['city'], 'country' => $input['national'], 'district' => $input['district'],
                'note' => $input['message'], 'totalPrice' => $input['totalPrice'],
                'totalPriceFee' => $input['totalPriceOrder'],
-               'nameReceive' => $input['nameReceive'], 'quantity' => $input['quantity'], 'payment_id' => $payment->id]);
+               'nameReceive' => $input['nameReceive'], 'quantity' => $input['quantity'],'address'=>$input['address'] ,'payment_id' => $payment->id]);
        }else{
 
            $order = Order::create(['user_id' => $id, 'city' => $input['city'], 'country' => $input['national'], 'district' => $input['district'],
                'note' => $input['message'], 'totalPrice' => $input['totalPrice'],
                'totalPriceFee' => $input['totalPriceOrder'],
-               'nameReceive' => $input['nameReceive'], 'quantity' => $input['quantity']]);
+               'nameReceive' => $input['nameReceive'], 'quantity' => $input['quantity'],'address'=>$input['address']]);
        }
        foreach ($input['book']as $item){
            $idBook = explode(',',$item)[0];
@@ -78,10 +78,17 @@ class OrderBookService implements OrderContract{
                 $orderView->setTotalPrice(number_format($totalPrice, 3));
            }
            $orderView->setId($id);
+           if($order->payment !== null){
+               $orderView->setPayment("Thanh toán online");
+               $orderView->setPaymentNote($order->payment->note);
+           }else{
+               $orderView->setPayment(null);
+           }
+         $orderView->setNote($order->note);
          $orderView->setUserId($user->id);
-           $orderView->setName($user->userName);
+           $orderView->setName($order->nameReceive);
           $orderView->setFullName($user->full_name);
-          $orderView->setAddress($user->address);
+          $orderView->setAddress($order->address);
           $orderView->setEmail($user->email);
          $orderView->setPhoneNumber($user->phoneNumber);
           $orderView->setCity($order->city);
@@ -136,7 +143,7 @@ class OrderBookService implements OrderContract{
         $order->city =$input['city'];
         $order->nameReceive =$input['nameReceive'];
         $order->district =$input['district'];
-        $order->country =$input['country'];
+        $order->country =$input['national'];
         $order->save();
         return "Cập nhật đơn hàng thành công!";
 

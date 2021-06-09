@@ -22,6 +22,7 @@ class Order extends Model
         'totalPriceFee',
         'quantity',
         'nameReceive',
+        'address'
     ];
 
     public function books(){

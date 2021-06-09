@@ -7,6 +7,9 @@ namespace App\viewModels;
 class showOrderModels
 {
     private $id;
+    private $payment;
+    private $payment_note;
+    private $note;
     private $userId;
     private $name;
     private $fullName;
@@ -21,6 +24,31 @@ class showOrderModels
     private $status;
     private $create_at;
     private $listBookViewModel =array();
+
+    public function setPayment($payment) {
+        $this->payment = $payment;
+    }
+
+    public function getPayment() {
+        return $this->payment;
+    }
+
+    public function setPaymentNote($payment_note) {
+        $this->payment_note = $payment_note;
+    }
+
+    public function getPaymentNote() {
+        return $this->payment_note;
+    }
+
+    public function setNote($note) {
+        $this->note = $note;
+    }
+
+    public function getNote() {
+        return $this->note;
+    }
+
 
     public function setCreate_at($create_at) {
         $this->create_at = $create_at;

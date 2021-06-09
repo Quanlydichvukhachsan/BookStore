@@ -76,8 +76,10 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function salesOrderDetail($id, int $customer){
+        $products =  $this->homeContract->getAll();
         $item =   $this->orderBook->orderShow($id,$customer);
-      return view('app.salesOrderDetail',compact('item'));
+
+      return view('app.salesOrderDetail',compact('item','products'));
     }
     /**
      * Display the specified resource.
@@ -88,8 +90,9 @@ class CartController extends Controller
      */
 
     public function updateSalesOrderDetail(UpdateSalesOrderRequest $request , $id, int $customer){
-            $result =  $this->orderBook->updateSalesOrderDetail($request,$id,$customer);
-        return response()->json(["result"=>$result]);
+        $result = $this->orderBook->updateSalesOrderDetail($request,$id,$customer);
+              session()->flash('update-success',$result);
+        return redirect()->route('cart.salesOrderDetail',["id"=>$id,"idCustomer"=>$customer]);
     }
 
     /**

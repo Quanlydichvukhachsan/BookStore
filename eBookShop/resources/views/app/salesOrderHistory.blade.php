@@ -66,7 +66,8 @@
                                 </td>
                                 <td>
                                     <div class="action-wrapper">
-                                        <input type="button" href="http://127.0.0.1:8000/sales/order/{{$order->id}}/customer/{{Auth::user()->id}}" class="button button-outline-secondary" value="Xem chi tiết"></input>
+
+                                        <input type="button"  onclick="location.href='http://127.0.0.1:8000/sales/order/{{$order->id}}/customer/{{Auth::user()->id}}'" class="button button-outline-secondary" value="Xem chi tiết"></input>
                                         <button class="button button-outline-secondary fas fa-trash"></button>
                                     </div>
                                 </td>

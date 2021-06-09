@@ -26,6 +26,13 @@
                         </a>
                         <ul class="g-dropdown" style="width:200px">
                             <li>
+                                @if(Auth::check())
+                                <a href="{{route('account',Auth::user()->id)}}">
+                                    <i class="fas fa-cog u-s-m-r-9"></i>
+                                    Thông tin tài khoản</a>
+                                    @endif
+                            </li>
+                            <li>
                                 <a href="{{route('cart')}}">
                                     <i class="fas fa-cog u-s-m-r-9"></i>
                                     Giỏ hàng</a>
@@ -35,11 +42,13 @@
                                     <i class="far fa-heart u-s-m-r-9"></i>
                                     Danh sách yêu thichs</a>
                             </li>
+                            @if(Auth::check())
                             <li>
                                 <a href="{{route('cart.salesOrder',Auth::user()->id)}}">
                                     <i class="far fa-check-circle u-s-m-r-9"></i>
                                     Đơn hàng</a>
                             </li>
+                            @endif
                             <li>
                                 @if(Auth::check())
                                 <a href="{{route('logout')}}"  onclick="event.preventDefault();

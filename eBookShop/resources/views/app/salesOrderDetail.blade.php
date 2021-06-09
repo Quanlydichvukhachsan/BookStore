@@ -1,626 +1,295 @@
 @extends('app.home')
-@section('style')
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-
-
-        nav,
-        .wrapper {
-            padding: 10px 50px
-        }
-
-        nav .logo a {
-            color: #000;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-decoration: none
-        }
-
-        nav div.ml-auto a {
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.8rem
-        }
-
-        header {
-            padding: 20px 0px
-        }
-
-        header .active {
-            font-weight: 700;
-            position: relative
-        }
-
-        header .active .fa-check {
-            position: absolute;
-            left: 50%;
-            bottom: -27px;
-            background-color: #fff;
-            font-size: 0.7rem;
-            padding: 5px;
-            border: 1px solid #008000;
-            border-radius: 50%;
-            color: #008000
-        }
-
-        .progress {
-            height: 2px;
-            background-color: #ccc
-        }
-
-        .progress div {
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
-
-        .progress .progress-bar {
-            width: 40%
-        }
-
-        #details {
-            padding: 30px 50px;
-            min-height: 300px
-        }
-
-        input {
-            border: none;
-            outline: none
-        }
-
-        .form-group .d-flex {
-            border: 1px solid #ddd
-        }
-
-        .form-group .d-flex input {
-            width: 95%
-        }
-
-        .form-group .d-flex:hover {
-            color: #000;
-            cursor: pointer;
-            border: 1px solid #008000
-        }
-
-        select {
-            width: 100%;
-            padding: 8px 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px
-        }
-
-        input[type="checkbox"]+label {
-            font-size: 0.85rem;
-            font-weight: 600
-        }
-
-        #address,
-        #cart,
-        #summary {
-            padding: 20px 50px
-        }
-
-        #address .d-md-flex p.text-justify,
-        #register p.text-muted {
-            margin: 0
-        }
-
-        #register {
-            background-color: #d9ecf2
-        }
-
-        #register a {
-            text-decoration: none;
-            color: #333
-        }
-
-        #cart,
-        #summary {
-            max-width: 500px
-        }
-
-        .h6 {
-            font-size: 1.2rem;
-            font-weight: 700
-        }
-
-        .h6 a {
-            text-decoration: none;
-            font-size: 1rem
-        }
-
-        .item img {
-            object-fit: cover;
-            border-radius: 5px
-        }
-
-        .item {
-            position: relative
-        }
-
-        .number {
-            position: absolute;
-            font-weight: 800;
-            color: #fff;
-            background-color:#20c997;
-            padding-left: 7px;
-            border-radius: 50%;
-            border: 1px solid #fff;
-            width: 25px;
-            height: 25px;
-            top: -5px;
-            right: -5px
-        }
-
-        .display-5 {
-            font-size: 1.2rem
-        }
-
-        #cart~p.text-muted {
-            margin: 0;
-            font-size: 0.9rem
-        }
-
-        tr.text-muted td {
-            border: none
-        }
-
-
-
-        .fa-minus,
-        .fa-plus {
-            font-size: 0.7rem
-        }
-
-        .table td {
-            padding: 0.3rem
-        }
-
-        .btn.text-uppercase {
-            border: 1px solid #333;
-            font-weight: 600;
-            border-radius: 0px
-        }
-
-        .btn.text-uppercase:hover {
-            background-color: #333;
-            color: #eee
-        }
-
-        .btn.text-white {
-            background-color: lightgreen;
-            border-radius: 0px
-        }
-
-        .btn.text-white:hover {
-            background-color: limegreen;
-            color: white;
-        }
-
-        .wrapper .row+div.text-muted {
-            font-size: 0.9rem
-        }
-
-        .mobile,
-        #mobile {
-            display: none
-        }
-
-        .buttons {
-            vertical-align: text-bottom
-        }
-
-        #register {
-            width: 50%
-        }
-        .view-order {
-            height:400px;
-            overflow-y: scroll;
-            border-radius: 10px;
-        }
-
-        /* Let's get this party started */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-            background: #3d8bfd;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-        }
-        ::-webkit-scrollbar-thumb:window-inactive {
-            background: #6ea8fe;
-        }
-
-        @media(min-width:768px) and (max-width: 991px) {
-            .progress .progress-bar {
-                width: 33%
-            }
-
-            #cart,
-            #summary {
-                max-width: 100%
-            }
-
-            .wrapper div.h5.large,
-            .wrapper .row+div.text-muted {
-                display: none
-            }
-
-            .mobile.h5,
-            #mobile {
-                display: block
-            }
-        }
-
-        @media(min-width: 576px) and (max-width: 767px) {
-            .progress .progress-bar {
-                width: 29%
-            }
-
-            #cart,
-            #summary {
-                max-width: 100%
-            }
-
-            .wrapper div.h5.large,
-            .wrapper .row+div.text-muted {
-                display: none
-            }
-
-            .mobile.h5,
-            #mobile {
-                display: block
-            }
-
-            .buttons {
-                width: 100%
-            }
-        }
-
-        @media(max-width: 575px) {
-            .progress .progress-bar {
-                width: 38%
-            }
-
-            #cart,
-            #summary {
-                max-width: 100%
-            }
-
-            nav,
-            .wrapper {
-                padding: 10px 30px
-            }
-
-            #register {
-                width: 100%
-            }
-        }
-
-        @media(max-width: 424px) {
-            body {
-                width: fit-content
-            }
-        }
-
-        @media(max-width: 375px) {
-            .progress .progress-bar {
-                width: 35%
-            }
-
-            body {
-                width: fit-content
-            }
-        }
-    </style>
+@section('pageWrapper')
+    <!-- Page Introduction Wrapper -->
+    <div class="page-style-a">
+        <div class="container">
+            <div class="page-intro">
+                <h2>Đơn hàng chi tiết</h2>
+                <ul class="bread-crumb">
+                    <li class="has-separator">
+                        <i class="ion ion-md-home"></i>
+                        <a href="{{route('home')}}">Trang chủ</a>
+                    </li>
+                    <li class="is-marked">
+                        <a href="http://127.0.0.1:8000/sales/order/{{$item->getId()}}/customer/{{Auth::user()->id}}">Đơn hàng chi tiết</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Page Introduction Wrapper /- -->
 @endsection
 @section('content')
-    <div class="container">
-        <div class="breadcrumbs">
-            <ol class="breadcrumb">
-                <li><a href="{{route('home')}}"> Home </a></li>
-                <li class="active">Sales order detail</li>
-            </ol>
-        </div>
-
-        <div class="h5 large">Billing Address</div>
-
-        <div class="row">
-            <form>
-                @csrf
-                @method("POST")
-            <div class="col-lg-6 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
-
-                <div id="details" class="bg-white rounded pb-5">
-
-                    <div class="form-group"> <label class="text-muted">Name</label> <input readonly type="text" value="{{$item->getName()}}" class="form-control"> </div>
-                    <div class="form-group"> <label class="text-muted">Email</label>
-                        <div class="d-flex jusify-content-start align-items-center rounded p-2"> <input readonly type="email" value="{{$item->getEmail()}}"> <span class="fas fa-check text-success pr-sm-2 pr-0"></span> </div>
-                    </div>
+    <!-- Checkout-Page -->
+    <div class="page-checkout u-s-p-t-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    {!! Form::open(['method' => 'POST' ,'route' => ['cart.updateSalesOrderDetail',$item->getId(),Auth::user()->id]]) !!}
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group"> <label>Full name</label>
-                                <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                                    <input id="nameReceive" name="nameReceive" type="text" value="{{$item->getFullName()}}">
-                                    <span class="fas fa-check text-success pr-2"></span>
-
-                                </div>
-                                <div class="invalid-feedback nameReceive"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                        <!-- Billing-&-Shipping-Details -->
                         <div class="col-lg-6">
-                            <div class="form-group"> <label>City</label>
-                                <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                                    <input id="city" name="city" type="text" value="{{$item->getCity()}}">
+                            <h4 class="section-h4">THông tin khách hàng</h4>
+                            <input name="userId" type="hidden" value="{{Auth::user()->id}}">
+                            <!-- Form-Fields -->
+                            <div class="group-inline u-s-m-b-13">
+                                <label for="nameReceive">Họ và tên người nhận
+                                    <span class="astk">*</span>
+                                </label>
 
-                                    <span class="fas fa-check text-success pr-2"></span> </div>
-                                <div class="invalid-feedback city"></div>
+                                <input name="nameReceive" type="text" id="nameReceive" class="text-field" value="{{$item->getName()}}">
+                                @if(count($errors) >0)
+                                    @if($errors->has('nameReceive'))
+                                        <span style="color: red;" class="nameReceive">{{$errors->first('nameReceive')}}</span>
+                                    @endif
+                                @endif
+
                             </div>
 
+                            <div class="u-s-m-b-13">
+                                <label for="national">Quốc gia
+                                    <span class="astk"> *</span>
+                                </label>
+                                <input name="national" type="text" id="national" class="text-field" value="{{$item->getCountry()}}">
+                                    @if(count($errors) >0)
+                                        @if($errors->has('national'))
+                                            <span style="color: red;" class="national">{{$errors->first('national')}}</span>
+                                        @endif
+                                    @endif
+                            </div>
+                            <div class="u-s-m-b-13">
+                                <label for="city">Thành phố
+                                    <span class="astk">*</span>
+                                </label>
+                                <input name="city" type="text" id="city" class="text-field" value="{{$item->getCity()}}">
+                                @if(count($errors) >0)
+                                    @if($errors->has('city'))
+                                        <span style="color: red;" class="city">{{$errors->first('city')}}</span>
+                                    @endif
+                                @endif
+                            </div>
+                            <div class="u-s-m-b-13">
+                                <label for="district">Quận/Huyện
+                                    <span class="astk">*</span>
+                                </label>
+                                <input name="district" type="text" id="district" class="text-field" value="{{$item->getDistrict()}}">
+
+                            @if(count($errors) >0)
+                                        @if($errors->has('district'))
+                                            <span style="color: red;" class="district">{{$errors->first('district')}}</span>
+                                        @endif
+                                    @endif
+                            </div>
+                            <div class="street-address u-s-m-b-13">
+                                <label for="address">Địa chỉ nhận hàng
+                                    <span class="astk">*</span>
+                                </label>
+                                <input type="text" name="address" id="address" class="text-field" placeholder="Địa chỉ nhận hàng" value="{{$item->getAddress()}}">
+                                @if(count($errors) >0)
+                                    @if($errors->has('address'))
+                                        <span style="color: red;" class="address">{{$errors->first('address')}}</span>
+                                    @endif
+                                @endif
+
+                            </div>
+
+
+                            <div class="group-inline u-s-m-b-13">
+                                <div class="group-1 u-s-p-r-16">
+                                    <label for="email">Email address
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input readonly name="email" type="text" id="email" class="text-field" value="{{Auth::user()->email}}">
+                                    @if(count($errors) >0)
+                                        @if($errors->has('email'))
+                                            <span style="color: red;" class="email">{{$errors->first('email')}}</span>
+                                        @endif
+                                    @endif
+                                </div>
+                                <div class="group-2">
+                                    <label for="phoneNumber">Số điện thoại
+                                        <span class="astk">*</span>
+                                    </label>
+                                    <input name="phoneNumber" type="text" id="phoneNumber" class="text-field" placeholder="Nhập số điện thoại" value="{{$item->getPhoneNumber()}}">
+                                    @if(count($errors) >0)
+                                        @if($errors->has('phoneNumber'))
+                                            <span style="color: red;" class="phoneNumber">{{$errors->first('phoneNumber')}}</span>
+                                        @endif
+                                    @endif
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <label for="message">Ghi chú</label>
+                                <textarea name="message" id="message" class="text-area"  placeholder="Ghi chú về đơn hàng.">{{$item->getNote()}}</textarea>
+                            </div>
                         </div>
+                        <!-- Billing-&-Shipping-Details /- -->
+                        <!-- Checkout -->
                         <div class="col-lg-6">
-                            <div class="form-group"> <label>Phone number</label>
-                                <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                                    <input id="phoneNumber" name="phoneNumber" type="text" value="{{$item->getPhoneNumber()}}">
-                                    <span class="fas fa-check text-success pr-2"></span>
+                            <h4 class="section-h4">Đơn hàng của bạn</h4>
+                            <div class="order-table">
+                                <table class="u-s-m-b-13">
+                                    <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Giá</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($item->getListBookViewModel() as $book)
+                                    <tr>
+                                        <td>
+                                            <h6 class="order-h6">{{$book->getTitle()}}</h6>
+                                            <span class="order-span-quantity"> x {{$book->getAmount()}}</span>
+                                            </td>
+                                        <td>
+                                            <h6 class="order-h6">{{ number_format($book->getPrice() * $book->getAmount(),3)}} VND</h6>
+                                            </td>
+                                        </tr>
+                                    <tr>
+                                        @endforeach
+                                        <td>
+                                            <h3 class="order-h3">Tổng tiền</h3>
+                                        </td>
+                                        <td>
+                                            <h3 class="order-h3 subtotal">{{$item->getTotalPrice()}} VND</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h3 class="order-h3">Phí giao hàng</h3>
+                                        </td>
+                                        <td>
+                                            <h3 class="order-h3">30.000 VND</h3>
+                                        </td>
+                                    </tr>
 
+                                    <tr>
+                                        @if($item->getPayment() !== "Thanh toán online")
+                                        <td>
+                                            <h3 class="order-h3">Tổng tiền phải trả</h3>
+                                        </td>
+                                        @else
+                                            <td>
+                                                <h3 class="order-h3">Đã thanh toán</h3>
+                                            </td>
+                                        @endif
+                                        <td>
+                                            <h3 class="order-h3 totalPrice">{{number_format($item->getTotalPriceFee(),0)}} VND</h3>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                @if($item->getPayment() === null)
+                                <div class="u-s-m-b-13">
+                                    <input  readonly type="radio" checked="checked"  value="1" onclick="hidePay()" class="radio-box" name="payment_online" id="cash-on-delivery">
+                                    <label class="label-text" for="cash-on-delivery">Thanh toán khi nhận hàng</label>
                                 </div>
-                                <div class="invalid-feedback phoneNumber"></div>
+                                    @else
+                                    <div class="u-s-m-b-13">
+                                        <input readonly type="radio" checked="checked" value="2" onclick="openPay()" class="radio-box" name="payment_online" id="paypal">
+                                        <label class="label-text" for="paypal">Đã thanh toán qua thẻ</label>
+                                    </div>
+
+                                    <div  class="content-pay u-s-m-b-13">
+                                        <label for="order_desc">Nội dung thanh toán</label>
+                                        <textarea name="order_desc" id="order_desc" class="text-area"  placeholder="Nội dung thanh toán.">{{$item->getPaymentNote()}}</textarea>
+                                        @if(count($errors) >0)
+                                            @if($errors->has('order_desc'))
+                                                <span style="color: red;" class="order_desc">{{$errors->first('order_desc')}}</span>
+                                            @endif
+                                        @endif
+                                    </div>
+                               @endif
+                                @if($item->getStatus() === "Waiting accepted" || $item->getStatus() === "Accepted" )
+                                    <div class="u-s-m-b-13">
+                                <button type="submit" class="button button-outline-secondary">Cập nhật thông tin đơn hàng</button>
+                                    </div>
+                                @if($item->getStatus() === "Waiting accepted")
+                                    <div class="u-s-m-b-13">
+                                        <span >Đang chờ chấp nhận đơn hàng</span>
+                                    </div>
+                                @elseif($item->getStatus() === "Accepted")
+                                        <div class="u-s-m-b-13">
+                                            <span style="color: #007bff;">Đang xử lý đơn hàng</span>
+                                        </div>
+                                    @endif
+                               @endif
+                                @if($item->getStatus() === "Waiting delivery")
+                                <div class="u-s-m-b-13">
+                                    <span style="color: #ffc107">Đơn hàng đang vận chuyển</span>
+                                </div>
+                                    @elseif($item->getStatus() === "Successfully delivered")
+                                    <div class="u-s-m-b-13">
+                                        <span style="color: #29cc97;">Đơn hàng đã được giao</span>
+                                    </div>
+                                @elseif($item->getStatus() === "Cancel")
+                                    <div class="u-s-m-b-13">
+                                        <span style="color: #d90429;">Đơn hàng đã bị hủy</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                        <!-- Checkout /- -->
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group"> <label>Address</label>
-                                <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                                    <input id="address" name="address" type="text" value="{{$item->getAddress()}}">
-                                    <span class="fas fa-check text-success pr-2"></span>
-                                </div>
-                                <div class="invalid-feedback address"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>District</label>
-                                <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                                    <input id="district" name="district" type="text" value="{{$item->getDistrict()}}">
-                                    <span class="fas fa-check text-success pr-2"></span>
-
-                                </div>
-                                <div class="invalid-feedback district"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group"> <label>Country</label>
-                                <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                                    <input id="country" name="country" type="text" value="{{$item->getCountry()}}">
-                                    <span class="fas fa-check text-success pr-2"></span>
-
-                                </div>
-                                <div class="invalid-feedback country"></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div> <input type="checkbox" checked> <label>Shipping address is same as billing</label>
-                <div id="address" class="bg-light rounded mt-3">
-                    <div class="h5 font-weight-bold text-primary"> Shopping Address </div>
-                    <div class="d-md-flex justify-content-md-start align-items-md-center pt-3">
-                        <div class="mr-auto"> <b>Home Address</b>
-                            <p class="text-justify text-muted">{{$item->getAddress()}}</p>
-                        </div>
-                        <div class="rounded py-2 px-3" id="register">
-                            <a href="#"> <b>Phone number</b> </a>
-                            <p class="text-muted">{{$item->getPhoneNumber()}}</p>
-                            <a href="#"> <b>Name receive</b> </a>
-                            <p class="text-muted">{{$item->getFullName()}}</p>
-                        </div>
-
-                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
-            <div class="col-lg-6 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1 pt-lg-0 pt-3">
-                <div id="cart" class="bg-white rounded">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="h6">Cart Summary</div>
-                    </div>
-                    <div class="view-order">
-                        @foreach($item->getListBookViewModel() as $bookModel)
-                            <div class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom">
-                                <div class="item pr-2"> <img src="{{asset($bookModel->getImages())}}" alt="img-{{$bookModel->getTitle()}}" width="80" height="80">
-                                    <div class="number">{{$bookModel->getAmount()}}</div>
-                                </div>
-                                <div class="d-flex flex-column px-3"> <b class="h5">{{$bookModel->getTitle()}}</b> <a href="{{route('book.show',$bookModel->getId())}}" class="h5 text-primary">B-{{$bookModel->getId()}}</a> </div>
-                                <div class="ml-auto"> <b class="h5"> ${{$bookModel->getPrice()}}</b> </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <div class="my-3"></div>
-                    <div class="d-flex align-items-center py-2">
-                        <div class="display-5">Total</div>
-                        <div class="ml-auto d-flex">
-                            <div class="text-primary text-uppercase px-3">vnd</div>
-                            <div class="font-weight-bold">{{number_format($item->getTotalPriceFee(), 0)}}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="text-muted h5">Status Order</p>
-                @if($item->getStatus() === "Waiting accepted")
-                    <p class="text-warning">{{$item->getStatus()}}</p>
-                @elseif($item->getStatus() === "Waiting delivery")
-                    <p class="text-secondary">{{$item->getStatus()}}</p>
-                @elseif($item->getStatus() === "Successfully delivered")
-                    <p class="text-success">{{$item->getStatus()}}</p>
-                @elseif($item->getStatus() === "Accepted")
-                    <p class="text-info">{{$item->getStatus()}}</p>
-                @else
-                    <p class="text-danger">{{$item->getStatus()}}</p>
-                @endif
-
-
-                <div class="row pt-lg-3 pt-2 buttons mb-sm-0 mb-2">
-                    <div class="col-md-6">
-                        <div> <a class="btn text-uppercase" href="{{route('cart.salesOrder',Auth::user()->id)}}">back to order</a> </div>
-                    </div>
-                    @if($item->getStatus() === "Waiting accepted")
-
-                            <div class="col-md-6 pt-md-0 pt-3">
-                                <input id="orderId" type="hidden" value="{{$item->getId()}}">
-                                <button class="btn text-white ml-auto btn-updateOrder"  data-user="{{$item->getUserId()}}" data-value="{{$item->getId()}}" type="submit"></span> Update order</button>
-                            </div>
-
-                    @endif
-                </div>
-
-                <div class="text-muted pt-3" id="mobile"> <span class="fas fa-lock"></span> Your information is save </div>
-            </div>
-            </form>
         </div>
-
-        <div class="text-muted"> <span class="fas fa-lock"></span> Your information is save </div>
-
     </div>
-
+    <!-- Checkout-Page /- -->
 @endsection
 @section('script')
     <script>
+
         window.onload = function() {
-            // adding data to localstorage
-            const attToCartBtn = document.getElementsByClassName('attToCart');
-            let items = [];
-            for(let i=0; i<attToCartBtn.length; i++){
-                attToCartBtn[i].addEventListener("click",function(e){
-                    e.preventDefault();
-
-                    if(typeof(Storage) !== 'undefined'){
-                        let item = {
-                            id:this.getAttribute('data-value'),
-                            name:e.target.parentElement.children[1].textContent,
-                            price:e.target.parentElement.children[0].textContent.replace('đ',''),
-                            author:this.getAttribute('data-author'),
-                            img :this.getAttribute('data-img'),
-                            no:1
-                        };
-                        if(JSON.parse(localStorage.getItem('items')) === null){
-                            items.push(item);
-                            localStorage.setItem("items",JSON.stringify(items));
-                            window.location.reload();
-                        }else{
-                            const localItems = JSON.parse(localStorage.getItem("items"));
-                            localItems.map(data=>{
-                                if(item.id == data.id){
-                                    item.no = data.no + 1;
-                                }else{
-                                    items.push(data);
-                                }
-                            });
-                            items.push(item);
-                            localStorage.setItem('items',JSON.stringify(items));
-                            window.location.reload();
-                        }
-
-                    }else{
-                        alert('local storage is not working on your browser');
-                    }
-
+            if (localStorage.getItem("items") !== null &&  JSON.parse(localStorage.getItem('items')).length >0 ) {
+                $('.cart-anchor').show();
+                $('.checkout-anchor').show();
+                // adding data to shopping cart
+                const iconShoppingP = document.querySelector('#mini-cart-trigger span');
+                const totalPrice = document.querySelector('#mini-cart-trigger').children[2];
+                let no = 0;
+                let priceTotal =0;
+                JSON.parse(localStorage.getItem('items')).map(data=>{
+                    no = no+ parseInt(data.no);
+                    priceTotal = priceTotal +(parseInt(data.no) * data.price);
+                    var formatPrice =(data.price).toLocaleString(
+                        undefined,
+                        { minimumFractionDigits: 3 }
+                    );
+                    $html =  '<li class="clearfix">'+
+                        '<a href="http://127.0.0.1:8000/home/'+data.name+'/'+data.id +'">'+
+                        '<img src="'+data.img+'" alt="Product">'+
+                        '<span class="mini-item-name">'+data.name+'</span>'+
+                        '<span class="mini-item-price">'+formatPrice+ ' VND</span>'+
+                        '<span class="mini-item-quantity"> x '+data.no +'</span>'+
+                        '</a>'+
+                        '</li>';
+                    $('.mini-cart-list').append($html);
                 });
-            }
-            // adding data to shopping cart
-            const iconShoppingP = document.querySelector('.notification span');
-            let no = 0;
-            JSON.parse(localStorage.getItem('items')).map(data=>{
-                no = no+data.no
-                ;	});
-            iconShoppingP.innerHTML = no;
 
+                let formatPrice =(priceTotal).toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 3 }
+                );
+
+                if(formatPrice !== "0.000"){
+                    var formatPriceTotal =(parseFloat(priceTotal+30.000)).toLocaleString(
+                        undefined,
+                        { minimumFractionDigits: 3 }
+                    );
+                    iconShoppingP.innerHTML = no;
+                    totalPrice.innerHTML =formatPrice + "VND";
+                    $('.calc-text-total').text(formatPrice + ' VND');
+                    $('.calc-text-order').text(formatPriceTotal + ' VND');
+                    $('.mini-total-price').text(formatPrice + ' VND');
+                }
+            }
         }
 
-
-    </script>
-    <script src={{asset("error-handler/exception.js")}}></script>
-    <script>
-        $overlay = $('<div id="overlay"/>').css({
-            position: 'fixed',
-            display: 'none',
-            top: 0,
-            left: 0,
-            color: '#adbcbf',
-            width: '100%',
-            height: $(window).height() + 'px',
-            opacity: 0.4,
-            background: '#f5f6f7 url("/images/Blocks-1s-200px.gif") no-repeat center'
-        });
-        $('button.btn-updateOrder').on('click',function(event) {
-            event.preventDefault();
-            var district = $('#district').val();
-            var country = $('#country').val();
-            var nameReceive = $('#nameReceive').val();
-            var phoneNumber = $('#phoneNumber').val();
-            var address = $('#address').val();
-            var city = $('#city').val();
-          var orderId =$('#orderId').val();
-         var id=  {{Auth::user()->id}};
-          $overlay.appendTo("body");
-           $('#overlay').show();
-            setTimeout(function (){
-                $.ajax({
-                    method :"POST",
-                    url: '/sales/order/'+ orderId +'/customer/' +id,
-                    cache:false,
-                    data:{
-                        "_token": '{{csrf_token()}}',
-                        'nameReceive':nameReceive,
-                        'phoneNumber':phoneNumber,
-                        'address' :address,
-                        'city':city,
-                        'district':district,
-                        'country':country
-                    },
-
-                    success: function(data) {
-
-                        $('#overlay').hide();
-                     $('#district').val(district);
-                     $('#country').val(country);
-                       $('#nameReceive').val(nameReceive);
-                         $('#phoneNumber').val(phoneNumber);
-                       $('#address').val(address);
-                         $('#city').val(city);
-                        $(".alert-highlighted span").text(data.result);
-                        $('.alert-highlighted').show();
-                        $('.alert-highlighted').fadeOut(10000);
-                    },
-                    error:function (error){
-                        console.log(error);
-                        $.fn.handlerError(error);
-                    }
-                });
-            },500);
-            return false;
-        });
     </script>
 @endsection
