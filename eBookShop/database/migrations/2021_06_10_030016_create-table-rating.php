@@ -16,6 +16,7 @@ class CreateTableRating extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->integer('book_id');
+            $table->integer('status')->default(0);
             $table->string('customerReview');
             $table->integer('numberRating');
             $table->string('descRating');

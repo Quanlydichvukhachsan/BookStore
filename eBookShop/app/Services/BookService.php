@@ -102,6 +102,25 @@ class BookService implements BookContract
     public function store($request)
     {
         $input =$request->all();
+
+         if($input['author'] !== null){
+             $index =count(explode(' ',$input['author']));
+             $firstName = explode(' ',$input['author'])[$index-1];
+             global $lastName;
+             for($i =0 ;$i < count(explode(' ',$input['author'])) -1 ;$i++ ){
+                 $lastName .= explode(' ',$input['author'])[$i] . ' ';
+             }
+            $author =  Author::firstOrCreate(['firstName'=>$firstName], ['lastName' => $lastName]);
+             $input['author_id'] = $author->id;
+         }
+         if($input['publisher'] !== null){
+             $publisher = Publisher::firstOrCreate(['name'=>$input['publisher']]);
+             $input['publisher_id'] = $publisher->id;
+         }
+         if($input['category'] !== null){
+             $category = Category::firstOrCreate(['name'=>$input['category']]);
+             $input['categories_id'] = $category->id;
+         }
         unset($input['input-file']);
         $input['original_Price'] =$input['price'];
         $book = Book::create($input);

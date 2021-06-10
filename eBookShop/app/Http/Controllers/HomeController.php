@@ -7,6 +7,7 @@ use App\Contracts\ReviewContract;
 use App\Http\Requests\RequestRating;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
 {
@@ -30,7 +31,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $products =  $this->homeContract->getAll();
+
         $productsSale  =  $this->homeContract->getProductSale();
         $productsChildren =  $this->homeContract->getProductChildren();
           $productsManga =$this->homeContract->getProductManga();
@@ -159,7 +162,8 @@ class HomeController extends Controller
            array_push($arrAjaxInfoBook,$productDetail->getAuthor());
            array_push($arrAjaxInfoBook,$productDetail->getPublisher());
            array_push($arrAjaxInfoBook,$productDetail->getlistImages());
-
+           array_push($arrAjaxInfoBook,$productDetail->getReviewBest());
+           array_push($arrAjaxInfoBook,$productDetail->getReviewNumberStar());
            if ($request->ajax()) {
                return response()->json($arrAjaxInfoBook);
            }
@@ -174,12 +178,18 @@ class HomeController extends Controller
   public function getProductNew(){
       $products =  $this->homeContract->getAll();
       $productsBestSell =$this->homeContract->getPoductByType("new");
+      if($productsBestSell === null){
+          return view('app.productNotFound',compact('products'));
+      }
       return view('app.productType',compact('productsBestSell','products'));
   }
 
     public function getProductSale(){
         $products =  $this->homeContract->getAll();
         $productsBestSell =$this->homeContract->getPoductByType("sale");
+        if($productsBestSell === null){
+            return view('app.productNotFound',compact('products'));
+        }
         return view('app.productType',compact('productsBestSell','products'));
     }
 
@@ -187,6 +197,9 @@ class HomeController extends Controller
     public function getProductHot(){
         $products =  $this->homeContract->getAll();
         $productsBestSell =$this->homeContract->getPoductByType("hot");
+        if($productsBestSell === null){
+            return view('app.productNotFound',compact('products'));
+        }
         return view('app.productType',compact('productsBestSell','products'));
     }
     /**

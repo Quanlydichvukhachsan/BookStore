@@ -154,9 +154,18 @@
                                             </a>
                                         </h6>
                                         <div class="item-stars">
-                                            <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                                                <span style='width:67px'></span>
+                                            <div class='star' title="0 out of 5 - based on 0 Reviews">
+                                                @if(array_key_exists(0,$item->getReviewBest()))
+                                                    @if((int)$item->getReviewBest()[0] >= 72)
+                                                        <span style='width:71px'></span>
+                                                    @else
+                                                        <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                    @endif
+                                                @else
+                                                    <span style='width:0px'></span>
+                                                @endif
                                             </div>
+                                            <span>({{$item->getReviewNumberStar()}})</span>
                                         </div>
                                     </div>
                                     <div class="price-template">

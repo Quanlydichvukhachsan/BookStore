@@ -27,9 +27,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#book-best-selling-products">Bán chạy nhất</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#men-top-rating-products">Top Rating</a>
-            </li>
+
         </ul>
     </div>
         <div class="wrapper-content">
@@ -68,9 +66,17 @@
                                                 </h6>
                                                 <div class="item-stars">
                                                     <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(0,$item->getReviewBest()))
+                                                            @if((int)$item->getReviewBest()[0] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                                <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                            @endif
+                                                        @else
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$item->getReviewNumberStar()}})</span>
                                                 </div>
                                             </div>
                                             <div class="price-template">
@@ -104,6 +110,7 @@
                     <div class="tab-pane active show fade" id="book-best-selling-products">
                         <div class="slider-fouc">
                             <div class="products-slider owl-carousel" data-item="4">
+                                @if($productsBestSell !== null)
                                 @foreach($productsBestSell->getListBook() as $item)
                                     <div class="item">
                                         <div class="image-container">
@@ -134,9 +141,17 @@
                                                 </h6>
                                                 <div class="item-stars">
                                                     <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(0,$item->getReviewBest()))
+                                                            @if((int)$item->getReviewBest()[0] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                                <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                            @endif
+                                                        @else
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$item->getReviewNumberStar()}})</span>
                                                 </div>
                                             </div>
                                             <div class="price-template">
@@ -156,6 +171,7 @@
                                             </div>
                                     </div>
                                 @endforeach
+                                    @endif
                             </div>
                         </div>
                     </div>
@@ -234,9 +250,17 @@
                                     </h6>
                                     <div class="item-stars">
                                         <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                            <span style='width:0'></span>
+                                            @if(array_key_exists(0,$item->getReviewBest()))
+                                                @if((int)$item->getReviewBest()[0] >= 72)
+                                                    <span style='width:71px'></span>
+                                                @else
+                                                    <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                @endif
+                                            @else
+                                                <span style='width:0px'></span>
+                                            @endif
                                         </div>
-                                        <span>(0)</span>
+                                        <span>({{$item->getReviewNumberStar()}})</span>
                                     </div>
                                 </div>
                                 <div class="price-template">
@@ -325,9 +349,17 @@
                                                     </h6>
                                                     <div class="item-stars">
                                                         <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                            <span style='width:0'></span>
+                                                            @if(array_key_exists(5,$item->getReviewBest()))
+                                                                @if((int)$item->getReviewBest()[0] >= 72)
+                                                                    <span style='width:71px'></span>
+                                                                @else
+                                                                    <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                                @endif
+                                                            @else
+                                                                <span style='width:0px'></span>
+                                                            @endif
                                                         </div>
-                                                        <span>(0)</span>
+                                                        <span>({{$item->getReviewNumberStar()}})</span>
                                                     </div>
                                                 </div>
                                                 <div class="price-template">
@@ -393,9 +425,17 @@
                                                 </h6>
                                                 <div class="item-stars">
                                                     <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(0,$item->getReviewBest()))
+                                                            @if((int)$item->getReviewBest()[0] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                                <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                            @endif
+                                                        @else
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$item->getReviewNumberStar()}})</span>
                                                 </div>
                                             </div>
                                             <div class="price-template">
@@ -460,9 +500,18 @@
                                                     </h6>
                                                     <div class="item-stars">
                                                         <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                            <span style='width:0'></span>
+                                                            @if(array_key_exists(0,$item->getReviewBest()))
+                                                                @if((int)$item->getReviewBest()[0] >= 72)
+                                                                    <span style='width:71px'></span>
+                                                                @else
+                                                                    <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                                @endif
+                                                            @else
+                                                                <span style='width:0px'></span>
+                                                            @endif
                                                         </div>
-                                                        <span>(0)</span>
+                                                        <span>({{$item->getReviewNumberStar()}})</span>
+
                                                     </div>
                                                 </div>
                                                 <div class="price-template">
@@ -557,9 +606,17 @@
                                     </h6>
                                     <div class="item-stars">
                                         <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                            <span style='width:0'></span>
+                                            @if(array_key_exists(0,$item->getReviewBest()))
+                                                @if((int)$item->getReviewBest()[0] >= 72)
+                                                    <span style='width:71px'></span>
+                                                @else
+                                                    <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                @endif
+                                            @else
+                                                <span style='width:0px'></span>
+                                            @endif
                                         </div>
-                                        <span>(0)</span>
+                                        <span>({{$item->getReviewNumberStar()}})</span>
                                     </div>
                                 </div>
                                 <div class="price-template">
@@ -593,241 +650,7 @@
         </div>
     </section>
     <!-- Women-Clothing -->
-    <section class="section-maker">
-        <div class="container">
-            <div class="sec-maker-header text-center">
-                <h3 class="sec-maker-h3">THIẾU NHI</h3>
-                <ul class="nav tab-nav-style-1-a justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#thieunhi-latest-products">Thiếu nhi mới nhất</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#manga-best-selling-products">Manga -comic</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#serialManga-top-rating-products">Series Manga</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="wrapper-content">
-                <div class="outer-area-tab">
-                    <div class="tab-content">
-                        <div class="tab-pane active show fade" id="thieunhi-latest-products">
-                            <div class="slider-fouc">
-                                <div class="products-slider owl-carousel" data-item="4">
-                                    @foreach($productsChildren->getListBook() as $item)
-                                        <div class="item">
-                                            <div class="image-container">
-                                                <a class="item-img-wrapper-link" href="single-product.html">
-                                                    <img src="{{$item->getImages()}}" alt="img-{{$item->getTitle()}}">
-                                                </a>
-                                                <div class="item-action-behaviors">
-                                                    <a class="item-quick-look" data-parentCate="{{$products->getListCategory()[0]->getName()}}" data-IdParentCate="{{$products->getListCategory()[0]->getId()}}"
-                                                       data-TitleSlug="{{$item->getCategorySlug()}}" data-ParentTitleSlug="{{$products->getListCategory()[0]->getTitleSlug()}}"
-                                                       data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
-                                                    </a>
-                                                    <a  data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}"  class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                                    <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="item-content">
-                                                <div class="what-product-is">
-                                                    <ul class="bread-crumb">
-                                                        <li class="has-separator">
-                                                            <a href="avascript:void(0)">Sản phẩm</a>
-                                                        </li>
-                                                        <li class="is-marked">
-                                                            <a class="ids{{$item->getIdCategory()}}" href='http://127.0.0.1:8000/product/{{$item->getCategorySlug()}}/{{$item->getIdCategory()}}'>{{$item->getCategory()}}</a>
-                                                        </li>
-                                                    </ul>
-                                                    <h6 class="item-title">
-                                                        <a href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a>
-                                                    </h6>
-                                                    <div class="item-stars">
-                                                        <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                            <span style='width:0'></span>
-                                                        </div>
-                                                        <span>(0)</span>
-                                                    </div>
-                                                </div>
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        {{$item->getPrice()}} đ
-                                                    </div>
-                                                    @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
-                                                        <div class="item-old-price">
-                                                            {{$item->getOriginalPrice()}} đ
-                                                        </div>
-                                                    @endif
 
-                                                </div>
-                                            </div>
-                                            @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
-                                                <div class="tag sale">
-                                                    <span>Sale</span>
-                                                </div>
-
-                                            @else
-                                                <div class="tag new">
-                                                    <span>New</span>
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="manga-best-selling-products">
-                            <!-- Product Not Found -->
-                            <div class="slider-fouc">
-                                <div class="products-slider owl-carousel" data-item="4">
-                                    @foreach($productsManga->getListBook() as $item)
-                                        <div class="item">
-                                            <div class="image-container">
-                                                <a class="item-img-wrapper-link" href="single-product.html">
-                                                    <img src="{{$item->getImages()}}" alt="img-{{$item->getTitle()}}">
-                                                </a>
-                                                <div class="item-action-behaviors">
-                                                    <a class="item-quick-look" data-parentCate="{{$products->getListCategory()[0]->getName()}}" data-IdParentCate="{{$products->getListCategory()[0]->getId()}}"
-                                                       data-TitleSlug="{{$item->getCategorySlug()}}" data-ParentTitleSlug="{{$products->getListCategory()[0]->getTitleSlug()}}"
-                                                       data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
-                                                    </a>
-                                                    <a  data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}"  class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                                    <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="item-content">
-                                                <div class="what-product-is">
-                                                    <ul class="bread-crumb">
-                                                        <li class="has-separator">
-                                                            <a href="avascript:void(0)">Sản phẩm</a>
-                                                        </li>
-                                                        <li class="is-marked">
-                                                            <a class="ids{{$item->getIdCategory()}}" href='http://127.0.0.1:8000/product/{{$item->getCategorySlug()}}/{{$item->getIdCategory()}}'>{{$item->getCategory()}}</a>
-                                                        </li>
-                                                    </ul>
-                                                    <h6 class="item-title">
-                                                        <a href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a>
-                                                    </h6>
-                                                    <div class="item-stars">
-                                                        <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                            <span style='width:0'></span>
-                                                        </div>
-                                                        <span>(0)</span>
-                                                    </div>
-                                                </div>
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        {{$item->getPrice()}} đ
-                                                    </div>
-                                                    @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
-                                                        <div class="item-old-price">
-                                                            {{$item->getOriginalPrice()}} đ
-                                                        </div>
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
-                                                <div class="tag sale">
-                                                    <span>Sale</span>
-                                                </div>
-
-                                            @else
-                                                <div class="tag new">
-                                                    <span>New</span>
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <!-- Product Not Found /- -->
-                        </div>
-                        <div class="tab-pane fade" id="serialManga-top-rating-products">
-                            <div class="slider-fouc">
-                                <div class="products-slider owl-carousel" data-item="4">
-                                    @foreach($productsSeriesManga->getListBook() as $item)
-                                        <div class="item">
-                                            <div class="image-container">
-                                                <a class="item-img-wrapper-link" href="single-product.html">
-                                                    <img src="{{$item->getImages()}}" alt="img-{{$item->getTitle()}}">
-                                                </a>
-                                                <div class="item-action-behaviors">
-                                                    <a class="item-quick-look" data-parentCate="{{$products->getListCategory()[0]->getName()}}" data-IdParentCate="{{$products->getListCategory()[0]->getId()}}"
-                                                       data-TitleSlug="{{$item->getCategorySlug()}}" data-ParentTitleSlug="{{$products->getListCategory()[0]->getTitleSlug()}}"
-                                                       data-nameCategory="{{$item->getCategory()}}" data-categoryId="{{$item->getIdCategory()}}" data-id="{{$item->getId()}}" data-value="{{$item->getTitle()}}" onclick="setValueQuickView(this)" data-toggle="modal" href="#quick-view">Quick Look
-                                                    </a>
-                                                    <a  data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}"  class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                                    <a data-value="{{$item->getId()}},{{$item->getTitle()}},{{$item->getPrice()}}" class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="item-content">
-                                                <div class="what-product-is">
-                                                    <ul class="bread-crumb">
-                                                        <li class="has-separator">
-                                                            <a href="avascript:void(0)">Sản phẩm</a>
-                                                        </li>
-                                                        <li class="is-marked">
-                                                            <a class="ids{{$item->getIdCategory()}}" href='http://127.0.0.1:8000/product/{{$item->getCategorySlug()}}/{{$item->getIdCategory()}}'>{{$item->getCategory()}}</a>
-                                                        </li>
-                                                    </ul>
-                                                    <h6 class="item-title">
-                                                        <a href="{{route('home.productDetail',[$item->getTitle(),$item->getId()])}}">{{$item->getTitle()}}</a>
-                                                    </h6>
-                                                    <div class="item-stars">
-                                                        <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                            <span style='width:0'></span>
-                                                        </div>
-                                                        <span>(0)</span>
-                                                    </div>
-                                                </div>
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        {{$item->getPrice()}} đ
-                                                    </div>
-                                                    @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
-                                                        <div class="item-old-price">
-                                                            {{$item->getOriginalPrice()}} đ
-                                                        </div>
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            @if( !round ($item->getPercentDiscount() * 100 / 100) == 0 && $item->getPercentDiscount() !== null)
-                                                <div class="tag sale">
-                                                    <span>Sale</span>
-                                                </div>
-
-                                            @else
-                                                <div class="tag new">
-                                                    <span>New</span>
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="women-featured-products">
-                            <!-- Product Not Found -->
-                            <div class="product-not-found">
-                                <div class="not-found">
-                                    <h2>SORRY!</h2>
-                                    <h6>There is not any product in specific catalogue.</h6>
-                                </div>
-                            </div>
-                            <!-- Product Not Found /- -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <div class="banner-layer">
         <div class="container">
             <div class="image-banner">
@@ -877,9 +700,18 @@
                                     </h6>
                                     <div class="item-stars">
                                         <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                            <span style='width:0'></span>
+                                            @if(array_key_exists(0,$item->getReviewBest()))
+                                                @if((int)$item->getReviewBest()[0] >= 72)
+                                                    <span style='width:71px'></span>
+                                                @else
+                                                    <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                    <span>({{$item->getReviewNumberStar()}})</span>
+                                                @endif
+                                            @else
+                                                <span style='width:0px'></span>
+                                                <span>(0)</span>
+                                            @endif
                                         </div>
-                                        <span>(0)</span>
                                     </div>
                                 </div>
                                 <div class="price-template">

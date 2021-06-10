@@ -49,6 +49,7 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <label>Author</label>
+                            <input name="author" type="text" class="form-control" placeholder="enter author" value="">
                             <select  class="form-control selectpicker" data-live-search="true" name="author_id">
                                 @foreach($authors as $author)
                                         <option value="{{$author->id}}">{{$author->full_name}}</option>
@@ -57,6 +58,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>Publisher</label>
+                            <input name="publisher" type="text" class="form-control" placeholder="enter publisher" value="">
                             <select class="form-control selectpicker" data-live-search="true" name="publisher_id">
                                 @foreach($publishers as $publisher)
                                         <option value="{{$publisher->id}}">{{$publisher->name}}</option>
@@ -68,6 +70,7 @@
                     <div  class="row mt-4">
                         <div class="col-md-3">
                             <label>Category</label>
+                            <input name="category" type="text" class="form-control" placeholder="enter category" value="">
                             <select class="form-control selectpicker" data-live-search="true" name="categories_id">
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>

@@ -13,7 +13,7 @@ class Rating extends Model
         'customerReview',
         'numberRating',
         'descRating',
-
+        'status'
     ];
     public function book()
     {

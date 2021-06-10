@@ -6,6 +6,8 @@ namespace App\viewModels;
 
 class bookViewModels
 {
+    private $bestRating = array();
+    private $reviewNumberStar;
     private $originalPrice;
     private $percentDiscount;
     private $categorySlug;
@@ -18,6 +20,24 @@ class bookViewModels
     private $images;
     private $id;
     private $titleSlug;
+
+
+
+    public function setReviewBest($bestRating) {
+        $this->bestRating = $bestRating ;
+
+    }
+    public function getReviewBest():array {
+        return $this->bestRating;
+    }
+
+    public function setReviewNumberStar($numberStar) {
+        $this->reviewNumberStar =$numberStar;
+    }
+    public function getReviewNumberStar() {
+        return $this->reviewNumberStar;
+    }
+
 
     public function setPercentDiscount($percentDiscount)
     {

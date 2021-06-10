@@ -11,6 +11,10 @@ use App\Models\ImageBook;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
 
+use App\Imports\BookImport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 class BookController extends Controller
 {
     protected $BookStore;
@@ -136,5 +140,12 @@ class BookController extends Controller
     public function updateDiscountBook(UpdatePriceRequest $request,$id){
         $result = $this->BookStore->updateDiscountBook($request,$id);
         return  response()->json(['result'=>$result]);
+    }
+
+    public function importExcel(Request $request){
+
+             Excel::import(new BookImport(),$request->file);
+             session()->flash('import-success',"Thêm dữ liệu thành công");
+             return redirect()->back();
     }
 }

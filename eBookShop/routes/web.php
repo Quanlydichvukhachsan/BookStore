@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth','role:Administrator|Manager|Salesman|Staff
     Route::post('/book/site/{id}/file-delete',[BookController::class, 'deleteImage'])->name('book.deleteImage');
     Route::get('/book/{id}/discount',[BookController::class, 'discountBook'])->name('book.discount');
     Route::post('/book/{id}/discount/update',[BookController::class, 'updateDiscountBook'])->name('book.UpdateDiscount');
-
+    Route::post('/book/import',[BookController::class, 'importExcel'])->name('book.import');
 
 });
 Route::group(['middleware' => ['auth','role:Administrator|Manager']],function () {

@@ -60,12 +60,37 @@ class HomeService implements HomeContract
          $productViewModels->setpathId($category->id);
 
          if($category->slug_name === $name){
-
+             $sumReview=0;
+             $arrAllRating =array();
              if(count($booksByCategory))
              {
 
                  foreach ($booksByCategory as $book){
                      $bookViewModels =new bookViewModels();
+                     if(count($book->ratings)){
+
+                         foreach ($book->ratings as $item) {
+                             if($item->status === 1) {
+
+                                 $sumReview += 1;
+                                 array_push($arrAllRating, $item->numberRating);
+                             }
+                         }
+                         $bookViewModels->setReviewNumberStar($sumReview);
+                         $count = array_count_values($arrAllRating);
+
+                         arsort($count);
+                         $keys = array_keys($count);
+                         $arrPercentRating = array();
+
+                         $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                         $bookViewModels->setReviewBest($arrPercentRating);
+
+                     }
+
+
                      $bookViewModels->setId($book->id);
                      $bookViewModels->setCategory($book->categories->name);
                      $bookViewModels->setIdCategory($book->categories->id);
@@ -108,18 +133,46 @@ class HomeService implements HomeContract
      }
     public function getAll()
     {
-         $books =  Book::orderBy('created_at', 'desc')->where('categories_id','!=',16)->where('categories_id','!=',18)->where('categories_id','!=',17)->paginate(5);
+         $books =  Book::orderBy('created_at', 'desc')->where('categories_id','!=',3)->where('categories_id','!=',4)->where('categories_id','!=',5)->paginate(5);
          $categorys =  Category::where('parent_id', '=', 0)->get();
+
         $productViewModels =new productViewModels();
          $productViewModels->setBooks($books);
+        $arrAllRating =array();
+        $sumReview =0;
          foreach ($books as $book){
+             $bookViewModels =new bookViewModels();
+             if(count($book->ratings)){
 
-               $bookViewModels =new bookViewModels();
+                 foreach ($book->ratings as $item) {
+                     if($item->status === 1) {
+
+                         $sumReview += 1;
+                         array_push($arrAllRating, $item->numberRating);
+                     }
+                 }
+                 $bookViewModels->setReviewNumberStar($sumReview);
+                 $count = array_count_values($arrAllRating);
+
+                 arsort($count);
+                 $keys = array_keys($count);
+                 $arrPercentRating = array();
+
+                     $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                 $bookViewModels->setReviewBest($arrPercentRating);
+
+             }
+
                $bookViewModels->setId($book->id);
                $bookViewModels->setOriginalPrice($book->original_Price);
                $bookViewModels->setPercentDiscount($book->percent_discount);
                $bookViewModels->setPrice($book->price);
-               $bookViewModels->setImages($book->imagebooks[0]->file);
+
+                   if(count($book->imagebooks)){
+                       $bookViewModels->setImages($book->imagebooks[0]->file);
+                   }
                $bookViewModels->setTitle($book->title);
                $bookViewModels->setAuthor($book->author->full_name);
                $bookViewModels->setCategory($book->categories->name);
@@ -522,9 +575,34 @@ class HomeService implements HomeContract
         $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
         $productViewModels->setBooks($books);
+        $sumReview =0;
+        $arrAllRating = array();
         foreach ($books as $book){
-
             $bookViewModels =new bookViewModels();
+            if(count($book->ratings)){
+
+                foreach ($book->ratings as $item) {
+                    if($item->status === 1) {
+
+                        $sumReview += 1;
+                        array_push($arrAllRating, $item->numberRating);
+                    }
+                }
+                $bookViewModels->setReviewNumberStar($sumReview);
+                $count = array_count_values($arrAllRating);
+
+                arsort($count);
+                $keys = array_keys($count);
+                $arrPercentRating = array();
+
+                $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                $bookViewModels->setReviewBest($arrPercentRating);
+
+            }
+
+
             $bookViewModels->setId($book->id);
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
@@ -562,13 +640,38 @@ class HomeService implements HomeContract
 
     public function getProductChildren()
     {
-        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',16)->get();
+        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',3)->get();
         $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
         $productViewModels->setBooks($books);
+        $sumReview =0;
+        $arrAllRating = array();
         foreach ($books as $book){
 
             $bookViewModels =new bookViewModels();
+            if(count($book->ratings)){
+
+                foreach ($book->ratings as $item) {
+                    if($item->status === 1) {
+
+                        $sumReview += 1;
+                        array_push($arrAllRating, $item->numberRating);
+                    }
+                }
+                $bookViewModels->setReviewNumberStar($sumReview);
+                $count = array_count_values($arrAllRating);
+
+                arsort($count);
+                $keys = array_keys($count);
+                $arrPercentRating = array();
+
+                $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                $bookViewModels->setReviewBest($arrPercentRating);
+
+            }
+
             $bookViewModels->setId($book->id);
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
@@ -603,13 +706,37 @@ class HomeService implements HomeContract
     }
     public function getProductManga()
     {
-        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',17)->get();
+        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',4)->get();
         $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
         $productViewModels->setBooks($books);
+        $sumReview =0;
+        $arrAllRating = array();
         foreach ($books as $book){
 
             $bookViewModels =new bookViewModels();
+            if(count($book->ratings)) {
+
+                foreach ($book->ratings as $item) {
+                    if ($item->status === 1) {
+
+                        $sumReview += 1;
+                        array_push($arrAllRating, $item->numberRating);
+                    }
+                }
+                $bookViewModels->setReviewNumberStar($sumReview);
+                $count = array_count_values($arrAllRating);
+
+                arsort($count);
+                $keys = array_keys($count);
+                $arrPercentRating = array();
+
+                $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                $bookViewModels->setReviewBest($arrPercentRating);
+            }
+
             $bookViewModels->setId($book->id);
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
@@ -645,13 +772,37 @@ class HomeService implements HomeContract
 
     public function getProductSeriesManga()
     {
-        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',18)->get();
+        $books =  Book::orderBy('created_at', 'desc')->where('categories_id','=',5)->get();
         $categorys =  Category::where('parent_id', '=', 0)->get();
         $productViewModels =new productViewModels();
         $productViewModels->setBooks($books);
+        $sumReview =0;
+        $arrAllRating =array();
         foreach ($books as $book){
 
             $bookViewModels =new bookViewModels();
+            if(count($book->ratings)) {
+
+                foreach ($book->ratings as $item) {
+                    if ($item->status === 1) {
+
+                        $sumReview += 1;
+                        array_push($arrAllRating, $item->numberRating);
+                    }
+                }
+                $bookViewModels->setReviewNumberStar($sumReview);
+                $count = array_count_values($arrAllRating);
+
+                arsort($count);
+                $keys = array_keys($count);
+                $arrPercentRating = array();
+
+                $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                $bookViewModels->setReviewBest($arrPercentRating);
+            }
+
             $bookViewModels->setId($book->id);
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
@@ -684,126 +835,190 @@ class HomeService implements HomeContract
         }
         return $productViewModels ;
     }
-         public function productBestSell(){
-                  $arrBookId =[];
-                  $order = Order::all();
-                  foreach ($order as $item){
-                      foreach ($item->books as $book){
+         public function productBestSell()
+         {
+             $order = Order::all();
+             if (!$order->isEmpty()) {
+                 $arrBookId = [];
 
-                          array_push($arrBookId,$book->id);
-                  }
-                  }
-             $count=array_count_values($arrBookId);//Counts the values in the array, returns associatve array
-             arsort($count);//Sort it from highest to lowest
-             $keys=array_keys($count);
-                $arrBook =[];
-             for($i=0;$i< 5 ;$i++){
-               $books = Book::findOrFail($keys[$i]);
-                 array_push($arrBook,$books);
-             }
+                 foreach ($order as $item) {
+                     foreach ($item->books as $book) {
 
-             $categorys =  Category::where('parent_id', '=', 0)->get();
-             $productViewModels =new productViewModels();
-             $productViewModels->setBooks($arrBook);
-             foreach ($arrBook as $book){
-
-                 $bookViewModels =new bookViewModels();
-                 $bookViewModels->setId($book->id);
-                 $bookViewModels->setOriginalPrice($book->original_Price);
-                 $bookViewModels->setPercentDiscount($book->percent_discount);
-                 $bookViewModels->setPrice($book->price);
-                 $bookViewModels->setImages($book->imagebooks[0]->file);
-                 $bookViewModels->setTitle($book->title);
-                 $bookViewModels->setAuthor($book->author->full_name);
-                 $bookViewModels->setCategory($book->categories->name);
-                 $bookViewModels->setIdCategory($book->categories->id);
-                 $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
-                 $productViewModels->setListBook($bookViewModels);
-
-             }
-
-             foreach ($categorys as $item){
-                 $showCategoryModel =new showCategoryModel();
-                 $showCategoryModel->setId($item->id);
-                 $showCategoryModel->setName($item->name);
-                 $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
-                 if($item->childs->count() >0){
-                     foreach ($item->childs as $child) {
-                         $childModel =new showCategoryModel();
-                         $childModel->setId($child->id);
-                         $childModel->setName($child->name);
-                         $childModel->setTitleSlug($this->formatNameToSlug($child->name));
-                         $showCategoryModel->setChilds($childModel);
+                         array_push($arrBookId, $book->id);
                      }
                  }
-                 $productViewModels->setListCategory($showCategoryModel);
+                 $count = array_count_values($arrBookId);//Counts the values in the array, returns associatve array
+                 arsort($count);//Sort it from highest to lowest
+                 $keys = array_keys($count);
+                 $arrBook = [];
+
+                 for ($i = 0; $i < count($keys); $i++) {
+                     $books = Book::findOrFail($keys[$i]);
+                     array_push($arrBook, $books);
+                 }
+
+                 $categorys = Category::where('parent_id', '=', 0)->get();
+                 $productViewModels = new productViewModels();
+                 $productViewModels->setBooks($arrBook);
+                 $sumReview =0;
+                 $arrAllRating =array();
+                 foreach ($arrBook as $book) {
+
+                     $bookViewModels = new bookViewModels();
+
+                     if(count($book->ratings)){
+
+                         foreach ($book->ratings as $item) {
+                             if($item->status === 1) {
+
+                                 $sumReview += 1;
+                                 array_push($arrAllRating, $item->numberRating);
+                             }
+                         }
+                         $bookViewModels->setReviewNumberStar($sumReview);
+                         $count = array_count_values($arrAllRating);
+
+                         arsort($count);
+                         $keys = array_keys($count);
+                         $arrPercentRating = array();
+
+                         $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                         $bookViewModels->setReviewBest($arrPercentRating);
+
+                     }
+
+                     $bookViewModels->setId($book->id);
+                     $bookViewModels->setOriginalPrice($book->original_Price);
+                     $bookViewModels->setPercentDiscount($book->percent_discount);
+                     $bookViewModels->setPrice($book->price);
+                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     $bookViewModels->setTitle($book->title);
+                     $bookViewModels->setAuthor($book->author->full_name);
+                     $bookViewModels->setCategory($book->categories->name);
+                     $bookViewModels->setIdCategory($book->categories->id);
+                     $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                     $productViewModels->setListBook($bookViewModels);
+
+                 }
+
+                 foreach ($categorys as $item) {
+                     $showCategoryModel = new showCategoryModel();
+                     $showCategoryModel->setId($item->id);
+                     $showCategoryModel->setName($item->name);
+                     $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+                     if ($item->childs->count() > 0) {
+                         foreach ($item->childs as $child) {
+                             $childModel = new showCategoryModel();
+                             $childModel->setId($child->id);
+                             $childModel->setName($child->name);
+                             $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                             $showCategoryModel->setChilds($childModel);
+                         }
+                     }
+                     $productViewModels->setListCategory($showCategoryModel);
+                 }
+
+             }else{
+                 $productViewModels = null;
              }
-             return $productViewModels ;
+             return $productViewModels;
          }
-         public function getPoductByType($type){
-        global $books;
-        if($type === "sale"){
-            $books =  Book::orderBy('created_at', 'desc')->where('percent_discount','!=',0.000)->paginate(8);
-        }
-        elseif($type === "new"){
-            $books =  Book::orderBy('created_at', 'desc')->paginate(8);
-        }else{
-            $arrBookId =[];
-            $order = Order::all();
-            foreach ($order as $item){
-                foreach ($item->books as $book){
+         public function getPoductByType($type)
+             {
+                 global $books;
+                 if ($type === "sale") {
+                     $books = Book::orderBy('created_at', 'desc')->where('percent_discount', '!=', 0.000)->paginate(8);
+                 } elseif ($type === "new") {
+                     $books = Book::orderBy('created_at', 'desc')->paginate(8);
+                 } else {
+                     $order = Order::all();
+                     if (!$order->isEmpty()) {
 
-                    array_push($arrBookId,$book->id);
-                }
-            }
-            $count=array_count_values($arrBookId);//Counts the values in the array, returns associatve array
-            arsort($count);//Sort it from highest to lowest
-            $keys=array_keys($count);
-            $books =[];
-            for($i=0;$i< 5 ;$i++){
-                $item = Book::findOrFail($keys[$i]);
-                array_push($books,$item);
-            }
-        }
+                         $arrBookId = [];
+                         foreach ($order as $item) {
+                             foreach ($item->books as $book) {
 
-             $categorys =  Category::where('parent_id', '=', 0)->get();
-             $productViewModels =new productViewModels();
-             $productViewModels->setBooks($books);
-             foreach ($books as $book){
-
-                 $bookViewModels =new bookViewModels();
-                 $bookViewModels->setId($book->id);
-                 $bookViewModels->setOriginalPrice($book->original_Price);
-                 $bookViewModels->setPercentDiscount($book->percent_discount);
-                 $bookViewModels->setPrice($book->price);
-                 $bookViewModels->setImages($book->imagebooks[0]->file);
-                 $bookViewModels->setTitle($book->title);
-                 $bookViewModels->setAuthor($book->author->full_name);
-                 $bookViewModels->setCategory($book->categories->name);
-                 $bookViewModels->setIdCategory($book->categories->id);
-                 $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
-                 $productViewModels->setListBook($bookViewModels);
-
-             }
-
-
-
-             foreach ($categorys as $item){
-                 $showCategoryModel =new showCategoryModel();
-                 $showCategoryModel->setId($item->id);
-                 $showCategoryModel->setName($item->name);
-                 $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
-                 if($item->childs->count() >0){
-                     foreach ($item->childs as $child) {
-                         $childModel =new showCategoryModel();
-                         $childModel->setId($child->id);
-                         $childModel->setName($child->name);
-                         $childModel->setTitleSlug($this->formatNameToSlug($child->name));
-                         $showCategoryModel->setChilds($childModel);
+                                 array_push($arrBookId, $book->id);
+                             }
+                         }
+                         $count = array_count_values($arrBookId);//Counts the values in the array, returns associatve array
+                         arsort($count);//Sort it from highest to lowest
+                         $keys = array_keys($count);
+                         $books = [];
+                         for ($i = 0; $i < count($keys); $i++) {
+                             $item = Book::findOrFail($keys[$i]);
+                             array_push($books, $item);
+                         }
+                     }else{
+                         $productViewModels =null;
+                         return $productViewModels ;
                      }
                  }
-                 $productViewModels->setListCategory($showCategoryModel);
-             }
+
+                 $categorys = Category::where('parent_id', '=', 0)->get();
+                 $productViewModels = new productViewModels();
+                 $productViewModels->setBooks($books);
+                 $sumReview =0;
+                 $arrAllRating =array();
+                 foreach ($books as $book) {
+
+                     $bookViewModels = new bookViewModels();
+                     if(count($book->ratings)){
+
+                         foreach ($book->ratings as $item) {
+                             if($item->status === 1) {
+
+                                 $sumReview += 1;
+                                 array_push($arrAllRating, $item->numberRating);
+                             }
+                         }
+                         $bookViewModels->setReviewNumberStar($sumReview);
+                         $count = array_count_values($arrAllRating);
+
+                         arsort($count);
+                         $keys = array_keys($count);
+                         $arrPercentRating = array();
+
+                         $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+                         $bookViewModels->setReviewBest($arrPercentRating);
+
+                     }
+
+                     $bookViewModels->setId($book->id);
+                     $bookViewModels->setOriginalPrice($book->original_Price);
+                     $bookViewModels->setPercentDiscount($book->percent_discount);
+                     $bookViewModels->setPrice($book->price);
+                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     $bookViewModels->setTitle($book->title);
+                     $bookViewModels->setAuthor($book->author->full_name);
+                     $bookViewModels->setCategory($book->categories->name);
+                     $bookViewModels->setIdCategory($book->categories->id);
+                     $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
+                     $productViewModels->setListBook($bookViewModels);
+
+                 }
+
+
+                 foreach ($categorys as $item) {
+                     $showCategoryModel = new showCategoryModel();
+                     $showCategoryModel->setId($item->id);
+                     $showCategoryModel->setName($item->name);
+                     $showCategoryModel->setTitleSlug($this->formatNameToSlug($item->name));
+                     if ($item->childs->count() > 0) {
+                         foreach ($item->childs as $child) {
+                             $childModel = new showCategoryModel();
+                             $childModel->setId($child->id);
+                             $childModel->setName($child->name);
+                             $childModel->setTitleSlug($this->formatNameToSlug($child->name));
+                             $showCategoryModel->setChilds($childModel);
+                         }
+                     }
+                     $productViewModels->setListCategory($showCategoryModel);
+                 }
+
              return $productViewModels ;
          }
       public function productKinhTe()
@@ -812,9 +1027,33 @@ class HomeService implements HomeContract
            $categorys =  Category::where('parent_id', '=', 0)->get();
            $productViewModels =new productViewModels();
            $productViewModels->setBooks($books);
+           $sumReview =0;
+           $arrAllRating =array();
            foreach ($books as $book){
-
                $bookViewModels =new bookViewModels();
+               if(count($book->ratings)){
+
+                   foreach ($book->ratings as $item) {
+                       if($item->status === 1) {
+
+                           $sumReview += 1;
+                           array_push($arrAllRating, $item->numberRating);
+                       }
+                   }
+                   $bookViewModels->setReviewNumberStar($sumReview);
+                   $count = array_count_values($arrAllRating);
+
+                   arsort($count);
+                   $keys = array_keys($count);
+                   $arrPercentRating = array();
+
+                   $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+
+
+                   $bookViewModels->setReviewBest($arrPercentRating);
+
+               }
+
                $bookViewModels->setId($book->id);
                $bookViewModels->setOriginalPrice($book->original_Price);
                $bookViewModels->setPercentDiscount($book->percent_discount);

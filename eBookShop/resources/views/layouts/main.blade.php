@@ -56,6 +56,12 @@
                  style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
                 <span>{{Session::get('review-delete')}}</span>
             </div>
+
+        @elseif(Session::has('import-success'))
+            <div class="alert alert-success alert-highlighted"
+                 style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+                <span>{{Session::get('import-success')}}</span>
+            </div>
         @endif
         <div aria-live="polite" aria-atomic="true" style="position: relative;">
             <div class="alert alert-success alert-highlighted"

@@ -26,7 +26,13 @@
     <div class="page-deal u-s-p-t-80">
         <div class="container">
             <div class="deal-page-wrapper">
+                @if(\Illuminate\Support\Facades\Route::currentRouteName()==="home.productNew")
                 <h1 class="deal-heading">Sản phẩm mới</h1>
+                @elseif(\Illuminate\Support\Facades\Route::currentRouteName()==="home.productSale")
+                    <h1 class="deal-heading">Sản phẩm sale</h1>
+                @else
+                    <h1 class="deal-heading">Sản phẩm bán chạy</h1>
+                    @endif
                 <h6 class="deal-has-total-items">{{count($productsBestSell->getListBook())}} Items</h6>
             </div>
 
@@ -64,9 +70,17 @@
                                     </h6>
                                     <div class="item-stars">
                                         <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                            <span style='width:0'></span>
+                                            @if(array_key_exists(0,$item->getReviewBest()))
+                                                @if((int)$item->getReviewBest()[0] >= 72)
+                                                    <span style='width:71px'></span>
+                                                @else
+                                                    <span style='width:{{(int)$item->getReviewBest()[0]}}px'></span>
+                                                @endif
+                                            @else
+                                                <span style='width:0px'></span>
+                                            @endif
                                         </div>
-                                        <span>(0)</span>
+                                        <span>({{$item->getReviewNumberStar()}})</span>
                                     </div>
                                 </div>
                                 <div class="price-template">
