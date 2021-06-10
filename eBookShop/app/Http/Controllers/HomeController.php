@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\HomeContract;
+use App\Contracts\ReviewContract;
+use App\Http\Requests\RequestRating;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,11 @@ class HomeController extends Controller
      * @return void
      */
     private  $homeContract;
-    public function __construct(HomeContract $homeContract)
+    private  $reviewContract;
+    public function __construct(HomeContract $homeContract,ReviewContract $reviewContract)
     {
              $this->homeContract =$homeContract;
+             $this->reviewContract =$reviewContract;
     }
 
     /**
@@ -184,6 +188,17 @@ class HomeController extends Controller
         $products =  $this->homeContract->getAll();
         $productsBestSell =$this->homeContract->getPoductByType("hot");
         return view('app.productType',compact('productsBestSell','products'));
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     */
+    public function reviewProduct(RequestRating $request, $id){
+                   $result =   $this->reviewContract->postReview($request,$id);
+                   session()->flash('review-success',$result);
+                   return redirect()->back();
     }
 
 }

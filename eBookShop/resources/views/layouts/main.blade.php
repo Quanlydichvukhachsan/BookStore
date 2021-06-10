@@ -36,7 +36,7 @@
                         <div class="d-flex flex-row align-items-center new-order">
                             <span class="badge badge-success">new</span>
                             <div class="ml-2 mr-2">
-                                <span>Bạn có một đơn hàng mới.</span><br>
+                                <span>Bạn có một thông báo mới.</span><br>
                                 <div class="info-user"> </div><br>
                                 <span class="see-order"></span>
                             </div>
@@ -46,6 +46,17 @@
                 </div>
             </div>
         </div>
+        @if(Session::has('review-accepted'))
+            <div class="alert alert-success alert-highlighted"
+                 style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+                <span>{{Session::get('review-accepted')}}</span>
+            </div>
+        @elseif(Session::has('review-delete'))
+            <div class="alert alert-success alert-highlighted"
+                 style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+                <span>{{Session::get('review-delete')}}</span>
+            </div>
+        @endif
         <div aria-live="polite" aria-atomic="true" style="position: relative;">
             <div class="alert alert-success alert-highlighted"
                  style="position: absolute; top: 0; right: 0; display: none;" data-delay="5000">

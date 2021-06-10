@@ -1,4 +1,5 @@
 <?php namespace App\Services;
+use App\Events\CanelOrderNotification;
 use App\Events\OrderNotification;
 use App\Models\Order;
 use App\Contracts\OrderContract;
@@ -159,7 +160,8 @@ class OrderBookService implements OrderContract{
          $order =  Order::findOrFail($id);
          $order->status= "Cancel";
          $order->save();
-        return "Hủy  đơn hàng thành công!";
+        event(new CanelOrderNotification($order,$order->user->full_name,$order->user->id));
+        return "Hủy đơn hàng thành công!";
     }
        public function quickRandom($length = 16)
         {

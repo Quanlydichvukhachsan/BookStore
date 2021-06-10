@@ -27,8 +27,8 @@ use App\Http\Controllers\AuthorController;
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/product/{category}/{id}', [App\Http\Controllers\HomeController::class, 'getByCategory'])->name('home.product');
     Route::get('/product/new', [App\Http\Controllers\HomeController::class, 'getProductNew'])->name('home.productNew');
-Route::get('/product/sale', [App\Http\Controllers\HomeController::class, 'getProductSale'])->name('home.productSale');
-Route::get('/product/hot', [App\Http\Controllers\HomeController::class, 'getProductHot'])->name('home.productHot');
+    Route::get('/product/sale', [App\Http\Controllers\HomeController::class, 'getProductSale'])->name('home.productSale');
+    Route::get('/product/hot', [App\Http\Controllers\HomeController::class, 'getProductHot'])->name('home.productHot');
     Route::post('/product/search', [App\Http\Controllers\HomeController::class, 'findProduct'])->name('home.findProduct');
     Route::get('/home/{title}/{id}', [App\Http\Controllers\HomeController::class, 'getProduct'])->name('home.productDetail');
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
@@ -46,7 +46,10 @@ Route::get('/product/hot', [App\Http\Controllers\HomeController::class, 'getProd
     Route::get('/vnpay/return', [App\Http\Controllers\CartController::class, 'vnpayReturn'])->name('vnpay.return');
 
     });
+Route::group(['middleware' => ['web']], function () {
+    Route::post('/product/{id}/review', [App\Http\Controllers\HomeController::class, 'reviewProduct'])->name('home.review');
 
+});
 //Route::get('/product/{category}/{id}/{childCategory}/{childId}', [App\Http\Controllers\HomeController::class, 'getProductById'])->name('home.showProductByCategory');
 Auth::routes();
 
@@ -67,7 +70,7 @@ Route::group(['middleware' => ['auth','role:Administrator|Manager|Salesman|Staff
     Route::resource('author',AuthorController::class);
     Route::resource('publisher',Controllers\PublisherController::class);
     Route::resource('book',BookController::class);
-
+    Route::resource('review',Controllers\ReviewController::class);
     Route::post('/book/site/{id}/file-delete',[BookController::class, 'deleteImage'])->name('book.deleteImage');
     Route::get('/book/{id}/discount',[BookController::class, 'discountBook'])->name('book.discount');
     Route::post('/book/{id}/discount/update',[BookController::class, 'updateDiscountBook'])->name('book.UpdateDiscount');

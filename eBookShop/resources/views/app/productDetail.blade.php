@@ -159,7 +159,7 @@
                                     <a class="nav-link" data-toggle="tab" href="#specification">Chi tiết</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#review">Reviews (15)</a>
+                                    <a class="nav-link" data-toggle="tab" href="#review">Đánh giá ({{count($productDetail->getReviewer())}})</a>
                                 </li>
                             </ul>
                         </div>
@@ -216,54 +216,102 @@
                             </div>
                             <!-- Specifications-Tab /- -->
                             <!-- Reviews-Tab -->
+                            @if(count(array_keys($productDetail->getReviewBest())))
                             <div class="tab-pane fade" id="review">
                                 <div class="review-whole-container">
                                     <div class="row r-1 u-s-m-b-26 u-s-p-b-22">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="total-score-wrapper">
-                                                <h6 class="review-h6">Average Rating</h6>
+                                                <h6 class="review-h6">Đánh giá trung bình</h6>
                                                 <div class="circle-wrapper">
-                                                    <h1>4.5</h1>
+                                                                 @if( round((int)$productDetail->getReviewBest()[array_keys($productDetail->getReviewBest())[0]] /100,1 ) >=1 )
+                                                        <h1>{{array_keys($productDetail->getReviewBest())[0]}} . 9</h1>
+                                                    @else
+                                                    <h1> {{array_keys($productDetail->getReviewBest())[0] + round((int)$productDetail->getReviewBest()[array_keys($productDetail->getReviewBest())[0]] /100,1 ) }}</h1>
+                                                              @endif
+
+
                                                 </div>
-                                                <h6 class="review-h6">Based on 23 Reviews</h6>
+                                                <h6 class="review-h6">Dựa trên {{$productDetail->getReviewNumberStar()[array_keys($productDetail->getReviewBest())[0] -1]}} Reviews</h6>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6">
                                             <div class="total-star-meter">
                                                 <div class="star-wrapper">
-                                                    <span>5 Stars</span>
+                                                    <span>5 Sao</span>
                                                     <div class="star">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(5,$productDetail->getReviewBest()))
+                                                                        @if((int)$productDetail->getReviewBest()[5] >= 72)
+                                                                <span style='width:71px'></span>
+                                                                            @else
+                                                        <span style='width:{{(int)$productDetail->getReviewBest()[5]}}px'></span>
+                                                                            @endif
+                                                            @else
+                                                                <span style='width:0px'></span>
+                                                            @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$productDetail->getReviewNumberStar()[4]}})</span>
                                                 </div>
                                                 <div class="star-wrapper">
-                                                    <span>4 Stars</span>
+                                                    <span>4 Sao</span>
                                                     <div class="star">
-                                                        <span style='width:67px'></span>
+                                                        @if(array_key_exists(4,$productDetail->getReviewBest()))
+                                                            @if((int)$productDetail->getReviewBest()[4] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                            <span style='width:{{(int)$productDetail->getReviewBest()[4]}}px'></span>
+                                                            @endif
+                                                        @else
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(23)</span>
+                                                    <span>({{$productDetail->getReviewNumberStar()[3]}})</span>
                                                 </div>
                                                 <div class="star-wrapper">
-                                                    <span>3 Stars</span>
+                                                    <span>3 Sao</span>
                                                     <div class="star">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(3,$productDetail->getReviewBest()))
+                                                            @if((int)$productDetail->getReviewBest()[3] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                            <span style='width:{{(int)$productDetail->getReviewBest()[3]}}px'></span>
+                                                            @endif
+                                                        @else
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$productDetail->getReviewNumberStar()[2]}})</span>
                                                 </div>
                                                 <div class="star-wrapper">
-                                                    <span>2 Stars</span>
+                                                    <span>2 Sao</span>
                                                     <div class="star">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(2,$productDetail->getReviewBest()))
+                                                            @if((int)$productDetail->getReviewBest()[2] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                            <span style='width:{{(int)$productDetail->getReviewBest()[2]}}px'></span>
+                                                            @endif
+                                                        @else
+
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$productDetail->getReviewNumberStar()[1]}})</span>
                                                 </div>
                                                 <div class="star-wrapper">
-                                                    <span>1 Star</span>
+                                                    <span>1 Sao</span>
                                                     <div class="star">
-                                                        <span style='width:0'></span>
+                                                        @if(array_key_exists(1,$productDetail->getReviewBest()))
+                                                            @if((int)$productDetail->getReviewBest()[1] >= 72)
+                                                                <span style='width:71px'></span>
+                                                            @else
+                                                            <span style='width:{{(int)$productDetail->getReviewBest()[1]}}px'></span>
+                                                            @endif
+                                                        @else
+                                                            <span style='width:0px'></span>
+                                                        @endif
                                                     </div>
-                                                    <span>(0)</span>
+                                                    <span>({{$productDetail->getReviewNumberStar()[0]}})</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -271,35 +319,30 @@
                                     <div class="row r-2 u-s-m-b-26 u-s-p-b-22">
                                         <div class="col-lg-12">
                                             <div class="your-rating-wrapper">
-                                                <h6 class="review-h6">Your Review is matter.</h6>
-                                                <h6 class="review-h6">Have you used this product before?</h6>
+                                               <form method="post" action="{{route('home.review',$productDetail->getId())}}">
+                                                   @csrf
+                                                <h6 class="review-h6">Đánh giá của bạn về sách</h6>
+                                                <h6 class="review-h6">Bạn đã từng mua sản phẩm này?</h6>
                                                 <div class="star-wrapper u-s-m-b-8">
                                                     <div class="star">
                                                         <span id="your-stars" style='width:0'></span>
                                                     </div>
                                                     <label for="your-rating-value"></label>
-                                                    <input id="your-rating-value" type="text" class="text-field" placeholder="0.0">
+                                                    <input id="your-rating-value" name="numberStar" type="text" class="text-field" placeholder="0.0">
                                                     <span id="star-comment"></span>
                                                 </div>
-                                                <form>
-                                                    <label for="your-name">Name
+
+
+                                                <label for="nameCustomer">Tên của bạn
                                                         <span class="astk"> *</span>
                                                     </label>
-                                                    <input id="your-name" type="text" class="text-field" placeholder="Your Name">
-                                                    <label for="your-email">Email
+                                                    <input id="nameCustomer" type="text" name="nameCustomer" class="text-field" placeholder="Tên của bạn">
+                                                    <label for="reviewDesc">Nhận xét
                                                         <span class="astk"> *</span>
                                                     </label>
-                                                    <input id="your-email" type="text" class="text-field" placeholder="Your Email">
-                                                    <label for="review-title">Review Title
-                                                        <span class="astk"> *</span>
-                                                    </label>
-                                                    <input id="review-title" type="text" class="text-field" placeholder="Review Title">
-                                                    <label for="review-text-area">Review
-                                                        <span class="astk"> *</span>
-                                                    </label>
-                                                    <textarea class="text-area u-s-m-b-8" id="review-text-area" placeholder="Review"></textarea>
-                                                    <button class="button button-outline-secondary">Submit Review</button>
-                                                </form>
+                                                    <textarea class="text-area u-s-m-b-8" id="reviewDesc" name="reviewDesc" placeholder="Viết nhận xét"></textarea>
+                                                    <button class="button button-outline-secondary">Gửi nhận xét</button>
+                                               </form>
                                             </div>
                                         </div>
                                     </div>
@@ -308,147 +351,160 @@
                                         <!-- Review-Options -->
                                         <div class="review-options u-s-m-b-16">
                                             <div class="review-option-heading">
-                                                <h6>Reviews
-                                                    <span> (15) </span>
+                                                <h6>Đánh giá
+                                                    <span> ({{count($productDetail->getReviewer())}}) </span>
                                                 </h6>
                                             </div>
-                                            <div class="review-option-box">
-                                                <div class="select-box-wrapper">
-                                                    <label class="sr-only" for="review-sort">Review Sorter</label>
-                                                    <select class="select-box" id="review-sort">
-                                                        <option value="">Sort by: Best Rating</option>
-                                                        <option value="">Sort by: Worst Rating</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <!-- Review-Options /- -->
                                         <!-- All-Reviews -->
                                         <div class="reviewers">
+                                            @foreach($productDetail->getReviewer() as $item)
                                             <div class="review-data">
                                                 <div class="reviewer-name-and-date">
-                                                    <h6 class="reviewer-name">John</h6>
-                                                    <h6 class="review-posted-date">10 May 2018</h6>
+                                                    <h6 class="reviewer-name">{{$item->getNameReviewer()}}</h6>
+                                                    <h6 class="review-posted-date">{{$item->getCreate_atReview()}}</h6>
                                                 </div>
                                                 <div class="reviewer-stars-title-body">
                                                     <div class="reviewer-stars">
                                                         <div class="star">
-                                                            <span style='width:67px'></span>
+                                                            @if(round($item->getNumberStar()) == 5 )
+                                                                <span style='width:71px'></span>
+                                                            @elseif(round($item->getNumberStar()) == 4)
+                                                                <span style='width:60px'></span>
+                                                            @elseif(round($item->getNumberStar()) == 3)
+                                                                <span style='width:40px'></span>
+                                                            @elseif(round($item->getNumberStar()) == 2)
+                                                                <span style='width:20px'></span>
+                                                            @elseif(round($item->getNumberStar()) == 1)
+                                                                <span style='width:10px'></span>
+                                                            @endif
+
                                                         </div>
-                                                        <span class="review-title">Good!</span>
+                                                        @if(round($item->getNumberStar()) == 5 )
+                                                        <span class="review-title">Tuyệt vời.</span>
+                                                        @elseif(round($item->getNumberStar()) == 4)
+                                                            <span class="review-title">Tôi thích sản phẩm này.</span>
+                                                        @elseif(round($item->getNumberStar()) == 3)
+                                                            <span class="review-title"> Tốt</span>
+                                                        @elseif(round($item->getNumberStar()) == 2)
+                                                            <span class="review-title"> Tôi không thích sách này.</span>
+                                                        @elseif(round($item->getNumberStar()) == 1)
+                                                            <span class="review-title"> Tôi ghét sản phẩm này.</span>
+                                                            @endif
                                                     </div>
                                                     <p class="review-body">
-                                                        Good Quality...!
+                                                      {{$item->getReviewDesc()}}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="review-data">
-                                                <div class="reviewer-name-and-date">
-                                                    <h6 class="reviewer-name">Doe</h6>
-                                                    <h6 class="review-posted-date">10 June 2018</h6>
-                                                </div>
-                                                <div class="reviewer-stars-title-body">
-                                                    <div class="reviewer-stars">
-                                                        <div class="star">
-                                                            <span style='width:67px'></span>
-                                                        </div>
-                                                        <span class="review-title">Well done!</span>
-                                                    </div>
-                                                    <p class="review-body">
-                                                        Cotton is good.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="review-data">
-                                                <div class="reviewer-name-and-date">
-                                                    <h6 class="reviewer-name">Tim</h6>
-                                                    <h6 class="review-posted-date">10 July 2018</h6>
-                                                </div>
-                                                <div class="reviewer-stars-title-body">
-                                                    <div class="reviewer-stars">
-                                                        <div class="star">
-                                                            <span style='width:67px'></span>
-                                                        </div>
-                                                        <span class="review-title">Well done!</span>
-                                                    </div>
-                                                    <p class="review-body">
-                                                        Excellent condition
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="review-data">
-                                                <div class="reviewer-name-and-date">
-                                                    <h6 class="reviewer-name">Johnny</h6>
-                                                    <h6 class="review-posted-date">10 March 2018</h6>
-                                                </div>
-                                                <div class="reviewer-stars-title-body">
-                                                    <div class="reviewer-stars">
-                                                        <div class="star">
-                                                            <span style='width:67px'></span>
-                                                        </div>
-                                                        <span class="review-title">Bright!</span>
-                                                    </div>
-                                                    <p class="review-body">
-                                                        Cotton
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="review-data">
-                                                <div class="reviewer-name-and-date">
-                                                    <h6 class="reviewer-name">Alexia C. Marshall</h6>
-                                                    <h6 class="review-posted-date">12 May 2018</h6>
-                                                </div>
-                                                <div class="reviewer-stars-title-body">
-                                                    <div class="reviewer-stars">
-                                                        <div class="star">
-                                                            <span style='width:67px'></span>
-                                                        </div>
-                                                        <span class="review-title">Well done!</span>
-                                                    </div>
-                                                    <p class="review-body">
-                                                        Good polyester Cotton
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                         <!-- All-Reviews /- -->
-                                        <!-- Pagination-Review -->
-                                        <div class="pagination-review-area">
-                                            <div class="pagination-review-number">
-                                                <ul>
-                                                    <li style="display: none">
-                                                        <a href="single-product.html" title="Previous">
-                                                            <i class="fas fa-angle-left"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="active">
-                                                        <a href="single-product.html">1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">3</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">...</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">10</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html" title="Next">
-                                                            <i class="fas fa-angle-right"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- Pagination-Review /- -->
                                     </div>
                                     <!-- Get-Reviews /- -->
                                 </div>
                             </div>
+                        @else
+                                <div class="tab-pane fade" id="review">
+                                    <div class="review-whole-container">
+                                        <div class="row r-1 u-s-m-b-26 u-s-p-b-22">
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="total-score-wrapper">
+                                                    <h6 class="review-h6">Đánh giá trung bình</h6>
+                                                    <div class="circle-wrapper">
+                                                        <h1>0</h1>
+                                                    </div>
+                                                    <h6 class="review-h6">Dựa trên 0 đánh</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="total-star-meter">
+                                                    <div class="star-wrapper">
+                                                        <span>5 sao</span>
+                                                        <div class="star">
+                                                            <span style='width:0'></span>
+                                                        </div>
+                                                        <span>(0)</span>
+                                                    </div>
+                                                    <div class="star-wrapper">
+                                                        <span>4 sao</span>
+                                                        <div class="star">
+                                                            <span style='width:0px'></span>
+                                                        </div>
+                                                        <span>(0)</span>
+                                                    </div>
+                                                    <div class="star-wrapper">
+                                                        <span>3 Sao</span>
+                                                        <div class="star">
+                                                            <span style='width:0'></span>
+                                                        </div>
+                                                        <span>(0)</span>
+                                                    </div>
+                                                    <div class="star-wrapper">
+                                                        <span>2 Sao</span>
+                                                        <div class="star">
+                                                            <span style='width:0'></span>
+                                                        </div>
+                                                        <span>(0)</span>
+                                                    </div>
+                                                    <div class="star-wrapper">
+                                                        <span>1 Sao</span>
+                                                        <div class="star">
+                                                            <span style='width:0'></span>
+                                                        </div>
+                                                        <span>(0)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row r-2 u-s-m-b-26 u-s-p-b-22">
+                                            <div class="col-lg-12">
+                                                <div class="your-rating-wrapper">
+                                                    <form method="post" action="{{route('home.review',$productDetail->getId())}}">
+                                                        @csrf
+                                                        <h6 class="review-h6">Đánh giá của bạn về sách</h6>
+                                                        <h6 class="review-h6">Bạn đã từng mua sản phẩm này?</h6>
+                                                        <div class="star-wrapper u-s-m-b-8">
+                                                            <div class="star">
+                                                                <span id="your-stars" style='width:0'></span>
+                                                            </div>
+                                                            <label for="your-rating-value"></label>
+                                                            <input id="your-rating-value" name="numberStar" type="text" class="text-field" placeholder="0.0">
+                                                            <span id="star-comment"></span>
+                                                        </div>
+
+
+                                                        <label for="nameCustomer">Tên của bạn
+                                                            <span class="astk"> *</span>
+                                                        </label>
+                                                        <input id="nameCustomer" type="text" name="nameCustomer" class="text-field" placeholder="Tên của bạn">
+                                                        <label for="reviewDesc">Nhận xét
+                                                            <span class="astk"> *</span>
+                                                        </label>
+                                                        <textarea class="text-area u-s-m-b-8" id="reviewDesc" name="reviewDesc" placeholder="Viết nhận xét"></textarea>
+                                                        <button class="button button-outline-secondary">Gửi nhận xét</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Get-Reviews -->
+                                        <div class="get-reviews u-s-p-b-22">
+                                            <!-- Review-Options -->
+                                            <div class="review-options u-s-m-b-16">
+                                                <div class="review-option-heading">
+                                                    <h6>Đánh giá
+                                                        <span> (0) </span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <!-- Review-Options /- -->
+                                        </div>
+                                        <!-- Get-Reviews /- -->
+                                    </div>
+                                </div>
+                            @endif
                             <!-- Reviews-Tab /- -->
                         </div>
                     </div>

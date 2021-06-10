@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Publisher;
 use App\viewModels\bookViewModels;
 use App\viewModels\productViewModels;
+use App\viewModels\reviewModels;
 use App\viewModels\showCategoryModel;
 use  App\viewModels\bookDetailViewModels;
 use Illuminate\Support\Facades\DB;
@@ -356,6 +357,59 @@ class HomeService implements HomeContract
             $bookDetailViewModels->setFormality($book->formality);
             $bookDetailViewModels->setId($book->id);
             $bookDetailViewModels->setSize($book->size);
+        $sumReview =0;
+        $countOne =0;
+        $countTwo =0;
+        $countThree =0;
+        $countFour =0;
+        $countFive =0;
+        $arrayRating = array();
+        $arrAllRating =array();
+        if(count($book->ratings)){
+
+            foreach ($book->ratings as $item) {
+                  if($item->status === 1) {
+                      $reviewer = new reviewModels();
+                      $reviewer->setCreate_atReview($item->created_at);
+                      $reviewer->setNameReviewer($item->customerReview);
+                      $reviewer->setNumberStar($item->numberRating);
+                      $reviewer->setReviewDesc($item->descRating);
+                      $bookDetailViewModels->setReviewer($reviewer);
+                      $sumReview += 1;
+                      array_push($arrAllRating, $item->numberRating);
+                      if ($item->numberRating === 1) {
+                          $countOne += 1;
+                      } elseif ($item->numberRating === 2) {
+                          $countTwo += 1;
+                      } elseif ($item->numberRating === 3) {
+                          $countThree += 1;
+                      } elseif ($item->numberRating === 4) {
+                          $countFour += 1;
+                      } elseif ($item->numberRating === 5) {
+                          $countFive += 1;
+                      }
+                  }
+                }
+                $count = array_count_values($arrAllRating);
+                arsort($count);
+                $keys = array_keys($count);
+                $arrPercentRating = array();
+                for ($i = 0; $i < count($keys); $i++) {
+                    $arrPercentRating[$keys[$i]] = number_format((($count[$keys[$i]] / $sumReview) * 100), 0);
+                }
+
+                $bookDetailViewModels->setReviewBest($arrPercentRating);
+
+        }
+        array_push($arrayRating,$countOne);
+        array_push($arrayRating,$countTwo);
+        array_push($arrayRating,$countThree);
+        array_push($arrayRating,$countFour);
+        array_push($arrayRating,$countFive);
+
+        $bookDetailViewModels->setReviewNumberStar($arrayRating);
+
+
             foreach ($book->imagebooks as $item) {
                 $bookDetailViewModels->setlistImages($item->file);
             }
