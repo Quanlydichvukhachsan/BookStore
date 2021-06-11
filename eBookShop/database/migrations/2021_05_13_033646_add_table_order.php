@@ -15,9 +15,12 @@ class AddTableOrder extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->integer('payment_id');
             $table->integer('user_id');
             $table->string('city');
+            $table->string('address');
             $table->string('country');
+            $table->string('nameReceive');
             $table->string('status')->default('Waiting accepted');
             $table->timestamps();
         });

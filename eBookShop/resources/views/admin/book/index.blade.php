@@ -21,17 +21,32 @@
         <div class="card card-default">
             <div class="card-header card-header-border-bottom d-flex justify-content-between">
                 <h2>Books</h2>
+
                 <div class="m-lg-auto">
                     <button class="btn" id="btn-show-all-children" type="button">Expand All</button>
                     <button class="btn" id="btn-hide-all-children" type="button">Collapse All</button>
+
                 </div>
+
+
                 @if(auth()->user()->hasDirectPermission('Create')||auth()->user()->hasRole('Administrator'))
+                    {!! Form::open(['method' => 'POST' ,'route' => ['book.import'],'enctype'=>'multipart/form-data']) !!}
+                    <div class="form-group">
+                        <label for="file"> Choose Excel</label>
+                        <input type="file" name="file" class="form-control-file">
+
+                    </div>
+                    <button class="btn btn-success" type="submit">
+                        Import Excel
+                    </button>
+                    {!! Form::close() !!}
                 {!! Form::open(['method' => 'GET' ,'route' => ['book.create']]) !!}
                 <button class="btn btn-success" type="submit">
                     <i class=" mdi mdi-plus-circle"></i> Create book
                 </button>
                 {!! Form::close() !!}
                     @endif
+
             </div>
 
             <div class="card-body">
@@ -120,7 +135,7 @@
                                 <td>{{$item->created_at}}</td>
                             <td>{{$item->updated_at}}</td>
                              <td>
-                                 @if(auth()->user()->hasDirectPermission('Update'))
+                                 @if(auth()->user()->hasDirectPermission('Update')||auth()->user()->hasRole('Administrator'))
                                  <button data-value="{{$item->id}}" class="btn-sm btn-success" onclick="getPriceDiscount(this)" type="button" data-toggle="modal" href="#"
                                          data-target="#exampleModalSmall">
                                      Discount
@@ -128,6 +143,7 @@
                                      @endif
                              </td>
                         </tr>
+
                         @endforeach
                         </tbody>
                     </table>
@@ -272,7 +288,7 @@
       })
   }
    function priceCal(price,discountPercent){
-               return (price * discountPercent)/100;
+               return (price * (100- discountPercent))/100;
    }
    function priceChange(price){
        $("#discount").bind('keyup mouseup', function () {

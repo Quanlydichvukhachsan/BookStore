@@ -9,6 +9,7 @@ use App\Contracts\BookContract;
 use App\Contracts\HomeContract;
 use App\Contracts\PermissionContract;
 use App\Contracts\PublisherContract;
+use App\Contracts\ReviewContract;
 use App\Contracts\RoleContract;
 use App\Contracts\UserContract;
 use App\Models\Category;
@@ -19,6 +20,7 @@ use App\Services\BookService;
 use App\Services\HomeService;
 use App\Services\PermissionService;
 use App\Services\PublisherService;
+use App\Services\ReviewService;
 use App\Services\RoleService;
 use App\Services\CategoryService;
 use App\Services\UserService;
@@ -51,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PublisherContract::class,PublisherService::class);
         $this->app->bind(AdminContract::class,AdminService::class);
         $this->app->bind(HomeContract::class,HomeService::class);
-
+        $this->app->bind(ReviewContract::class,ReviewService::class);
     }
 
     /**

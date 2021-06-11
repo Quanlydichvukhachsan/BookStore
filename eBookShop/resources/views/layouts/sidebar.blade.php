@@ -99,6 +99,12 @@
 
                                 </a>
                             </li>
+                                <li >
+                                    <a class="sidenav-item-link" href="{{route('review.index')}}">
+                                        <span class="nav-text">Review</span>
+
+                                    </a>
+                                </li>
                         </div>
                     </ul>
                 </li>

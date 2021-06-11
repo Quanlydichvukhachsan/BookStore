@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contracts\OrderContract;
+use App\Contracts\HomeContract;
 class OrderController extends Controller
 {
     private  $orderBook;
-    public function __construct(OrderContract $orderBook)
+    private  $homeContract;
+    public function __construct(OrderContract $orderBook,HomeContract $homeContract)
     {
         $this->orderBook =$orderBook;
+        $this->homeContract =$homeContract;
     }
 
     /**
@@ -61,10 +64,10 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function orderShow($id,  $customer)
+    public function orderShow($id, $customer)
     {
-       $item = $this->orderBook->orderShow($id,$customer);
 
+       $item = $this->orderBook->orderShow($id,$customer);
       return view('admin.order.overview',compact("item"));
     }
 

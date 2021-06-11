@@ -44,6 +44,10 @@ class Book extends Model
     public function imagebooks(){
         return $this->hasMany('App\Models\ImageBook',foreignKey: 'book_id',localKey: 'id');
     }
+    public function ratings(){
+        return $this->hasMany('App\Models\Rating',foreignKey: 'book_id',localKey: 'id');
+    }
+
     public function orders()
     {
         return $this->belongsToMany('App\Models\Order','order_book', 'book_id', 'order_id');

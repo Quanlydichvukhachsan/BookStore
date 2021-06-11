@@ -27,10 +27,10 @@ class UpdateCustomerRequest extends FormRequest
         return [
             'firstName'=>'required|string|max:255',
             'lastName'=>'required|string|max:255',
+            'address'=>'required|string|max:255',
             'phoneNumber'=>'required|string|min:10|unique:users,phoneNumber,' . $this->id . ',id',
-            'email'=>'required|regex:/(.+)@(.+)\.(.+)/i|email|unique:users,email,' . $this->id . ',id',
-            'passwordOld'=>'required|between:8,255',
-            'password' => 'required|between:8,255|confirmed',
+            'email'=>'required|regex:/(.+)@(.+)\.(.+)/i|email|unique:users,email,' . $this->id . ',id'
+
         ];
     }
 }

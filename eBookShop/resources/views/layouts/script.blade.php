@@ -29,6 +29,12 @@
 <script src="{{asset("https://js.pusher.com/7.0/pusher.min.js")}}"></script>
 
 <script>
+    $(function () {
+        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+            $(".alert").slideUp(500);
+        });
+
+    });
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -37,12 +43,36 @@
     });
 
     var channel = pusher.subscribe('my-channel');
-    channel.bind('order-detail', function(result) {
+    channel.bind('cancelOrder-detail', function(result) {
+        var user = result.userName;
+        var userId = result.userId;
+        var order =result.order;
+        $htmlOrder =' <a class="learn-more" href="'+'/order/'+order.id +'/customer/'+userId+'/show'+'">xem đơn hàng<i class="fa fa-angle-right ml-2"></i></a>';
+        $htmlUser = '<a class="nameOrder" href="' +'/user/'+userId+'"> <span>'+user+'</span></a>'+'<span>'+ ' đã hủy đơn đặt hàng.'+'</span>';
+        $('#notification-user-order .info-user').html("");
+        $('#notification-user-order .info-user').append($htmlUser);
+        $('#notification-user-order .see-order').html("");
+        $('#notification-user-order .see-order').append($htmlOrder);
+        $('#notification-user-order').show();
+
+    });
+    channel.bind('review-detail', function(result) {
         console.log(result);
+        var review = result.review;
+        var titleBook =result.titleBook;
+        $htmlUser = '<span>'+review.customerReview+  ' đã đánh giá ' +review.numberRating+' sao cho sách '+'<a href="http://127.0.0.1:8000/book/'+review.book_id+'">'+titleBook+'</a>'+'</span>';
+        $htmlOrder =' <a class="learn-more" href="http://127.0.0.1:8000/review/'+review.id+'">xem đánh giá<i class="fa fa-angle-right ml-2"></i></a>';
+        $('#notification-user-order .info-user').html("");
+        $('#notification-user-order .info-user').append($htmlUser);
+        $('#notification-user-order .see-order').html("");
+        $('#notification-user-order .see-order').append($htmlOrder);
+        $('#notification-user-order').show();
+    });
+    channel.bind('order-detail', function(result) {
         var user = result.user;
         var order =result.order;
         $htmlOrder =' <a class="learn-more" href="'+'/order/'+order.id +'/customer/'+user.id+'/show'+'">xem đơn hàng<i class="fa fa-angle-right ml-2"></i></a>';
-        $htmlUser = '<a class="nameOrder" href="' +'/user/'+user.id+'"> <span>'+ user.lastName +" "+ user.firstName+'</span></a>';
+        $htmlUser = '<a class="nameOrder" href="' +'/user/'+user.id+'"> <span>'+ user.lastName +" "+ user.firstName+'</span></a>'+'<span>'+ ' đã đặt đơn đặt hàng mới.'+'</span>';
         $('#notification-user-order .info-user').html("");
         $('#notification-user-order .info-user').append($htmlUser);
         $('#notification-user-order .see-order').html("");

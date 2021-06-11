@@ -14,8 +14,19 @@ class productViewModels
     private $listBook =array();
     private $listCategory =array();
     private $pathName;
+    private $nameCategory;
     private $pathId;
     private  $books ;
+
+
+    public function setNameCategory($nameCategory) {
+        $this->nameCategory =$nameCategory;
+    }
+
+
+    public function getNameCategory()  {
+        return $this->nameCategory;
+    }
 
     public function setpathName($name) {
        $this->pathName =$name;

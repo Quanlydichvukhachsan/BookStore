@@ -6,6 +6,15 @@ namespace App\viewModels;
 
 class bookDetailViewModels
 {
+    private $size;
+    private $bestRating = array();
+    private $reviewNumberStar = array();
+    private $reviewer = array();
+    private $categorySlug;
+    private $category;
+    private $idcategory;
+    private $originalPrice;
+    private $percentDiscount;
     private $author;
     private $title;
     private $amount;
@@ -20,6 +29,85 @@ class bookDetailViewModels
     private $original_Price;
     private $describe;
     private $listBooKAll = array();
+    private $listBooKRecent = array();
+
+    public function setReviewer($reviewer) {
+        array_push($this->reviewer,$reviewer);
+
+
+    }
+    public function getReviewer():array {
+        return $this->reviewer;
+    }
+
+    public function setReviewBest($bestRating) {
+        $this->bestRating = $bestRating ;
+
+    }
+    public function getReviewBest():array {
+        return $this->bestRating;
+    }
+
+    public function setReviewNumberStar($numberStar) {
+       $this->reviewNumberStar =$numberStar;
+    }
+    public function getReviewNumberStar():array {
+        return $this->reviewNumberStar;
+    }
+
+    public function setSize($size) {
+        $this->size =$size;
+    }
+
+
+    public function getSize()  {
+        return $this->size;
+    }
+
+    public function setCategorySlug($category) {
+        $this->categorySlug =$category;
+    }
+
+
+    public function getCategorySlug()  {
+        return $this->categorySlug;
+    }
+
+    public function setIdCategory($idcategory) {
+        $this->idcategory =$idcategory;
+    }
+
+
+    public function getIdCategory()  {
+        return $this->idcategory;
+    }
+
+    public function setCategory($category) {
+        $this->category =$category;
+    }
+
+
+    public function getCategory()  {
+        return $this->category;
+    }
+
+    public function setPercentDiscount($percentDiscount)
+    {
+        $this->percentDiscount = $percentDiscount;
+    }
+    public function getPercentDiscount()
+    {
+        return $this->percentDiscount;
+    }
+
+    public function setOriginalPrice($originalPrice)
+    {
+        $this->originalPrice = $originalPrice;
+    }
+    public function getOriginalPrice()
+    {
+        return $this->originalPrice;
+    }
 
 
     public function setListBookAll($book) {
@@ -28,6 +116,14 @@ class bookDetailViewModels
     public function getListBookAll():array {
         return $this->listBooKAll;
     }
+
+    public function setListBookRecent($book) {
+        array_push($this->listBooKRecent,$book);
+    }
+    public function getListBookRecent():array {
+        return $this->listBooKRecent;
+    }
+
 
     public function setDescribe($describe)
     {
