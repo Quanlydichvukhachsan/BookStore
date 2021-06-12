@@ -28,6 +28,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <!-- Product-zoom-area -->
+                     @if(count($productDetail->getlistImages()))
                     <div class="zoom-area">
                         <img id="zoom-pro" class="img-fluid" src="{{$productDetail->getlistImages()[0]}}" data-zoom-image="{{$productDetail->getlistImages()[0]}}" alt="Zoom Image">
 
@@ -40,6 +41,7 @@
                             @endfor
                         </div>
                     </div>
+                    @endif
                     <!-- Product-zoom-area /- -->
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">

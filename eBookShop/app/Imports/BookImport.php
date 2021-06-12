@@ -34,7 +34,7 @@ class BookImport implements ToModel,WithHeadingRow
             'size' =>$row['size'],
             'foreign_book' => 0,
             'price' =>$row['price'],
-            'original_Price' =>$row['original_price'],
+            'original_Price' =>$row['price'],
             'describe' => $row['describe']
         ]);
     }

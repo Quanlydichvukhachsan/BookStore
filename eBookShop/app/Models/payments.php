@@ -20,4 +20,5 @@ class payments extends Model
     public function order(){
         return $this->hasOne('App\Models\Order','payment_id', 'id');
     }
+
 }

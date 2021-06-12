@@ -105,6 +105,12 @@
 
                                     </a>
                                 </li>
+                                <li >
+                                    <a class="sidenav-item-link" href="{{route('payment.index')}}">
+                                        <span class="nav-text">Payment</span>
+
+                                    </a>
+                                </li>
                         </div>
                     </ul>
                 </li>

@@ -53,6 +53,7 @@ class HomeService implements HomeContract
          return $titleSlug;
      }
          public function setProductByCategory($category,$name ,$booksByCategory){
+
          global  $parentCategory  ;
          $productViewModels =new productViewModels();
          $productViewModels->setpathName($name);
@@ -60,17 +61,20 @@ class HomeService implements HomeContract
          $productViewModels->setpathId($category->id);
 
          if($category->slug_name === $name){
+
              $sumReview=0;
              $arrAllRating =array();
              if(count($booksByCategory))
              {
 
                  foreach ($booksByCategory as $book){
+
                      $bookViewModels =new bookViewModels();
-                     if(count($book->ratings)){
+
+                     if(count($book->ratings)) {
 
                          foreach ($book->ratings as $item) {
-                             if($item->status === 1) {
+                             if ($item->status === 1) {
 
                                  $sumReview += 1;
                                  array_push($arrAllRating, $item->numberRating);
@@ -81,31 +85,36 @@ class HomeService implements HomeContract
 
                          arsort($count);
                          $keys = array_keys($count);
+
                          $arrPercentRating = array();
 
                          $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
-
 
                          $bookViewModels->setReviewBest($arrPercentRating);
 
                      }
 
-
                      $bookViewModels->setId($book->id);
                      $bookViewModels->setCategory($book->categories->name);
                      $bookViewModels->setIdCategory($book->categories->id);
+
                      $bookViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
                      $bookViewModels->setOriginalPrice($book->original_Price);
                      $bookViewModels->setPercentDiscount($book->percent_discount);
                      $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
                      $bookViewModels->setPrice($book->price);
-                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     if(count($book->imagebooks)) {
+                         $bookViewModels->setImages($book->imagebooks[0]->file);
+                     }
                      $bookViewModels->setTitle($book->title);
+
                      $productViewModels->setListBook($bookViewModels);
+
                  }
              }
 
              if($category->parent_id !== 0) {
+
                  $parentCategory = Category::findOrFail($category->parent_id);
              }else{
                  $parentCategory =$category;
@@ -114,11 +123,14 @@ class HomeService implements HomeContract
          }else{
              $parentCategory =$category;
          }
+
          $showCategoryModel =new showCategoryModel();
          $showCategoryModel->setId($parentCategory->id);
          $showCategoryModel->setName($parentCategory->name);
          $showCategoryModel->setTitleSlug($this->formatNameToSlug($parentCategory->name));
+
          if($parentCategory->childs->count() >0){
+
              foreach ($parentCategory->childs as $child) {
                  $childModel =new showCategoryModel();
                  $childModel->setId($child->id);
@@ -389,12 +401,12 @@ class HomeService implements HomeContract
     public function getProductDetail(string $title, $id)
     {
         global $bookDetailViewModels;
+
         $book = Book::findOrFail($id);
         $categoryBook =$book->categories->id;
         $bookRaLationShip = Book::where('id','<>',$id)->get();
         $bookRecent =Book::where('id','<>',$id)->orderBy('created_at', 'desc')->paginate(5);
         $bookDetailViewModels = new bookDetailViewModels();
-
         $bookDetailViewModels->setCategorySlug($this->formatNameToSlug($book->categories->name));
         $bookDetailViewModels->setCategory($book->categories->name);
         $bookDetailViewModels->setIdCategory($book->categories->id);
@@ -443,6 +455,7 @@ class HomeService implements HomeContract
                       }
                   }
                 }
+
                 $count = array_count_values($arrAllRating);
                 arsort($count);
                 $keys = array_keys($count);
@@ -461,11 +474,12 @@ class HomeService implements HomeContract
         array_push($arrayRating,$countFive);
 
         $bookDetailViewModels->setReviewNumberStar($arrayRating);
-
+        if(count($book->imagebooks)) {
 
             foreach ($book->imagebooks as $item) {
                 $bookDetailViewModels->setlistImages($item->file);
             }
+        }
             $bookDetailViewModels->setDescribe($book->describe);
             foreach ($bookRaLationShip as $book) {
                  if($book->categories->id === $categoryBook ) {
@@ -473,7 +487,9 @@ class HomeService implements HomeContract
                      $bookViewModels->setId($book->id);
                      $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
                      $bookViewModels->setPrice($book->price);
-                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     if(count($book->imagebooks)) {
+                         $bookViewModels->setImages($book->imagebooks[0]->file);
+                     }
                      $bookViewModels->setTitle($book->title);
                      $bookViewModels->setPercentDiscount($book->percent_discount);
                      $bookViewModels->setOriginalPrice($book->original_Price);
@@ -488,7 +504,9 @@ class HomeService implements HomeContract
                 $bookViewModels->setId($book->id);
                 $bookViewModels->setTitleSlug($this->formatNameToSlug($book->title));
                 $bookViewModels->setPrice($book->price);
-                $bookViewModels->setImages($book->imagebooks[0]->file);
+                if(count($book->imagebooks)) {
+                    $bookViewModels->setImages($book->imagebooks[0]->file);
+                }
                 $bookViewModels->setTitle($book->title);
                 $bookViewModels->setPercentDiscount($book->percent_discount);
                 $bookViewModels->setOriginalPrice($book->original_Price);
@@ -550,6 +568,11 @@ class HomeService implements HomeContract
     }
     public function findProductSingle($name){
          $books = Book::where('title','=',$name)->get();
+
+         if(!count($books)){
+
+             return false;
+         }
          $category =$books[0]->categories;
         return $this->setProductByCategory($category,$category->slug_name,$books);
     }
@@ -607,7 +630,9 @@ class HomeService implements HomeContract
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
             $bookViewModels->setPrice($book->price);
-            $bookViewModels->setImages($book->imagebooks[0]->file);
+            if(count($book->imagebooks)) {
+                $bookViewModels->setImages($book->imagebooks[0]->file);
+            }
             $bookViewModels->setTitle($book->title);
             $bookViewModels->setAuthor($book->author->full_name);
             $bookViewModels->setCategory($book->categories->name);
@@ -676,7 +701,9 @@ class HomeService implements HomeContract
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
             $bookViewModels->setPrice($book->price);
-            $bookViewModels->setImages($book->imagebooks[0]->file);
+            if(count($book->imagebooks)) {
+                $bookViewModels->setImages($book->imagebooks[0]->file);
+            }
             $bookViewModels->setTitle($book->title);
             $bookViewModels->setAuthor($book->author->full_name);
             $bookViewModels->setCategory($book->categories->name);
@@ -741,7 +768,9 @@ class HomeService implements HomeContract
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
             $bookViewModels->setPrice($book->price);
-            $bookViewModels->setImages($book->imagebooks[0]->file);
+            if(count($book->imagebooks)) {
+                $bookViewModels->setImages($book->imagebooks[0]->file);
+            }
             $bookViewModels->setTitle($book->title);
             $bookViewModels->setAuthor($book->author->full_name);
             $bookViewModels->setCategory($book->categories->name);
@@ -807,7 +836,9 @@ class HomeService implements HomeContract
             $bookViewModels->setOriginalPrice($book->original_Price);
             $bookViewModels->setPercentDiscount($book->percent_discount);
             $bookViewModels->setPrice($book->price);
-            $bookViewModels->setImages($book->imagebooks[0]->file);
+            if(count($book->imagebooks)) {
+                $bookViewModels->setImages($book->imagebooks[0]->file);
+            }
             $bookViewModels->setTitle($book->title);
             $bookViewModels->setAuthor($book->author->full_name);
             $bookViewModels->setCategory($book->categories->name);
@@ -893,7 +924,9 @@ class HomeService implements HomeContract
                      $bookViewModels->setOriginalPrice($book->original_Price);
                      $bookViewModels->setPercentDiscount($book->percent_discount);
                      $bookViewModels->setPrice($book->price);
-                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     if(count($book->imagebooks)) {
+                         $bookViewModels->setImages($book->imagebooks[0]->file);
+                     }
                      $bookViewModels->setTitle($book->title);
                      $bookViewModels->setAuthor($book->author->full_name);
                      $bookViewModels->setCategory($book->categories->name);
@@ -991,7 +1024,9 @@ class HomeService implements HomeContract
                      $bookViewModels->setOriginalPrice($book->original_Price);
                      $bookViewModels->setPercentDiscount($book->percent_discount);
                      $bookViewModels->setPrice($book->price);
-                     $bookViewModels->setImages($book->imagebooks[0]->file);
+                     if(count($book->imagebooks)) {
+                         $bookViewModels->setImages($book->imagebooks[0]->file);
+                     }
                      $bookViewModels->setTitle($book->title);
                      $bookViewModels->setAuthor($book->author->full_name);
                      $bookViewModels->setCategory($book->categories->name);
@@ -1058,7 +1093,9 @@ class HomeService implements HomeContract
                $bookViewModels->setOriginalPrice($book->original_Price);
                $bookViewModels->setPercentDiscount($book->percent_discount);
                $bookViewModels->setPrice($book->price);
-               $bookViewModels->setImages($book->imagebooks[0]->file);
+               if(count($book->imagebooks)) {
+                   $bookViewModels->setImages($book->imagebooks[0]->file);
+               }
                $bookViewModels->setTitle($book->title);
                $bookViewModels->setAuthor($book->author->full_name);
                $bookViewModels->setCategory($book->categories->name);

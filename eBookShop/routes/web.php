@@ -87,7 +87,8 @@ Route::group(['middleware' => ['auth','role:Administrator']],function () {
     Route::resource('permission',PermissionController::class);
     Route::get('/user/{user}/role',[UserController::class, 'editRole'])->name('user.role');
     Route::post('/user/{user}/addRole',[UserController::class, 'addRole'])->name('user.addRole');
-
+    Route::resource('payment',Controllers\PaymentController::class);
+    Route::post('/payment/export',[Controllers\PaymentController::class, 'exportExcel'])->name('payment.export');
 });
 Route::group(['middleware' => ['auth','role:Superuser|Administrator|Manager|Accounting|Salesman|Inventory officer']],function () {
     Route::resource('order',OrderController::class);

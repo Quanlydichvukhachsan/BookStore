@@ -127,6 +127,9 @@ class CartController extends Controller
     public function vnpayReturn(Request $request){
         $products =  $this->homeContract->getAll();
            $result = $this->orderBook->vnpayReturn($request);
+           if($result === false ){
+               return view('app.vnPaymentFail',compact('products'));
+           }
             return view('app.vnPayReturn',compact('result','products'));
     }
     /**

@@ -143,7 +143,7 @@
                                                         {{$product->getListCategory()[0]->getName()}}</a>
                                                 </li>
                                                 <li class="is-marked">
-                                                    <a  href="http://127.0.0.1:8000/product/{{$product->getListCategory()[0]->getTitleSlug()}}/{{$product->getListCategory()[0]->getId()}}/{{$product->getpathName()}}/{{$product->getpathId()}}">
+                                                    <a  href="http://127.0.0.1:8000/product/{{$product->getpathName()}}/{{$product->getpathId()}}">
                                                         {{$product->getNameCategory()}}</a>
                                                 </li>
                                                  @endif

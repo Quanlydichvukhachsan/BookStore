@@ -62,6 +62,21 @@
                  style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
                 <span>{{Session::get('import-success')}}</span>
             </div>
+        @elseif(Session::has('delete-paymentFail'))
+            <div class="alert alert-danger alert-highlighted"
+                 style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+                <span>{{Session::get('delete-paymentFail')}}</span>
+            </div>
+        @elseif(Session::has('delete-paymentSuccess'))
+            <div class="alert alert-success alert-highlighted"
+                 style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+                <span>{{Session::get('delete-paymentSuccess')}}</span>
+            </div>
+        @elseif(Session::has('export'))
+            <div class="alert alert-success alert-highlighted"
+                 style="z-index: 9999; position: fixed; top: 150px; right: 0;  " data-delay="5000">
+                <span>{{Session::get('export')}}</span>
+            </div>
         @endif
         <div aria-live="polite" aria-atomic="true" style="position: relative;">
             <div class="alert alert-success alert-highlighted"

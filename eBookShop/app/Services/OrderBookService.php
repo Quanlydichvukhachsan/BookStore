@@ -237,6 +237,8 @@ class OrderBookService implements OrderContract{
                     'vnp_response_code'=>$request->vnp_ResponseCode,'code_vnpay'=>$request->vnp_TransactionNo,
                     'code_bank'=>$request->vnp_BankCode,'time'=>date('Y-m-d H:i',strtotime($request->vnp_PayDate))]);
              $this->setOrderCreate($user,$input,$id,$payment);
+         }else{
+             return false;
          }
         return $payment;
     }
