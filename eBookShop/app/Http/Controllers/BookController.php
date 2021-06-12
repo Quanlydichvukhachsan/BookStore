@@ -20,6 +20,7 @@ class BookController extends Controller
     protected $BookStore;
 
     public function __construct(BookContract $BookStore){
+
          $this->BookStore = $BookStore;
 
     }
@@ -30,8 +31,8 @@ class BookController extends Controller
      */
     public function index()
     {
-          $books =   $this->BookStore->getAll();
-        return  view('admin.book.index',compact('books'));
+          $books =  $this->BookStore->getAll();
+          return  view('admin.book.index',compact('books'));
     }
 
     /**
@@ -53,8 +54,7 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
-
-        $result =  $this->BookStore->store($request);
+        $result = $this->BookStore->store($request);
         $request->session()->flash('create-book',$result);
         return redirect()->route('book.index');
     }

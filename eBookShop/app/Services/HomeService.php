@@ -72,25 +72,29 @@ class HomeService implements HomeContract
                      $bookViewModels =new bookViewModels();
 
                      if(count($book->ratings)) {
-
+                           $check =false ;
                          foreach ($book->ratings as $item) {
                              if ($item->status === 1) {
-
+                                   $check =true;
                                  $sumReview += 1;
                                  array_push($arrAllRating, $item->numberRating);
                              }
+
                          }
-                         $bookViewModels->setReviewNumberStar($sumReview);
-                         $count = array_count_values($arrAllRating);
+                         if($check === true){
+                             $bookViewModels->setReviewNumberStar($sumReview);
+                             $count = array_count_values($arrAllRating);
 
-                         arsort($count);
-                         $keys = array_keys($count);
+                             arsort($count);
+                             $keys = array_keys($count);
 
-                         $arrPercentRating = array();
+                             $arrPercentRating = array();
 
-                         $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
+                             $arrPercentRating[0] = number_format((($count[$keys[0]] / $sumReview) * 100), 0);
 
-                         $bookViewModels->setReviewBest($arrPercentRating);
+                             $bookViewModels->setReviewBest($arrPercentRating);
+                         }
+
 
                      }
 
@@ -611,6 +615,7 @@ class HomeService implements HomeContract
                         array_push($arrAllRating, $item->numberRating);
                     }
                 }
+
                 $bookViewModels->setReviewNumberStar($sumReview);
                 $count = array_count_values($arrAllRating);
 

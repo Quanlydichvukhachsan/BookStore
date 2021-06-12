@@ -34,7 +34,6 @@ class CategoryService implements CategoryContract
     public function childview($Category)
     {
         $childs = $Category->childs;
-
         //$Cate = Category::Where('id','=',$Category->childs[0]->parent_id)->first();
         $htmlS = '<ul>';
         foreach ($childs as $cateChild) {
