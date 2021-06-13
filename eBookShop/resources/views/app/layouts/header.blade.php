@@ -77,9 +77,9 @@
             <div class="row clearfix align-items-center">
                 <div class="col-lg-3 col-md-9 col-sm-6">
                     <div class="brand-logo text-lg-center">
-                        <a href="{{route('home')}}">
-                            <img src="{{asset('images/main-logo/groover-branding-1.png')}}" alt="Groover Brand Logo" class="app-brand-logo">
-                        </a>
+                       <a href="{{route('home')}}">
+                            <img src="{{asset('assets/webApp/images/main-logo/groover-branding-1.png')}}" alt="Groover Brand Logo" class="app-brand-logo">
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6 u-d-none-lg">

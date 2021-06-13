@@ -9,7 +9,7 @@
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1516979187457-637abb4f9353.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
+                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-15720614861d811e12d0a10.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
                 </a>
             </div>
         </div>
@@ -290,7 +290,7 @@
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1516979187457-637abb4f9353.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
+                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1511881220587-13b89d1da6b8.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
                 </a>
             </div>
         </div>
@@ -561,7 +561,7 @@
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1516979187457-637abb4f9353.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
+                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1588025681119-4af9a661fec2.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
                 </a>
             </div>
         </div>
@@ -655,7 +655,7 @@
         <div class="container">
             <div class="image-banner">
                 <a href="shop-v1-root-category.html" class="mx-auto banner-hover effect-dark-opacity">
-                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1516979187457-637abb4f9353.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
+                    <img class="img-fluid"   src="{{asset('assets/webApp/images/banners/photo-1541697349791-30e88807ccc8.jpg')}}"   style=" width: 1340px ;  height: 236px;"   alt="Winter Season Banner">
                 </a>
             </div>
         </div>

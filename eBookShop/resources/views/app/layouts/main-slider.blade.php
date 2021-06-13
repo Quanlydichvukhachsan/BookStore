@@ -3,23 +3,23 @@
     <div class="slider-main owl-carousel">
         <div class="bg-image one">
             <div class="slide-content slide-animation">
-                <h1>Casual Clothing</h1>
-                <h2>lifestyle / clothing / hype</h2>
+                <h1>Tất cả loại sách tại đây</h1>
+                <h2>Sách / Văn học / Tản văn</h2>
             </div>
         </div>
         <div class="bg-image two">
             <div class="slide-content-2 slide-animation">
-                <h2 class="slide-2-h2-a">Hiking</h2>
-                <h2 class="slide-2-h2-b">Collection</h2>
-                <h1>2018</h1>
+                <h2 class="slide-2-h2-a">Flash Sale</h2>
+                <h2 class="slide-2-h2-b">Ưu đãi lớn</h2>
+                <h1>2021</h1>
             </div>
         </div>
         <div class="bg-image three">
             <div class="slide-content slide-animation">
-                <h1>Tech
-                    <span style="color:#333">Deals</span>
+                <h1>Kinh tế
+                    <span style="color:#333">Giảm giá lớn</span>
                 </h1>
-                <h2 style="color:#333"># shopping</h2>
+                <h2 style="color:#333"># Đăng ký ngay</h2>
             </div>
         </div>
     </div>
